@@ -1,0 +1,196 @@
+@import './variables';
+@import './cross-browsing';
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+// media queries
+@media only screen and (max-width: 767px) {
+  .only.pc {
+    display: none!important;
+  }
+  .navbar-custom {
+    // height: 12px!important;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .only.mobile {
+    display: none!important;
+  }
+}
+
+// font
+h1, h2, h3, h4, h5, div, span, label, p, div {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  color: rgb(27, 28, 29)
+}
+a {
+  color: $color-primary;
+}
+strong {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+}
+
+// flex box
+.flex {
+  @include flex-box();
+  .f1 {
+    flex: 1;
+  }
+  .f2 {
+    flex: 2;
+  }
+}
+.flex.center {
+  align-items: center;
+}
+.hashtag {
+  color: rgb(0, 162, 154);
+  cursor: pointer;
+}
+.pre {
+  white-space: pre-wrap;
+}
+
+// It is a better choice what change module or elements in semantic files than this scss.
+img.tiny {
+  width: 60px!important;
+  height: 60px!important;
+}
+
+// profile image 
+
+.background.profile {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+// img {
+  // border:1px solid rgb(219, 219, 219)!important;
+// }
+
+.link, .linked {
+  cursor: pointer;
+}
+.remove.link {
+  background: none!important;
+}
+
+.margin-min {
+  margin: 15px;
+}
+
+.required::after {
+  content: '*';
+  color: $color-secondary;
+}
+
+// ------------- buttons
+.more-btn {
+  display: block!important;
+  width: 150px!important;
+  margin:30px auto!important;
+}
+// remove the save-btn css after change it to primary-btn from templete files
+.save-btn, .primary-btn {
+  width: 92px;
+  font-size: 14px;
+  font-family: NotoSansCJKkr-Bold;
+}
+
+// palette
+.color {
+  &.primary {
+    color: $color-primary;
+  }
+  &.secondary {
+    color: $color-secondary;
+  }
+  &.negative {
+    color: $color-secondary;
+  }
+}
+
+.ui.modal .feed-list {
+  max-height: 500px;
+  overflow: auto;
+  overflow-x: hidden;
+}
+// ******************** sementic custom
+@media only screen and (max-width: 767px) {
+  .ui.container {
+    margin-left: 4px!important;
+    margin-right: 4px!important;
+  }
+}
+.ui.segment,
+.ui.vertical.menu {
+  box-shadow: none!important;
+  border-color: $color-line!important;
+}
+
+.ui.segments {
+  box-shadow: none!important;
+  border:1px solid $color-line!important;
+}
+
+.ui.attached.segment {
+  border-radius: 0 0 4px 4px !important;
+}
+.ui.form textarea {
+  border-color: $color-line!important;
+}
+.ui.segment.rect,
+.ui.segments.rect {
+  border-radius: 0!important;
+}
+.ui.styled.accordion, .ui.styled.accordion .accordion {
+  box-shadow: 0 0 0 1px $color-line!important;
+}
+.ui.selection.dropdown,
+.ui.selection.dropdown.styled,
+.ui.selection.active.dropdown .menu {
+  border: 1px solid $color-primary!important;
+}
+.ui.basic.button {
+  box-shadow: 0 0 0 1px $color-line inset!important;
+  color: $color-font!important;
+}
+.ui.card, .ui.cards>.card {
+  box-shadow: 0 0 0 1px $color-line inset!important;
+  .content {
+    border-top: 1px solid $color-line!important;
+  }
+}
+.ui.divider:not(.vertical):not(.horizontal) {
+  border-top: 1px solid $color-line!important;
+}
+.ui.input.styled input {
+  border: 1px solid $color-line!important;
+}
+.ui.input.styled.primary input {
+  border: 1px solid $color-primary!important;
+}
+.ui.form textarea:not([rows]) {
+  min-height: 7em!important;
+}
+.ui.dropdown .menu>.item>.image,
+.ui.dropdown .menu>.item>img,
+.ui.dropdown>.text>.image,
+.ui.dropdown>.text>img {
+  max-height: inherit!important;
+}
+.ui.primary.label, .ui.primary.labels .label {
+    background-color: $color-primary!important;
+    border-color: $color-primary!important;
+    color: #fff!important;
+}
+.ui.secondary.label, .ui.secondary.labels .label {
+    background-color: $color-secondary!important;
+    border-color: $color-secondary!important;
+    color: #fff!important;
+}
+.home .ui.star.rating .icon {
+  color:rgba(255,255,255,0.8);
+}

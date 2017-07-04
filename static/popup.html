@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Wekin</title>
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+  <style>
+    .ui.primary.button {
+      background-color: #00A29A
+    }
+
+    .ui.input,
+    .ui.form textarea {
+      width: 100%;
+      margin: 8px 4px;
+    }
+
+    .ui.input input,
+    .ui.form textarea {
+      border: 1px solid #7D7D7D;
+    }
+
+    .ui.primary.button {
+      float: right;
+      margin-right: -4px;
+      width: 150px;
+    }
+
+    body {
+      padding: 8px 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="vue">
+    <h4>{{ title }}</h4>
+    <div class="ui input">
+      <input type="text" placeholder="이름" v-model="name">
+    </div>
+    <div class="ui input">
+      <input type="text" placeholder="이메일" v-model="email">
+    </div>
+    <div class="ui input">
+      <input type="text" placeholder="전화번호" v-model="phone">
+    </div>
+    <div class="ui form">
+      <div class="field">
+        <textarea placeholder="문의하실 내용을 입력해주세요." v-model="content"></textarea>
+      </div>
+    </div>
+    <button class="ui primary button" @click="sendEmail()">보내기</button>
+  </div>
+</body>
+<script>
+  var router = new VueRouter({
+    mode: 'history',
+    routes: []
+  });
+  var vue = new Vue({
+    router,
+    el: '#vue',
+    data() {
+      return {
+        title: null,
+        name: null,
+        email: null,
+        phone: null,
+        content: null,
+      }
+    },
+    created() {
+      this.title = this.$route.query.title
+    },
+    methods: {
+      sendEmail() {
+        let target = this.email
+        let title = this.title
+        let message = `위킨명 : ${this.title}<br/>메일주소 : ${this.email}<br/>이름 : ${this.name}<br/>전화번호 : ${this.phone}<br/>내용 : ${this.content}`
+        fetch('https://wekin-api-dot-wekinproject.appspot.com/v1/util/mail', {
+          method: 'POST',
+          mode: 'cords',
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: `target=${target}&title=${title}&message=${message}`
+        }).then(function () {
+          alert("전송 되었습니다.")
+          window.open("about:blank","_self").close();
+        })
+      }
+    },
+  })
+
+</script>
+
+</html>

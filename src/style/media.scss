@@ -1,0 +1,24 @@
+@import './variables.scss';
+
+$break-mobile: 479px;
+$break-tablet: 767px;
+$break-small: 991px;
+$break-large: 1199px;
+
+@mixin respond($media) {
+  @if $media == mobile { // ~479까지
+    @media only screen and (max-width: $break-mobile) { @content; }
+  }
+  @else if $media == tablet { // 480~767까지 
+    @media only screen and (min-width: $break-mobile + 1) and (max-width: $break-tablet) { @content; }
+  }
+  @else if $media == small { // 768~991까지  small monitor
+    @media only screen and (min-width: $break-tablet + 1) and (max-width: $break-small) { @content; }
+  }
+  @else if $media == large { // 991~1199까지  large monitor
+    @media only screen and (min-width: $break-small + 1) and (max-width: $break-large) { @content; }
+  }
+  @else if $media == wide { // 1200부터~ large monitor
+    @media only screen and (min-width: $break-large + 1) { @content; }
+  }
+}

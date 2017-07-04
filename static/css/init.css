@@ -1,0 +1,64 @@
+/*
+  style loader가 로드 되기 전 먼저 보여줄 화면 정의
+*/
+div.mobile {
+  display: none!important;
+}
+.mobile-nav {
+  display: none!important;
+}
+
+/* 미디어 플레이어 */
+.dplayer-ptime, .dplayer-dtime {
+  color: white
+}
+
+.feed-editor__linear-container .fireUpload {
+  height: 55px;
+  position: absolute;
+  width: 100%;
+  z-index: 9998;
+  border: 0;
+}
+
+.feed-editor__linear-container .fireUpload input {
+    opacity: 0;
+    height: 100%;
+    width: 44%;
+    z-index: 9998;
+    cursor: pointer;
+  }
+/* 
+ .settings__list .fireUpload {
+     height: 55px;
+    position: absolute;
+    width: 100%;
+    z-index: 9999;
+ }
+
+.settings__list .fireUpload input {
+    opacity: 0;
+    height: 100%;
+    width: 44%;
+    z-index: 9999;
+    cursor: pointer;
+  }*/
+@media only screen and (max-width: 991px) {
+  div.mobile {
+    display: block!important;
+  }
+  .mobile-nav {
+    height: 60px;
+    text-align: center;
+    display: inherit!important;
+    background: rgb(255, 255, 255);
+  }
+  .mobile-nav img {
+    height: 100%;
+    padding: 12px;
+    margin:0 auto;
+  }
+  .pc-nav {
+    display: none!important;
+  }
+}
