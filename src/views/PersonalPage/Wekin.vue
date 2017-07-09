@@ -74,6 +74,7 @@
 import wekinCardLayout from 'components/WekinCardLayout.vue'
 import feedEditor from 'components/FeedEditor.vue'
 import api from 'api'
+import _ from 'lodash'
 
 export default {
   data() {
@@ -85,7 +86,7 @@ export default {
   },
   computed: {
     isExistCancelable() {
-      return this.orders.find(order => {
+      return _.find(this.orders, (order) => {
         if ((order.status == "paid" || order.status == "ready") && new Date(order.Wekin.start_date) > new Date()) {
           return order
         }

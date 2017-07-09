@@ -282,7 +282,7 @@ export default {
       let endDate = moment(this.endDate).toDate().getTime()
 
       if (this.startDate && this.endDate) { //시작일 종료일 모두 선택한 경우
-        let wekin = activity.Wekins.find((wekin) => {
+        let wekin = _.find(activity.Wekins, (wekin) => {
           if ((moment(wekin.start_date).diff(startDate) > 0) && (moment(wekin.start_date).diff(endDate) < 0)) {
             return true
           }
@@ -294,7 +294,7 @@ export default {
         }
       }
       if (this.startDate) {
-        let wekin = activity.Wekins.find((wekin) => {
+        let wekin = _.find(activity.Wekins, (wekin) => {
           if (moment(wekin.start_date).diff(startDate) > 0) {
             return true
           }
@@ -304,7 +304,7 @@ export default {
         }
       }
       if (this.endDate) {
-        let wekin = activity.Wekins.find((wekin) => {
+        let wekin = _.find(activity.Wekins, (wekin) => {
           if (moment(wekin.start_date).diff(endDate) < 0) {
             return true
           }
@@ -320,7 +320,7 @@ export default {
       if (this.peopleCount == 0) {
         return true
       }
-      let wekin = activity.Wekins.find((wekin) => {
+      let wekin = _.find(activity.Wekins, (wekin) => {
         if ((wekin.max_user - Number(wekin.current_user)) > 0 && (wekin.max_user - Number(wekin.current_user)) >= this.peopleCount) {  // 구매 가능한 인원이 1명이상이면서 선택한 인원보다 커야함
           return true
         }
@@ -334,7 +334,8 @@ export default {
       if (this.locationCheck.all) { // 전체면 무조건 통과
         return true
       } else if (activity.address_detail.area) { // 아니면 검사 area가 있을 경우만
-        return this.locationFilter.includes(activity.address_detail.area)
+        return _.includes(this.locationFilter, activity.address_detail.area)
+        // return this.locationFilter.includes(activity.address_detail.area)
       }
       return false
     },

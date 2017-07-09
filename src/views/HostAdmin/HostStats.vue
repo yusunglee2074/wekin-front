@@ -167,14 +167,14 @@ export default {
           this.ratings = json.results
         }).catch((error) => console.error(error))
     },
-    /** 
-     * 
+    /**
+     *
      * @argument {Number} ratings 평점 배열
      * @argument {Number} value 찾을 값
      * @return {Number} 갯수 리턴
-     * 
+     *
      * @description 평점 배열에서 값을 찾아 갯수를 리턴한다.
-     * 
+     *
      **/
     findAndCountRating(ratings, value) {
       return ratings.filter((rating) => rating.activity_rating == value).length
@@ -228,8 +228,8 @@ export default {
 
         let isMatched = false // 처음에는 매치 된 값이 없으므로 false
         let month = Number(now.format('M'))
-        this.reservations.forEach(reservation => {  // 예약 된 날짜 만큼 반복 
-          if (now.format('M/D/YYYY') == (moment(reservation.date).format('M/D/YYYY'))) { // 오늘 날짜와 예약 날짜가 같으면 
+        this.reservations.forEach(reservation => {  // 예약 된 날짜 만큼 반복
+          if (now.format('M/D/YYYY') == (moment(reservation.date).format('M/D/YYYY'))) { // 오늘 날짜와 예약 날짜가 같으면
             isMatched = true  // 매치는 true
             this.chartData.push(Number(reservation.count))  // 차트 값에다가 예약 된 카운트를 넣어준다.
           }
@@ -254,7 +254,7 @@ export default {
     }
   },
   mounted() {
-    this.defaultMonth = moment().month()
+    this.defaultMonth = moment().month() +1
     $('.ui.rating')
       .rating({ maxRating: 5 })
       .rating('disable')
