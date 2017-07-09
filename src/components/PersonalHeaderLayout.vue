@@ -1,13 +1,18 @@
 <template>
-  <div class="ui segment flex info-container" v-if="user">
-    <div class="ui image circular background profile pc" v-bind:style="{'background-image': `url(${user.profile_image || user.picture})`}"></div>
-    <div class="content">
+  <div class="ui segment info-container" v-if="user">
+    <div class="content flex">
+      <div class="ui image circular background profile pc" v-bind:style="{'background-image': `url(${user.profile_image || user.picture})`}"></div>
       <div class="ui image circular background profile mobile" v-bind:style="{'background-image': `url(${user.profile_image || user.picture})`}"></div>
-      <strong>{{user.name}}</strong>
-      <p>{{user.introduce}}</p>
-      <span class="link" @click="onFollowingClick()">팔로우 {{followingCount}}명</span>
-      <span class="link" @click="onFollowerClick()">팔로워 {{followerCount}}명</span>
+      <div class="right-content flex-f1">
+        <strong>{{user.name}}</strong>
+        <div class="follow-container">
+          <span class="link" @click="onFollowingClick()">팔로우 {{followingCount}}명</span>
+          <span class="link" @click="onFollowerClick()">팔로워 {{followerCount}}명</span>
+        </div>
+        <div class="introduce pc">{{user.introduce}}</div>
+      </div>
     </div>
+    <div class="introduce mobile">{{user.introduce}}</div>
     <slot name="button">
       <router-link to="/settings" tag="i" class="icon setting"></router-link>
     </slot>
@@ -79,6 +84,7 @@ export default {
   .profile {
     width: 140px;
     height: 140px;
+    min-width: 140px;
   }
   .content {
     margin: 0 40px;
@@ -103,8 +109,17 @@ export default {
   span {
     font-size: 16px;
     &:last-child {
-      margin-left: 76px;
+      margin-left: 46px;
     }
+  }
+  .right-content {
+    margin-left: 44px;
+    margin-top: 20px;
+  }
+  .follow-container,
+  .introduce {
+    margin-top: 18px;
+    font-size: 15px;
   }
 }
 
@@ -122,9 +137,11 @@ export default {
       display: inline-block!important;
       width: 77px;
       height: 77px;
+      min-width: 77px;
     }
-    strong {
+    .right-content {
       margin-left: 34px;
+      margin-top: 10px;
     }
     p {
       margin-top: 10px;

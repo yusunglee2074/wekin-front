@@ -81,7 +81,7 @@ export default {
 
 .router-view {
   display: inline-block;
-  width: 776px;
+  width: 774px;
   max-width: 780px;
   margin-left: 12px;
   vertical-align: top;

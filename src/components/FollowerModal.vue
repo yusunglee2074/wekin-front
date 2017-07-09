@@ -10,7 +10,7 @@
           <div class="ui primary button primary-btn" v-if="!follow.isFollowed" @click="followUser(follow)">팔로우</div>
           <div class="ui basic button primary-btn" v-if="follow.isFollowed" @click="followUser(follow)">팔로잉</div>
           <!--<div class="ui primary button primary-btn" v-if="follow.User.user_key == user.user_key" @click="followUser(follow.User.user_key)">팔로우</div>
-              <div class="ui button primary-btn" v-if="follow.User.user_key != user.user_key" @click="followUser(follow.User.user_key)">팔로잉</div>-->
+                <div class="ui button primary-btn" v-if="follow.User.user_key != user.user_key" @click="followUser(follow.User.user_key)">팔로잉</div>-->
         </div>
         <img class="ui mini circular middle aligned image" v-if="follow.User" :src="follow.User.profile_image">
         <span class="name" @click="pushUserPage(follow.User.user_key)" v-if="follow.User">{{follow.User.name}}</span>
@@ -22,6 +22,7 @@
 </template>
 <script>
 import api from 'api'
+import _ from 'lodash'
 
 export default {
   data() {
@@ -63,9 +64,11 @@ export default {
     },
     getFollower() { // 팔로워 구하기
       // return api.getFollower(this.$route.params.key)
-      return api.getFollower(this.userKey)
-        .then(follows => follows)
-        .catch(err => console.error(err))
+      if (this.userKey !== undefined) {
+        return api.getFollower(this.userKey)
+          .then(follows => follows)
+          .catch(err => console.error(err))
+      }
     },
     getMyFollowing() {
       return api.getFollowing(this.user.user_key)
@@ -80,13 +83,13 @@ export default {
     // this.getFollower()
   },
   mounted() {
-    this.$store.watch(() => {
-      if (this.$store.state.user !== undefined) {
+    setTimeout(() => {
+      if (this.user !== undefined && this.userKey !== undefined) {
         this.getMyFollowing().then((myFollows) => {
           this.getFollower().then((follows) => {
             follows.map(follow => {
               follow.isFollowed = false // NOTE: 돔을 변경하기 위해선 필요함
-              myFollows.find(myFollow => {  // 팔로유저가 내가 팔로한 유저를 찾는다.)
+              _.find(myFollows, (myFollow) => {
                 if (follow.User.user_key == myFollow.Follower.user_key) {
                   follow.isFollowed = true
                 }
@@ -95,12 +98,12 @@ export default {
             this.follows = follows
           })
         })
-      } else {
+      } else if(this.userKey !== undefined){
         this.getFollower().then((follows) => {
           this.follows = follows
         })
       }
-    })
+    }, 1000)
   }
 }
 </script>

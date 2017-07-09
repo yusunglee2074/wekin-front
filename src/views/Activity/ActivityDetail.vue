@@ -1,29 +1,33 @@
 <template>
   <div id="WekinDetail" v-if="activity">
+    <navbar id="navbar" ref="navbar"></navbar>
     <div class="navbar-custom"></div>
     <div class="wekin swiper-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide top-slide" v-for="image in activity.main_image.image">
-          <div :style="`background-image:url(${image.replace('730','')})`"></div>
+        <div class="swiper-slide top-slide" v-for="(image, index) in activity.main_image.image" v-bind:key="index">
+          <div :style="`background-image:url(${image})`"></div>
         </div>
       </div>
-      <div class="swiper-pagination"></div>
+      <div class="swiper-pagination" slot="pagination"></div>
+      <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+      <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+      <div class="swiper-scrollbar" slot="scrollbar"></div>
     </div>
     <div class="ui container segment unboxing info-container" id="info-container">
       <div class="ui right rail apply-container">
         <div class="ui sticky">
           <div class="ui segment">
             <h2>{{activity.title}}</h2>
-            <p v-if="activity.address_detail">
-              <i class="icon marker"></i>{{activity.address_detail.text}}
+            <p v-if="activity.address">
+              <i class="icon marker"></i>{{activity.address}}
             </p>
             <p v-if="wekins.length">
               <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}명 (최소 {{wekins[0].min_user || selectedWekin.min_user}}명)
               <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
             </p>
             <!--<p v-show="Object.keys(selectedWekin).length == 0 && wekins.length">
-                                <i class="icon users"></i>{{wekins[0].max_user}}명 (최소 {{wekins[0].min_user}}명)
-                              </p>-->
+                                  <i class="icon users"></i>{{wekins[0].max_user}}명 (최소 {{wekins[0].min_user}}명)
+                                </p>-->
             <p>
               <i class="icon won"></i>{{activity.price | joinComma}}원
             </p>
@@ -35,10 +39,7 @@
               <i class="dropdown icon"></i>
               <div class="default text">날짜선택</div>
               <div class="menu">
-                <div class="item" v-for="wekin in wekins" :data-value="wekin.wekin_key" v-if="new Date(wekin.start_date) >= new Date()">{{wekin.start_date | formatDateTimeKo}}</div>
-                <!--<div class="item" data-value="1" v-for="wekin in selectedWekin.max_user">명</div>                -->
-                <!--<div class="item" data-value="1">03.27(월) 13:00~14:00</div>-->
-                <!--<div class="item" data-value="2">03.29(수) 13:00~14:00</div>-->
+                <div class="item" v-for="(wekin, index) in wekins" v-bind:key="wekin.wekin_key" :data-value="wekin.wekin_key" v-if="new Date(wekin.start_date) >= new Date()">{{wekin.start_date | formatDateTimeKo}}</div>
               </div>
             </div>
             <div class="ui selection dropdown styled full-width peopleCount" v-if="Object.keys(selectedWekin).length">
@@ -47,7 +48,7 @@
               <div class="default text">인원선택</div>
               <div class="menu">
                 <!-- FIXME: 현재 유저 JOIN 완료시 수정  -->
-                <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)">{{index + 1}}명</div>
+                <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)" v-bind:key="index">{{index + 1}}명</div>
                 <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) == 0" data-value="closed">마감</div>
                 <!--<div class="item" :data-value="index + 1" v-for="(wekin, index) in selectedWekin.max_user">{{index + 1}}명</div>-->
               </div>
@@ -73,7 +74,7 @@
         <div class="title-mobile-container">
           <h2>{{activity.title}}</h2>
           <p v-if="activity.address_detail">
-            <i class="icon marker"></i>{{activity.address_detail.text}}
+            <i class="icon marker"></i>{{activity.address}}
           </p>
           <p v-if="wekins.length">
             <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}명 (최소 {{wekins[0].min_user || selectedWekin.min_user}}명)
@@ -127,9 +128,7 @@
         </div>
         <div class="ui divider"></div>
         <h4>환불 규정</h4>
-        <p class="pre">
-          {{activity.refund_policy}}
-        </p>
+        <p class="pre">{{activity.refund_policy}}</p>
         <div class="ui divider"></div>
         <h4>문의사항</h4>
         <p>위킨 연락처</p>
@@ -170,22 +169,24 @@
             <label>내 Q&amp;A만 보기</label>
           </div>
           <div class="ui accordion" v-if="filteredQuestions && filteredQuestions.length">
-            <div class="list" v-for="(question,index) in filteredQuestions">
+            <div class="list" v-for="(question, index) in filteredQuestions" v-bind:key="index">
               <div class="title">
-                <div class="ui equal width grid">
-                  <div class="nine wide column" v-if="question.private_mode">
+                <div class="flex">
+                  <div class="summary f1" v-if="question.private_mode">
                     <i class="icon lock"></i>
                     비밀글 입니다.
+                    <span class="mobile user name">{{question.User.name}}</span>
+                    <span class="mobile date">{{question.created_at | formatDate}}</span>
                   </div>
-                  <div class="nine wide column" v-if="!question.private_mode">
+                  <div class="summary f1" v-if="!question.private_mode">
                     <i class="icon q">Q</i>
                     {{question.content}}
                     <span class="mobile user name">{{question.User.name}}</span>
                     <span class="mobile date">{{question.created_at | formatDate}}</span>
                   </div>
-                  <div class="pc column name">{{question.User.name}}</div>
-                  <div class="pc three wide column date">{{question.created_at | formatDate}}</div>
-                  <div class="three column status">{{question.answer | qnaStatus}}</div>
+                  <div class="pc user name">{{question.User.name}}</div>
+                  <div class="pc date">{{question.created_at | formatDate}}</div>
+                  <div class="status">{{question.answer | qnaStatus}}</div>
                 </div>
               </div>
               <div class="content" v-if="!question.private_mode || isMyQuestion(question)">
@@ -197,8 +198,8 @@
                   <span class="label">답변</span>
                   <span>{{question.answer}}</span>
                 </p>
-                <button class="ui basic button" v-if="isMyQuestion(question)">수정</button>
-                <button class="ui basic button" v-if="isMyQuestion(question)" @click="deleteReview(index, question.doc_key)">삭제</button>
+                <!--<button class="ui basic button" v-if="isMyQuestion(question)">수정</button>-->
+                <button class="ui negative button" v-if="isMyQuestion(question)" @click="deleteReview(index, question.doc_key)">삭제</button>
               </div>
             </div>
             <button class="ui basic button more-btn" @click="getQnas(qnaPage++)" v-if="!isLastQna">더보기</button>
@@ -207,7 +208,7 @@
         <div v-if="filteredQuestions && !filteredQuestions.length" class="qna-not-exist">등록 된 Q&amp;A가 없습니다.</div>
       </div>
     </div>
-  
+
     <!-- waiting modal -->
     <div class="ui modal waiting-modal">
       <i class="close icon"></i>
@@ -227,7 +228,7 @@
         <div class="ui negative button approve" id="confirm">확인</div>
       </div>
     </div>
-  
+
     <!-- 모바일 버전 ! -->
     <div class="mobile-container">
       <div class="mobile-button-container">
@@ -236,8 +237,8 @@
             <i class="icon bookmark" v-bind:class="{remove: !isFavoritedActivity, red: isFavoritedActivity}"></i>
           </button>
           <!--<a :href="'mailto:' + activity.Host.User.email" class="ui white button">
-                                              <i class="icon outline mail"></i>
-                                            </a>-->
+                                                <i class="icon outline mail"></i>
+                                              </a>-->
           <button class="ui white button" @click="onMailClick()">
             <i class="icon outline mail"></i>
           </button>
@@ -246,7 +247,7 @@
           </button>
         </div>
       </div>
-  
+
       <div class="mobile-form-container-back-layer" v-if="isMobileFormShowing" @click="toggleMobileForm()">
       </div>
       <div class="mobile-form-container" v-if="isMobileFormShowing">
@@ -255,9 +256,9 @@
           <i class="dropdown icon"></i>
           <div class="default text">날짜선택</div>
           <div class="menu">
-            <div class="item" v-for="wekin in wekins" :data-value="wekin.wekin_key" v-if="new Date(wekin.start_date) >= new Date()">{{wekin.start_date | formatDateTimeKo}} ({{wekin.max_user - wekin.current_user}}남음)</div>
+            <div class="item" v-for="wekin in wekins" v-bind:key="wekin.wekin_key" :data-value="wekin.wekin_key" v-if="new Date(wekin.start_date) >= new Date()">{{wekin.start_date | formatDateTimeKo}} ({{wekin.max_user - wekin.current_user}}남음)</div>
             <!--<div class="item" v-for="wekin in wekins" :data-value="wekin.wekin_key">{{wekin.start_date | formatDateKo}}</div>
-                                                          // TODO: 위킨 data value 테스트 -->
+                                                            // TODO: 위킨 data value 테스트 -->
           </div>
         </div>
         <div class="ui selection dropdown styled full-width peopleCount" v-if="Object.keys(selectedWekin).length">
@@ -265,7 +266,7 @@
           <i class="dropdown icon"></i>
           <div class="default text">인원선택</div>
           <div class="menu">
-            <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)">{{index + 1}}명</div>
+            <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)" v-bind:key="index">{{index + 1}}명</div>
             <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) == 0" data-value="closed">마감</div>
           </div>
         </div>
@@ -304,9 +305,9 @@ export default {
         case 0:
           return "일반인"
         case 1:
-          return "전문가(개인)"
-        case 2:
           return "전문가(업체)"
+        case 2:
+          return "전문가(개인)"
       }
     },
     checkSchedule(wekin) {
@@ -367,7 +368,7 @@ export default {
       isScheduleSelected: false,
       isMobileFormShowing: false,
       isFavoritedActivity: false,
-      isRequested: false, // 예약 요청되었는지 여부 
+      isRequested: false, // 예약 요청되었는지 여부
       peopleCount: 0,
       isDropdownClicked: false
     }
@@ -490,7 +491,7 @@ export default {
               this.$router.push(`/login`)
             }
           } else {
-            if (this.isRequested && confirm("정말 취소하시겠습니까?")) { // 대기신청 취소 
+            if (this.isRequested && confirm("정말 취소하시겠습니까?")) { // 대기신청 취소
               api.cancelWaiting(this.selectedWekin.wekin_key)
                 .then((result) => console.log(result))
                 .catch((error) => console.error(error))
@@ -533,10 +534,15 @@ export default {
         .catch(err => console.error(err))
     },
     initBanner() {
-      this.banners = new Swiper('.wekin.swiper-container', {
-        slidesPerView: 1,
-        pagination: '.wekin .swiper-pagination',
-        autoplay: 2500,
+      this.$nextTick(() => {
+        this.banners = new Swiper('.wekin.swiper-container', {
+          slidesPerView: 1,
+          pagination: '.wekin .swiper-pagination',
+          autoplay: 3000,
+          paginationClickable: true,
+          nextButton: '.swiper-button-next',
+          prevButton: '.swiper-button-prev'
+        })
       })
     },
     getActivity() {
@@ -624,7 +630,8 @@ export default {
               User: {
                 name: this.user.name,
                 user_key: this.user.user_key,
-              }
+              },
+              user_key: this.user.user_key
             }
             this.questions.rows.unshift(qna)
             this.content = null
@@ -690,13 +697,11 @@ export default {
         })
     }
   },
-  created() {
+  mounted() {
     this.getWekins()
     this.getActivity()
     this.getReviews()
     this.getQnas()
-  },
-  mounted() {
     this.$store.watch(() => {
       if (this.$store.state.user !== undefined) {
         this.getUserFavorite()
@@ -716,8 +721,6 @@ export default {
     } else if (window.location.hash == "#qna") {
       $('.menu .item').tab('change tab', 'third')
     }
-
-
     $('.ui.rating')
       .rating({
         initialRating: 3,
@@ -807,6 +810,7 @@ h2 {
 
 .info-container {
   max-width: 656px!important;
+  min-height: 600px;
   margin-top: 0;
   padding: 0;
   right: 154px;
@@ -1011,6 +1015,19 @@ h2 {
           .status {
             font-weight: 300
           }
+          .sum
+          .name {
+            min-width: 50px;
+            text-align: center;
+          }
+          .date {
+            min-width: 100px;
+            text-align: center;
+          }
+          .status {
+            min-width: 50px;
+            text-align: center;
+          }
         }
         .content {
           padding: 10px 32px 16px;
@@ -1028,6 +1045,7 @@ h2 {
     }
   }
 }
+
 
 
 
@@ -1083,7 +1101,7 @@ h2 {
       width: 56px;
       line-height: 42px;
     }
-    i.icon.remove.bookmark:before {
+    i.icon.bookmark {
       font-size: 25px;
       display: inline-block;
       margin-top: 3px;
@@ -1220,37 +1238,6 @@ h2 {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
  @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .info-container {
@@ -1260,4 +1247,9 @@ h2 {
       display: none;
     }
   }*/
+</style>
+<style>
+.explain-detail img {
+  width: 100%!important;
+}
 </style>

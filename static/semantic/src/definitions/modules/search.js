@@ -1237,7 +1237,7 @@ $.fn.search.settings = {
 
   error : {
     source      : 'Cannot search. No source used, and Semantic API module was not included',
-    noResults   : 'Your search returned no results',
+    noResults   : '검색 결과가 없습니다.',
     logging     : 'Error in debug logging, exiting.',
     noEndpoint  : 'No search endpoint was specified',
     noTemplate  : 'A valid template name was not specified.',

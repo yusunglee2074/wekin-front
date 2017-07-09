@@ -6,7 +6,7 @@
     <div class="ui tab active" id="first" data-tab="first">
       <div class="result-container" v-if="qnas && qnas.length">
         <!--<router-link :to="`/activity/${qna.Activity.activity_key}`" tag="div" class="result-container__list link" v-for="qna in qnas">-->
-         <router-link :to="`/activity/${qna.Activity.activity_key}#qna`" tag="div" class="result-container__list link" v-for="(qna, index) in qnas" v-bind:key="index" >
+         <router-link :to="`/activity/${qna.Activity.activity_key}#qna`" tag="div" class="result-container__list link" v-for="(qna, index) in qnas" v-bind:key="index">
           <img class="ui image aligned top" v-if="qna.Activity" :src="qna.Activity.main_image.image[0]">
           <div class="content">
             <span class="title">{{qna.Activity.title}}</span>
@@ -59,6 +59,8 @@ export default {
 <style lang="scss" scoped>
 .content {
   margin-top: 6px;
+  margin-left: 12px;
+  display: inline-block;
 
   .title {
     margin-bottom: 8px;
@@ -73,6 +75,9 @@ export default {
 }
 
 .result-container .image {
+  vertical-align: bottom!important;
   width: 88px;
+  height: 70px;
+  object-fit: cover;
 }
 </style>

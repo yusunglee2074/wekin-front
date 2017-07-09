@@ -31,9 +31,9 @@
           또는
         </span>
         <div class="social-login-container">
-          <img class="link" src="/static/images/logo-facebook-68x68.png" @click="onFacebookJoinClick()">
-          <img class="link" src="/static/images/logo-kakao-68x68.png" @click="onKakaoClick()">
-          <img class="link" src="/static/images/logo-googleplus-68x68.png" @click="onGoogleClick()">
+          <img class="link" src="static/images/logo-facebook-68x68.png" @click="onFacebookJoinClick()">
+          <img class="link" src="static/images/logo-kakao-68x68.png" @click="onKakaoClick()">
+          <img class="link" src="static/images/logo-googleplus-68x68.png" @click="onGoogleClick()">
         </div>
         <div class="ui divider"></div>
         <div class="bottom-login-container">이미 위킨 회원이신가요?
@@ -65,13 +65,19 @@ export default {
       isLoading: false,
     }
   },
+  computed: {
+    userSession() {
+      return this.$store.state.user
+    }
+  },
   mounted() {
-    this.initKakaoLogin()
     $('.agreement-checkbox').checkbox({
       onChange: () => {
         this.isAgreed = !this.isAgreed
       }
     })
+    this.initKakaoLogin()
+
   },
   methods: {
     initKakaoLogin() {

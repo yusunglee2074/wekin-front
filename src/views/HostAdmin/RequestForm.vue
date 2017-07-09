@@ -81,13 +81,16 @@
           </button>
         </div>
       </div>
-      <div class="settings__list" v-if="uploadedLicense">
-        <img :src="uploadedLicense" style="width:100%;height:100%">
+      <div class="settings__list">
+        <div style="position:relative" v-for="(imageUrl, index) in uploadedLicense" v-bind:key="index">
+          <img style="width:100%;height:100%" :src="imageUrl">
+          <i class="icon close link" style="position:absolute; top:0;right:0" @click="deleteImage(uploadedLicense, index)"></i>
+        </div>
       </div>
       <div class="settings__list">
         <label>자격증</label>
         <div class="ui action floated right input">
-          <FireUpload :imageUrl="uploadedLicense" @update:imageUrl="val => uploadedLicense = val" @progress="progress"></FireUpload>
+          <FireUpload :imageUrl="uploadedLicense" @update:imageUrl="val => uploadedLicense.push(val)" @progress="progress"></FireUpload>
           <button class="ui teal left labeled icon button">
             <i class="plus icon"></i> 추가
           </button>
@@ -194,6 +197,9 @@ export default {
         this.isImageUploading = false
       }
     },
+    deleteImage(list, index) {
+      list.splice(index, 1)
+    },
     sendForm() {
       if (this.checkForm()) {
         let params = {
@@ -208,7 +214,7 @@ export default {
           host_sns: this.request.company.sns,
           host_email: this.request.company.email,
           business_registration: this.uploadedBusinessRegistration,
-          license: this.uploadedLicense,
+          license_list: this.uploadedLicense,
           type: this.hostType,
           join_method: this.knownRoute,
         }
@@ -218,7 +224,7 @@ export default {
             alert('신청이 완료되었습니다. 확인 후 연락드리겠습니다.')
             window.location.href = '/'
           })
-          .catch(error => console.error(error))
+          .catch(error => alert('메이커 신청에 실패하였습니다. 위킨에 문의 바랍니다.'))
       }
     },
     checkForm() {
@@ -226,7 +232,7 @@ export default {
         this.request.introduce &&
         this.request.email &&
         this.request.phone &&
-        this.uploadedProfile)) {
+        this.uploadedProfile != "/static/images/default-profile.png")) {
         alert('필수 항목을 채워주세요.')
       } else if (this.request.company.email && !Validation.checkEmailValidation(this.request.company.email)) {
         alert("이메일 형식을 확인해주세요.")
@@ -255,7 +261,7 @@ export default {
       hostType: 0,
       uploadedBusinessRegistration: null,
       uploadedProfile: "/static/images/default-profile.png",
-      uploadedLicense: null,
+      uploadedLicense: [],
       isImageUploading: false,
     }
   },
@@ -287,6 +293,7 @@ export default {
 .host-request .floated.right.checkbox {
   width: 76px;
 }
+
 .host-request .fireUpload {
   height: 37px;
 }
@@ -339,7 +346,7 @@ export default {
   }
   .ui.segment {
     padding: 1.5em 14em;
-  } // 파일 업로드 
+  } // 파일 업로드
   .floated.right button {
     position: absolute!important;
     right: 0

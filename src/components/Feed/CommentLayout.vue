@@ -1,6 +1,6 @@
 <template>
   <div class="comment-container__list">
-    <img class="ui image mini circular" :src="comment.user_profile_image">
+    <img class="ui image mini circular" :src="comment.user_profile_image.replace('public', 'static') ">
     <div class="content">
       <span class="name">{{comment.user_name}}</span>
       <span class="date">{{comment.created_at | timeago}}</span>

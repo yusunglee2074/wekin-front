@@ -33,7 +33,7 @@
           <div class="ui horizontal small divided company-info list pc">
             <span class="item">경기도 화성시 지산2길 25, 201호</span>
             <span class="item">고객센터 : 010-5108-2668</span>
-            <span class="item">사업/서비스 제휴 문의 : cylim@wekiner.com</span>
+            <span class="item">사업/서비스 제휴 문의 : wekiner@wekiner.com</span>
           </div>
           <div class="ui horizontal small company-info">
             <span class="item">©2017 All Rights Reserved</span>

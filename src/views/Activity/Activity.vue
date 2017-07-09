@@ -1,5 +1,6 @@
 <template>
   <div id="wekins">
+    <navbar id="navbar" ref="navbar"></navbar>
     <div class="navbar-custom"></div>
     <div class="ui segment list">
       <div class="ui left rail filter">
@@ -26,6 +27,23 @@
             </div>
           </div>
         </div>
+        <!--카테고리-->
+        <!--<div class="ui styled accordion">
+          <div class="active title">
+            카테고리
+          </div>
+          <div class="active content">
+            <div class="button-container">
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '놀이'}" @click="toggleCheckList(categoryCheck, 0, '놀이')">놀이</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '도전'}" @click="toggleCheckList(categoryCheck, 0, '도전')">도전</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '체험'}" @click="toggleCheckList(categoryCheck, 0, '체험')">체험</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '문화'}" @click="toggleCheckList(categoryCheck, 0, '문화')">문화</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '휴식'}" @click="toggleCheckList(categoryCheck, 0, '휴식')">휴식</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '한강몽땅'}" @click="toggleCheckList(categoryCheck, 0, '한강몽땅')">한강몽땅</button>
+            </div>
+          </div>
+        </div>-->
+        <!--카테고리 끝-->
         <div class="ui styled accordion">
           <div class="active title">
             <!--<i class="dropdown icon"></i>-->
@@ -124,10 +142,21 @@
         </div>
         <span class="ui right floated actived-wekins" v-if="filteredWekin">{{filteredWekin.length}}개의 활동이 있습니다.</span>
       </div>
-      <div class="ui link three stackable cards" v-if="filteredWekin">
-        <wekin-card-layout :activityKey="wekin.activity_key" :title="wekin.title" :address="wekin.address" :name="wekin.Host.name" :imageUrl="wekin.main_image.image[0]" :favorite="wekin.Favorites" :rating="Math.round(wekin.rating_avg) || 0" :reviewCount="wekin.review_count" v-for="wekin in filteredWekin" v-bind:key="wekin.wekin_key">
+      <div class="ui link three stackable cards activities">
+        <wekin-card-layout
+          :activityKey="wekin.activity_key"
+          :title="wekin.title"
+          :address="wekin.address"
+          :name="wekin.Host.name"
+          :imageUrl="wekin.main_image.image[0]"
+          :favorite="wekin.Favorites"
+          :rating="Math.round(wekin.rating_avg) || 0"
+          :reviewCount="wekin.review_count"
+          v-for="(wekin, index) in filteredWekin" v-bind:key="wekin.wekin_key">
           <span class="right floated price" slot="extra-header">￦ {{wekin.price | joinComma}}</span>
-          <div class="content extra-body" slot="extra-body"> {{wekin.intro_summary}} </div>
+          <div class="content extra-body" slot="extra-body">
+            <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 4" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="schedule.wekin_key">{{schedule.start_date | formatDateKo}}</span>
+          </div>
         </wekin-card-layout>
         <div class="ui active inverted dimmer" v-if="isLoading">
           <div class="ui medium text loader">Loading</div>
@@ -146,6 +175,7 @@ import _ from 'lodash'
 import moment from 'moment'
 
 const MAX_PRICE = 300000
+const ONE_DAY_TIME = 86400000
 
 export default {
   data() {
@@ -189,7 +219,8 @@ export default {
         jeju: false,
         abroad: false
       },
-      locationFilter: ["전체"]
+      locationFilter: ["전체"],
+      categoryCheck: '',
     }
   },
   asyncComputed: {
@@ -199,13 +230,35 @@ export default {
           this.isInCurrentLocation(wekin) &&
           this.isInArea(wekin) &&
           this.isInPeople(wekin) &&
-          this.isInDate(wekin)) {
+          this.isInDate(wekin) &&
+          this.isInCategory(wekin)) {
           return wekin
         }
       })
     }
   },
   methods: {
+    isEndSchedule(schedule) {
+      let now = +moment()
+      let startDate = moment(schedule.start_date).toDate().getTime()
+      if ((startDate - now) < 0) {
+        return true
+      }
+      if (schedule.max_user == schedule.current_user) {
+        return true
+      }
+      return false
+    },
+    isCommingSchedule(schedule) {
+      if (!this.isEndSchedule(schedule)) {
+        let now = +moment()
+        let startDate = moment(schedule.start_date).toDate().getTime()
+        if ((startDate - now) < ONE_DAY_TIME) {
+          return true
+        }
+      }
+      return false
+    },
     resetFilter() {
       this.clearPeopleCheck()
       this.clearLocationCheck()
@@ -215,6 +268,7 @@ export default {
       this.startPrice = 0
       this.endPrice = MAX_PRICE
       this.locationFilter = ["전체"]
+      this.categoryCheck = ''
       $('#price').range('set valueDouble', 0, MAX_PRICE);
       $('#display-d').html(`0원 ~ ${MAX_PRICE}+`);
       $(".thumb").trigger("click");
@@ -300,6 +354,15 @@ export default {
         return true
       }
       return false
+    },
+    isInCategory(activity) {
+      if (this.categoryCheck === '') {
+        return true
+      } else if (this.categoryCheck === activity.category) {
+        return true
+      } else {
+        return false
+      }
     },
     clearLocationCheck() {
       this.locationCheck.all = false
@@ -392,6 +455,36 @@ export default {
           this.locationFilter.push("전체")
         }
       }
+      // 카테고리 시작
+      else if (checkListType === this.categoryCheck) {
+        switch (text) {
+          case "놀이":
+            this.togglecategory(text)
+            break;
+          case "도전":
+            this.togglecategory(text)
+            break;
+          case "체험":
+            this.togglecategory(text)
+            break;
+          case "문화":
+            this.togglecategory(text)
+            break;
+          case "휴식":
+            this.togglecategory(text)
+            break;
+          case "한강몽땅":
+            this.togglecategory(text)
+            break;
+        }
+      }
+    },
+    togglecategory(text) {
+      if(this.categoryCheck !== text) {
+        this.categoryCheck = text
+      } else {
+        this.categoryCheck = ''
+      }
     },
     getGeoLocation() {
       if (typeof window !== 'undefined' && "geolocation" in navigator) {
@@ -416,8 +509,41 @@ export default {
         .then(json => {
           this.isLoading = false
           this.wekins = json.results
+          this.initSortDropdown()
         })
         .catch(err => console.error(err))
+    },
+    initSortDropdown() {
+      this.$nextTick(() => {
+        setTimeout(() => {
+          $(".ui.dropdown.sort").dropdown({
+            onChange: (value) => {
+              switch (Number(value)) {
+                case 0: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
+                  this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
+                  console.log('00000임')
+                  break;
+                case 1: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
+                  this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
+                  break;
+                case 2: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
+                  this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
+                  break;
+                case 3: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
+                  this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
+                  break;
+                case 4: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
+                  console.log(this.wekins)
+                  this.wekins = _.orderBy(this.wekins, ['price'], ['desc']);
+                  break;
+                case 5: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
+                  this.wekins = _.orderBy(this.wekins, ['price'], ['asc']);
+                  break;
+              }
+            }
+          })
+        }, 1000)
+      })
     }
   },
   components: {
@@ -425,9 +551,10 @@ export default {
     Navb
   },
   created() {
-    this.getActivities()
   },
   mounted() {
+    this.getActivities()
+
     let vue = this
     let params = this.$route.params
 
@@ -440,6 +567,9 @@ export default {
         this.locationCheck.all = false
         this.toggleCheckList(this.locationCheck, 0, this.$route.params.location)
       }
+    }
+    if (params.categoryCheck) {
+      this.categoryCheck = this.$route.params.categoryCheck
     }
     if (params.people) {
       this.peopleCheck.one = false
@@ -463,43 +593,6 @@ export default {
     if (params.endPrice) {
       this.endPrice = params.endPrice
     }
-    setTimeout(() => {
-      $(".ui.dropdown.sort").dropdown({
-        onChange: (value) => {
-          switch (Number(value)) {
-            case 0: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-              this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
-              console.log('00000임')
-              break;
-            case 1: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-              this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
-              break;
-            case 2: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-              this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
-              break;
-            case 3: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-              this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
-              break;
-            case 4: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-              console.log(this.wekins)
-              this.wekins = _.orderBy(this.wekins, ['price'], ['desc']);
-              break;
-            case 5: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-              this.wekins = _.orderBy(this.wekins, ['price'], ['asc']);
-              break;
-          }
-        }
-      })
-    }, 100)
-    $('.ui.sticky')
-      .sticky({
-        context: '#example1'
-      })
-    // $('.ui.rating')
-    //   .rating({
-    //     initialRating: 3,
-    //     maxRating: 5
-    //   })
     $('#rangestart').calendar({
       type: 'date',
       endCalendar: $('#rangeend'),
@@ -556,6 +649,15 @@ export default {
   padding-top: 0;
 }
 
+.activities {
+  .endSchedule {
+    color: #979797
+  }
+  .commingSchedule {
+    color: red;
+  }
+}
+
 .cards {
   padding-top: 14px;
   .price {
@@ -609,6 +711,8 @@ export default {
     button {
       margin: 6px;
       width: 76px;
+      max-height: 35.31px;
+      padding: 11px 0px 11px 0px;
     }
   }
 
@@ -706,6 +810,9 @@ export default {
     left: inherit;
   }
 }
+
+
+
 
 /*@media only screen and (min-width: 768px) and (max-width: 950px) {
     .list {

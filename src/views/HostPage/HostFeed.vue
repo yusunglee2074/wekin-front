@@ -31,10 +31,7 @@ export default {
     },
     getMakerFeed() {
       api.getMakerFeed(this.$route.params.key)
-        .then(json => {
-          console.log(json.results)
-          this.feeds = json.results
-        })
+        .then(json => this.feeds = json.results)
         .catch(err => console.error(err))
     },
   },

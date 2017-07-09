@@ -48,7 +48,7 @@
             <input type="text" disabled="disabled" v-model="formUser.email">
           </div>
           <div class="ui checkbox">
-            <input type="checkbox" name="mailNoti" checked="checked" v-model="mailNoti">
+            <input type="checkbox" name="emailNoti" checked="checked" v-model="emailNoti">
             <label>위킨 메일 수신 동의</label>
           </div>
         </div>
@@ -67,7 +67,7 @@
           </div>
           <div v-if="isPhoneVerifying">인증 만료 시간: {{expiredTime | formatTimer}}</div>
           <button class="ui primary button" @click="verifySmsCode()" v-if="isPhoneVerifying">인증완료</button>
-          <button class="ui basic negative button"  v-if="!formUser.phoneValid" @click="sendPhoneVerification()">인증요청</button>
+          <button class="ui basic negative button" v-if="!formUser.phoneValid" @click="sendPhoneVerification()">인증요청</button>
         </div>
       </div>
       <div class="ui divider"></div>
@@ -111,13 +111,13 @@
     <div class="ui segment">
       <div class="header">회원탈퇴</div>
       <div class="ui divider"></div>
-      <div class="settings__list">
+      <div class="settings__list" v-if="providerId == 'password'">
         <label class="vertical">이메일</label>
         <div class="ui input fields">
           <input type="text" v-model="deleteUser.email">
         </div>
       </div>
-      <div class="settings__list">
+      <div class="settings__list" v-if="providerId == 'password'">
         <label class="vertical">비밀번호</label>
         <div class="ui input fields">
           <input type="password" v-model="deleteUser.password">
@@ -155,7 +155,7 @@ export default {
         password: null
       },
       pushNoti: true,
-      mailNoti: true,
+      emailNoti: true,
       gender: 0,
       expiredTime: EXPIRED_TIME,
       isPhoneVerifying: false,
@@ -165,23 +165,24 @@ export default {
       newPassword1: null,
       newPassword2: null,
       uploadedProfile: "/static/images/default-profile.png",
+      providerId: '',
     }
   },
   methods: {
-    onPhoneClick () {
-      if(this.formUser.phoneValid && confirm("전화번호를 재인증 하시겠습니까?")) {
+    onPhoneClick() {
+      if (this.formUser.phoneValid && confirm("전화번호를 재인증 하시겠습니까?")) {
         this.formUser.phoneValid = false
-      } 
+      }
     },
     startTimer() {
       let interval = setInterval(() => {
         this.expiredTime--
         if (this.expiredTime <= 0) {
-          this.stopTimer()
+          this.stopTimer(interval)
         }
       }, 1000);
     },
-    stopTimer() {
+    stopTimer(interval) {
       this.expiredTime = EXPIRED_TIME
       this.isPhoneVerifying = false
       this.formUser.phonVerificationCode = ''
@@ -190,6 +191,7 @@ export default {
     verifySmsCode() {
       auth.verifySmsCode(this.formUser.phone, this.formUser.phonVerificationCode)
         .then((data) => {
+          console.log(data)
           if (data.success) {
             this.formUser.phoneValid = true
             this.stopTimer()
@@ -228,7 +230,7 @@ export default {
           introduce: this.formUser.introduce,
           profile_image: this.uploadedProfile,
           gender: this.gender,
-          mail_noti: this.mailNoti,
+          email_noti: this.emailNoti,
           push_noti: this.pushNoti
         }
         this.isLoading = true
@@ -253,30 +255,43 @@ export default {
       }
     },
     onWithdrawalClick() {
-      if (this.deleteUser.email == this.user.email) {
-        let result = confirm(`개인정보 취급방침 동의에 의거하여 탈퇴 시 개인정보는 즉시 삭제됩니다.
+      let providerId = this.providerId
+      if (confirm(`개인정보 취급방침 동의에 의거하여 탈퇴 시 개인정보는 즉시 삭제됩니다.
 다시 한번 개인정보 취급방침을 확인하여 주시기 바랍니다.
 
 <탈퇴 시 유의사항>
 1) 탈퇴 즉시 모든 개인정보와 거래내역은 삭제됩니다.
 2) 3개월내 해당 이메일/아이디로 재가입이 불가합니다.
 
-정말 탈퇴하시겠습니까?`)
-        if (result) {
+정말 탈퇴하시겠습니까?`)) {
+        if (providerId == 'password') {
           auth.deleteUser(this.deleteUser.email, this.deleteUser.password)
             .then(() => {
+              api.deleteUser().then((result) => {
+                if (result) {
+                  alert('탈퇴되었습니다. 이용해주셔서 감사합니다.')
+                  window.location.href = '/'
+                } else {
+                  alert('위킨에 문의 바랍니다.')
+                }
+              })
+            }).catch(() => alert('위킨에 문의 바랍니다.'))
+        } else {
+          api.deleteUser().then((result) => {
+            if (result) {
               alert('탈퇴되었습니다. 이용해주셔서 감사합니다.')
+              firebase.auth().signOut()
               window.location.href = '/'
-            })
-            .catch(() => alert('위킨에 문의 바랍니다.'))
+            } else {
+              alert('위킨에 문의 바랍니다.')
+            }
+          }).catch(() => alert('위킨에 문의 바랍니다.'))
         }
-      } else {
-        alert("이메일과 비밀번호를 모두 입력해주세요.")
       }
     },
     progress(value) {
       this.isFileUploading = true
-      if(value >= 100) {
+      if (value >= 100) {
         this.isFileUploading = false
       }
     }
@@ -300,9 +315,10 @@ export default {
         this.uploadedProfile = this.user.profile_image
         this.gender = this.user.gender
         this.pushNoti = this.user.push_noti
-        this.mailNoti = this.user.mail_noti
+        this.emailNoti = this.user.email_noti
       }
     })
+    this.providerId = firebase.auth().currentUser.providerData[0].providerId
   }
 }
 </script>
@@ -313,6 +329,7 @@ export default {
 .profile-uploader {
   max-width: 145px!important
 }
+
 .settings {
   max-width: 512px;
 
@@ -358,6 +375,30 @@ export default {
 
   .ui.segment {
     padding: 1.5em 14em;
+  }
+
+
+  .fireUpload {
+    border: 1px solid #979797;
+    width: 100%;
+
+    input {
+      width: 100%;
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    &.profile {
+      position: absolute;
+      border: none;
+
+      input {
+        height: 55px;
+        max-width: 365px;
+      }
+    }
   }
 }
 

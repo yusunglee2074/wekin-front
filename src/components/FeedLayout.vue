@@ -23,7 +23,7 @@
           <div class="item" @click="onFacebookShareClick()">
             <img class="facebookLogoBtn" src="/static/images/ic-facebook.png"> 페이스북
           </div>
-           <div class="item" @click="snsShare('twitter')">
+          <div class="item" @click="snsShare('twitter')">
             <img class="facebookLogoBtn" src="/static/images/ic-twitter.png"> 트위터
           </div>
           <div class="item" @click="snsShare('google')">
@@ -42,11 +42,11 @@
             <img class="facebookLogoBtn" src="/static/images/ic-band.png"> 밴드
           </div>
           <!--
-            <div class="item"><img src="/static/images/ic-twitter.png"> 트위터
-          </div>
-          <div class="item">
-            <img src="/static/images/ic-kakao.png"> 카카오스토리
-            </div>-->
+                      <div class="item"><img src="/static/images/ic-twitter.png"> 트위터
+                    </div>
+                    <div class="item">
+                      <img src="/static/images/ic-kakao.png"> 카카오스토리
+                      </div>-->
           <div class="ui divider" v-if="user && feed.User.user_key == user.user_key"></div>
           <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onModifyClick()">수정하기</div>
           <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onDeleteClick()">삭제하기</div>
@@ -76,7 +76,7 @@
         <div class="ui star top right rating" :data-rating="feed.activity_rating"></div>
       </div>
     </div>
-    <div class="action-container" v-if="feed.Likes">
+    <div class="action-container" v-if="likes">
       <span class="link" @click="onLikeClick()">
         <i class="heart like red icon" v-bind:class="{ outline: !isLiked }"></i> 좋아요 {{likeCount}}
       </span>
@@ -102,6 +102,7 @@
 <script>
 import api from 'api'
 import auth from 'src/auth'
+import _ from 'lodash'
 import commentLayout from 'components/Feed/CommentLayout.vue'
 import { Text } from 'src/util'
 
@@ -126,6 +127,7 @@ export default {
       isLiked: false,
       images: [],
       comments: [],
+      likes: [],
       commentCount: 0,
       commentContent: null,
       likeCount: 0,
@@ -199,35 +201,35 @@ export default {
         $('.dropdown.feed-menu').dropdown()
       })
     },
-    snsShare(sns_type){
+    snsShare(sns_type) {
       var title = $("#ogTitle").attr('content');
       var href = window.location.href;
       var loc = "";
       var img = 'http://we-kin.com/static/images/default-profile.png'
       var oFlag = true;
 
-      if( sns_type == 'facebook' ) {
+      if (sns_type == 'facebook') {
         console.log("fb")
-        loc = '//www.facebook.com/sharer/sharer.php?u='+href+'&t='+title;
+        loc = '//www.facebook.com/sharer/sharer.php?u=' + href + '&t=' + title;
       }
-      else if ( sns_type == 'twitter' ) {
-        loc = '//twitter.com/home?status='+encodeURIComponent(title)+' '+href;
+      else if (sns_type == 'twitter') {
+        loc = '//twitter.com/home?status=' + encodeURIComponent(title) + ' ' + href;
       }
-      else if ( sns_type == 'google' ) {
-        loc = '//plus.google.com/share?url='+href;
+      else if (sns_type == 'google') {
+        loc = '//plus.google.com/share?url=' + href;
       }
-      else if ( sns_type == 'pinterest' ) {
+      else if (sns_type == 'pinterest') {
 
-        loc = '//www.pinterest.com/pin/create/button/?url='+href+'&media='+img+'&description='+encodeURIComponent(title);
+        loc = '//www.pinterest.com/pin/create/button/?url=' + href + '&media=' + img + '&description=' + encodeURIComponent(title);
       }
-      else if ( sns_type == 'kakaostory') {
-        loc = 'https://story.kakao.com/share?url='+encodeURIComponent(href);
+      else if (sns_type == 'kakaostory') {
+        loc = 'https://story.kakao.com/share?url=' + encodeURIComponent(href);
       }
-      else if ( sns_type == 'band' ) {
-        loc = 'http://www.band.us/plugin/share?body='+encodeURIComponent(title)+'%0A'+encodeURIComponent(href);
+      else if (sns_type == 'band') {
+        loc = 'http://www.band.us/plugin/share?body=' + encodeURIComponent(title) + '%0A' + encodeURIComponent(href);
       }
-      else if ( sns_type == 'naver' ) {
-        loc = "http://share.naver.com/web/shareView.nhn?url="+encodeURIComponent(href)+"&title="+encodeURIComponent(title);
+      else if (sns_type == 'naver') {
+        loc = "http://share.naver.com/web/shareView.nhn?url=" + encodeURIComponent(href) + "&title=" + encodeURIComponent(title);
       }
       else {
         return false;
@@ -321,6 +323,15 @@ export default {
           })
       }
     },
+    getLikes() {
+      if (this.feed.doc_key) {
+        api.getLikesFromKey(this.feed.doc_key)
+          .then(likes => {
+            this.likeCount = likes.count
+            this.likes = likes.rows
+          })
+      }
+    },
     nextImage() {
       this.imageLightBox.slideNext()
     },
@@ -330,19 +341,15 @@ export default {
   },
   mounted() {
     this.getComments()
-
+    this.getLikes()
     this.$store.watch(() => {
       if (this.$store.state.user !== undefined) {
         // this.feed.content = this.hashLinker(this.feed.content, this.feed.tags)
-
-        if (this.feed.Likes && this.user) {
-          this.likeCount = this.feed.Likes.length
-          this.isLiked = this.feed.Likes.find(like => {
-            if (this.user.user_key === like.user_key) {
-              return true
-            }
-          })
-        }
+        this.isLiked = _.find(this.likes, (like) => {
+          if (this.user.user_key === like.user_key) {
+            return true
+          }
+        })
       }
     })
     if (typeof window !== 'undefined') {
@@ -446,7 +453,7 @@ div[contenteditable=true] {
 
   .body-container {
     padding: 20px 40px;
-    
+
     .rating {
       padding-left: 8px;
     }
@@ -536,14 +543,25 @@ div[contenteditable=true] {
   }
 }
 
+
+
+
+
+
 /*issue 340 */
-.menu .item img.facebookLogoBtn{
-  width:30px;
+
+.menu .item img.facebookLogoBtn {
+  width: 30px;
   display: inline-block;
   margin-top: -4px;
 }
-/*issue 340*/
 
+
+
+
+
+
+/*issue 340*/
 
 .more-img {
   width: 120px;

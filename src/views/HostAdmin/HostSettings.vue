@@ -2,6 +2,9 @@
   <div class="host-settings">
     <host-card-layout title="설정">
       <div slot="content" class="content">
+        <div class="ui active inverted dimmer" v-if="isImageUploading">
+          <div class="ui medium text loader">이미지를 업로드중입니다.</div>
+        </div>
         <div class="header">프로필 설정</div>
         <div class="ui divider"></div>
         <div class="settings__list">
@@ -66,19 +69,28 @@
           </div>
         </div>
         <div class="ui divider"></div>
+        <div class="settings__list" v-if="uploadedBusinessRegistration">
+          <img :src="uploadedBusinessRegistration" style="width:100%;height:100%">
+        </div>
         <div class="settings__list">
           <label>사업자 등록증</label>
           <div class="ui action floated right input">
-            <FireUpload :imageUrl="uploadedBusinessRegistration" @update:imageUrl="val => uploadedImage = val" @progress="progress"></FireUpload>
+            <FireUpload :imageUrl="uploadedBusinessRegistration" @update:imageUrl="val => uploadedBusinessRegistration = val" @progress="progress"></FireUpload>
             <button class="ui teal left labeled icon button">
               <i class="plus icon"></i> 추가
             </button>
           </div>
         </div>
+        <div class="settings__list" v-if="uploadedLicense && uploadedLicense.length">
+          <div style="position:relative" v-for="(imageUrl, index) in uploadedLicense" v-bind:key="index">
+            <img style="width:100%;height:100%" :src="imageUrl">
+            <i class="icon close link" style="position:absolute; top:0;right:0" @click="deleteImage(uploadedLicense, index)"></i>
+          </div>
+        </div>
         <div class="settings__list">
           <label>자격증</label>
           <div class="ui action floated right input">
-            <FireUpload :imageUrl="uploadedLicense" @update:imageUrl="val => uploadedImage = val" @progress="progress"></FireUpload>
+            <FireUpload :imageUrl="uploadedLicense" @update:imageUrl="val => uploadedLicense.push(val)" @progress="progress"></FireUpload>
             <button class="ui teal left labeled icon button">
               <i class="plus icon"></i> 추가
             </button>
@@ -182,7 +194,13 @@ import api from 'api'
 export default {
   methods: {
     progress(value) {
-      console.log(value)
+      this.isImageUploading = true
+      if (value >= 100) {
+        this.isImageUploading = false
+      }
+    },
+    deleteImage(list, index) {
+      list.splice(index, 1)
     },
     sendForm() {
       if (this.checkForm()) {
@@ -197,7 +215,7 @@ export default {
           host_sns: this.request.company.sns,
           host_email: this.request.company.email,
           business_registration: this.uploadedBusinessRegistration,
-          license: this.uploadedLicense,
+          license_list: this.uploadedLicense,
           type: this.hostType,
           join_method: this.knownRoute,
         }
@@ -240,11 +258,12 @@ export default {
           sns: null,
         }
       },
+      isImageUploading: false,
       knownRoute: null,
       hostType: null,
       uploadedBusinessRegistration: null,
       uploadedProfile: "/static/images/default-profile.png",
-      uploadedLicense: null,
+      uploadedLicense: [],
     }
   },
   components: {

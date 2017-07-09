@@ -133,7 +133,8 @@ export default {
     },
     addBeenOrder() {
       api.addBeenOrder(this.orderUid)
-        .then((result) => console.log(result))
+        .then(this.getUserOrders)
+        .then(alert("활동이 추가되었습니다."))
         .catch((error) => alert("활동 번호를 확인해주세요."))
     },
     isCancelable(order) {

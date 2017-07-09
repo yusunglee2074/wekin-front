@@ -34,7 +34,7 @@ export default {
   created () {
     this.getMakerReviews()
   },
-  mounted () { 
+  mounted () {
     $('.ui.rating')
       .rating({
         initialRating: 3,

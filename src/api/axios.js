@@ -4,3 +4,6 @@
 // module.exports.http = axios.create({
 //   baseURL: baseUrl
 // })
+
+// import apia from 'api'
+// apia

@@ -25,9 +25,9 @@
           또는
         </span>
         <div class="social-login-container">
-          <img class="link" src="/static/images/logo-facebook-68x68.png" @click="onFacebookLoginClick()">
-          <img class="link" src="/static/images/logo-kakao-68x68.png" @click="onKakaoClick()">
-          <img class="link" src="/static/images/logo-googleplus-68x68.png" @click="onGoogleClick()">
+          <img class="link" src="static/images/logo-facebook-68x68.png" @click="onFacebookLoginClick()">
+          <img class="link" src="static/images/logo-kakao-68x68.png" @click="onKakaoClick()">
+          <img class="link" src="static/images/logo-googleplus-68x68.png" @click="onGoogleClick()">
           <!--<img class="link" src="static/images/logo-naver-68x68.png" @click="onNaverClick()">-->
           <!--<div id="naver_id_login"></div>-->
         </div>

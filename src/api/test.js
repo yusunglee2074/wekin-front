@@ -1,4 +1,4 @@
-class api {
+class apia {
   constructor (test) {
     console.log('')
   }
@@ -7,6 +7,6 @@ class api {
     console.log('test')
   }
 }
-api.prototype.QueryTypes = 'test'
+apia.prototype.QueryTypes = 'test'
 
-module.exports = api
+module.exports = apia

@@ -19,6 +19,7 @@
             <button class="ui teal left labeled icon button">
               <i class="plus icon"></i> 추가
             </button>
+            <span class="message">최적 사이즈 : 768x500</span>
           </div>
         </div>
         <div class="settings__list">
@@ -27,14 +28,48 @@
             <input type="text" v-model="request.title">
           </div>
         </div>
-        <div class="settings__list">
-          <label class="required">간단 소개</label>
-          <div class="ui form fields">
+        <!--<div class="ui divider"></div>-->
+        <!--<div class="settings__list">
+          <label class="required">카테고리</label>
+          <div class="grouped fields">
             <div class="field">
-              <textarea v-model="request.intro_summary"></textarea>
+              <div class="ui radio">
+                <input type="radio" name="fruit" checked="" tabindex="0" value="놀이" v-model="request.category">
+                <label>놀이</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio">
+                <input type="radio" name="fruit" tabindex="0" class="hidden" value="도전" v-model="request.category">
+                <label>도전</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio">
+                <input type="radio" name="fruit" tabindex="0" class="hidden" value="체험" v-model="request.category">
+                <label>체험</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio">
+                <input type="radio" name="fruit" tabindex="0" class="hidden" value="문화" v-model="request.category">
+                <label>문화</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio">
+                <input type="radio" name="fruit" tabindex="0" class="hidden" value="축제" v-model="request.category">
+                <label>축제</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio">
+                <input type="radio" name="fruit" tabindex="0" class="hidden" value="휴식" v-model="request.category">
+                <label>휴식</label>
+              </div>
             </div>
           </div>
-        </div>
+        </div>-->
         <div class="ui divider"></div>
         <div class="settings__list">
           <label class="required">상세소개</label>
@@ -67,7 +102,7 @@
             </div>
           </div>
         </div>
-         <div class="settings__list">
+        <div class="settings__list">
           <label class="required">활동 장소</label>
           <div class="ui form fields">
             <div class="field">
@@ -87,14 +122,14 @@
           <label class="required">환불규정</label>
           <div class="ui form fields">
             <div class="field">
-              <textarea v-model="request.refund_policy"></textarea>
+              <textarea v-model="request.refundPolicy" placeholder="환불 규정이 없으시면, 아래 위킨 환불규정 입력을 체크 해주세요."></textarea>
             </div>
           </div>
         </div>
         <div class="settings__list">
           <label></label>
-          <div class="ui checkbox">
-            <input type="checkbox" name="example">
+          <div class="ui checkbox refundPolicy">
+            <input type="checkbox" name="refundPolicy">
             <label>위킨 환불규정 입력</label>
           </div>
         </div>
@@ -131,23 +166,20 @@
           </div>
           <div class="settings__list limit">
             <label>최대~최소인원</label>
-            <div class="ui form">
-              <div class="two fields">
-                <div class="field">
-                  <label>최대 인원</label>
-                  <input type="text" :id="['max_user--' + index]">
-                </div>
-                <label style="padding-top:34px;" class="pc">~</label>
-                <div class="field">
-                  <label>최소 인원</label>
-                  <input type="text" :id="['min_user--' + index]">
-                </div>
+            <div class="limit-user-container flex">
+              <div class="ui input flex-f1">
+                <label>최대 인원</label>
+                <input type="text" :id="['max_user--' + index]">
+              </div>
+              <div class="ui input flex-f1" style="margin-top:12px;">
+                <label>최소 인원</label>
+                <input type="text" :id="['min_user--' + index]">
               </div>
             </div>
           </div>
           <div class="flex">
             <div class="flex-space"></div>
-            <button class="ui button negative" @click="onWekinScheduleDeleteClick(index)"  v-if="activity.status !=3">삭제</button>
+            <button class="ui button negative" @click="onWekinScheduleDeleteClick(index)" v-if="activity.status !=3">삭제</button>
           </div>
         </div>
         <div class="settings__list">
@@ -155,12 +187,12 @@
         </div>
         <div class="ui divider"></div>
         <!--<button class="ui primary button floated right save-btn">확인</button>
-                                                    <button class="ui primary button floated right save-btn">삭제요청</button>-->
+                                                            <button class="ui primary button floated right save-btn">삭제요청</button>-->
         <p>진행중인 경우 수정사항을 위킨으로 보내주세요.</p>
         <button class="ui primary button floated right save-btn" @click="sendForm()" v-if="activity.status !=3">저장</button>
         <button class="ui negative button floated right save-btn" @click="deleteForm()" v-if="activity.status !=3">삭제</button>
         <button class="ui negative button floated right save-btn" @click="onConfirmClick()" v-if="activity.status ==3">확인</button>
-        <p>010-5108-2668 / cylim@wekiner.com</p>
+        <p>010-5108-2668 / wekiner@wekiner.com</p>
         <div class="clear"></div>
       </div>
     </host-card-layout>
@@ -170,6 +202,7 @@
 import hostCardLayout from 'components/HostCardLayout.vue'
 import FireUpload from 'components/FireUpload.vue'
 import api from 'api'
+import moment from 'moment'
 
 export default {
   data() {
@@ -190,15 +223,17 @@ export default {
       uploadedMainImages: [],
       isFileUploading: false,
       wekinSchedules: 1,
+      refundPolicyData: '', // 서버에서 불러오는 환불정보.
+      refundPolicyTemp: '', // 작성중이던 환불정보
       request: {
         title: null,
         mainImage: null,
-        intro_summary: null,
         schedule: null,
         inclusion: null,
         preparation: null,
         address_detail: null,
-        refund_policy: null,
+        refundPolicy: null,
+        category: null,
       },
       wekins: []
     }
@@ -251,13 +286,13 @@ export default {
     checkForm() {
       if (!(this.uploadedMainImages.length &&
         this.request.title &&
-        this.request.intro_summary &&
         $('#editor').trumbowyg('html') != "" &&
         this.request.inclusion &&
         this.request.preparation &&
         this.request.address &&
-        this.request.refund_policy &&
-        this.request.price)) {
+        this.request.refundPolicy &&
+        this.request.price &&
+        this.request.category)) {
         alert('필수 항목을 채워주세요.')
       } else {
         return true
@@ -290,12 +325,11 @@ export default {
           }
         }
 
-        if(hasWekin) {
+        if (hasWekin) {
           let params = {
             host_key: this.user.Host.host_key,
             main_image: this.uploadedMainImages,
             title: this.request.title,
-            intro_summary: this.request.intro_summary,
             intro_detail: $('#editor').trumbowyg('html'),
             schedule: this.request.schedule,
             inclusion: this.request.inclusion,
@@ -303,6 +337,7 @@ export default {
             address_detail: { text: this.request.address, meet_area: this.request.meetArea },
             refund_policy: this.request.refundPolicy,
             price: this.request.price,
+            category: this.request.category,
             wekins: wekins
           }
           api.updateActivity(this.$route.params.key, params)
@@ -323,9 +358,10 @@ export default {
           this.request.preparation = result.preparation
           this.request.price = result.price
           this.request.address = result.address_detail.text
-          this.request.refund_policy = result.refund_policy
-          this.request.intro_summary = result.intro_summary
+          this.request.refundPolicy = result.refund_policy
+          this.request.meetArea = result.address_detail.meet_area
           this.uploadedMainImages = result.main_image.image
+          this.request.category = result.category
           $('#editor').trumbowyg('html', result.intro_detail);
 
           api.getAdminWekin(this.$route.params.key)
@@ -337,8 +373,8 @@ export default {
                   text: this.koreanCalendar
                 })
                 wekins.forEach((wekin, index) => {
-                  $(`#startDate--${index}`).calendar('set date', wekin.start_date),
-                    $(`#endDate--${index}`).calendar('set date', wekin.due_date),
+                  $(`#startDate--${index}`).calendar('set date', moment(wekin.start_date).toDate()),
+                    $(`#endDate--${index}`).calendar('set date', moment(wekin.due_date).toDate()),
                     $(`#max_user--${index}`).val(wekin.max_user),
                     $(`#min_user--${index}`).val(wekin.min_user)
                 })
@@ -347,10 +383,26 @@ export default {
             .catch(error => console.error(error))
         })
         .catch(error => console.error(error))
+    },
+    initPolicyCheckbox() {
+      $(".checkbox.refundPolicy").checkbox({
+        onChecked: () => {
+          this.refundPolicyTemp = this.request.refundPolicy
+          this.request.refundPolicy = this.refundPolicyData
+        },
+        onUnchecked: () => this.request.refundPolicy = this.refundPolicyTemp
+      })
+    },
+    getPolicy() {
+      api.getPolicy()
+        .then((result) => this.refundPolicyData = result[0].value.body)
+        .then(this.initPolicyCheckbox)
+        .catch((error) => console.error(error))
     }
   },
   created() {
     this.getAdminActivity()
+    this.getPolicy()
   },
   mounted() {
     $('#startDate--0').calendar({
@@ -403,6 +455,14 @@ export default {
 @import '../../style/cross-browsing';
 @import '/static/trumbowyg/dist/ui/trumbowyg.min.css';
 
+.limit-user-container {
+  flex-direction: column;
+  width: 100%;
+  .input {
+    flex-direction: column;
+  }
+}
+
 .host-wekin {
   .fireUpload {
     border: 1px solid #979797!important;
@@ -418,9 +478,16 @@ export default {
 }
 
 .content {
+  width: 502px;
   max-width: 502px;
   padding-top: 22px!important;
   margin: 0 auto!important;
+}
+
+.message {
+  padding-top: 8px;
+  font-size: 11px;
+  padding-left: 8px;
 }
 
 .settings {
@@ -496,6 +563,35 @@ export default {
     &__list {
       flex-direction: column;
     }
+  }
+}
+</style>
+
+<style lang="scss">
+.wekin-uploader {
+  height: 36px;
+  width: 100%;
+  z-index: 9998;
+  position: relative
+}
+
+.host-wekin .fireUpload {
+  border: 1px solid;
+  position: absolute;
+  width: 100%;
+  input {
+    width: 100%;
+    position: absolute;
+    cursor: pointer;
+    z-index: 1;
+    opacity: 0;
+  }
+  &.profile {
+    opacity: 0;
+    position: absolute;
+    border: none;
+    height: 55px;
+    max-width: 365px;
   }
 }
 </style>

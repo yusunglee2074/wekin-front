@@ -4,9 +4,10 @@
     <div class="menu">
       <div class="title">최근 알림</div>
       <router-link class="item list linked" :to="notification | link" v-for="notification in notifications" v-bind:key="notification.noti_key">
-        <img class="ui image mini circular" :src="notification | profile">
+        <!--<img class="ui image mini circular" :src="notification | profile">-->
+        <i class="icon" :class="notification.active_target | icon"></i>
         <div>
-          <div class="message">{{notification | mergeMessage}}</div>
+          <div class="message">{{notification.message_text}}</div>
           <div class="date">{{notification.created_at | formatDate}}</div>
         </div>
       </router-link>
@@ -26,6 +27,32 @@ export default {
     }
   },
   filters: {
+    icon(active_target) {
+      switch(active_target) {
+        case "후기":
+          return "edit"
+        case "질문":
+          return "talk"
+        case "승인":
+          return "checked calendar"
+        case "댓글":
+          return "browser"
+        case "대기":
+          return "hourglass end"
+        case "참석":
+          return "ticket"
+        case "구매":
+          return "won"
+        case "답변":
+          return "talk"
+        case "좋아요":
+          return "heart"
+        case "위킨등록":
+          return "checkmark box"
+        default:
+          return "hand spock"
+      }
+    },
     mergeMessage(notification) {
       let from = notification.user_name
       let to = notification.target_user_name
@@ -38,7 +65,7 @@ export default {
       let defaultImage = '/static/images/default-image.png'
       if (notification.type == "user" && notification.User) {
         return notification.User.profile_image || defaultImage
-      } else if (notification.type == "host" && notification.User) {
+      } else if (notification.type == "host" && notification.User.Host) {
         return notification.User.Host.profile_image || defaultImage
       }
     },

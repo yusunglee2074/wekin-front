@@ -69,13 +69,9 @@ export default {
     }
   },
   mounted() {
-    this.$store.watch(() => {
-      if (this.$store.state.user !== undefined) {
-        this.getMaker()
-      } else {
-        this.getMaker()        
-      }
-    })
+    setTimeout(() => {
+      this.getMaker()
+    }, 500)
   },
   components: {
     hostHeaderLayout

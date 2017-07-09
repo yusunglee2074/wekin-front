@@ -75,6 +75,7 @@ export default {
         key: null,
         title: null,
         rating: 0,
+        Host: {}
       },
       findWekin: '',
       isFileUploading: false,
@@ -107,6 +108,7 @@ export default {
         activity_key: this.activity.key,
         activity_title: this.activity.title,
         activity_rating: $(this.$el.querySelector('.rating')).rating('get rating'),
+        host_key: this.activity.Host.host_key,
         image_url: this.uploadedImages,
         content: this.content,
         type: this.getDocType(),
@@ -185,17 +187,19 @@ export default {
   mounted() {
     $('.ui.wekin.search').search({
       apiSettings: {
-        url: '/api/v1/activity?keyword={query}'
+        url: 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1/activity/front?keyword={query}'
       },
       fields: {
         results: 'results',
         title: 'title',
-        key: 'activity_key'
+        key: 'activity_key',
+        Host: 'Host',
       },
       minCharacters: 2,
       onSelect: (result, response) => {
         this.activity.title = result.title
         this.activity.key = result.activity_key
+        this.activity.Host = result.Host
       }
     })
   }
@@ -204,7 +208,6 @@ export default {
 <style lang="scss" scoped>
 @import '../style/variables.scss';
 @import '../style/cross-browsing.scss';
-@import '/static/fine-uploader/fine-uploader-gallery.min.css';
 
 .feed-editor {
   max-width: 578px;
@@ -267,7 +270,7 @@ export default {
   }
   .flex-space {
     display: none;
-  } // 파일 업로드 
+  } // 파일 업로드
   .videoUploader {
     height: 55px;
     position: absolute;

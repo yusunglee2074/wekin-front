@@ -1,10 +1,10 @@
 <template>
   <div id="personal-page-feed">
     <div class="ui three doubling cards">
-      <wekin-card-layout 
-        :title="favorite.Activity.title" 
-        :address="favorite.Activity.address" 
-        :name="`maker ${favorite.Activity.Host.name}`" 
+      <wekin-card-layout
+        :title="favorite.Activity.title"
+        :address="favorite.Activity.address"
+        :name="`maker ${favorite.Activity.Host.name}`"
         :imageUrl="favorite.Activity.main_image.image[0]"
         :activityKey="favorite.Activity.activity_key"
         :rating="favorite.Activity.rating_avg"

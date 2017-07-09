@@ -5,7 +5,7 @@
     </div>
     <div class="navbar-custom"></div>
     <div class="ui container">
-      <personal-header :user="userProfile" ref="personal_header">>
+      <personal-header :user="userProfile" ref="personal_header">
         <i class="icon add user" slot="button" v-bind:class="{add: !isFollowed, remove: isFollowed}" @click="toggleFollow()" v-if="!isMyPage"></i>
       </personal-header>
       <div class="ui basic top attached buttons">

@@ -1,3 +1,4 @@
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
@@ -66,18 +67,14 @@ module.exports = {
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       },
-      {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
-      },
     ]
   },
-   plugins: [
+  plugins: [
     new webpack.ProvidePlugin({
       $: 'jquery',
       jquery: 'jquery',
       'window.jQuery': 'jquery',
       jQuery: 'jquery'
-    })
+    }),
   ]
 }

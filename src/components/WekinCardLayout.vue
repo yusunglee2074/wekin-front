@@ -71,6 +71,8 @@ export default {
   font-family: NotoSansCJKkr-Medium;
   font-weight: 600;
   font-size: 18px;
+  min-height: 2em;
+  display: block;
 }
 .image {
   padding: 1px!important;
@@ -102,7 +104,7 @@ export default {
   text-overflow: ellipsis;
   white-space: normal;
   line-height: 1.2;
-  height: 5em;
+  height: 44px;
   text-align: left;
   word-wrap: break-word;
   display: -webkit-box;

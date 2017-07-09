@@ -50,6 +50,7 @@
       <router-link to="/activity" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨</router-link>
       <router-link to="/feed" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">피드</router-link>
       <router-link to="/customer" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">고객센터</router-link>
+      <router-link to="/manual" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">등록방법</router-link>
       <router-link to="/notification" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()" v-if="user">알림</router-link>
       <div class="item link" v-if="user" @click="onLogoutClick()">로그아웃</div>
     </div>
@@ -71,11 +72,11 @@
       <router-link to="/activity" class="link" tag="div" exact>위킨</router-link>
       <router-link to="/feed" class="link" tag="div" exact>피드</router-link>
       <router-link to="/customer" class="link" tag="div" exact>고객센터</router-link>
-      <router-link to="/about" class="link" tag="div" exact>위킨소개</router-link>
+      <router-link to="/manual" class="link" tag="div" exact>등록방법</router-link>
     </div>
-  
+
     <!-- 모바일 끝 -->
-  
+
     <div class="pc-nav ui stackable menu menu-container">
       <router-link to="/">
         <img class="item logo" src="/static/images/logo-115x30.png"></img>
@@ -93,6 +94,7 @@
         <router-link to="/activity" class="item linked" tag="div" exact>위킨</router-link>
         <router-link to="/feed" class="item linked" tag="div" exact>피드</router-link>
         <router-link to="/customer" class="item linked" tag="div" exact>고객센터</router-link>
+        <router-link to="/manual" class="item linked" tag="div" exact>등록방법</router-link>
       </div>
       <div class="right menu" v-if="!user">
         <router-link :to="`/login?redirectUrl=${this.$route.fullPath}`" class="item linked" tag="span" exact>로그인</router-link>
@@ -101,8 +103,8 @@
       </div>
       <div class="right menu" v-else="user">
         <div class="ui item dropdown button user-menu">
-          <router-link :to="`/users/${user.user_key}`" tag="div" class="ui circular background profile image" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></router-link>
-          <router-link :to="`/users/${user.user_key}`" tag="div" class="ui circular background profile image" v-if="isHostMode" v-bind:style="{'background-image': `url(${user.Host.profile_image})`}"></router-link>
+          <div class="ui circular background profile image" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></div>
+          <div class="ui circular background profile image" v-if="isHostMode" v-bind:style="{'background-image': `url(${user.Host.profile_image})`}"></div>
           <div class="text" v-if="!isHostMode">{{ user.name }}</div>
           <div class="text" v-if="isHostMode">{{ user.Host.name }}</div>
           <div class="menu" v-if="!isHostMode">
@@ -112,7 +114,7 @@
             <a :href="`/users/${user.user_key}/interest`" class="item link" exact>관심위킨</a>
             <a :href="`/users/${user.user_key}/board`" class="item link" exact>게시글</a>
             <a :href="`/settings`" class="item link" exact>프로필 설정</a>
-            <a :href="`/host/request`" class="item link" v-if="!user.Host || !user.Host.host_key || user.Host.status != 3" exact>메이커 신청하기</a>
+            <a :href="`/host/request`" class="item link" v-if="!user.Host" exact>메이커 신청하기</a>
             <a :href="`/host/admin`" class="item link" v-if="user.Host && user.Host.host_key && user.Host.status == 3" exact>메이커 전환</a>
             <div class="divider"></div>
             <div class="item link" @click="onLogoutClick()">로그아웃</div>
@@ -209,7 +211,7 @@ export default {
       })
     },
     fetchData() {
-      if (this.$route.fullPath.includes("host/admin")) {
+      if (this.$route.fullPath.indexOf("host/admin") > -1) {
         this.isHostMode = true
       } else {
         this.isHostMode = false
@@ -333,6 +335,7 @@ a.router-link-active {
   }
 }
 
+.mobile-nav,
 .mobile-sub-nav {
   display: none;
 }

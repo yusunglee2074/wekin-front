@@ -44,7 +44,7 @@ export default {
       let defaultImage = '/static/images/default-image.png'
       if (notification.type == "user" && notification.User) {
         return notification.User.profile_image || defaultImage
-      } else if (notification.type == "host" && notification.User) {
+      } else if (notification.type == "host" && notification.User.Host) {
         return notification.User.Host.profile_image || defaultImage
       }
     },

@@ -72,16 +72,16 @@ export default {
   //   '$route': 'getFollowing'
   // },
   created() {
-    
+
   },
   mounted() {
-    this.$store.watch(() => {
-      if (this.$store.state.user !== undefined) {
+    setTimeout(() => {
+            if (this.user !== undefined && this.userKey !== undefined) {
         this.getMyFollowing().then((myFollows) => {
           this.getFollowing().then((follows) => {
             follows.map(follow => {
               follow.isFollowed = false
-              myFollows.find(myFollow => {  // 팔로유저가 내가 팔로한 유저를 찾는다.)
+              _.find(myFollows, (myFollow) => {
                 if (follow.Follower.user_key == myFollow.Follower.user_key) {
                   follow.isFollowed = true
                 }
@@ -90,11 +90,10 @@ export default {
             this.follows = follows
           })
         })
-      } else {
-        console.log(this.user)
-        // this.getFollowing().then((follows) => this.follows = follows)
+      } else if(this.userKey !== undefined){
+        this.getFollowing().then((follows) => this.follows = follows)
       }
-    })
+    }, 1000)
   }
 }
 </script>

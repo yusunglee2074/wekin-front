@@ -7,7 +7,7 @@
       <i class="comment outline icon"></i>
       <span>댓글 {{feed.comment_count}}</span>
       <i class="heart outline like icon"></i>
-      <span>좋아요 {{feed.like_count}}</span>
+      <span>좋아요 {{feed.Likes.length || 0}}</span>
     </div>
     <div class="ui modal" ref="feedLayout">
       <feed-layout :feed="feed"></feed-layout>

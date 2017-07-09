@@ -9,7 +9,10 @@
         <div class="swiper-slide" v-for="banner in banners" v-bind:style="{ backgroundImage: `url(${banner.url})`, backgroundSize:'cover', backgroundPosition: 'center' }">
         </div>
       </div>
-      <div class="swiper-pagination"></div>
+      <div class="swiper-pagination" slot="pagination"></div>
+      <div class="swiper-button-prev swiper-button-white" slot="button-prev"></div>
+      <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
+      <div class="swiper-scrollbar"   slot="scrollbar"></div>
     </div>
   
     <div class="ui segment search-container only pc">
@@ -131,7 +134,7 @@
                   <strong class="title">{{wekin.title}}</strong>
                 </span>
                 <div class="description">
-                  <span v-for="schedule in wekin.Wekins" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="schedule.wekin_key">{{schedule.start_date | formatDateKo}}</span>
+                  <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 3" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="schedule.wekin_key">{{schedule.start_date | formatDateKo}}</span>
                 </div>
               </div>
             </router-link>
@@ -152,7 +155,7 @@
         </h3>
         <div class="new-wekins swiper-container">
           <div class="swiper-wrapper">
-            <router-link :to="`/activity/${wekin.activity_key}`" tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in newestActivities" v-bind:key="wekin.activity_key">
+            <router-link :to="`/activity/${wekin.activity_key}`" tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in newestActivities" v-bind:key="index">
               <div class="image">
                 <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.image[0]})`}"></div>
                 <div class="backImage overlayer"></div>
@@ -171,7 +174,7 @@
                   <strong class="title">{{wekin.title}}</strong>
                 </span>
                 <div class="description">
-                  <span v-for="schedule in wekin.Wekins" style="padding-right:8px;">{{schedule.start_date | formatDateKo}}</span>
+                  <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 3" v-bind:key="index" style="padding-right:8px;">{{schedule.start_date | formatDateKo}}</span>
                 </div>
               </div>
             </router-link>
@@ -289,7 +292,11 @@ export default {
           this.$nextTick(() => {
             this.swiperBanner = new Swiper('.banners.swiper-container', {
               slidesPerView: 1,
+              autoplay: 3000,
               pagination: '.banners .swiper-pagination',
+              paginationClickable: true,
+              nextButton: '.swiper-button-next',
+              prevButton: '.swiper-button-prev'
             })
           })
         })
@@ -587,7 +594,7 @@ export default {
     max-width: 900px
   }
   @include respond(small) {
-    max-width: 740px
+    max-width: 750px
   }
   height: $search-container-height;
   margin: 40px auto 0;
@@ -879,7 +886,7 @@ export default {
 
   .pop-wekins,
   .new-wekins {
-    height: 174px;
+    height: 192px;
   }
 }
 

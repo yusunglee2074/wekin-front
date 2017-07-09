@@ -9,7 +9,7 @@
       </div>
       <div class="ui tab notice active" data-tab="first">
         <div class="ui styled notice accordion">
-          <div class="notice-list" v-for="notice in notices">
+          <div class="notice-list" v-for="(notice, index) in notices" v-bind:key="index">
             <div class="title">
               <div class="ui label" v-for="category in categories" v-bind:key="category.env_key" v-bind:style="{ 'background-color': `#${category.value.color}` }"> {{category.value.name}} </div>
               <i class="angle down icon"></i>
@@ -39,7 +39,7 @@
         <div class="ui tab active" data-tab="0"></div>
         <div class="ui tab" :data-tab="faqCategory.env_key" v-for="faqCategory in faqCategories" v-bind:key="faqCategory.env_key"></div>
         <div class="ui styled faq accordion">
-          <div class="notice-list" v-for="faq in filteredFaqs">
+          <div class="notice-list" v-for="(faq, index) in filteredFaqs" v-bind:key="index">
             <div class="title">
               <i class="angle down icon"></i>
               <div class="text">{{faq.title}}</div>
@@ -82,6 +82,7 @@
 
 <script>
 import api from 'api'
+import _ from 'lodash'
 import { Validation } from 'src/util'
 
 export default {
@@ -104,7 +105,7 @@ export default {
         if (
           this.keyword.length >= 0 &&
           faq.title.indexOf(this.keyword) >= 0 &&
-          (this.faqTabId > 0 && faq.category.includes(this.faqTabId))
+          (this.faqTabId > 0 && _.includes(faq.category, this.faqTabId))
         ) {
           return faq
         }
@@ -187,12 +188,10 @@ export default {
       return notice.category.indexOf(category) >= 0
     }
   },
-  created() {
-    this.getNotice()
-    this.getFAQ()
-  },
   mounted() {
     $('.menu .item').tab()
+    this.getNotice()
+    this.getFAQ()
   }
 }
 </script>

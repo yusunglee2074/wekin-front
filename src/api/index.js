@@ -1,52 +1,10 @@
 import axios from 'axios'
-// import auth from 'src/auth'
 
-// const bucketsUrl = 'api/v1'
-// const postsUrl = 'https://kangsweb.firebaseio.com/posts'
-// const baseUrl = 'https://us-central1-kangsweb.cloudfunctions.net/'
-const baseUrl = 'http://192.168.0.5:8080/api/v1'
-const TEST_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
-// const TEST_API_URL = 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1'
-// const TEST_API_URL = 'http://192.168.0.9:8888/v1'
-// const TEST_API_URL = 'http://api.artism.co.kr:9999/v1'
+const BASE_API_URL = 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1'
+// const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
 const GEO_API_KEY = 'AIzaSyARPCWOhPLlFgDvqXbKb5RLA4rnVAcGbZ0'
 
 const BOARD_TYPE_NOTICE = 0
-// const Cache = {
-//   get: (key) => {
-//     if (!window.sessionStorage) return false
-//     return JSON.parse(window.sessionStorage.getItem(key))
-//   },
-//   set: (key, data) => {
-//     if (!window.sessionStorage) return false
-//     window.sessionStorage.setItem(key, JSON.stringify(data))
-//     return true
-//   },
-//   has: (key) => {
-//     return Boolean(window.sessionStorage && window.sessionStorage.hasOwnProperty(key))
-//   }
-// }
-const http = axios.create({
-  baseURL: baseUrl
-})
-// const httpTest = axios.create({
-//   baseURL: testApiUrl
-// })
-// httpTest.defaults.headers.common = {}
-
-// if (typeof window !== 'undefined') {
-//   let token = localStorage.getItem('accessToken')
-//   if (token) {
-//     http.defaults.headers.common['x-access-token'] = localStorage.getItem('accessToken')
-//   }
-// }
-
-http.interceptors.request.use((config) => {
-  config.headers.common['x-access-token'] = localStorage.getItem('accessToken')
-  return Promise.resolve(config)
-}, (error) => {
-  return Promise.reject(error)
-})
 
 axios.interceptors.request.use((config) => {
   config.headers.common['x-access-token'] = localStorage.getItem('accessToken')
@@ -57,39 +15,39 @@ axios.interceptors.request.use((config) => {
 
 export default {
   getUser () {
-    return http.get('user/verify')
+    return axios.get(`${BASE_API_URL}/user/front/verify`)
       .then(res => res.data)
   },
   getAllWekins () {
-    return http.get('wekin')
+    return axios.get(`${BASE_API_URL}/wekin/front`)
       .then(res => res.data)
   },
   getActivities () {
-    return http.get('activity')
+    return axios.get(`${BASE_API_URL}/activity/front`)
       .then(res => res.data)
   },
   getActivity (activityKey) {
-    return http.get(`activity/${activityKey}`)
+    return axios.get(`${BASE_API_URL}/activity/front/${activityKey}`)
       .then(res => res.data)
   },
   getAdminActivity (activityKey) {
-    return http.get(`admin/activity/${activityKey}`)
+    return axios.get(`${BASE_API_URL}/admin/front/activity/${activityKey}`)
       .then(res => res.data)
   },
   getAdminWekin (activityKey) {
-    return http.get(`admin/activity/${activityKey}/wekin`)
-          .then(res => res.data)
+    return axios.get(`${BASE_API_URL}/admin/front/activity/${activityKey}/wekin`)
+      .then(res => res.data)
   },
   getAdminBookings (hostKey) {
-    return http.get(`admin/host/${hostKey}/wekin`)
+    return axios.get(`${BASE_API_URL}/admin/front/host/${hostKey}/wekin`)
       .then(res => res.data)
   },
   getWekins (activityKey) {
-    return http.get(`activity/${activityKey}/wekin`)
+    return axios.get(`${BASE_API_URL}/activity/front/${activityKey}/wekin`)
       .then(res => res.data)
   },
   searchActivity (keyword) {
-    return http.get(`activity`, {
+    return axios.get(`${BASE_API_URL}/activity/front`, {
       params: {
         keyword: keyword
       }
@@ -97,7 +55,7 @@ export default {
       .then(res => res.data)
   },
   searchHash (keyword) {
-    return http.get(`doc/search`, {
+    return axios.get(`${BASE_API_URL}/doc/front/search`, {
       params: {
         hash: keyword
       }
@@ -105,39 +63,39 @@ export default {
       .then(res => res.data)
   },
   getAttendWekiners (wekinKey) {
-    return http.get(`/activity/wekin/${wekinKey}/wekiner`)
+    return axios.get(`${BASE_API_URL}/activity/front/wekin/${wekinKey}/wekiner`)
       .then(res => res.data)
   },
   getMakers () {
-    return http.get('host')
+    return axios.get(`${BASE_API_URL}/host/front`)
       .then(res => res.data)
   },
   getMaker (hostKey) {
-    return http.get(`host/${hostKey}`)
+    return axios.get(`${BASE_API_URL}/host/front/${hostKey}`)
       .then(res => res.data)
   },
   getMakerFeed (hostKey) {
-    return http.get(`host/${hostKey}/feed`)
+    return axios.get(`${BASE_API_URL}/host/front/${hostKey}/feed`)
       .then(res => res.data)
   },
   getMakerReservation (hostKey) {
-    return http.get(`host/${hostKey}/reservation`)
+    return axios.get(`${BASE_API_URL}/host/front/${hostKey}/reservation`)
       .then(res => res.data)
   },
   getMakerRatings (hostKey) {
-    return http.get(`host/${hostKey}/rating`)
+    return axios.get(`${BASE_API_URL}/host/front/${hostKey}/rating`)
       .then(res => res.data)
   },
   getMakerActivities (hostKey) {
-    return http.get(`host/${hostKey}/activity`)
+    return axios.get(`${BASE_API_URL}/host/front/${hostKey}/activity`)
       .then(res => res.data)
   },
   getMakerReviews (hostKey) {
-    return http.get(`host/${hostKey}/review`)
+    return axios.get(`${BASE_API_URL}/host/front/${hostKey}/review`)
       .then(res => res.data)
   },
   getMakerQnAs (hostKey, page, size) {
-    return http.get(`host/${hostKey}/qna`, {
+    return axios.get(`${BASE_API_URL}/host/front/${hostKey}/qna`, {
       params: {
         page: page,
         size: size
@@ -146,24 +104,20 @@ export default {
       .then(res => res.data)
   },
   updateAnswer (docKey, answer) {
-    return http.put(`host/qna/${docKey}`, {
+    return axios.put(`${BASE_API_URL}/host/front/qna/${docKey}`, {
       answer: answer
     }).then(res => res.data)
   },
   getUserActivities (userKey) {
-    return http.get(`user/${userKey}/activity`)
+    return axios.get(`${BASE_API_URL}/user/front/${userKey}/activity`)
       .then(res => res.data)
   },
   getUserQnAs (userKey) {
-    return http.get(`user/${userKey}/qna`)
+    return axios.get(`${BASE_API_URL}/user/front/${userKey}/qna`)
       .then(res => res.data)
   },
-  // getPopularFeed () {
-  //   return http.get('doc/popular')
-  //     .then(res => res.data)
-  // },
   getReviews (activityKey, page, size) {
-    return http.get(`doc`, {
+    return axios.get(`${BASE_API_URL}/doc/front`, {
       params: {
         type: 1,
         activity_key: activityKey,
@@ -174,11 +128,11 @@ export default {
       .then(res => res.data)
   },
   deleteReview (docKey) {
-    return http.delete(`qna/${docKey}`)
+    return axios.delete(`${BASE_API_URL}/qna/${docKey}`)
       .then(res => res.data)
   },
   getQnas (activityKey, page, size) {
-    return http.get('qna', {
+    return axios.get(`${BASE_API_URL}/qna`, {
       params: {
         activityKey: activityKey,
         page: page,
@@ -187,14 +141,14 @@ export default {
     }).then(res => res.data)
   },
   postQnA (activityKey, params) {
-    return http.post(`qna/${activityKey}`, params)
+    return axios.post(`${BASE_API_URL}/qna/${activityKey}`, params)
       .then(res => res.data)
   },
   /**
    * 피드에는 후기까지 포함하여 보여진다.
    */
   getFeed (page, size) {
-    return http.get('doc', {
+    return axios.get(`${BASE_API_URL}/doc/front`, {
       params: {
         type: '0, 1',
         page: page,
@@ -204,88 +158,92 @@ export default {
       .then(res => res.data)
   },
   getdoc () {
-    return http.get('doc')
+    return axios.get(`${BASE_API_URL}/doc/front`)
       .then(res => res.data)
   },
   postFeed (params) {
-    return http.post(`doc`, params)
+    return axios.post(`${BASE_API_URL}/doc/front`, params)
       .then(res => res.data)
   },
   updateDoc (docKey, params) {
-    return http.put(`doc/${docKey}`, params)
+    return axios.put(`${BASE_API_URL}/doc/front/${docKey}`, params)
       .then(res => res.data)
   },
   postDoc (params) {
-    return http.post(`doc`, params)
+    return axios.post(`${BASE_API_URL}/doc/front`, params)
       .then(res => res.data)
   },
   deleteDoc (docKey) {
-    return http.delete(`doc/${docKey}`)
+    return axios.delete(`${BASE_API_URL}/doc/front/${docKey}`)
       .then(res => res.data)
   },
   getUserDoc (userKey) {
-    return http.get(`doc/user/${userKey}`)
+    return axios.get(`${BASE_API_URL}/doc/front/user/${userKey}`)
       .then(res => res.data)
   },
   getDocFromKey (docKey) {
-    return http.get(`doc/${docKey}`)
+    return axios.get(`${BASE_API_URL}/doc/front/${docKey}`)
       .then(res => res.data)
   },
   getCommentsFromKey (docKey, page, size) {
-    return http.get(`doc/${docKey}/comment`, {
+    return axios.get(`${BASE_API_URL}/doc/front/${docKey}/comment`, {
       params: {
         page: page,
         size: size
       }
     }).then(res => res.data)
   },
+  getLikesFromKey (docKey) {
+    return axios.get(`${BASE_API_URL}/doc/front/${docKey}/like`)
+      .then(res => res.data)
+  },
   postComment (params) {
-    return http.post(`doc/${params.doc_key}/comment`, params)
+    return axios.post(`${BASE_API_URL}/doc/front/${params.doc_key}/comment`, params)
       .then(res => res)
   },
   getImagesFromKey (imageKeys) {
-    return http.get(`image/${imageKeys}`)
+    return axios.get(`${BASE_API_URL}/image/front/${imageKeys}`)
       .then(res => res.data)
   },
   getUserProfile (userKey) {
-    return http.get(`user/${userKey}`)
+    return axios.get(`${BASE_API_URL}/user/front/${userKey}`)
       .then(res => res.data)
   },
   saveProfile (userKey, params) {
-    return http.put(`user/${userKey}`, params)
+    return axios.put(`${BASE_API_URL}/user/front/${userKey}`, params)
       .then(res => res.data)
   },
   requestHost (params) {
-    return http.post(`host/request`, params)
+    return axios.post(`${BASE_API_URL}/host/front/request`, params)
       .then(res => res.data)
   },
   updateHost (hostKey, params) {
-    return http.post(`host/${hostKey}`, params)
+    return axios.post(`${BASE_API_URL}/host/front/${hostKey}`, params)
       .then(res => res.data)
   },
   addActivity (params) {
-    return http.post(`activity`, params)
+    return axios.post(`${BASE_API_URL}/activity/front`, params)
       .then(res => res.data)
   },
   updateActivity (activityKey, params) {
-    return http.put(`activity/${activityKey}`, params)
+    return axios.put(`${BASE_API_URL}/activity/front/${activityKey}`, params)
       .then(res => res.data)
   },
   deleteActivity (activityKey) {
-    return http.delete(`activity/${activityKey}`)
+    return axios.delete(`${BASE_API_URL}/activity/front/${activityKey}`)
       .then(res => res.data)
   },
   signUp (accessToken, name, profileImage) {
-    return http.post(`user/signUp`, { accessToken: accessToken, name: name, profileImage: profileImage })
+    return axios.post(`${BASE_API_URL}/user/front/signUp`, { accessToken: accessToken, name: name, profileImage: profileImage })
       .then(res => res.data)
   },
   createCustomToken (accessToken) {
-    return http.post(`user/createCustomToken`, {
+    return axios.post(`${BASE_API_URL}/user/front/createCustomToken`, {
       accessToken: accessToken
     }).then(res => res.data)
   },
   signUpWithToken (customToken) {
-    return http.post(`user/signUpWithCustomToken`, {
+    return axios.post(`${BASE_API_URL}/user/front/signUpWithCustomToken`, {
       customToken: customToken
     }).then(res => res.data)
   },
@@ -299,7 +257,7 @@ export default {
    * 공지사항 게시판 목록
    */
   getBoard (type) {
-    return http.get(`board`, {
+    return axios.get(`${BASE_API_URL}/board/front`, {
       params: {
         type: type
       }
@@ -311,7 +269,7 @@ export default {
    * 호스트 관련 API ... TODO: hostApi 모듈로 빼기
    */
   getCountAllWekin (hostKey) {
-    return http.get(`activity/host/${hostKey}`, {
+    return axios.get(`${BASE_API_URL}/activity/front/host/${hostKey}`, {
       params: {
         count: true
       }
@@ -319,27 +277,27 @@ export default {
       .then(res => res.data)
   },
   getHostWekin (hostKey) {
-    return http.get(`activity/host/${hostKey}`)
+    return axios.get(`${BASE_API_URL}/activity/front/host/${hostKey}`)
       .then(res => res.data)
   },
   getRecentlyWekin (hostKey) {
-    return http.get(`activity/host/${hostKey}/recently`)
+    return axios.get(`${BASE_API_URL}/activity/front/host/${hostKey}/recently`)
       .then(res => res.data)
   },
   sendPhoneVerification (phoneNumber) {
-    return http.post('user/verify/phone', {
+    return axios.post(`${BASE_API_URL}/user/front/verify/phone`, {
       phoneNumber: phoneNumber
     }).then(res => res.data)
   },
   verifySmsCode (phoneNumber, verifyCode) {
-    return http.put('user/verify/phone', {
+    return axios.put(`${BASE_API_URL}/user/front/verify/phone`, {
       phoneNumber: phoneNumber,
       verifyCode: verifyCode
     }).then(res => res.data)
   },
   // 테스트용 서버 버전
   getMainBanners () {
-    return axios.get(`${TEST_API_URL}/env/main/banner`)
+    return axios.get(`${BASE_API_URL}/env/main/banner`)
       .then(res => res.data)
   },
   /**
@@ -347,7 +305,7 @@ export default {
    * @param {Number} userKey
    */
   getFollower (userKey) {
-    return axios.get(`${TEST_API_URL}/follow/target/${userKey}`)
+    return axios.get(`${BASE_API_URL}/follow/target/${userKey}`)
       .then(res => res.data)
   },
   /**
@@ -355,11 +313,11 @@ export default {
    * @param {Number} userKey
    */
   getFollowing (userKey) {
-    return axios.get(`${TEST_API_URL}/follow/${userKey}`)
+    return axios.get(`${BASE_API_URL}/follow/${userKey}`)
       .then(res => res.data)
   },
   toggleFollow (userKey, followTargetUserKey) {
-    return axios.put(`${TEST_API_URL}/follow/${userKey}/${followTargetUserKey}`)
+    return axios.put(`${BASE_API_URL}/follow/${userKey}/${followTargetUserKey}`)
       .then(res => res.data)
   },
   /**
@@ -369,36 +327,36 @@ export default {
    * @param {string} message
    */
   sendEmail (target, title, message) {
-    return axios.post(`${TEST_API_URL}/util/mail`, {
+    return axios.post(`${BASE_API_URL}/util/mail`, {
       target: target,
       title: title,
       message: message
     })
   },
   sendSms (target, message) {
-    return axios.post(`${TEST_API_URL}/util/sms`, {
+    return axios.post(`${BASE_API_URL}/util/sms`, {
       target: target,
       message: message
     })
   },
   toggleFavorite (userKey, activityKey) {
-    return axios.put(`${TEST_API_URL}/favorite/${userKey}/${activityKey}`)
+    return axios.put(`${BASE_API_URL}/favorite/${userKey}/${activityKey}`)
       .then(res => res.data)
   },
   toggleLike (userKey, activityKey) {
-    return axios.put(`${TEST_API_URL}/like/${userKey}/${activityKey}`)
+    return axios.put(`${BASE_API_URL}/like/${userKey}/${activityKey}`)
       .then(res => res.data)
   },
   getUserFavorite (userKey) {
-    return axios.get(`${TEST_API_URL}/favorite/${userKey}`)
+    return axios.get(`${BASE_API_URL}/favorite/${userKey}`)
       .then(res => res.data)
   },
   getUserOrders (userKey) {
-    return axios.get(`${TEST_API_URL}/order/user/${userKey}`)
+    return axios.get(`${BASE_API_URL}/order/user/${userKey}`)
       .then(res => res.data)
   },
   requestOrder (userKey, wekinKey, amount, extra) {
-    return axios.post(`${TEST_API_URL}/order/order`, {
+    return axios.post(`${BASE_API_URL}/order/order`, {
       user_key: userKey,
       wekin_key: wekinKey,
       amount: amount,
@@ -407,72 +365,76 @@ export default {
       .then(res => res.data)
   },
   requestRefund (userKey, params) {
-    return axios.post(`${TEST_API_URL}/order/refund`)
+    return axios.post(`${BASE_API_URL}/order/refund`)
       .then(res => res.data)
   },
   verifyOrder (orderKey, impUid) {
-    return axios.put(`${TEST_API_URL}/order/confirm/${orderKey}`, {
+    return axios.put(`${BASE_API_URL}/order/confirm/${orderKey}`, {
       imp_uid: impUid
     }).then(res => res.data)
   },
   deleteOrder (orderKey) {
-    return axios.delete(`${TEST_API_URL}/order/${orderKey}`)
+    return axios.delete(`${BASE_API_URL}/order/${orderKey}`)
       .then(res => res.data)
   },
   cancelOrder (orderKey) {
-    return axios.put(`${TEST_API_URL}/order/refund/${orderKey}`)
+    return axios.put(`${BASE_API_URL}/order/refund/${orderKey}`)
       .then(res => res.data)
   },
   getNotification (orderKey) {
-    return axios.get(`${TEST_API_URL}/noti`)
+    return axios.get(`${BASE_API_URL}/noti`)
       .then(res => res.data)
   },
   getNoticeCategory () {
-    return axios.get(`${TEST_API_URL}/env/notice/category`)
+    return axios.get(`${BASE_API_URL}/env/notice/category`)
       .then(res => res.data)
   },
   getFaqCategory () {
-    return axios.get(`${TEST_API_URL}/env/faq/category`)
+    return axios.get(`${BASE_API_URL}/env/faq/category`)
       .then(res => res.data)
   },
   getPolicy () {
-    return axios.get(`${TEST_API_URL}/env/conf/policy`)
+    return axios.get(`${BASE_API_URL}/env/conf/policy`)
       .then(res => res.data)
   },
   addBeenOrder (orderUid) {
-    return axios.post(`${TEST_API_URL}/order/been/${orderUid}`)
+    return axios.post(`${BASE_API_URL}/order/been/${orderUid}`)
       .then(res => res.data)
   },
   requestWaiting (wekinKey, method) {
-    return axios.post(`${TEST_API_URL}/waiting/${wekinKey}`, { method: method })
+    return axios.post(`${BASE_API_URL}/waiting/${wekinKey}`, { method: method })
       .then(res => res.data)
   },
   isRequestedWaiting (wekinKey) {
-    return axios.get(`${TEST_API_URL}/waiting/${wekinKey}`)
+    return axios.get(`${BASE_API_URL}/waiting/${wekinKey}`)
       .then(res => res.data)
   },
   cancelWaiting (wekinKey) {
-    return axios.delete(`${TEST_API_URL}/waiting/${wekinKey}`)
+    return axios.delete(`${BASE_API_URL}/waiting/${wekinKey}`)
       .then(res => res.data)
   },
   getCommission (hostKey, month) {
-    return axios.get(`${TEST_API_URL}/order/host/${hostKey}/${month}`)
+    return axios.get(`${BASE_API_URL}/order/host/${hostKey}/${month}`)
       .then(res => res.data)
   },
   getNewestActivity () {
-    return axios.get(`${TEST_API_URL}/home/newestActivity`)
+    return axios.get(`${BASE_API_URL}/home/newestActivity`)
       .then(res => res.data)
   },
   getPopularActivity () {
-    return axios.get(`${TEST_API_URL}/home/popularActivity`)
+    return axios.get(`${BASE_API_URL}/home/popularActivity`)
       .then(res => res.data)
   },
   getPopularMaker () {
-    return axios.get(`${TEST_API_URL}/home/popularMaker`)
+    return axios.get(`${BASE_API_URL}/home/popularMaker`)
       .then(res => res.data)
   },
   getPopularFeed () {
-    return axios.get(`${TEST_API_URL}/home/popularFeed`)
+    return axios.get(`${BASE_API_URL}/home/popularFeed`)
+      .then(res => res.data)
+  },
+  deleteUser () {
+    return axios.delete(`${BASE_API_URL}/user`)
       .then(res => res.data)
   }
 }

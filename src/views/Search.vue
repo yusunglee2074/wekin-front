@@ -32,8 +32,8 @@ export default {
 .search-layer {
   z-index: 9999;
   display: block;
-  position: absolute;
-  top: -32px;
+  position: fixed;
+  top: 0;
   background: white;
   width: 100%;
   height: 100%;

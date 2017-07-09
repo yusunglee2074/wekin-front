@@ -24,6 +24,23 @@
         </div>
       </div>
     </div>
+    <!--카테고리-->
+    <!--<div class="ui styled accordion">
+      <div class="active title">
+        카테고리
+      </div>
+      <div class="active content">
+        <div class="button-container">
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '놀이'}" @click="toggleCheckList(categoryCheck, 0, '놀이')">놀이</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '도전'}" @click="toggleCheckList(categoryCheck, 0, '도전')">도전</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '체험'}" @click="toggleCheckList(categoryCheck, 0, '체험')">체험</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '문화'}" @click="toggleCheckList(categoryCheck, 0, '문화')">문화</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '휴식'}" @click="toggleCheckList(categoryCheck, 0, '휴식')">휴식</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '한강몽땅'}" @click="toggleCheckList(categoryCheck, 0, '한강몽땅')"><span>한강몽땅</span></button>
+        </div>
+      </div>
+    </div>-->
+    <!--카테고리 끝-->
     <div class="ui styled accordion">
       <div class="active title">
         <!--<i class="dropdown icon"></i>-->
@@ -112,6 +129,8 @@
   </div>
 </template>
 <script>
+const MAX_PRICE = 300000
+
 export default {
   data() {
     return {
@@ -130,8 +149,8 @@ export default {
         pm: '오후'
       },
       wekins: [],
-      startPrice: 5000,
-      endPrice: 50000,
+      startPrice: 0,
+      endPrice: MAX_PRICE,
       peopleCheckList: [true, false, false, false, false, false],
       isLoading: true,
       peopleCount: 0,
@@ -154,7 +173,8 @@ export default {
         jeju: false,
         abroad: false
       },
-      locationFilter: ["전체"]
+      locationFilter: ["전체"],
+      categoryCheck: '',
     }
   },
   methods: {
@@ -166,6 +186,7 @@ export default {
       let startPrice = this.startPrice
       let endPrice = this.endPrice
       let people = this.peopleCount
+      let category = this.categoryCheck
       this.$router.push({
         name: 'Activity', path: '/activity', params: {
           location: location,
@@ -174,7 +195,8 @@ export default {
           startPrice: startPrice,
           endPrice: endPrice,
           people: people,
-          locationCheck: locationCheck
+          locationCheck: locationCheck,
+          categoryCheck: category
         }
       })
     },
@@ -188,33 +210,14 @@ export default {
       this.peopleCheck.one = true
       this.endDate = null
       this.startPrice = 0
-      this.endPrice = 100000
+      this.endPrice = MAX_PRICE
       this.locationFilter = ["전체"]
-      $('#price').range('set value', 100000)
+      this.categoryCheck = ""
+      $('#price').range('set valueDouble', 0, MAX_PRICE);
+      $('#display-d').html(`0원 ~ ${MAX_PRICE}+`);
+      $(".thumb").trigger("click");
       $("#rangestart").calendar('clear')
       $("#rangeend").calendar('clear')
-    },
-    isInArea(wekin) {
-      if (this.locationCheck.all) { // 전체면 무조건 통과
-        return true
-      } else if (wekin.address_detail.area) { // 아니면 검사 area가 있을 경우만
-        return this.locationFilter.includes(wekin.address_detail.area)
-      }
-      return false
-    },
-    isInPrice(wekin) {
-      if (wekin.price >= this.startPrice && wekin.price <= this.endPrice) {
-        return true
-      }
-      return false
-    },
-    isInCurrentLocation(wekin) {
-      if (!this.address) {
-        return true
-      } else if (wekin.distance <= 5) {
-        return true
-      }
-      return false
     },
     clearLocationCheck() {
       this.locationFilter = []
@@ -302,6 +305,36 @@ export default {
             this.locationCheck.abroad = !this.locationCheck.abroad
             break;
         }
+      } 
+      // 카테고리 시작 
+      else if (checkListType === this.categoryCheck) {
+        switch (text) {
+          case "놀이":
+            this.togglecategory(text)
+            break;
+          case "도전":
+            this.togglecategory(text)
+            break;
+          case "체험":
+            this.togglecategory(text)
+            break;
+          case "문화":
+            this.togglecategory(text)
+            break;
+          case "한강몽땅":
+            this.togglecategory(text)
+            break;
+          case "휴식":
+            this.togglecategory(text)
+            break;
+        }
+      }
+    },
+    togglecategory(text) {
+      if(this.categoryCheck !== text) {
+        this.categoryCheck = text
+      } else {
+        this.categoryCheck = ''
       }
     },
     getGeoLocation() {
@@ -327,9 +360,9 @@ export default {
     let vue = this
     $('#price').range({
       min: 0,
-      max: 100000,
+      max: MAX_PRICE,
       start: 0,
-      doubleStart: 100000,
+      doubleStart: MAX_PRICE,
       step: 5000,
       verbose: true,
       debug: true,
@@ -402,6 +435,8 @@ export default {
     button {
       margin: 6px;
       width: 76px;
+      max-height: 35.31px;
+      padding: 11px 0px 11px 0px;
     }
   }
 

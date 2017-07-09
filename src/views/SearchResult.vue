@@ -103,6 +103,7 @@ export default {
     width: 110px;
     height: 80px;
     vertical-align: top;
+    object-fit: cover;
   }
   .header {
     display: inline-block;

@@ -10,7 +10,7 @@
     <a href="http://post.naver.com/wekiner"><img id="icon" src="/static/images/post_icon.png"></a>
     </div>
   </div>
-  
+
 </template>
 
 
@@ -27,7 +27,7 @@ export default {
   text-align: center;
 
   img {
-  
+
     &#about {
       width: 100%;
       max-width: 900px;

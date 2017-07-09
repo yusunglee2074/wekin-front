@@ -30,7 +30,7 @@
       </div>
     </div>
     <div class="ui card">
-      <div class="header">조회수</div>
+      <div class="header">예약률</div>
       <div class="ui horizontal half segments">
         <div class="ui segment">
           <div class="value">{{count || 0}}</div>
@@ -41,7 +41,8 @@
           <div class="label">전체 예약수</div>
         </div>
         <div class="ui segment">
-          <div class="value">{{ (((reservationCount / count) * 100).toFixed(2)) || 0 }}%</div>
+          <div class="value" v-if="reservationCount != 0 && count != 0">{{ (((reservationCount / count) * 100).toFixed(2)) || 0 }}%</div>
+          <div class="value" v-else>0%</div>
           <div class="label">예약률</div>
         </div>
       </div>
@@ -265,7 +266,7 @@ export default {
           this.getCommission(value)
         }
       })
-      this.getCommission(this.defaultMonth)      
+      this.getCommission(this.defaultMonth)
     }, 500)
   }
 }

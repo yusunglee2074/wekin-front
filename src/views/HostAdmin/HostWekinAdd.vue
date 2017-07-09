@@ -28,14 +28,47 @@
             <input type="text" v-model="request.title">
           </div>
         </div>
-        <div class="settings__list">
-          <label class="required">간단 소개</label>
-          <div class="ui form fields">
+        <!--<div class="settings__list">
+          <label class="required">카테고리</label>
+          <div class="grouped fields">
             <div class="field">
-              <textarea v-model="request.introSummary"></textarea>
+              <div class="ui radio">
+                <input type="radio" name="fruit" checked="" tabindex="0" value="놀이" v-model="request.category">
+                <label>놀이</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio">
+                <input type="radio" name="fruit" tabindex="0" class="hidden" value="도전" v-model="request.category">
+                <label>도전</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio">
+                <input type="radio" name="fruit" tabindex="0" class="hidden" value="체험" v-model="request.category">
+                <label>체험</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio">
+                <input type="radio" name="fruit" tabindex="0" class="hidden" value="문화" v-model="request.category">
+                <label>문화</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio">
+                <input type="radio" name="fruit" tabindex="0" class="hidden" value="축제" v-model="request.category">
+                <label>축제</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio">
+                <input type="radio" name="fruit" tabindex="0" class="hidden" value="휴식" v-model="request.category">
+                <label>휴식</label>
+              </div>
             </div>
           </div>
-        </div>
+        </div>-->
         <div class="ui divider"></div>
         <div class="settings__list">
           <label class="required">상세소개</label>
@@ -132,17 +165,14 @@
           </div>
           <div class="settings__list limit">
             <label>최대~최소인원</label>
-            <div class="ui form">
-              <div class="two fields">
-                <div class="field">
-                  <label>최대 인원</label>
-                  <input type="text" :id="['max_user--' + index]">
-                </div>
-                <label style="padding-top:34px;" class="pc">~</label>
-                <div class="field">
-                  <label>최소 인원</label>
-                  <input type="text" :id="['min_user--' + index]">
-                </div>
+            <div class="limit-user-container flex">
+              <div class="ui input flex-f1">
+                <label>최대 인원</label>
+                <input type="text" :id="['max_user--' + index]">
+              </div>
+              <div class="ui input flex-f1" style="margin-top:12px;">
+                <label>최소 인원</label>
+                <input type="text" :id="['min_user--' + index]">
               </div>
             </div>
           </div>
@@ -156,7 +186,7 @@
         </div>
         <div class="ui divider"></div>
         <!--<button class="ui primary button floated right save-btn">확인</button>
-                                  <button class="ui primary button floated right save-btn">삭제요청</button>-->
+                                    <button class="ui primary button floated right save-btn">삭제요청</button>-->
         <button class="ui primary button floated right save-btn" @click="sendForm()">신청하기</button>
         <div class="clear"></div>
       </div>
@@ -236,9 +266,17 @@ export default {
       })
     },
     checkForm() {
+      console.log(this.uploadedMainImages.length,
+        this.request.title,
+        $('#editor').trumbowyg('html') != "",
+        this.request.inclusion,
+        this.request.preparation,
+        this.request.address,
+        this.request.meetArea,
+        this.request.refundPolicy,
+        this.request.price)
       if (!(this.uploadedMainImages.length &&
         this.request.title &&
-        this.request.introSummary &&
         $('#editor').trumbowyg('html') != "" &&
         this.request.inclusion &&
         this.request.preparation &&
@@ -283,7 +321,6 @@ export default {
             host_key: this.user.Host.host_key,
             main_image: this.uploadedMainImages,
             title: this.request.title,
-            intro_summary: this.request.introSummary,
             intro_detail: $('#editor').trumbowyg('html'),
             schedule: this.request.schedule,
             inclusion: this.request.inclusion,
@@ -291,6 +328,7 @@ export default {
             address_detail: { text: this.request.address, meet_area: this.request.meetArea },
             refund_policy: this.request.refundPolicy,
             price: this.request.price,
+            category: this.request.category,
             wekins: wekins
           }
           api.addActivity(params)
@@ -384,6 +422,14 @@ export default {
   content: attr(data-text)
 }
 
+.limit-user-container {
+  flex-direction: column;
+  width:100%;
+  .input {
+    flex-direction: column;
+  }
+}
+
 .save-btn {
   width: 110px!important;
 }
@@ -403,6 +449,7 @@ export default {
 }
 
 .content {
+  width: 502px;
   max-width: 502px;
   padding-top: 22px!important;
   margin: 0 auto!important;
@@ -475,6 +522,7 @@ export default {
     padding: 1.5em 14em;
   }
 }
+
 @media only screen and (max-width: 991px) {
   .pc {
     display: none;
@@ -492,5 +540,25 @@ export default {
   width: 100%;
   z-index: 9998;
   position: relative
+}
+
+.host-wekin .fireUpload {
+  border: 1px solid;
+  position: absolute;
+  width: 100%;
+  input {
+    width: 100%;
+    position: absolute;
+    cursor: pointer;
+    z-index: 1;
+    opacity: 0;
+  }
+  &.profile {
+    opacity: 0;
+    position: absolute;
+    border: none;
+    height: 55px;
+    max-width: 365px;
+  }
 }
 </style>

@@ -125,7 +125,8 @@
         </div>
         <div class="ui checkbox agreement-checkbox">
           <input type="checkbox" name="agreement-checkbox" tabindex="0" class="hidden">
-          <label>본인은 <a href="/policy/privacy" target="_blank">개인정보 제 3자 제공</a>동의에 관한 내용을 모두 이해하였으며 이에 동의합니다.</label>
+          <label>본인은
+            <a href="/policy/privacy" target="_blank">개인정보 제 3자 제공</a>동의에 관한 내용을 모두 이해하였으며 이에 동의합니다.</label>
         </div>
         <button class="ui primary button full-width" v-on:click="onPayment()">참가신청하기</button>
       </div>
@@ -146,6 +147,7 @@ export default {
       isAgreed: false,
       activity: {},
       payMethod: "card",
+      user: {},
       requestUser: {
         name: '',
         email: '',
@@ -161,28 +163,30 @@ export default {
     }
   },
   computed: {
-    user() {
-      return this.$store.state.user
-    },
     selectedWekin() {
       return this.$route.params.selectedWekin
     }
   },
   methods: {
-    onPhoneClick () {
-      if(this.requestUser.phoneValid && confirm("전화번호를 재인증 하시겠습니까?")) {
+    getUser() {
+      auth.getCurrentUser().then(user => {
+        this.user = user
+      }).catch(error => console.error(error))
+    },
+    onPhoneClick() {
+      if (this.requestUser.phoneValid && confirm("전화번호를 재인증 하시겠습니까?")) {
         this.requestUser.phoneValid = false
-      } 
+      }
     },
     startTimer() {
       let interval = setInterval(() => {
         this.expiredTime--
         if (this.expiredTime <= 0) {
-          this.stopTimer()
+          this.stopTimer(interval)
         }
       }, 1000);
     },
-    stopTimer() {
+    stopTimer(interval) {
       this.expiredTime = EXPIRED_TIME
       this.isPhoneVerifying = false
       this.requestUser.phonVerificationCode = ''
@@ -264,7 +268,7 @@ export default {
                 buyer_name: this.requestUser.name,
                 buyer_tel: this.requestUser.phone,
                 digital: false,
-                app_scheme : 'iamport'
+                app_scheme: 'iamport'
               }, (rsp) => {
                 if (rsp.success) {
                   api.verifyOrder(result.order_key, rsp.imp_uid)
@@ -299,6 +303,7 @@ export default {
   },
   created() {
     this.getActivity()
+    this.getUser()
     // this.requestUser.name = this.user.name
     // this.requestUser.email = this.user.email
   },
@@ -408,7 +413,7 @@ export default {
   display: none!important;
 }
 
-// 모바일 대응 
+// 모바일 대응
 @media only screen and (max-width: 1199px) {
   .ui.form {
     input {
