@@ -256,6 +256,12 @@ export default {
       customToken: customToken
     }).then(res => res.data)
   },
+  geoCoding(address) {
+    if (typeof window !== 'undefined') {
+      return window.fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${GEO_API_KEY}`)
+        .then(res => res.json())
+    }
+  },
   reverseGeoCoding (latitude, longitude) {
     if (typeof window !== 'undefined') {
       return window.fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GEO_API_KEY}`)

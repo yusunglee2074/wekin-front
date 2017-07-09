@@ -127,7 +127,7 @@ export default {
     padding-top: 25%;
   }
   .ui.horizontal.segments {
-    height: 76px;
+    height: 20vw;
   }
   .ui.list {
     font-size: 14px;

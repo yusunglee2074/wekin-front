@@ -119,7 +119,7 @@ export default {
     @include flex-box();
     height: 45px;
     text-align: center;
-    div {
+    a {
       flex: 0.6
     }
     .f-one {

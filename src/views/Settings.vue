@@ -318,7 +318,11 @@ export default {
         this.emailNoti = this.user.email_noti
       }
     })
-    this.providerId = firebase.auth().currentUser.providerData[0].providerId
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.providerId = firebase.auth().currentUser.providerData[0].providerId    
+      }
+    })
   }
 }
 </script>

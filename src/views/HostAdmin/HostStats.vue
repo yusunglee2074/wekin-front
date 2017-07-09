@@ -375,6 +375,9 @@ export default {
   }
   .ui.horizontal.segments {
     height: 76px;
+      &.half {
+      height: 22vw;
+    }
   }
 
   .rating-container {

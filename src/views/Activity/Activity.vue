@@ -105,7 +105,7 @@
           </div>
           <div class="active content">
             <div class="ui buttons">
-              <div id="search" class="ui basic primary button" v-on:click="showLocationPopup = !showLocationPopup">{{address}}</div>
+              <div id="search" class="ui basic primary button" v-on:click="showLocationPopup = !showLocationPopup"><span class="addressText">{{address}}</span></div>
               <div id="gps" class="ui top right teal pointing icon button" @click="getGeoLocation()">
                 <i class="compass icon"></i>
               </div>
@@ -113,12 +113,12 @@
             <div class="ui segment popup-box" v-if="showLocationPopup">
               <span>현재 설정된 주소가 맞지 않으신가요?</span>
               <div class="ui action input">
-                <input type="text" placeholder="동명을 입력하세요">
-                <button class="ui basic icon button">
+                <input type="text" placeholder="동명을 입력하세요" v-model="addressText">
+                <button class="ui basic icon button" @click="getTextToGeoLocation()">
                   <i class="search icon"></i>
                 </button>
               </div>
-              <button id="search" class="ui primary button">
+              <button id="search" class="ui primary button" @click="getGeoLocation()">
                 <i class="icon compass"></i>
                 현재위치 자동 검색
               </button>
@@ -183,6 +183,7 @@ export default {
       showLocationPopup: false,
       position: null,
       address: null,
+      addressText: '',
       startDate: null,
       endDate: null,
       koreanCalendar: {
@@ -262,6 +263,7 @@ export default {
     resetFilter() {
       this.clearPeopleCheck()
       this.clearLocationCheck()
+      this.address = ''
       this.locationCheck.all = true
       this.peopleCheck.six = true
       this.endDate = null
@@ -333,20 +335,23 @@ export default {
     isInArea(activity) {
       if (this.locationCheck.all) { // 전체면 무조건 통과
         return true
-      } else if (activity.address_detail.area) { // 아니면 검사 area가 있을 경우만
+      }
+      if (activity && activity.address_detail.area) { // 아니면 검사 area가 있을 경우만
         return _.includes(this.locationFilter, activity.address_detail.area)
         // return this.locationFilter.includes(activity.address_detail.area)
       }
       return false
     },
     isInPrice(activity) {
-      if (activity.price >= this.startPrice && activity.price <= this.endPrice) {
-        return true
+      if(activity) {
+        if (activity.price >= this.startPrice && activity.price <= this.endPrice) {
+          return true
+        }
+        if (this.startPrice >= MAX_PRICE) {
+          return true
+        }
+        return false
       }
-      if (this.startPrice >= MAX_PRICE) {
-        return true
-      }
-      return false
     },
     isInCurrentLocation(activity) {
       if (!this.address) {
@@ -450,7 +455,7 @@ export default {
             this.locationCheck.abroad = !this.locationCheck.abroad
             break;
         }
-        console.log(this.locationFilter)
+        // console.log(this.locationFilter)
         if (this.locationFilter.length == 0) {
           this.locationCheck.all = true
           this.locationFilter.push("전체")
@@ -487,6 +492,24 @@ export default {
         this.categoryCheck = ''
       }
     },
+    getTextToGeoLocation() {
+      if (typeof window !== 'undefined' && "geolocation" in navigator) {
+        api.geoCoding(this.addressText)
+          .then(address => {
+            this.address = address.results[0].formatted_address.replace('대한민국', '')
+            let lat = address.results[0].geometry.location.lat
+            let lng = address.results[0].geometry.location.lng
+            // console.log(this.wekins)
+            this.wekins = this.wekinsTemp.map(wekin => {
+              if(wekin.address_detail && wekin.address_detail.location) {
+                wekin.distance = Location.distanceInKmBetweenEarthCoordinates(lat, lng, wekin.address_detail.location.lat, wekin.address_detail.location.lng)
+                return wekin
+              }
+            })
+          })
+          .catch(err => console.error(err))
+      }
+    },
     getGeoLocation() {
       if (typeof window !== 'undefined' && "geolocation" in navigator) {
         navigator.geolocation.watchPosition(position => {
@@ -494,12 +517,13 @@ export default {
           api.reverseGeoCoding(position.coords.latitude, position.coords.longitude)
             .then(address => {
               this.address = address.results[0].formatted_address.replace('대한민국', '')
-              this.wekins = this.wekins.map(wekin => {
-                wekin.distance =
-                  Location.distanceInKmBetweenEarthCoordinates(this.position.coords.latitude, this.position.coords.longitude, wekin.coordinates.x, wekin.coordinates.y)
-                return wekin
+              this.wekins = this.wekinsTemp.map(wekin => {
+                if(wekin.address_detail && wekin.address_detail.location) {
+                  wekin.distance = Location.distanceInKmBetweenEarthCoordinates(this.position.coords.latitude, this.position.coords.longitude, wekin.address_detail.location.lat, wekin.address_detail.location.lng)
+                  return wekin
+                }
               })
-              console.log(this.wekins)
+              // console.log(this.wekins)
             })
             .catch(err => console.error(err))
         })
@@ -510,6 +534,7 @@ export default {
         .then(json => {
           this.isLoading = false
           this.wekins = json.results
+          this.wekinsTemp = json.results
           this.initSortDropdown()
         })
         .catch(err => console.error(err))
@@ -522,7 +547,7 @@ export default {
               switch (Number(value)) {
                 case 0: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
                   this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
-                  console.log('00000임')
+                  // console.log('00000임')
                   break;
                 case 1: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
                   this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
@@ -534,7 +559,7 @@ export default {
                   this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
                   break;
                 case 4: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-                  console.log(this.wekins)
+                  // console.log(this.wekins)
                   this.wekins = _.orderBy(this.wekins, ['price'], ['desc']);
                   break;
                 case 5: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
@@ -638,8 +663,24 @@ export default {
 <style lang=scss scoped>
 @import '../../style/variables';
 
+.addressText {
+  line-height: 1.4;
+  font-family: NotoSansCJKkr-Regular;
+  /* padding-bottom: 7px; */
+  /* min-height: 38px; */
+  max-height: 36px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  /* height: 0.6em; */
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
 .list {
-  min-height: 858px;
+  min-height: 904px;
   max-width: 1030px;
   left: 164px;
   margin: 0 auto;

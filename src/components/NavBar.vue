@@ -438,7 +438,7 @@ a.a-active {
     align-items: center;
     text-align: center;
     @include flex-box();
-    div {
+    a {
       flex: 1
     }
   }

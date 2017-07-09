@@ -20,8 +20,11 @@
   }
   .content,  {
     border-top: none!important;
-    min-height: 600px;
+    // min-height: 600px;
   }
+}
+
+@media only screen and (max-width: 991px) {
 }
 </style>
 <script>

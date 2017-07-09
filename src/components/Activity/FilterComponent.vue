@@ -207,7 +207,7 @@ export default {
       this.clearPeopleCheck()
       this.clearLocationCheck()
       this.locationCheck.all = true
-      this.peopleCheck.one = true
+      this.peopleCheck.six = true
       this.endDate = null
       this.startPrice = 0
       this.endPrice = MAX_PRICE
@@ -305,8 +305,8 @@ export default {
             this.locationCheck.abroad = !this.locationCheck.abroad
             break;
         }
-      } 
-      // 카테고리 시작 
+      }
+      // 카테고리 시작
       else if (checkListType === this.categoryCheck) {
         switch (text) {
           case "놀이":
@@ -399,7 +399,7 @@ export default {
 @import '../../style/variables';
 
 .navbar-custom {
-  
+
 }
 .filter {
   .ui.styled.accordion {

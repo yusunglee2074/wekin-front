@@ -187,7 +187,8 @@ export default {
   mounted() {
     $('.ui.wekin.search').search({
       apiSettings: {
-        url: 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1/activity/front?keyword={query}'
+        // url: 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1/activity/front?keyword={query}'
+        url: 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1/activity/front?keyword={query}'
       },
       fields: {
         results: 'results',

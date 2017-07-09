@@ -198,6 +198,10 @@ export default {
 <style lang="scss" scoped>
 @import '../../style/variables.scss';
 
+.ui.three.doubling.cards .card {
+  width: 100%!important;
+}
+
 .menu--wide .item {
   min-width: 100px;
   justify-content: center;

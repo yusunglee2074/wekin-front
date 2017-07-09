@@ -119,7 +119,9 @@
         <p>{{activity.preparation}}</p>
         <div class="ui divider"></div>
         <h4 v-if="wekiners.length">참석 위키너</h4>
-        <a :href="`/users/${wekiner.user_key}`" tag="img" class="ui tiny circular image wekiner link" :src="wekiner.User.profile_image" v-for="(wekiner, index) in wekiners" v-bind:key="index"></a>
+        <a :href="`/users/${wekiner.user_key}`"  v-for="(wekiner, index) in wekiners" v-bind:key="index">
+          <img class="ui tiny circular image wekiner link" :src="wekiner.User.profile_image"></img>
+        </a>
         <div v-if="wekiners.length" class="ui divider"></div>
         <h4>집결지</h4>
         <div class="google-map link" v-if="activity.address_detail">

@@ -92,15 +92,19 @@ export default {
             }
           })
           this.getMoreBookings()
+          this.initDropdown()
         })
-        .then(this.initDropdown)
         .catch(error => console.error(error))
     },
     initDropdown() {
-      $('.ui.dropdown.bookingStatus').dropdown({
-        onChange: (value) => {
-          this.status = value
-        }
+      this.$nextTick(() => {
+        setTimeout(() => {
+          $('.ui.dropdown.bookingStatus').dropdown({
+            onChange: (value) => {
+              this.status = value
+            }
+          })
+        }, 500)
       })
     }
   },

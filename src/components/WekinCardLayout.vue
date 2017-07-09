@@ -1,17 +1,17 @@
 <template>
   <div class="card">
-    <a :href="`/activity/${activityKey}`" tag="div" class="image link">
+    <router-link :to="`/activity/${activityKey}`" tag="div" class="image link">
       <slot name="badge">
       </slot>
       <div :style="{ 'background':'url(' + imageUrl + ') center center', 'height': 200 + 'px', 'background-size':'cover'}"></div>
-    </a>
-    <a :href="`/activity/${activityKey}`" tag="div"  class="content link">
+    </router-link>
+    <router-link tag="div" class="content link" :to="`/activity/${activityKey}`">
       <slot name="extra-header">
       </slot>
       <span class="title">{{title}}</span>
       <div class="address">{{address}}</div>
       <div class="name">Maker {{name}}</div>
-    </a>
+    </router-link>
     <slot name="extra-body" class="extra-body">
     </slot>
     <div class="extra content">
@@ -74,9 +74,11 @@ export default {
   min-height: 2em;
   display: block;
 }
+
 .image {
   padding: 1px!important;
 }
+
 .price {
   font-family: NotoSansCJKkr-Light;
   font-size: 18px;
@@ -123,5 +125,11 @@ export default {
 
 .ui.buttons {
   width: 100%;
+}
+
+@media only screen and (max-width: 548px) {
+  .ui.three.doubling.cards>.card {
+    width: 100%!important;
+  }
 }
 </style>
