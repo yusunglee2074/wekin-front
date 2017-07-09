@@ -92,7 +92,7 @@
       </div>
     </div>
     <div class="comment-container" v-if="commentCount!=0">
-      <comment-layout :comment="comment" :user="user" v-for="comment in comments" v-bind:key="comment.comment_key"></comment-layout>
+      <comment-layout :comment="comment" :user="user" :parent="$refs" v-for="comment in comments" v-bind:key="comment.comment_key"></comment-layout>
     </div>
     <div class="more-btn-container link" @click="getComments(page++)" v-if="!isLastComment">
       댓글 더보기

@@ -23,7 +23,8 @@ import api from 'api'
 export default {
   props: {
     comment: {},
-    user: {}
+    user: {},
+    parent: null,
   },
   computed: {
     cutContent() {
@@ -51,7 +52,10 @@ export default {
           comment_key: this.comment.comment_key
         }
         api.deleteComment(commentParams)
-          .then(response => this.$el.remove())
+          .then(response => {
+            this.$parent.commentCount--
+            this.$el.remove()
+          })
           .catch(err => alert(err.response.data))
       }
     },

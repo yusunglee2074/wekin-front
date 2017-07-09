@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const BASE_API_URL = 'http://localhost:8888/v1'
-// const BASE_API_URL = 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1'
+// const BASE_API_URL = 'http://localhost:8888/v1'
+const BASE_API_URL = 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1'
 // const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
 const GEO_API_KEY = 'AIzaSyARPCWOhPLlFgDvqXbKb5RLA4rnVAcGbZ0'
 
