@@ -3,14 +3,15 @@
     <i class="alarm icon"></i>
     <div class="menu">
       <div class="title">최근 알림</div>
-      <router-link class="item list linked" :to="notification | link" v-for="notification in notifications" v-bind:key="notification.noti_key">
+      <div class="item list" v-for="notification in notifications" v-bind:key="notification.noti_key">
+      <!--<div class="item list linked" :href="notification | link" v-for="notification in notifications" v-bind:key="notification.noti_key">-->
         <!--<img class="ui image mini circular" :src="notification | profile">-->
         <i class="icon" :class="notification.active_target | icon"></i>
         <div>
           <div class="message">{{notification.message_text}}</div>
           <div class="date">{{notification.created_at | formatDate}}</div>
         </div>
-      </router-link>
+      </div>
       <div class="item list" v-if="notifications.length == 0">
         <p>알림이 없습니다.</p>
       </div>

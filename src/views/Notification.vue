@@ -8,13 +8,13 @@
       <i class="close icon floated right link" @click="onCloseClick()"></i>
     </button>
     <div class="menu">
-      <router-link class="item list linked flex" :to="notification | link" v-for="notification in notifications" v-bind:key="notification.noti_key">
+      <a class="item list linked flex" :href="notification | link" v-for="notification in notifications" v-bind:key="notification.noti_key">
         <img class="ui image mini circular" :src="notification | profile">
         <div class="text">
           <div class="message">{{notification | mergeMessage}}</div>
           <div class="date">{{notification.created_at | formatDate}}</div>
         </div>
-      </router-link>
+      </a>
     </div>
   </div>
 </template>

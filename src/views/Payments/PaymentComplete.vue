@@ -56,8 +56,8 @@
         <div class="ui divider"></div>
         <p>지치고 힘든 당신의 활력소 위킨을 이용해주셔서 감사합니다. 예약 현황은 [마이페이지 - 활동]에서 확인하실 수 있습니다.</p>
       </div>
-      <router-link :to="`/users/${user.user_key}/wekin`" tag="button" class="ui primary button full-width">예약 확인</router-link>
-      <router-link to="/" tag="button" class="ui primary button full-width">홈으로</router-link>
+      <a :href="`/users/${user.user_key}/wekin`" tag="button" class="ui primary button full-width">예약 확인</a>
+      <a href="/" tag="button" class="ui primary button full-width">홈으로</a>
     </div>
   </div>
 </template>

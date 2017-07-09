@@ -14,7 +14,7 @@
       <div class="swiper-button-next swiper-button-white" slot="button-next"></div>
       <div class="swiper-scrollbar"   slot="scrollbar"></div>
     </div>
-  
+
     <div class="ui segment search-container only pc">
       <div class="ui selection dropdown home location">
         <label>지역</label>
@@ -86,7 +86,7 @@
       </div>
       <button class="negative ui button" @click="searchActivity()">위킨 찾기</button>
     </div>
-  
+
     <div class="home-body-container">
       <div class="ui container popular-feed-container">
         <h3 class="ui header">
@@ -107,7 +107,7 @@
           <i class="icon angle right"></i>
         </div>
       </div>
-  
+
       <div class="ui container popular-wekin-container">
         <h3 class="ui header">
           <div class="header-label-bar"></div>
@@ -115,7 +115,7 @@
         </h3>
         <div class="pop-wekins swiper-container">
           <div class="swiper-wrapper">
-            <router-link :to="`/activity/${wekin.activity_key}`" tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in activities" v-bind:key="wekin.activity_key">
+            <a :href="`/activity/${wekin.activity_key}`" tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in activities" v-bind:key="wekin.activity_key">
               <div class="image">
                 <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.image[0]})`}"></div>
                 <div class="backImage overlayer"></div>
@@ -137,7 +137,7 @@
                   <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 3" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="schedule.wekin_key">{{schedule.start_date | formatDateKo}}</span>
                 </div>
               </div>
-            </router-link>
+            </a>
           </div>
         </div>
         <div class="prev-btn" v-on:click="popularWekins.slidePrev()">
@@ -147,7 +147,7 @@
           <i class="icon angle right"></i>
         </div>
       </div>
-  
+
       <div class="ui container new-wekin-container">
         <h3 class="ui header">
           <div class="header-label-bar"></div>
@@ -155,7 +155,7 @@
         </h3>
         <div class="new-wekins swiper-container">
           <div class="swiper-wrapper">
-            <router-link :to="`/activity/${wekin.activity_key}`" tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in newestActivities" v-bind:key="index">
+            <a :href="`/activity/${wekin.activity_key}`" tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in newestActivities" v-bind:key="index">
               <div class="image">
                 <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.image[0]})`}"></div>
                 <div class="backImage overlayer"></div>
@@ -177,7 +177,7 @@
                   <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 3" v-bind:key="index" style="padding-right:8px;">{{schedule.start_date | formatDateKo}}</span>
                 </div>
               </div>
-            </router-link>
+            </a>
           </div>
         </div>
         <div class="prev-btn" v-on:click="newWekins.slidePrev()">
@@ -187,7 +187,7 @@
           <i class="icon angle right"></i>
         </div>
       </div>
-  
+
       <div class="ui container popular-maker-container">
         <h3 class="ui header">
           <div class="header-label-bar"></div>

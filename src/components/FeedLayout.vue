@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="body-container">
-      <router-link :to="`/users/${feed.User.user_key}`" tag="div" class="ui top aligned circular background image profile link" v-if="feed.User" v-bind:style="{'background-image': `url(${feed.User.profile_image})`}"></router-link>
+      <a :href="`/users/${feed.User.user_key}`" class="ui top aligned circular background image profile link" v-if="feed.User" v-bind:style="{'background-image': `url(${feed.User.profile_image})`}"></a>
       <div class="info">
         <span v-if="feed.User">{{feed.User.name}}</span>
         <p>{{feed.created_at | formatDate}}</p>
@@ -72,7 +72,7 @@
       </div>
       <div class="hash-container" v-if="feed.activity_key !=null && feed.activity_title">
         <!--<button class="ui basic button">후기</button>-->
-        <router-link :to="`/activity/${feed.activity_key}`" tag="button" class="ui basic button">{{feed.activity_title | cuttingText}}</router-link>
+        <a :href="`/activity/${feed.activity_key}`" tag="button" class="ui basic button">{{feed.activity_title | cuttingText}}</a>
         <div class="ui star top right rating" :data-rating="feed.activity_rating"></div>
       </div>
     </div>
@@ -92,7 +92,7 @@
       </div>
     </div>
     <div class="comment-container" v-if="commentCount!=0">
-      <comment-layout :comment="comment" v-for="comment in comments" v-bind:key="comment.comment_key"></comment-layout>
+      <comment-layout :comment="comment" :user="user" v-for="comment in comments" v-bind:key="comment.comment_key"></comment-layout>
     </div>
     <div class="more-btn-container link" @click="getComments(page++)" v-if="!isLastComment">
       댓글 더보기
@@ -277,6 +277,7 @@ export default {
           doc_key: this.feed.doc_key,
           content: this.commentContent,
           user_name: this.user.name,
+          user_key: this.user.user_key,
           user_profile_image: this.user.picture || this.user.profile_image
         }
         api.postComment(commentParams)

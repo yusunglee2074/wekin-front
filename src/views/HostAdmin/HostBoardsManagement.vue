@@ -18,8 +18,8 @@
           </div>
           <review-layout :review="review" v-for="review in filteredReviews" v-bind:key="review.doc_key">
             <div slot="buttons" class="buttons">
-              <!--<router-link :to="'/activity/' + review.activity_key" class="ui primary button" tag="button">보러가기</router-link>-->
-              <router-link :to="'/activity/' + review.activity_key+'#review'" class="ui primary button" tag="button">보러가기</router-link>
+              <!--<a :href="'/activity/' + review.activity_key" class="ui primary button" tag="button">보러가기</a>-->
+              <a :href="'/activity/' + review.activity_key+'#review'" class="ui primary button" tag="button">보러가기</a>
               <!--<button class="ui primary button">신고하기</button>-->
             </div>
           </review-layout>

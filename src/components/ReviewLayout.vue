@@ -10,7 +10,9 @@
         <div class="swiper-pagination"></div>
       </div>
     </div>
-    <router-link :to="`/users/${review.User.user_key}/`" tag="img" class="ui top aligned image circular profile" :src="review.User.profile_image"></router-link>
+    <a :href="`/users/${review.User.user_key}/`">
+      <img  tag="img" class="ui top aligned image circular profile" :src="review.User.profile_image"></img>
+    </a>
     <div class="info">
       <span>{{review.User.name}}</span>
       <span class="wekinTitle">{{review.activity_title | cuttingText}}</span>

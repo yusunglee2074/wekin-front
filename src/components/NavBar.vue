@@ -8,12 +8,12 @@
         <i class="remove icon floated right link" @click="toggleMobileMenu()"></i>
       </div>
       <div class="button-container" @click="toggleMobileMenu()" v-if="!user">
-        <router-link :to="`/login?redirectUrl=${this.$route.fullPath}`" class="ui button primary" tag="div" exact>로그인</router-link>
-        <router-link to="/join" class="ui button basic" tag="div" exact>회원가입</router-link>
+        <a :href="`/login?redirectUrl=${this.$route.fullPath}`" class="ui button primary" tag="div" exact v-show="!isLoginHiding">로그인</a>
+        <a href="/join" class="ui button basic" tag="div" exact exact v-show="!isLoginHiding">회원가입</a>
       </div>
       <div class="login-info-container" v-if="user">
-        <router-link :to="`/users/${user.user_key}`" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></router-link>
-        <router-link :to="`/users/${user.user_key}`" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="isHostMode" v-bind:style="{'background-image': `url(${user.Host.profile_image})`}"></router-link>
+        <a :href="`/users/${user.user_key}`" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></a>
+        <a :href="`/users/${user.user_key}`" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="isHostMode" v-bind:style="{'background-image': `url(${user.Host.profile_image})`}"></a>
         <div class="text" v-if="!isHostMode">{{ user.name }}</div>
         <div class="text" v-else>{{ user.Host.name }}</div>
       </div>
@@ -36,31 +36,31 @@
           <!--<div class="item">프로필 수정</div>-->
         </div>
         <div class="active content" v-else>
-          <router-link :href="`/host/admin`" class="item" exact v-on:click.native="toggleMobileMenu()">MAKER PAGE</router-link>
+          <a :href="`/host/admin`" class="item" exact v-on:click.native="toggleMobileMenu()">MAKER PAGE</a>
           <div class="divider"></div>
-          <router-link :to="`/host/admin/wekins/add`" class="item" exact v-on:click.native="toggleMobileMenu()">위킨 만들기</router-link>
-          <router-link :to="`/host/admin/wekins`" class="item" exact v-on:click.native="toggleMobileMenu()">위킨관리</router-link>
-          <router-link :to="`/host/admin/bookings`" class="item" exact v-on:click.native="toggleMobileMenu()">예약관리</router-link>
-          <router-link :to="`/host/admin/boards`" class="item" exact v-on:click.native="toggleMobileMenu()">후기 / Q&amp;A관리</router-link>
-          <router-link :to="`/host/admin/settings`" class="item" exact v-on:click.native="toggleMobileMenu()">설정</router-link>
-          <router-link :to="`/`" class="item link" exact v-on:click.native="toggleMobileMenu()">위키너 모드 전환</router-link>
+          <a :href="`/host/admin/wekins/add`" class="item" exact v-on:click.native="toggleMobileMenu()">위킨 만들기</a>
+          <a :href="`/host/admin/wekins`" class="item" exact v-on:click.native="toggleMobileMenu()">위킨관리</a>
+          <a :href="`/host/admin/bookings`" class="item" exact v-on:click.native="toggleMobileMenu()">예약관리</a>
+          <a :href="`/host/admin/boards`" class="item" exact v-on:click.native="toggleMobileMenu()">후기 / Q&amp;A관리</a>
+          <a :href="`/host/admin/settings`" class="item" exact v-on:click.native="toggleMobileMenu()">설정</a>
+          <a :href="`/`" class="item link" exact v-on:click.native="toggleMobileMenu()">위키너 모드 전환</a>
         </div>
       </div>
-      <router-link to="/" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨 홈</router-link>
-      <router-link to="/activity" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨</router-link>
-      <router-link to="/feed" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">피드</router-link>
-      <router-link to="/customer" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">고객센터</router-link>
-      <router-link to="/manual" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">등록방법</router-link>
-      <router-link to="/notification" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()" v-if="user">알림</router-link>
+      <a href="/" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨 홈</a>
+      <a href="/activity" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨</a>
+      <a href="/feed" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">피드</a>
+      <a href="/customer" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">고객센터</a>
+      <a href="/manual" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">등록방법</a>
+      <a href="/notification" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()" v-if="user">알림</a>
       <div class="item link" v-if="user" @click="onLogoutClick()">로그아웃</div>
     </div>
     <div class="ui menu mobile-nav">
       <button class="side-menu" @click="toggleMobileMenu()">
         <i class="content icon"></i>
       </button>
-      <router-link to="/">
+      <a href="/">
         <img class="item logo" src="/static/images/logo-134x35.png"></img>
-      </router-link>
+      </a>
       <button class="search-btn">
         <i class="search icon" @click="showMobileSearch()"></i>
       </button>
@@ -69,18 +69,18 @@
       </button>
     </div>
     <div class="ui menu mobile-sub-nav" v-if="!isHostMode">
-      <router-link to="/activity" class="link" tag="div" exact>위킨</router-link>
-      <router-link to="/feed" class="link" tag="div" exact>피드</router-link>
-      <router-link to="/customer" class="link" tag="div" exact>고객센터</router-link>
-      <router-link to="/manual" class="link" tag="div" exact>등록방법</router-link>
+      <a href="/activity" class="link" tag="div" exact>위킨</a>
+      <a href="/feed" class="link" tag="div" exact>피드</a>
+      <a href="/customer" class="link" tag="div" exact>고객센터</a>
+      <a href="/manual" class="link" tag="div" exact>등록방법</a>
     </div>
 
     <!-- 모바일 끝 -->
 
     <div class="pc-nav ui stackable menu menu-container">
-      <router-link to="/">
+      <a href="/">
         <img class="item logo" src="/static/images/logo-115x30.png"></img>
-      </router-link>
+      </a>
       <div class="item search-container">
         <div class="ui">
           <div class="ui icon input">
@@ -91,14 +91,14 @@
         </div>
       </div>
       <div class="menu">
-        <router-link to="/activity" class="item linked" tag="div" exact>위킨</router-link>
-        <router-link to="/feed" class="item linked" tag="div" exact>피드</router-link>
-        <router-link to="/customer" class="item linked" tag="div" exact>고객센터</router-link>
-        <router-link to="/manual" class="item linked" tag="div" exact>등록방법</router-link>
+        <a href="/activity" class="item linked" tag="div" exact>위킨</a>
+        <a href="/feed" class="item linked" tag="div" exact>피드</a>
+        <a href="/customer" class="item linked" tag="div" exact>고객센터</a>
+        <a href="/manual" class="item linked" tag="div" exact>등록방법</a>
       </div>
       <div class="right menu" v-if="!user">
-        <router-link :to="`/login?redirectUrl=${this.$route.fullPath}`" class="item linked" tag="span" exact>로그인</router-link>
-        <router-link to="/join" class="item linked" tag="div" exact>회원가입</router-link>
+        <a :href="`/login?redirectUrl=${this.$route.fullPath}`" class="item linked" tag="span" exact v-show="!isLoginHiding">로그인</a>
+        <a href="/join" class="item linked" tag="div" exact v-show="!isLoginHiding">회원가입</a>
          <!--<div class="loading"></div>-->
       </div>
       <div class="right menu" v-else="user">
@@ -151,7 +151,8 @@ export default {
       isMobileMenuShowing: false,
       isMobileSearchShowing: false,
       isMaker: null,
-      searchKeyword: ''
+      searchKeyword: '',
+      isLoginHiding: true
     }
   },
   components: {
@@ -179,9 +180,13 @@ export default {
     $('.ui.dropdown').dropdown({
       action: 'hide'
     })
+    setTimeout(() => {
+      this.isLoginHiding = false
+    },1000)
   },
   ready(){
-    $(".loading").hide(100);
+    // $(".loading").hide(100);
+    // this.isLoginHiding = false
   },
   methods: {
     showMobileFilter() {
@@ -246,7 +251,7 @@ export default {
   z-index: 1;
 }
 
-a.router-link-active {
+a.a-active {
   color: #f66;
 }
 

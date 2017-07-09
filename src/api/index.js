@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const BASE_API_URL = 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1'
+const BASE_API_URL = 'http://localhost:8888/v1'
+// const BASE_API_URL = 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1'
 // const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
 const GEO_API_KEY = 'AIzaSyARPCWOhPLlFgDvqXbKb5RLA4rnVAcGbZ0'
 
@@ -199,6 +200,10 @@ export default {
   },
   postComment (params) {
     return axios.post(`${BASE_API_URL}/doc/front/${params.doc_key}/comment`, params)
+      .then(res => res)
+  },
+  updateComment (params) {
+    return axios.put(`${BASE_API_URL}/doc/front/${params.doc_key}/comment/${params.comment_key}`, params)
       .then(res => res)
   },
   getImagesFromKey (imageKeys) {

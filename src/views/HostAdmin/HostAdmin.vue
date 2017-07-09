@@ -8,21 +8,21 @@
       <div class="side-bar">
         <img class="ui rounded image" :src="user.Host.profile_image">
         <div class="ui vertical side menu">
-          <router-link to="/host/admin" class="item" active-class="active" exact>홈</router-link>
-          <router-link to="/host/admin/stats" class="item" active-class="active">통계</router-link>
-          <router-link to="/host/admin/wekins" class="item" active-class="active">위킨관리</router-link>
-          <router-link to="/host/admin/bookings" class="item" active-class="active">예약관리</router-link>
-          <router-link to="/host/admin/boards" class="item" active-class="active">후기/Q&amp;A</router-link>
-          <router-link to="/host/admin/settings" class="item" active-class="active">설정</router-link>
+          <a href="/host/admin" class="item" active-class="active" exact>홈</a>
+          <a href="/host/admin/stats" class="item" active-class="active">통계</a>
+          <a href="/host/admin/wekins" class="item" active-class="active">위킨관리</a>
+          <a href="/host/admin/bookings" class="item" active-class="active">예약관리</a>
+          <a href="/host/admin/boards" class="item" active-class="active">후기/Q&amp;A</a>
+          <a href="/host/admin/settings" class="item" active-class="active">설정</a>
         </div>
       </div>
       <!-- 모바일 메뉴 -->
       <div class="mobile-menu flex">
-        <router-link to="/host/admin" tag="div" class="f-one" active-class="active" exact>홈</router-link>
-        <router-link to="/host/admin/stats" tag="div" class="f-two" active-class="active">통계</router-link>
-        <router-link to="/host/admin/wekins" tag="div" active-class="active">위킨관리</router-link>
-        <router-link to="/host/admin/bookings" tag="div" active-class="active">예약관리</router-link>
-        <router-link to="/host/admin/boards" tag="div" active-class="active">후기/Q&amp;A</router-link>
+        <a href="/host/admin" tag="div" class="f-one" active-class="active" exact>홈</a>
+        <a href="/host/admin/stats" tag="div" class="f-two" active-class="active">통계</a>
+        <a href="/host/admin/wekins" tag="div" active-class="active">위킨관리</a>
+        <a href="/host/admin/bookings" tag="div" active-class="active">예약관리</a>
+        <a href="/host/admin/boards" tag="div" active-class="active">후기/Q&amp;A</a>
       </div>
       <router-view class="router-view"></router-view>
     </div>

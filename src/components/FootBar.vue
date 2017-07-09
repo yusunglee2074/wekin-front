@@ -5,18 +5,18 @@
       <div class="ui grid">
         <div class="computer only column row">
           <div class="ui horizontal small link list">
-            <router-link to="/about" class="item">위킨소개</router-link>
-            <router-link to="/policy/term" class="item">이용약관</router-link>
-            <router-link to="/policy/privacy" class="item">개인정보취급방침</router-link>
-            <router-link to="/customer" class="item">고객센터</router-link>
+            <a href="/about" class="item">위킨소개</a>
+            <a href="/policy/term" class="item">이용약관</a>
+            <a href="/policy/privacy" class="item">개인정보취급방침</a>
+            <a href="/customer" class="item">고객센터</a>
           </div>
         </div>
         <div class="mobile-bar">
           <div class="ui horizontal small link list">
-            <router-link to="/about" class="item">위킨소개</router-link>
-            <router-link to="/policy/term" class="item">이용약관</router-link>
-            <router-link to="/policy/privacy" class="item">개인정보취급방침</router-link>
-            <router-link to="/customer" class="item">고객센터</router-link>
+            <a href="/about" class="item">위킨소개</a>
+            <a href="/policy/term" class="item">이용약관</a>
+            <a href="/policy/privacy" class="item">개인정보취급방침</a>
+            <a href="/customer" class="item">고객센터</a>
           </div>
         </div>
       </div>

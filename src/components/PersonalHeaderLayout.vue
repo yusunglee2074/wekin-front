@@ -14,7 +14,7 @@
     </div>
     <div class="introduce mobile">{{user.introduce}}</div>
     <slot name="button">
-      <router-link to="/settings" tag="i" class="icon setting"></router-link>
+      <a href="/settings" tag="i" class="icon setting"></a>
     </slot>
     <follower-modal v-if="user" :userKey="user.user_key" ref="follower"></follower-modal>
     <following-modal v-if="user" :userKey="user.user_key" ref="following"></following-modal>

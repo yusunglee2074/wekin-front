@@ -21,12 +21,12 @@
           <div class="ui checkbox agreement-checkbox">
             <input type="checkbox" name="example">
             <label>
-              <router-link to="/policy/term" tag="a">이용약관</router-link>과
-              <router-link to="policy/privacy" tag="a">개인정보취급방침</router-link>에 동의합니다.</label>
+              <a href="/policy/term" tag="a">이용약관</a>과
+              <a href="policy/privacy" tag="a">개인정보취급방침</a>에 동의합니다.</label>
           </div>
         </div>
       </div>
-      <div class="padded">
+      <!--<div class="padded">
         <span class="ui horizontal divider">
           또는
         </span>
@@ -37,9 +37,9 @@
         </div>
         <div class="ui divider"></div>
         <div class="bottom-login-container">이미 위킨 회원이신가요?
-          <router-link to="/login" tag="a"> 로그인</router-link>
+          <a href="/login" tag="a"> 로그인</a>
         </div>
-      </div>
+      </div>-->
     </div>
     <div class="ui active inverted dimmer" v-if="isLoading">
       <div class="ui medium text loader">Loading</div>

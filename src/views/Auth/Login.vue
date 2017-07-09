@@ -16,11 +16,11 @@
         <div class="ui small feed">
           <button class="negative ui button" @click="onLoginClick()">로그인하기</button>
           <span>비밀번호를 잃어버렸어요!
-            <router-link to="/findPassword" tag="a"> 비밀번호 재설정</router-link>
+            <a href="/findPassword" tag="a"> 비밀번호 재설정</a>
           </span>
         </div>
       </div>
-      <div class="padded">
+      <!--<div class="padded">
         <span class="ui horizontal divider">
           또는
         </span>
@@ -28,14 +28,12 @@
           <img class="link" src="static/images/logo-facebook-68x68.png" @click="onFacebookLoginClick()">
           <img class="link" src="static/images/logo-kakao-68x68.png" @click="onKakaoClick()">
           <img class="link" src="static/images/logo-googleplus-68x68.png" @click="onGoogleClick()">
-          <!--<img class="link" src="static/images/logo-naver-68x68.png" @click="onNaverClick()">-->
-          <!--<div id="naver_id_login"></div>-->
         </div>
         <div class="ui divider"></div>
         <div class="bottom-login-container">아직 위킨 회원이 아니신가요?
-          <router-link to="/join"> 회원가입</router-link>
+          <a href="/join"> 회원가입</a>
         </div>
-      </div>
+      </div>-->
     </div>
     <div class="ui active inverted dimmer" v-if="isLoading">
       <div class="ui medium text loader">Loading</div>

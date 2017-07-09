@@ -5,8 +5,8 @@
     </div>
     <div class="ui tab active" id="first" data-tab="first">
       <div class="result-container" v-if="qnas && qnas.length">
-        <!--<router-link :to="`/activity/${qna.Activity.activity_key}`" tag="div" class="result-container__list link" v-for="qna in qnas">-->
-         <router-link :to="`/activity/${qna.Activity.activity_key}#qna`" tag="div" class="result-container__list link" v-for="(qna, index) in qnas" v-bind:key="index">
+        <!--<a :href="`/activity/${qna.Activity.activity_key}`" tag="div" class="result-container__list link" v-for="qna in qnas">-->
+         <a :href="`/activity/${qna.Activity.activity_key}#qna`" tag="div" class="result-container__list link" v-for="(qna, index) in qnas" v-bind:key="index">
           <img class="ui image aligned top" v-if="qna.Activity" :src="qna.Activity.main_image.image[0]">
           <div class="content">
             <span class="title">{{qna.Activity.title}}</span>
@@ -17,7 +17,7 @@
             <div class="status">{{qna.answer | qnaStatus}}</div>
           </div>
           <div class="ui divider"></div>
-        </router-link>
+        </a>
         <!--<button class="ui basic button more-btn">더보기</button>-->
       </div>
       <p v-else style="font-size: 15px;color: #979797;;text-align:center">작성하신 게시물이 없습니다.</p>

@@ -12,7 +12,7 @@
     <host-card-layout title="최신 위킨 목록">
       <div slot="content" class="content recently-wekins">
         <div class="ui two doubling cards" v-if="wekins.length">
-          <router-link :to="'/activity/' + wekin.activity_key" tag="div" class="ui card linked swiper-slide" v-for="(wekin, index) in wekins" v-bind:key="index">
+          <a :href="'/activity/' + wekin.activity_key" tag="div" class="ui card linked swiper-slide" v-for="(wekin, index) in wekins" v-bind:key="index">
             <div class="image">
               <img :src="wekin.main_image.image[0]">
             </div>
@@ -27,7 +27,7 @@
                                 <div class="ui star rating" data-rating="3"></div>후기 5개
                               </div>-->
             </div>
-          </router-link>
+          </a>
         </div>
         <div v-else>진행중인 최신 위킨이 없습니다.</div>
       </div>

@@ -18,7 +18,7 @@
             <span class="date">{{wekin.start_date | formatDate}}</span>
             <!--<span class="time">16:00~18:00</span>-->
           </div>
-          <router-link :to="'/host/admin/bookings/' + wekin.wekin_key" tag="button" class="ui primary button right">예약자 확인</router-link>
+          <a :href="'/host/admin/bookings/' + wekin.wekin_key" tag="button" class="ui primary button right">예약자 확인</a>
         </div>
         <div class="wekin-list-layout" style="text-align:center;" v-if="wekins && wekins.length == 0">
           <p style="width:100%">진행중인 위킨이 없습니다.</p>

@@ -11,14 +11,14 @@
     <div class="result-container" v-if="!isHashMoreClicked">
       <div class="header">위킨</div>
       <div class="floated right">{{activities.length}}개의 검색결과가 있습니다.</div>
-      <router-link :to="'/activity/' + activity.activity_key" tag="div" class="result-container__list flex link" v-for="(activity, index) in activities" v-bind:key="index">
+      <a :href="'/activity/' + activity.activity_key" tag="div" class="result-container__list flex link" v-for="(activity, index) in activities" v-bind:key="index">
         <img class="ui image aligned top" :src="activity.main_image.image[0]">
         <div class="content">
           <div class="title">{{activity.title}}</div>
           <div class="address">{{activity.address}}</div>
           <div class="name">Maker {{activity.Host.name}}</div>
         </div>
-      </router-link>
+      </a>
       <div class="floated right result-detail-btn link" @click="activityMoreClick()" v-if="activities.length!=0 && !isActivityMoreClicked">위킨 더보기 &gt</div>
     </div>
     <div class="ui divider clear" v-if="!isActivityMoreClicked"></div>

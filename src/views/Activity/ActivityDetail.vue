@@ -87,7 +87,9 @@
         </div>
         <h4>메이커</h4>
         <div class="maker flex">
-          <router-link :to="`/host/${activity.Host.host_key}`" tag="img" class="ui top aligned tiny image circular profile link" :src="activity.Host.profile_image"></router-link>
+          <a :href="`/host/${activity.Host.host_key}`">
+            <img tag="img" class="ui top aligned tiny image circular profile link" :src="activity.Host.profile_image"></img>
+          </a>
           <div class="content">
             <strong class="name">{{activity.Host.name}}</strong>
             <span>
@@ -117,7 +119,7 @@
         <p>{{activity.preparation}}</p>
         <div class="ui divider"></div>
         <h4 v-if="wekiners.length">참석 위키너</h4>
-        <router-link :to="`/users/${wekiner.user_key}`" tag="img" class="ui tiny circular image wekiner link" :src="wekiner.User.profile_image" v-for="(wekiner, index) in wekiners" v-bind:key="index"></router-link>
+        <a :href="`/users/${wekiner.user_key}`" tag="img" class="ui tiny circular image wekiner link" :src="wekiner.User.profile_image" v-for="(wekiner, index) in wekiners" v-bind:key="index"></a>
         <div v-if="wekiners.length" class="ui divider"></div>
         <h4>집결지</h4>
         <div class="google-map link" v-if="activity.address_detail">

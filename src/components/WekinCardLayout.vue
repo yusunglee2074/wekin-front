@@ -1,17 +1,17 @@
 <template>
   <div class="card">
-    <router-link :to="`/activity/${activityKey}`" tag="div" class="image link">
+    <a :href="`/activity/${activityKey}`" tag="div" class="image link">
       <slot name="badge">
       </slot>
       <div :style="{ 'background':'url(' + imageUrl + ') center center', 'height': 200 + 'px', 'background-size':'cover'}"></div>
-    </router-link>
-    <router-link :to="`/activity/${activityKey}`" tag="div"  class="content link">
+    </a>
+    <a :href="`/activity/${activityKey}`" tag="div"  class="content link">
       <slot name="extra-header">
       </slot>
       <span class="title">{{title}}</span>
       <div class="address">{{address}}</div>
       <div class="name">Maker {{name}}</div>
-    </router-link>
+    </a>
     <slot name="extra-body" class="extra-body">
     </slot>
     <div class="extra content">

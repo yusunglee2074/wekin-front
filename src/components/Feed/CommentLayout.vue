@@ -3,18 +3,26 @@
     <img class="ui image mini circular" :src="comment.user_profile_image.replace('public', 'static') ">
     <div class="content">
       <span class="name">{{comment.user_name}}</span>
-      <span class="date">{{comment.created_at | timeago}}</span>
-      <div class="body">{{cutContent}}</div>
+      <span class="date">{{comment.updated_at | timeago}}
+        <span class="modify-button link" v-show="isMyComment && !isModifying" @click="modifyComment()"> 수정하기</span>
+      </span>
+      <div class="body" v-show="!isModifying">{{cutContent}}</div>
+      <div class="body ui input" v-show="isModifying">
+        <input class="input" type="text" v-model="comment.content">
+        <button class="ui button negative" style="margin-left:12px; vertical-align:middle" @click="updateComment()">수정</button>
+      </div>
       <a class="expand-btn link" v-if="!isExpanded && !isTooShort" @click="onExpandClick()">더보기</a>
     </div>
   </div>
 </template>
 <script>
 import { Text } from 'src/util'
+import api from 'api'
 
 export default {
   props: {
-    comment: {}
+    comment: {},
+    user: {}
   },
   computed: {
     cutContent() {
@@ -24,9 +32,33 @@ export default {
         this.isTooShort = true
         return this.comment.content
       }
-    }
+    },
+    isMyComment() {
+      if (this.user) {
+        if (this.comment.user_key == this.user.user_key) {
+          return true
+        }
+      }
+      return false
+    },
   },
   methods: {
+    updateComment() {
+      let commentParams = {
+        content: this.comment.content,
+        doc_key: this.comment.doc_key,
+        comment_key: this.comment.comment_key
+      }
+      api.updateComment(commentParams)
+        .then(response => {
+          this.isModifying = false
+          this.comment.updated_at = new Date()
+        })
+        .catch(err => alert(err.response.data))
+    },
+    modifyComment() {
+      this.isModifying = true
+    },
     onExpandClick() {
       this.isExpanded = true
     }
@@ -39,6 +71,7 @@ export default {
       content: '',
       fullContent: '',
       shortContent: '',
+      isModifying: false,
       isTooShort: false,
       isExpanded: false
     }

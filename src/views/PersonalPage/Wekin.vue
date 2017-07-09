@@ -36,7 +36,7 @@
             <div class="card--reservation__buttons">
               <button class="ui basic button" v-if="order.order_pay_method == 'vbank'" @click="goToPaymentCompletedPage(order)">계좌안내</button>
               <button class="ui basic button" v-if="isCancelable(order)" @click="cancelOrder(order)">참가취소</button>
-              <!--<router-link :to="`/activity/${order.Wekin.Activity.activity_key}`" tag="button" class="ui basic button">참가취소</router-link>-->
+              <!--<a :to="`/activity/${order.Wekin.Activity.activity_key}`" tag="button" class="ui basic button">참가취소</a>-->
             </div>
           </div>
         </div>
