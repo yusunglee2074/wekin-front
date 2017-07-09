@@ -206,6 +206,10 @@ export default {
     return axios.put(`${BASE_API_URL}/doc/front/${params.doc_key}/comment/${params.comment_key}`, params)
       .then(res => res)
   },
+  deleteComment (params) {
+    return axios.delete(`${BASE_API_URL}/doc/front/${params.doc_key}/comment/${params.comment_key}`)
+      .then(res => res)
+  },
   getImagesFromKey (imageKeys) {
     return axios.get(`${BASE_API_URL}/image/front/${imageKeys}`)
       .then(res => res.data)

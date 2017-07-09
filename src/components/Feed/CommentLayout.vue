@@ -5,6 +5,7 @@
       <span class="name">{{comment.user_name}}</span>
       <span class="date">{{comment.updated_at | timeago}}
         <span class="modify-button link" v-show="isMyComment && !isModifying" @click="modifyComment()"> 수정하기</span>
+        <span class="modify-button link" v-show="isMyComment" @click="deleteComment()"> 삭제하기</span>
       </span>
       <div class="body" v-show="!isModifying">{{cutContent}}</div>
       <div class="body ui input" v-show="isModifying">
@@ -43,6 +44,17 @@ export default {
     },
   },
   methods: {
+    deleteComment() {
+      if (confirm('삭제하시겠습니까?')) {
+        let commentParams = {
+          doc_key: this.comment.doc_key,
+          comment_key: this.comment.comment_key
+        }
+        api.deleteComment(commentParams)
+          .then(response => this.$el.remove())
+          .catch(err => alert(err.response.data))
+      }
+    },
     updateComment() {
       let commentParams = {
         content: this.comment.content,
