@@ -10,7 +10,7 @@
       <div class="body" v-show="!isModifying">{{cutContent}}</div>
       <div class="body ui input" v-show="isModifying">
         <input class="input" type="text" v-model="comment.content">
-        <button class="ui button negative" style="margin-left:12px; vertical-align:middle" @click="updateComment()">수정</button>
+        <button class="ui button negative" style="margin-left:12px; vertical-align:middle;height:38px;margin-top:-2px;" @click="updateComment()">수정</button>
       </div>
       <a class="expand-btn link" v-if="!isExpanded && !isTooShort" @click="onExpandClick()">더보기</a>
     </div>
