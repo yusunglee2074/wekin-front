@@ -28,7 +28,7 @@
           </div>
         </div>
         <!--카테고리-->
-        <!--<div class="ui styled accordion">
+        <div class="ui styled accordion">
           <div class="active title">
             카테고리
           </div>
@@ -42,7 +42,7 @@
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '한강몽땅'}" @click="toggleCheckList(categoryCheck, 0, '한강몽땅')">한강몽땅</button>
             </div>
           </div>
-        </div>-->
+        </div>
         <!--카테고리 끝-->
         <div class="ui styled accordion">
           <div class="active title">
