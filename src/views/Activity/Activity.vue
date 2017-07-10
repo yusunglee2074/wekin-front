@@ -127,6 +127,28 @@
         </div>
         <button class="ui button negative full-width reset-btn" @click="resetFilter()">필터 초기화</button>
       </div>
+      <div class="categoryformobile">
+        <div class="ui text menu">
+          <a v-bind:class="{isClicked: this.categoryCheck === '놀이'}" class="item" @click="toggleCheckList(categoryCheck, 0, '놀이')">
+            놀이
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '도전'}" class="item" @click="toggleCheckList(categoryCheck, 0, '도전')">
+            도전
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '체험'}" class="item" @click="toggleCheckList(categoryCheck, 0, '체험')">
+            체험
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '문화'}" class="item" @click="toggleCheckList(categoryCheck, 0, '문화')">
+            문화 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '휴식'}" class="item" @click="toggleCheckList(categoryCheck, 0, '휴식')">
+            휴식 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '한강몽땅'}" class="item" id="fourlettercategory" @click="toggleCheckList(categoryCheck, 0, '한강몽땅')">
+            한강몽땅 
+          </a>
+        </div>
+      </div>
       <div class="ui clearing segment rect">
         <div class="ui selection dropdown styled sort">
           <input name="sort" type="hidden" value="0">
@@ -788,7 +810,7 @@ export default {
   }
 }
 
-.mobile-filter-btn {
+.mobile-filter-btn, .categoryformobile {
   display: none;
 }
 
@@ -821,6 +843,9 @@ export default {
       color: white;
     }
   }
+  .categoryformobile {
+    display: inherit;
+  }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -848,5 +873,27 @@ export default {
   .list {
     left: inherit;
   }
+}
+
+.ui.text.menu {
+  margin: 0px 0px;
+  margin-left: -10px;
+  height: 28px;
+  min-height: 10px;
+  font-size: 16px;
+  .item {
+    text-align: center;
+    width: 16.66%;
+    display: block;
+
+    &#fourlettercategory {
+      min-width: 76px;
+      padding-right: 8px;
+    }
+  }
 } 
+
+.isClicked {
+  color: rgb(0, 162, 154)!important;
+}
 </style>
