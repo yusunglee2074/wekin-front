@@ -4,13 +4,13 @@
     <div class="content">
       <span class="name">{{comment.user_name}}</span>
       <span class="date">{{comment.updated_at | timeago}}
-        <span class="modify-button link" v-show="isMyComment && !isModifying" @click="modifyComment()"> 수정하기</span>
-        <span class="modify-button link" v-show="isMyComment" @click="deleteComment()"> 삭제하기</span>
+        <span class="modify-button link" v-show="isMyComment && !isModifying" @click="modifyComment()"> 수정</span>
+        <span class="modify-button link" v-show="isMyComment" @click="deleteComment()"> 삭제</span>
       </span>
       <div class="body" v-show="!isModifying">{{cutContent}}</div>
-      <div class="body ui input" v-show="isModifying">
+      <div class="body ui input flex" style="align-content:center" v-show="isModifying">
         <input class="input" type="text" v-model="comment.content">
-        <button class="ui button negative" style="margin-left:12px; vertical-align:middle;height:38px;margin-top:-2px;" @click="updateComment()">수정</button>
+        <button class="ui button negative" style="margin-left:8px; height:38px;" @click="updateComment()">수정</button>
       </div>
       <a class="expand-btn link" v-if="!isExpanded && !isTooShort" @click="onExpandClick()">더보기</a>
     </div>

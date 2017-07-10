@@ -74,9 +74,9 @@
       <a href="/customer" class="link" tag="div" exact>고객센터</a>
       <a href="/manual" class="link" tag="div" exact>등록방법</a>
     </div>
-
+  
     <!-- 모바일 끝 -->
-
+  
     <div class="pc-nav ui stackable menu menu-container">
       <a href="/">
         <img class="item logo" src="/static/images/logo-115x30.png"></img>
@@ -99,7 +99,7 @@
       <div class="right menu" v-if="!user">
         <a :href="`/login?redirectUrl=${this.$route.fullPath}`" class="item linked" tag="span" exact v-show="!isLoginHiding">로그인</a>
         <a href="/join" class="item linked" tag="div" exact v-show="!isLoginHiding">회원가입</a>
-         <!--<div class="loading"></div>-->
+        <!--<div class="loading"></div>-->
       </div>
       <div class="right menu" v-else="user">
         <div class="ui item dropdown button user-menu">
@@ -182,9 +182,9 @@ export default {
     })
     setTimeout(() => {
       this.isLoginHiding = false
-    },1000)
+    }, 1000)
   },
-  ready(){
+  ready() {
     // $(".loading").hide(100);
     // this.isLoginHiding = false
   },
@@ -197,6 +197,13 @@ export default {
     },
     toggleMobileMenu() {
       this.isMobileMenuShowing = !this.isMobileMenuShowing
+      if (this.isMobileMenuShowing) {
+        $('#app').bind('touchmove', (e) => {
+          e.preventDefault()
+        })
+      } else {
+        $('#app').unbind('touchmove')
+      }
       this.$nextTick(() => {
         $('.ui.accordion.menu').accordion()
       })
@@ -423,10 +430,11 @@ a.a-active {
     }
   }
 }
-.loading{
+
+.loading {
   position: absolute;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   background: #fff;
 }
 

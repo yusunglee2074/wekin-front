@@ -1,0 +1,6 @@
+service: wekin-front-dev
+api_version: 1.0.0
+runtime: nodejs
+env: flex
+automatic_scaling:
+  min_num_instances: 1

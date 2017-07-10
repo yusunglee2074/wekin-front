@@ -17,7 +17,28 @@
       <div class="ui right rail apply-container">
         <div class="ui sticky">
           <div class="ui segment">
-            <h2>{{activity.title}}</h2>
+            <div class="ui icon top floated right inline dropdown feed-menu">
+              <i class="ellipsis vertical icon"></i>
+              <div class="menu">
+                <div class="header">공유하기</div>
+                <div class="item" @click="onFacebookShareClick()">
+                  <img class="facebookLogoBtn" src="/static/images/ic-facebook.png"> 페이스북
+                </div>
+                <div class="item" @click="snsShare('google')">
+                  <img class="facebookLogoBtn" src="/static/images/ic-google.png"> 구글
+                </div>
+                <div class="item" @click="snsShare('kakaostory')">
+                  <img class="facebookLogoBtn" src="/static/images/ic-kakaostory.png"> 카카오스토리
+                </div>
+                <div class="item" @click="snsShare('naver')">
+                  <img class="facebookLogoBtn" src="/static/images/ic-naver.png"> 네이버
+                </div>
+                <div class="ui divider" v-if="user && feed.User.user_key == user.user_key"></div>
+                <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onModifyClick()">수정하기</div>
+                <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onDeleteClick()">삭제하기</div>
+              </div>
+            </div>
+            <h2 style="margin-top:0">{{activity.title}}</h2>
             <p v-if="activity.address">
               <i class="icon marker"></i>{{activity.address}}
             </p>
@@ -26,8 +47,8 @@
               <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
             </p>
             <!--<p v-show="Object.keys(selectedWekin).length == 0 && wekins.length">
-                                  <i class="icon users"></i>{{wekins[0].max_user}}명 (최소 {{wekins[0].min_user}}명)
-                                </p>-->
+                                    <i class="icon users"></i>{{wekins[0].max_user}}명 (최소 {{wekins[0].min_user}}명)
+                                  </p>-->
             <p>
               <i class="icon won"></i>{{activity.price | joinComma}}원
             </p>
@@ -119,7 +140,7 @@
         <p>{{activity.preparation}}</p>
         <div class="ui divider"></div>
         <h4 v-if="wekiners.length">참석 위키너</h4>
-        <a :href="`/users/${wekiner.user_key}`"  v-for="(wekiner, index) in wekiners" v-bind:key="index">
+        <a :href="`/users/${wekiner.user_key}`" v-for="(wekiner, index) in wekiners" v-bind:key="index">
           <img class="ui tiny circular image wekiner link" :src="wekiner.User.profile_image"></img>
         </a>
         <div v-if="wekiners.length" class="ui divider"></div>
@@ -212,7 +233,7 @@
         <div v-if="filteredQuestions && !filteredQuestions.length" class="qna-not-exist">등록 된 Q&amp;A가 없습니다.</div>
       </div>
     </div>
-
+  
     <!-- waiting modal -->
     <div class="ui modal waiting-modal">
       <i class="close icon"></i>
@@ -232,7 +253,7 @@
         <div class="ui negative button approve" id="confirm">확인</div>
       </div>
     </div>
-
+  
     <!-- 모바일 버전 ! -->
     <div class="mobile-container">
       <div class="mobile-button-container">
@@ -241,8 +262,8 @@
             <i class="icon bookmark" v-bind:class="{remove: !isFavoritedActivity, red: isFavoritedActivity}"></i>
           </button>
           <!--<a :href="'mailto:' + activity.Host.User.email" class="ui white button">
-                                                <i class="icon outline mail"></i>
-                                              </a>-->
+                                                  <i class="icon outline mail"></i>
+                                                </a>-->
           <button class="ui white button" @click="onMailClick()">
             <i class="icon outline mail"></i>
           </button>
@@ -251,7 +272,7 @@
           </button>
         </div>
       </div>
-
+  
       <div class="mobile-form-container-back-layer" v-if="isMobileFormShowing" @click="toggleMobileForm()">
       </div>
       <div class="mobile-form-container" v-if="isMobileFormShowing">
@@ -262,7 +283,7 @@
           <div class="menu">
             <div class="item" v-for="wekin in wekins" v-bind:key="wekin.wekin_key" :data-value="wekin.wekin_key" v-if="new Date(wekin.start_date) >= new Date()">{{wekin.start_date | formatDateTimeKo}} ({{wekin.max_user - wekin.current_user}}남음)</div>
             <!--<div class="item" v-for="wekin in wekins" :data-value="wekin.wekin_key">{{wekin.start_date | formatDateKo}}</div>
-                                                            // TODO: 위킨 data value 테스트 -->
+                                                              // TODO: 위킨 data value 테스트 -->
           </div>
         </div>
         <div class="ui selection dropdown styled full-width peopleCount" v-if="Object.keys(selectedWekin).length">
@@ -378,6 +399,50 @@ export default {
     }
   },
   methods: {
+     snsShare(sns_type) {
+      var title = $("#ogTitle").attr('content');
+      var href = window.location.href;
+      var loc = "";
+      var img = 'http://we-kin.com/static/images/default-profile.png'
+      var oFlag = true;
+
+      if (sns_type == 'facebook') {
+        console.log("fb")
+        loc = '//www.facebook.com/sharer/sharer.php?u=' + href + '&t=' + title;
+      }
+      else if (sns_type == 'twitter') {
+        loc = '//twitter.com/home?status=' + encodeURIComponent(title) + ' ' + href;
+      }
+      else if (sns_type == 'google') {
+        loc = '//plus.google.com/share?url=' + href;
+      }
+      else if (sns_type == 'pinterest') {
+
+        loc = '//www.pinterest.com/pin/create/button/?url=' + href + '&media=' + img + '&description=' + encodeURIComponent(title);
+      }
+      else if (sns_type == 'kakaostory') {
+        loc = 'https://story.kakao.com/share?url=' + encodeURIComponent(href);
+      }
+      else if (sns_type == 'band') {
+        loc = 'http://www.band.us/plugin/share?body=' + encodeURIComponent(title) + '%0A' + encodeURIComponent(href);
+      }
+      else if (sns_type == 'naver') {
+        loc = "http://share.naver.com/web/shareView.nhn?url=" + encodeURIComponent(href) + "&title=" + encodeURIComponent(title);
+      }
+      else {
+        return false;
+      }
+      window.open(loc);
+    },
+    onFacebookShareClick() {
+      let image = this.activity.main_image.image[0]
+      let name = `${this.activity.title} | 위킨`
+
+      window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&caption=Wekin&description=${encodeURIComponent(this.activity.address)}&display=popup&locale=ko_KR&name=${encodeURIComponent(name)}&link=${encodeURIComponent(`http://www.we-kin.com/activity/${this.activity.activity_key}`)}&picture=${encodeURIComponent(image)}&version=v2.1`,
+        'facebookShare',
+        'toolbar=0,status=0,width=625,height=435'
+      );
+    },
     onRequestNotificationClick() {
       let method = []
       if (this.isEmailNotiChecked) method.push('mail')
@@ -755,6 +820,12 @@ export default {
 @import '../../style/variables';
 @import '../../style/cross-browsing';
 
+.menu .item img.facebookLogoBtn {
+  width: 30px;
+  display: inline-block;
+  margin-top: -4px;
+}
+
 h2 {
   font-family: NotoSansCJKkr-Regular;
   padding-bottom: 10px;
@@ -1019,8 +1090,7 @@ h2 {
           .status {
             font-weight: 300
           }
-          .sum
-          .name {
+          .sum .name {
             min-width: 50px;
             text-align: center;
           }
@@ -1049,6 +1119,7 @@ h2 {
     }
   }
 }
+
 
 
 
@@ -1240,6 +1311,7 @@ h2 {
     margin-top: 0;
   }
 }
+
 
 
 /*

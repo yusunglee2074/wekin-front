@@ -841,9 +841,6 @@ export default {
 }
 
 @media only screen and (max-width: 767px) {
-  .navbar-custom {
-    margin-bottom: 90px;
-  }
   .filter {
     display: none;
   }
@@ -851,33 +848,5 @@ export default {
   .list {
     left: inherit;
   }
-}
-
-
-
-
-/*@media only screen and (min-width: 768px) and (max-width: 950px) {
-    .list {
-      max-width: 600px;
-    }
-    .ui.three.stackable.cards>.card {
-      width: calc(50% - 2em);
-      margin-left: 1em;
-      margin-right: 1em;
-    }
-
-    .list {
-      left: inherit;
-    }
-  }*/
-
-
-/*@media only screen and (max-width: 950px) {
-    .list {
-      left:0!important;
-    }
-    .filter {
-      display: none;
-    }
-  }*/
+} 
 </style>

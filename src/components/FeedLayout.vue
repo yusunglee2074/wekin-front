@@ -23,14 +23,8 @@
           <div class="item" @click="onFacebookShareClick()">
             <img class="facebookLogoBtn" src="/static/images/ic-facebook.png"> 페이스북
           </div>
-          <div class="item" @click="snsShare('twitter')">
-            <img class="facebookLogoBtn" src="/static/images/ic-twitter.png"> 트위터
-          </div>
           <div class="item" @click="snsShare('google')">
             <img class="facebookLogoBtn" src="/static/images/ic-google.png"> 구글
-          </div>
-          <div class="item" @click="snsShare('pinterest')">
-            <img class="facebookLogoBtn" src="/static/images/ic-pinterest.png"> 핀터레스트
           </div>
           <div class="item" @click="snsShare('kakaostory')">
             <img class="facebookLogoBtn" src="/static/images/ic-kakaostory.png"> 카카오스토리
@@ -38,15 +32,7 @@
           <div class="item" @click="snsShare('naver')">
             <img class="facebookLogoBtn" src="/static/images/ic-naver.png"> 네이버
           </div>
-          <div class="item" @click="snsShare('band')">
-            <img class="facebookLogoBtn" src="/static/images/ic-band.png"> 밴드
-          </div>
-          <!--
-                      <div class="item"><img src="/static/images/ic-twitter.png"> 트위터
-                    </div>
-                    <div class="item">
-                      <img src="/static/images/ic-kakao.png"> 카카오스토리
-                      </div>-->
+
           <div class="ui divider" v-if="user && feed.User.user_key == user.user_key"></div>
           <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onModifyClick()">수정하기</div>
           <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onDeleteClick()">삭제하기</div>
@@ -283,7 +269,7 @@ export default {
         api.postComment(commentParams)
           .then(response => {
             if (response.status == 201) {
-              this.comments.unshift(commentParams)
+              this.comments.unshift(response.data)
               this.commentCount++
               this.commentContent = ''
             }
@@ -514,6 +500,7 @@ div[contenteditable=true] {
   .comment-input-container .content {
     display: flex;
     align-items: center;
+    align-content: center;
   }
   .comment-input-container .input {
     max-height: 34px;
@@ -543,12 +530,7 @@ div[contenteditable=true] {
     position: absolute;
   }
 }
-
-
-
-
-
-
+ 
 /*issue 340 */
 
 .menu .item img.facebookLogoBtn {
@@ -557,10 +539,7 @@ div[contenteditable=true] {
   margin-top: -4px;
 }
 
-
-
-
-
+ 
 
 /*issue 340*/
 
