@@ -28,7 +28,7 @@
             <input type="text" v-model="request.title">
           </div>
         </div>
-        <!--<div class="settings__list">
+        <div class="settings__list">
           <label class="required">카테고리</label>
           <div class="grouped fields">
             <div class="field">
@@ -68,7 +68,7 @@
               </div>
             </div>
           </div>
-        </div>-->
+        </div>
         <div class="ui divider"></div>
         <div class="settings__list">
           <label class="required">상세소개</label>
