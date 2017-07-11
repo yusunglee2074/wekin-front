@@ -794,7 +794,7 @@ export default {
 
 .pop-wekins,
 .new-wekins {
-  height: 214px;
+  height: 222px;
 }
 
 .makers {

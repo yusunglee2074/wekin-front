@@ -6,7 +6,7 @@
           <div class="ui text loader">이미지 업로드중</div>
         </div>
         <div class="settings__list">
-          <div style="position:relative" v-for="(imageUrl, index) in uploadedMainImages" v-bind:key="index">
+          <div style="position:relative;flex:1" v-for="(imageUrl, index) in uploadedMainImages" v-bind:key="index">
             <img style="width:100%;height:100%" :src="imageUrl">
             <i class="icon close link" style="position:absolute; top:0;right:0" @click="deleteImage(index)"></i>
           </div>
@@ -266,15 +266,6 @@ export default {
       })
     },
     checkForm() {
-      console.log(this.uploadedMainImages.length,
-        this.request.title,
-        $('#editor').trumbowyg('html') != "",
-        this.request.inclusion,
-        this.request.preparation,
-        this.request.address,
-        this.request.meetArea,
-        this.request.refundPolicy,
-        this.request.price)
       if (!(this.uploadedMainImages.length &&
         this.request.title &&
         $('#editor').trumbowyg('html') != "" &&

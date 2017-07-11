@@ -179,14 +179,16 @@ export default {
     this.fetchData()
     $('.ui.dropdown').dropdown({
       action: 'hide'
-    })
-    setTimeout(() => {
-      this.isLoginHiding = false
-    }, 1000)
-  },
-  ready() {
-    // $(".loading").hide(100);
-    // this.isLoginHiding = false
+    }) 
+    auth.onAuthStateChanged()
+      .then((user) => {
+        if(user === null) {
+          this.isLoginHiding = false
+        }
+      })
+    // setTimeout(() => {
+    //   this.isLoginHiding = false
+    // }, 1000)
   },
   methods: {
     showMobileFilter() {

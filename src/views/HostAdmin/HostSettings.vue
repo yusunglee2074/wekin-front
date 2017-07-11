@@ -303,6 +303,7 @@ export default {
 
 .host-settings {
   .content {
+    width:100%;
     max-width: 502px;
     min-width: 70%;
     padding-top: 22px!important;
