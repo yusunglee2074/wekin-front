@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 // const BASE_API_URL = 'http://localhost:8888/v1'
+// const BASE_API_URL = 'http://192.168.0.9:8888/v1'
 const BASE_API_URL = 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1'
 // const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
 const GEO_API_KEY = 'AIzaSyARPCWOhPLlFgDvqXbKb5RLA4rnVAcGbZ0'
@@ -243,6 +244,7 @@ export default {
       .then(res => res.data)
   },
   signUp (accessToken, name, profileImage) {
+    console.log(accessToken, name)
     return axios.post(`${BASE_API_URL}/user/front/signUp`, { accessToken: accessToken, name: name, profileImage: profileImage })
       .then(res => res.data)
   },
