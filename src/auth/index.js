@@ -93,6 +93,11 @@ export default {
       })
     })
   },
+  onAuthStateChanged () {
+    return new Promise((resolve, reject) => {
+      firebase.auth().onAuthStateChanged((user) => resolve(user))
+    })
+  },
   loginWithFacebook () {
     let provider = new firebase.auth.FacebookAuthProvider()
     provider.addScope('email')

@@ -33,9 +33,6 @@
                 <div class="item" @click="snsShare('naver')">
                   <img class="facebookLogoBtn" src="/static/images/ic-naver.png"> 네이버
                 </div>
-                <div class="ui divider" v-if="user && feed.User.user_key == user.user_key"></div>
-                <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onModifyClick()">수정하기</div>
-                <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onDeleteClick()">삭제하기</div>
               </div>
             </div>
             <h2 style="margin-top:0">{{activity.title}}</h2>

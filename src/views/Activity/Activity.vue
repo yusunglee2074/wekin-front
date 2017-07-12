@@ -562,8 +562,8 @@ export default {
         .catch(err => console.error(err))
     },
     initSortDropdown() {
-      this.$nextTick(() => {
-        setTimeout(() => {
+      setTimeout(() => {
+        this.$nextTick(() => {
           $(".ui.dropdown.sort").dropdown({
             onChange: (value) => {
               switch (Number(value)) {
@@ -590,8 +590,8 @@ export default {
               }
             }
           })
-        }, 1000)
-      })
+        })
+      }, 1000)
     }
   },
   components: {
