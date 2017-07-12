@@ -129,6 +129,7 @@
             <a href="/policy/privacy" target="_blank">개인정보 제 3자 제공</a>동의에 관한 내용을 모두 이해하였으며 이에 동의합니다.</label>
         </div>
         <button class="ui primary button full-width" v-on:click="onPayment()">참가신청하기</button>
+        <a :href="`/activity/${$route.params.key}`" class="ui negative button full-width" style="margin-top:12px">취소</a>
       </div>
     </div>
   </div>
@@ -268,7 +269,8 @@ export default {
                 buyer_name: this.requestUser.name,
                 buyer_tel: this.requestUser.phone,
                 digital: false,
-                app_scheme: 'iamport'
+                app_scheme: 'iamport',
+                m_redirect_url : `http://we-kin.com/activity/${this.activity.activity_key}/payment/complete`
               }, (rsp) => {
                 if (rsp.success) {
                   api.verifyOrder(result.order_key, rsp.imp_uid)
@@ -334,6 +336,7 @@ export default {
 @import '../../style/typography.scss';
 @import '../../style/variables.scss';
 @import '../../style/cross-browsing.scss';
+@import '../../style/media.scss';
 
 .ui.grid {
   max-width: 1000px;
@@ -395,7 +398,6 @@ export default {
   }
   .checkbox-container {
     width: 170px;
-    margin-left: 120px;
     display: inline-block;
 
     .ui.radio.checkbox {

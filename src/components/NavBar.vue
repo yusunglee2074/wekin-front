@@ -8,8 +8,8 @@
         <i class="remove icon floated right link" @click="toggleMobileMenu()"></i>
       </div>
       <div class="button-container" @click="toggleMobileMenu()" v-if="!user">
-        <a :href="`/login?redirectUrl=${this.$route.fullPath}`" class="ui button primary" tag="div" exact v-show="!isLoginHiding">로그인</a>
-        <a href="/join" class="ui button basic" tag="div" exact exact v-show="!isLoginHiding">회원가입</a>
+        <a :href="`/login?redirectUrl=${this.$route.fullPath}`" class="ui button primary" tag="div" exact>로그인</a>
+        <a href="/join" class="ui button basic" tag="div" exact>회원가입</a>
       </div>
       <div class="login-info-container" v-if="user">
         <a :href="`/users/${user.user_key}`" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></a>

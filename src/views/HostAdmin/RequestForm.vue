@@ -289,6 +289,7 @@ export default {
 <style lang="scss">
 @import '../../style/variables.scss';
 @import '../../style/cross-browsing.scss';
+@import '../../style/media.scss';
 
 .host-request .floated.right.checkbox {
   width: 76px;
@@ -346,6 +347,9 @@ export default {
   }
   .ui.segment {
     padding: 1.5em 14em;
+    @include respond(mobile) { padding: 18px }
+    @include respond(tablet) { padding: 18px }
+    @include respond(small) { padding: 18px }
   } // 파일 업로드
   .floated.right button {
     position: absolute!important;
