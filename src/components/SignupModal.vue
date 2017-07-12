@@ -1,33 +1,31 @@
 <template>
-  <div class="modallogin">
+  <div class="modalsignup">
     <div class="modal-mask" @click="close" v-show="show" transition="modal">
       <div class="modal-container" @click.stop>
         <div class="modal-header">
-          <h3>로그인</h3>
+          <h3>회원가입</h3>
         </div>
         <div class="modal-body">
-          <div class="ui input">
-            <input type="text" placeholder="이메일" v-model="user.email">
-          </div>
-          <div class="ui input">
-            <input type="password" placeholder="비밀번호" v-model="user.password" @keyup.enter="onLoginClick">
-          </div>
-          <div class="color secondary">{{errorMessage}}</div>
-          <div class="modal-footer">
-            <button class="negative ui button" @click="onLoginClick()">로그인하기</button>
-            <div class="ui divider"></div>
-            <div>비밀번호를 잃어버리셨나요?</div>
-            <p><a href="/findPassword">비밀번호 재설정</a></p>
-          </div>
-          <div class="padded">
-            <!--<span class="ui horizontal divider">
-              또는
-            </span>
-            <div class="social-login-container">
-              <img class="link" src="../../static/images/logo-facebook-68x68.png" @click="onFacebookLoginClick()">
-              <img class="link" src="../../static/images/logo-kakao-68x68.png" @click="onKakaoClick()">
-              <img class="link" src="../../static/images/logo-googleplus-68x68.png" @click="onGoogleClick()">
-            </div>-->
+          <div class="content padded">
+            <div class="ui input">
+              <input type="email" placeholder="이메일" v-model="user.email">
+            </div>
+            <div class="ui input">
+              <input type="text" placeholder="이름" v-model="user.name">
+            </div>
+            <div class="ui input">
+              <input type="password" placeholder="비밀번호" v-model="user.password">
+            </div>
+            <div class="color secondary">{{errorMessage}}</div>
+            <div class="ui small feed">
+              <button class="negative ui button" @click="onSignUpClick()">가입하기</button>
+              <div class="ui checkbox agreement-checkbox">
+                <input type="checkbox" name="example">
+                <label class="label-for-signup">
+                  <a href="/policy/term" tag="a">이용약관</a>과
+                  <a href="policy/privacy" tag="a">개인정보취급방침</a>에 동의합니다.</label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -40,20 +38,21 @@
 import auth from 'src/auth'
 import firebase from 'firebase'
 import { Validation } from 'src/util'
-import SignupModal from './SignupModal.vue'
 
 export default {
-  name: 'modallogin',
+  name: 'modalsignup',
   props: ['show'],
   data () {
     return {
-      user: {},
+      user: {
+        email: null,
+        name: null, 
+        password: null 
+      },
       errorMessage: '',
-      showSignupModal: false
+      isAgreed: false,
+      isLoading: false,
     }
-  },
-  components: {
-    'modal-signup': SignupModal
   },
   methods: {
     savePost: function() {
@@ -70,17 +69,19 @@ export default {
     },
     checkForm() {
       if (!(this.user.email &&
-        this.user.password)) {
-        this.errorMessage = "이메일 비밀번호를 확인해주세요."
+        this.user.password &&
+        this.user.name)) {
+        this.errorMessage = "모든 폼을 입력해주세요."
       } else if (!Validation.checkEmailValidation(this.user.email)) {
         this.errorMessage = "이메일 형식을 확인해주세요."
+      } else if (!this.isAgreed) {
+        alert("약관에 동의해주세요.")
       } else {
         return true
       }
     },
     onLoginSuccess(user) {
       this.isLoading = false
-      console.log(user)
       if (user.emailVerified) {
         this.goToRedirectUrl()
       } else {
@@ -91,28 +92,45 @@ export default {
       this.isLoading = false
       this.errorMessage = this.getErrorMessage(error.code)
     },
+    onFacebookJoinClick() {
+      this.isLoading = true
+      auth.loginWithFacebook()
+        .then((currentUser) => window.location.href = '/')
+        .catch((error) => this.onLoginFail(error))
+    },
     getErrorMessage(error) {
       switch (error) {
-        case "auth/wrong-password":
-          return "비밀번호가 올바르지 않습니다."
-        case "auth/user-not-found":
-          return "이메일이 존재하지 않습니다."
-
+        case "auth/weak-password":
+          return "비밀번호는 6자리 이상 입력해주세요."
+        case "auth/email-already-in-use":
+          return "이미 가입 된 이메일 입니다."
+      }
+    },
+    onSignUpSuccess(result) {
+      this.isLoading = false
+      alert('가입이 완료되었습니다. 서비스 이용을 위해 이메일 인증을 완료해주세요.')
+      window.location.href = '/verifyEmail'
+    },
+    onSignUpFail(error) {
+      this.isLoading = false
+      console.log(error)
+      this.errorMessage = this.getErrorMessage(error.code)
+    },
+    onSignUpClick() {
+      if (this.checkForm()) {
+        this.isLoading = true
+        auth.signUp(this.user.email, this.user.password, this.user.name)
+          .then(result => this.onSignUpSuccess(result))
+          .catch(error => this.onSignUpFail(error))
       }
     },
     goToRedirectUrl() {
-      if(this.$route.query.redirectUrl.indexOf('find') >= 0 || this.$route.query.redirectUrl.indexOf('join') >= 0) {
-        window.location.href = '/'
-      } else {
       window.location.href = this.$route.query.redirectUrl || '/'
-      }
     },
-    onFacebookLoginClick() {
+    onFacebookClick() {
       this.isLoading = true
       auth.loginWithFacebook()
-        .then((currentUser) => {
-          this.goToRedirectUrl()
-        })
+        .then((currentUser) => this.goToRedirectUrl())
         .catch((error) => this.onLoginFail(error))
     },
     onGoogleClick() {
@@ -127,23 +145,16 @@ export default {
         .catch((error) => this.onLoginFail(error))
     },
     onKakaoClick() {
+      this.isLoading = true
       auth.loginWithKakao()
         .then((currentUser) => this.goToRedirectUrl())
         .catch((error) => this.onLoginFail(error))
     },
-    onLoginClick() {
-      if (this.checkForm()) {
-        this.isLoading = true
-        auth.signIn(this.user.email, this.user.password)
-          .then((currentUser) => this.onLoginSuccess(currentUser))
-          .catch((error) => this.onLoginFail(error))
-      }
-    }
   },
   mounted() {
-    document.addEventListener("keydown", (e) => {
-      if (this.show && e.keyCode == 27) {
-        this.close();
+    $('.agreement-checkbox').checkbox({
+      onChange: () => {
+        this.isAgreed = !this.isAgreed
       }
     })
   }
@@ -152,9 +163,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-* {
-    box-sizing: border-box;
-}
 
 .modal-mask {
     position: fixed;
@@ -168,7 +176,8 @@ export default {
 }
 
 .modal-container {
-    width: 300px;
+    width: 350px;
+    height: 330px;
     margin: 40px auto 0;
     padding: 20px 30px;
     background-color: #fff;
@@ -176,6 +185,7 @@ export default {
     box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
     transition: all .3s ease;
     font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
 }
 
 .modal-header h3 {
@@ -217,7 +227,14 @@ export default {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
 }
-.ui .input {
+.ui.input {
   margin-bottom: 10px;
+}
+.ui.small.feed {
+  margin-top: 2px;
+  margin-bottom: 6px;
+}
+.label-for-signup {
+  margin-top: 10px;
 }
 </style>

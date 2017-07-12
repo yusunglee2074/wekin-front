@@ -7,13 +7,11 @@
         <img src="/static/images/logo-mobile.png">
         <i class="remove icon floated right link" @click="toggleMobileMenu()"></i>
       </div>
-      <div class="button-container" @click="toggleMobileMenu()" v-if="!user">
-        <a :href="`/login?redirectUrl=${this.$route.fullPath}`" class="ui button primary" tag="div" exact v-show="!isLoginHiding">로그인</a>
-      </div>
-        <modal v-bind:show.sync="showModal"></modal>
-        <button @click="showModal = true">로그인(모달)</button>
-      <div class="button-container" @click="toggleMobileMenu()" v-if="!user">
-        <a href="/join" class="ui button basic" tag="div" exact exact v-show="!isLoginHiding">회원가입</a>
+      <div class="button-container" v-if="!user">
+        <modal v-bind:show.sync="showLoginModal"></modal>
+        <a class="ui button primary" @click="showLoginModal = true">로그인</a>
+        <modal-signup v-bind:show.sync="showSignupModal"></modal-signup>
+        <a class="ui button basic" @click="showSignupModal = true">회원가입</a>
       </div>
       <div class="login-info-container" v-if="user">
         <a :href="`/users/${user.user_key}`" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></a>
@@ -101,12 +99,11 @@
         <a href="/manual" class="item linked" tag="div" exact>등록방법</a>
       </div>
       <div class="right menu" v-if="!user">
-        <a :href="`/login?redirectUrl=${this.$route.fullPath}`" class="item linked" tag="span" exact v-show="!isLoginHiding">로그인</a>
+        <modal v-bind:show.sync="showLoginModal"></modal>
+        <a class="item linked" @click="showLoginModal = true">로그인</a>
+        <modal-signup v-bind:show.sync="showSignupModal"></modal-signup>
+        <a class="item linked" @click="showSignupModal = true">회원가입</a>
 
-        <modal v-bind:show.sync="showModal"></modal>
-        <button @click="showModal = true">로그인(모달)</button>
-
-        <a href="/join" class="item linked" tag="div" exact v-show="!isLoginHiding">회원가입</a>
         <!--<div class="loading"></div>-->
       </div>
       <div class="right menu" v-else="user">
@@ -151,6 +148,7 @@
 import auth from 'src/auth'
 import NotificationLayout from 'components/NotificationLayout.vue'
 import LoginModal from './LoginModal.vue'
+import SignupModal from './SignupModal.vue'
 
 export default {
   data() {
@@ -163,12 +161,14 @@ export default {
       isMaker: null,
       searchKeyword: '',
       isLoginHiding: true,
-      showModal: false
+      showLoginModal: false,
+      showSignupModal: false
     }
   },
   components: {
     NotificationLayout,
-    'modal': LoginModal
+    'modal': LoginModal,
+    'modal-signup': SignupModal
   },
   computed: {
     isActivityPage() {
