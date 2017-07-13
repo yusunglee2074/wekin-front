@@ -80,7 +80,6 @@ export default {
     },
     onLoginSuccess(user) {
       this.isLoading = false
-      console.log(user)
       if (user.emailVerified) {
         this.goToRedirectUrl()
       } else {
@@ -101,11 +100,7 @@ export default {
       }
     },
     goToRedirectUrl() {
-      if(this.$route.query.redirectUrl.indexOf('find') >= 0 || this.$route.query.redirectUrl.indexOf('join') >= 0) {
-        window.location.href = '/'
-      } else {
-      window.location.href = this.$route.query.redirectUrl || '/'
-      }
+      window.location.reload()
     },
     onFacebookLoginClick() {
       this.isLoading = true
@@ -154,6 +149,8 @@ export default {
 <style scoped>
 * {
     box-sizing: border-box;
+}
+.modallogin {
 }
 
 .modal-mask {
