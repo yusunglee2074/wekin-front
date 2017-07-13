@@ -6,7 +6,6 @@
           <h3>회원가입</h3>
         </div>
         <div class="modal-body">
-          <div class="content padded">
             <div class="ui input">
               <input type="email" placeholder="이메일" v-model="user.email">
             </div>
@@ -24,7 +23,6 @@
                 <label class="label-for-signup">
                   <a href="/policy/term" tag="a">이용약관</a>과
                   <a href="policy/privacy" tag="a">개인정보취급방침</a>에 동의합니다.</label>
-              </div>
             </div>
           </div>
         </div>
