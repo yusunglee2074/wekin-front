@@ -8,9 +8,7 @@
         <i class="remove icon floated right link" @click="toggleMobileMenu()"></i>
       </div>
       <div class="button-container" v-if="!user">
-        <modal v-bind:show.sync="showLoginModal"></modal>
         <a class="ui button primary" @click="showLoginModal = true">로그인</a>
-        <modal-signup v-bind:show.sync="showSignupModal"></modal-signup>
         <a class="ui button basic" @click="showSignupModal = true">회원가입</a>
       </div>
       <div class="login-info-container" v-if="user">
@@ -141,6 +139,8 @@
         <notification-layout class="ui item dropdown user-alarm"></notification-layout>
       </div>
     </div>
+  <modal v-bind:show.sync="showLoginModal"></modal>
+  <modal-signup v-bind:show.sync="showSignupModal"></modal-signup>
   </div>
 </template>
 
