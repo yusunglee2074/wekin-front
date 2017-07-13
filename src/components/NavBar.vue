@@ -408,6 +408,7 @@ a.a-active {
     z-index: 999!important;
     overflow-y: scroll;
     height: 100%;
+    overflow: hidden;
   }
 
 
