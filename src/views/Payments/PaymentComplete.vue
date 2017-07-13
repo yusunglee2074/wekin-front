@@ -2,7 +2,21 @@
   <div id="paymentComplete" v-if="rsp">
     <div class="navbar-custom"></div>
     <div class="payment-result-container">
-      <div class="ui segment payment-result-container__succeed" v-if="rsp.pay_method != 'vbank'">
+      <div class="ui segment payment-result-container__succeed" v-if="rsp.status == 'failed'">
+        <span class="payment-result-container__header">결제가 취소되었습니다.</span>
+        <div class="ui divider"></div>
+        <div class="payment-result-container__list">
+          <label>신청 활동</label>
+          <span class="floated right">{{rsp.name}}</span>
+        </div>
+        <div class="payment-result-container__list">
+          <label>결제 요청</label>
+          <span class="floated right">{{rsp.amount | joinComma}}원</span>
+        </div>
+        <div class="ui divider"></div>
+        <p>실패 사유 : {{rsp.fail_reason}}</p>
+      </div>
+      <div class="ui segment payment-result-container__succeed" v-if="rsp.pay_method != 'vbank' && rsp.status != 'failed'">
         <span class="payment-result-container__header">결제가 완료되었습니다.</span>
         <div class="ui divider"></div>
         <div class="payment-result-container__list">
@@ -11,7 +25,7 @@
         </div>
         <div class="payment-result-container__list">
           <label>결제 금액</label>
-          <span class="floated right">{{rsp.paid_amount | joinComma}}원</span>
+          <span class="floated right">{{rsp.paid_amount || rsp.amount | joinComma}}원</span>
         </div>
         <div class="payment-result-container__list">
           <label>신청 결과</label>
@@ -56,20 +70,37 @@
         <div class="ui divider"></div>
         <p>지치고 힘든 당신의 활력소 위킨을 이용해주셔서 감사합니다. 예약 현황은 [마이페이지 - 활동]에서 확인하실 수 있습니다.</p>
       </div>
-      <a :href="`/users/${user.user_key}/wekin`" tag="button" class="ui primary button full-width">예약 확인</a>
-      <a href="/" tag="button" class="ui primary button full-width">홈으로</a>
+      <a :href="`/users/${user.user_key}/wekin`" tag="button" class="ui primary button full-width" v-if="rsp.status != 'failed'">예약 확인</a>
+      <a :href="`/activity/${$route.params.key}`" tag="button" class="ui primary button full-width">확인</a>
     </div>
   </div>
 </template>
 <script>
+import api from 'api'
 
 export default {
-  computed: {
-    rsp () {
-      return this.$route.params.rsp
+  asyncComputed: {
+    rsp() {
+      if (this.$route.query.imp_uid) {
+        return this.verifyOrder()
+      } else {
+        return this.$route.params.rsp
+      }
     },
-    user () {
+    user() {
       return this.$store.state.user
+    }
+  },
+  methods: {
+    verifyOrder() {
+      let orderKey = this.$route.query.merchant_uid
+      let impUID = this.$route.query.imp_uid
+      return api.verifyOrder(orderKey, impUID)
+        .then((result) => {
+          console.log(result.data)
+         return result.data
+        })
+        .catch((error) => console.error(error))
     }
   }
 }
@@ -77,7 +108,7 @@ export default {
 <style lang="scss" scoped>
 .payment-result-container {
   max-width: 324px;
-  margin:150px auto;
+  margin: 150px auto;
 
   &__header {
     display: inherit;
@@ -107,7 +138,6 @@ export default {
   }
   p {
     font-size: 12px;
-
   }
 }
 </style>

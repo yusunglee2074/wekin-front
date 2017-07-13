@@ -32,7 +32,7 @@
           <div class="item" @click="snsShare('naver')">
             <img class="facebookLogoBtn" src="/static/images/ic-naver.png"> 네이버
           </div>
-
+          <div class="item"  @click="onReportClick()">신고하기</div>
           <div class="ui divider" v-if="user && feed.User.user_key == user.user_key"></div>
           <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onModifyClick()">수정하기</div>
           <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onDeleteClick()">삭제하기</div>
@@ -42,7 +42,7 @@
         <p v-bind:class="{ expanded: isExpanded}" v-html="cutContent" style="white-space:pre-wrap"></p>
         <a class="expand-btn link" v-if="!isExpanded && !isTooShort" @click="onExpandClick()">더보기</a>
         <div class="ui images" v-if="feed.image_url">
-          <a class="link" v-for="(image, index) in feed.image_url" v-if="index < MAX_IMAGE_COUNT" @click="showImageLightBox()">
+          <a class="link" v-for="(image, index) in feed.image_url" v-bind:key="index" v-if="index < MAX_IMAGE_COUNT" @click="showImageLightBox()">
             <img :src="image" v-if="!(feed.image_url.length > MAX_IMAGE_COUNT && index == 3)">
           </a>
           <a class="link image-cover" v-if="feed.image_url.length > MAX_IMAGE_COUNT" @click="showImageLightBox()">
@@ -150,6 +150,10 @@ export default {
     }
   },
   methods: {
+    onReportClick() {
+      api.sendEmail('wekin@wekiner.com', '[피드 신고] 신고 된 피드 알림', `피드 번호 : ${this.feed.doc_key}에 대한 신고가 들어왔습니다. 확인해주세요. \n 내용 : ${this.feed.content}`)
+        .then(() => alert("신고되었습니다."))
+    },
     hashLinking(content, hashTags) {
       if (hashTags !== null) {
         try {

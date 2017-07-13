@@ -212,11 +212,11 @@ export default {
     toggleMobileMenu() {
       this.isMobileMenuShowing = !this.isMobileMenuShowing
       if (this.isMobileMenuShowing) {
-        $('#app').bind('touchmove', (e) => {
+        $('#views').bind('touchmove', (e) => {
           e.preventDefault()
         })
       } else {
-        $('#app').unbind('touchmove')
+        $('#views').unbind('touchmove')
       }
       this.$nextTick(() => {
         $('.ui.accordion.menu').accordion()
