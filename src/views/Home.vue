@@ -545,21 +545,11 @@ export default {
     }
     .swiper-slide {
       height: 600px;
-      @include respond(mobile) {
-        height: 200px
-      }
-      @include respond(tablet) {
-        height: 400px
-      }
-      @include respond(small) {
-        height: 500px
-      }
-      @include respond(large) {
-        height: 500px
-      }
-      @include respond(wide) {
-        height: 600px
-      }
+      @include respond(mobile) { height: 200px }
+      @include respond(tablet) { height: 400px }
+      @include respond(small) { height: 500px }
+      @include respond(large) { height: 500px }
+      @include respond(wide) { height: 600px }
     }
   }
   .title {

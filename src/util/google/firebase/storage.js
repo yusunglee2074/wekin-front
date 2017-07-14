@@ -1,8 +1,9 @@
 const firebase = require('firebase')
 
-exports.imageUploadOne = (file, callback) => {
+exports.mediaUpload = (file, callback) => {
+  let extension = file.name.split('.').pop()
   let dPath = datePath()
-  let path = `images/test/${dPath}.png`
+  let path = `video/${dPath}.${extension}`
 
   fireUpload(file, path, (snap) => {
     callback(snap.snapshot.downloadURL)

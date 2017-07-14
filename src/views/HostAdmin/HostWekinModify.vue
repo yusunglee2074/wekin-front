@@ -203,6 +203,7 @@ import hostCardLayout from 'components/HostCardLayout.vue'
 import FireUpload from 'components/FireUpload.vue'
 import api from 'api'
 import moment from 'moment'
+import {Storage} from 'src/util'
 
 export default {
   data() {
@@ -248,6 +249,14 @@ export default {
     FireUpload
   },
   methods: {
+    imageCallback(event, trumbowyg) {
+      Storage.imageUpload(event, task => {
+        let url = task.snapshot.downloadURL
+        let img = url.substring(0, url.indexOf('token') - 1)
+        trumbowyg.execCmd('insertImage', img)
+        trumbowyg.closeModal()
+      }, prg => {})
+    },
     deleteImage(index) {
       this.uploadedMainImages.splice(index, 1)
     },
@@ -429,13 +438,8 @@ export default {
       },
       plugins: {
         // Add imagur parameters to upload plugin
-        upload: {
-          serverPath: 'https://api.imgur.com/3/image',
-          fileFieldName: 'image',
-          headers: {
-            'Authorization': 'Client-ID 9e57cb1c4791cea'
-          },
-          urlPropertyName: 'data.link'
+        uploadimage: {
+          event: this.imageCallback
         }
       },
       btns: ['viewHTML',
@@ -446,7 +450,7 @@ export default {
         ['image'],
         ['preformatted'],
         'fullscreen']
-    });
+    })
   }
 }
 </script>
