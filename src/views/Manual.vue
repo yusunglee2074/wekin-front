@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <div class="navbar-custom"></div>
-    <img id="about" src="/static/images/maker_manual.jpg">
+    <img id="about" src="/static/images/maker_manual.png">
     <div>
     <a href="http://facebook.com/Wekin-1369310116471093"><img id="icon" src="/static/images/facebook_icon.png"></a>
     <a href="http://pf.kakao.com/_xmQxjZxl"><img id="icon" src="/static/images/kakao_icon.png"></a>
