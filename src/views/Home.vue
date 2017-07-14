@@ -6,8 +6,8 @@
     <div class="navbar-custom"></div>
     <div class="banners swiper-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="banner in banners">
-          <a href="#"><div class="swiper-slide" v-bind:style="{ backgroundImage: `url(${banner.url})`, backgroundSize:'cover', backgroundPosition: 'center' }"></div></a>
+        <div class="swiper-slide" v-for="(banner, index) in banners">
+          <a :href="`event/${index}`"><div class="swiper-slide" v-bind:style="{ backgroundImage: `url(${banner.url})`, backgroundSize:'cover', backgroundPosition: 'center' }"></div></a>
         </div>
       </div>
       <div class="swiper-pagination" slot="pagination"></div>
