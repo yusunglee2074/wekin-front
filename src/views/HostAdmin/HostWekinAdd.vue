@@ -28,14 +28,13 @@
             <input type="text" v-model="request.title">
           </div>
         </div>
-        <!--<div class="settings__list">
-            <label class="required">카테고리</label>
-            <div class="grouped fields">
-              <div class="field">
-                <div class="ui radio">
-                  <input type="radio" name="fruit" checked="" tabindex="0" value="놀이" v-model="request.category">
-                  <label>놀이</label>
-                </div>
+        <div class="settings__list">
+          <label class="required">카테고리</label>
+          <div class="grouped fields">
+            <div class="field">
+              <div class="ui radio">
+                <input type="radio" name="fruit" checked="" tabindex="0" value="놀이" v-model="request.category">
+                <label>놀이</label>
               </div>
               <div class="field">
                 <div class="ui radio">
@@ -68,7 +67,8 @@
                 </div>
               </div>
             </div>
-          </div>-->
+          </div>
+        </div>
         <div class="ui divider"></div>
         <div class="settings__list">
           <label class="required">상세소개</label>

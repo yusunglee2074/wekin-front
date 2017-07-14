@@ -259,6 +259,7 @@ export default {
           })
       } else {
         alert("로그인이 필요한 서비스 입니다.")
+        this.$parent.$parent.$refs.navbar.showModalLogin()
       }
     },
     onPostCommentClick() {
@@ -281,6 +282,7 @@ export default {
           .catch(err => alert(err.response.data))
       } else {
         alert("로그인이 필요한 서비스 입니다.")
+        this.$parent.$parent.$refs.navbar.showModalLogin()
       }
     },
     showImageLightBox() {

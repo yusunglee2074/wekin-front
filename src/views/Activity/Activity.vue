@@ -28,21 +28,21 @@
           </div>
         </div>
         <!--카테고리-->
-        <!--<div class="ui styled accordion">
+        <div class="ui styled accordion">
           <div class="active title">
             카테고리
           </div>
           <div class="active content">
             <div class="button-container">
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '한강몽땅'}" @click="toggleCheckList(categoryCheck, 0, '한강몽땅')">한강몽땅</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '놀이'}" @click="toggleCheckList(categoryCheck, 0, '놀이')">놀이</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '도전'}" @click="toggleCheckList(categoryCheck, 0, '도전')">도전</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '체험'}" @click="toggleCheckList(categoryCheck, 0, '체험')">체험</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '문화'}" @click="toggleCheckList(categoryCheck, 0, '문화')">문화</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '휴식'}" @click="toggleCheckList(categoryCheck, 0, '휴식')">휴식</button>
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '한강몽땅'}" @click="toggleCheckList(categoryCheck, 0, '한강몽땅')">한강몽땅</button>
             </div>
           </div>
-        </div>-->
+        </div>
         <!--카테고리 끝-->
         <div class="ui styled accordion">
           <div class="active title">
@@ -126,6 +126,28 @@
           </div>
         </div>
         <button class="ui button negative full-width reset-btn" @click="resetFilter()">필터 초기화</button>
+      </div>
+      <div class="categoryformobile">
+        <div class="ui text menu">
+          <a v-bind:class="{isClicked: this.categoryCheck === '한강몽땅'}" class="item" id="fourlettercategory" @click="toggleCheckList(categoryCheck, 0, '한강몽땅')">
+            한강몽땅 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '놀이'}" class="item" @click="toggleCheckList(categoryCheck, 0, '놀이')">
+            놀이
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '도전'}" class="item" @click="toggleCheckList(categoryCheck, 0, '도전')">
+            도전
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '체험'}" class="item" @click="toggleCheckList(categoryCheck, 0, '체험')">
+            체험
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '문화'}" class="item" @click="toggleCheckList(categoryCheck, 0, '문화')">
+            문화 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '휴식'}" class="item" @click="toggleCheckList(categoryCheck, 0, '휴식')">
+            휴식 
+          </a>
+        </div>
       </div>
       <div class="ui clearing segment rect">
         <div class="ui selection dropdown styled sort">
@@ -534,6 +556,7 @@ export default {
         .then(json => {
           this.isLoading = false
           this.wekins = json.results
+          console.log(this.wekins)
           this.wekinsTemp = json.results
           this.initSortDropdown()
         })
@@ -788,7 +811,7 @@ export default {
   }
 }
 
-.mobile-filter-btn {
+.mobile-filter-btn, .categoryformobile {
   display: none;
 }
 
@@ -821,6 +844,9 @@ export default {
       color: white;
     }
   }
+  .categoryformobile {
+    display: inherit;
+  }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -848,5 +874,27 @@ export default {
   .list {
     left: inherit;
   }
+}
+
+.ui.text.menu {
+  margin: 0px 0px;
+  margin-left: -10px;
+  height: 28px;
+  min-height: 10px;
+  font-size: 16px;
+  .item {
+    text-align: center;
+    width: 16.66%;
+    display: block;
+
+    &#fourlettercategory {
+      min-width: 86px;
+      padding-right: 0px;
+    }
+  }
 } 
+
+.isClicked {
+  color: rgb(0, 162, 154)!important;
+}
 </style>
