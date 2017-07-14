@@ -203,6 +203,10 @@ export default {
     // }, 1000)
   },
   methods: {
+    showSignupModalandCloseLoginModal() {
+      this.showLoginModal = false 
+      this.showSignupModal = true
+    },
     showModalLogin() {
       this.showLoginModal = true
     },

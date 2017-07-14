@@ -18,6 +18,8 @@
             <div class="ui divider"></div>
             <div>비밀번호를 잃어버리셨나요?</div>
             <p><a href="/findPassword">비밀번호 재설정</a></p>
+            <div>회원가입 하러가기</div>
+            <p><a href="#" @click="callSignupModal">회원가입</a></p>
           </div>
           <div class="padded">
             <!--<span class="ui horizontal divider">
@@ -56,6 +58,9 @@ export default {
     'modal-signup': SignupModal
   },
   methods: {
+    callSignupModal () {
+      this.$parent.$parent.$refs.navbar.showSignupModalandCloseLoginModal()
+    },
     savePost: function() {
       this.$emit('update:show', false)
     },
