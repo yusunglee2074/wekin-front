@@ -1,7 +1,7 @@
 <template>
-  <div class="event">
+  <div class="about">
     <div class="navbar-custom"></div>
-    <img id="about" :src=`/static/images/promotion/${imageIndex}.jpeg`/>
+    <img id="about" :src="`/static/images/promotion/${imageIndex}.png`">
   </div>
 
 </template>
