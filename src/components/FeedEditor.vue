@@ -60,7 +60,7 @@
 import api from 'api'
 import FireUpload from 'components/FireUpload.vue'
 import firebase from 'firebase'
-import { Media } from 'src/util'
+import { Storage } from 'src/util'
 
 export default {
   data() {
@@ -99,8 +99,10 @@ export default {
     },
     uploadMedia(e) {
       let file = e.target.files[0]
-      Media.storage(file, this.progress).then(url => {
+      this.isFileUploading = true      
+      Storage.mediaUpload(file, url => {
         this.uploadedMedia = url
+        this.isFileUploading = false
       })
     },
     onPostClick() {

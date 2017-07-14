@@ -10,13 +10,19 @@ export default {
    * @param {user} user
    */
   signUp (email, password, userName) {
-    return firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(currentUser => {
-        currentUser.sendEmailVerification()
-        currentUser.getIdToken().then(token => {
-          return api.signUp(token, userName)
-        })
-      })
+    return api.signUp(email, password, userName)
+            .then(customToken => firebase.auth().signInWithCustomToken(customToken))
+            .then(currentUser => { 
+              currentUser.sendEmailVerification() 
+              return currentUser
+            })
+    // return firebase.auth().createUserWithEmailAndPassword(email, password)
+    //   .then(currentUser => {
+    //     currentUser.sendEmailVerification()
+    //     currentUser.getIdToken().then(token => {
+    //       return api.signUp(token, userName)
+    //     })
+      // })
   },
   /**
    * 폼에서 유저 정보를 넘겨 받는다.

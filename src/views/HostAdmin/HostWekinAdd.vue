@@ -36,35 +36,35 @@
                 <input type="radio" name="fruit" checked="" tabindex="0" value="놀이" v-model="request.category">
                 <label>놀이</label>
               </div>
-            </div>
-            <div class="field">
-              <div class="ui radio">
-                <input type="radio" name="fruit" tabindex="0" class="hidden" value="도전" v-model="request.category">
-                <label>도전</label>
+              <div class="field">
+                <div class="ui radio">
+                  <input type="radio" name="fruit" tabindex="0" class="hidden" value="도전" v-model="request.category">
+                  <label>도전</label>
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <div class="ui radio">
-                <input type="radio" name="fruit" tabindex="0" class="hidden" value="체험" v-model="request.category">
-                <label>체험</label>
+              <div class="field">
+                <div class="ui radio">
+                  <input type="radio" name="fruit" tabindex="0" class="hidden" value="체험" v-model="request.category">
+                  <label>체험</label>
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <div class="ui radio">
-                <input type="radio" name="fruit" tabindex="0" class="hidden" value="문화" v-model="request.category">
-                <label>문화</label>
+              <div class="field">
+                <div class="ui radio">
+                  <input type="radio" name="fruit" tabindex="0" class="hidden" value="문화" v-model="request.category">
+                  <label>문화</label>
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <div class="ui radio">
-                <input type="radio" name="fruit" tabindex="0" class="hidden" value="축제" v-model="request.category">
-                <label>축제</label>
+              <div class="field">
+                <div class="ui radio">
+                  <input type="radio" name="fruit" tabindex="0" class="hidden" value="축제" v-model="request.category">
+                  <label>축제</label>
+                </div>
               </div>
-            </div>
-            <div class="field">
-              <div class="ui radio">
-                <input type="radio" name="fruit" tabindex="0" class="hidden" value="휴식" v-model="request.category">
-                <label>휴식</label>
+              <div class="field">
+                <div class="ui radio">
+                  <input type="radio" name="fruit" tabindex="0" class="hidden" value="휴식" v-model="request.category">
+                  <label>휴식</label>
+                </div>
               </div>
             </div>
           </div>
@@ -186,7 +186,7 @@
         </div>
         <div class="ui divider"></div>
         <!--<button class="ui primary button floated right save-btn">확인</button>
-                                    <button class="ui primary button floated right save-btn">삭제요청</button>-->
+                                      <button class="ui primary button floated right save-btn">삭제요청</button>-->
         <button class="ui primary button floated right save-btn" @click="sendForm()">신청하기</button>
         <div class="clear"></div>
       </div>
@@ -197,6 +197,7 @@
 import hostCardLayout from 'components/HostCardLayout.vue'
 import FireUpload from 'components/FireUpload.vue'
 import api from 'api'
+import {Storage} from 'src/util'
 
 export default {
   data() {
@@ -234,6 +235,14 @@ export default {
     FireUpload
   },
   methods: {
+    imageCallback(event, trumbowyg) {
+      Storage.imageUpload(event, task => {
+        let url = task.snapshot.downloadURL
+        let img = url.substring(0, url.indexOf('token') - 1)
+        trumbowyg.execCmd('insertImage', img)
+        trumbowyg.closeModal()
+      }, prg => {})
+    },
     deleteImage(index) {
       this.uploadedMainImages.splice(index, 1)
     },
@@ -383,13 +392,8 @@ export default {
       },
       plugins: {
         // Add imagur parameters to upload plugin
-        upload: {
-          serverPath: 'https://api.imgur.com/3/image',
-          fileFieldName: 'image',
-          headers: {
-            'Authorization': 'Client-ID 9e57cb1c4791cea'
-          },
-          urlPropertyName: 'data.link'
+        uploadimage: {
+          event: this.imageCallback
         }
       },
       btns: ['viewHTML',
@@ -400,7 +404,7 @@ export default {
         ['image'],
         ['preformatted'],
         'fullscreen']
-    });
+    }) 
   }
 }
 </script>
@@ -415,7 +419,7 @@ export default {
 
 .limit-user-container {
   flex-direction: column;
-  width:100%;
+  width: 100%;
   .input {
     flex-direction: column;
   }

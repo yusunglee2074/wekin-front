@@ -21,7 +21,7 @@ require('./style/common.scss')
 require('./style/media.scss')
 require('./style/variables.scss')
 require('../static/trumbowyg/dist/trumbowyg.min.js')
-require('../static/trumbowyg/dist/plugins/upload/trumbowyg.upload.min.js')
+require('../static/trumbowyg/dist/plugins/uploadimage/trumbowyg.uploadimage.js')
 require('../static/trumbowyg/dist/langs/ko.min.js')
 
 Vue.use(require('vue-infinite-scroll'))
