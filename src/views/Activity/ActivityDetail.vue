@@ -1154,7 +1154,7 @@ h2 {
     bottom: 0;
     padding: 0 6px 6px;
     background: #F0F0F0;
-    z-index: 9999;
+    z-index: 9998;
   }
   .apply-btn {
     height: 48px;
