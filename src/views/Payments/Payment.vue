@@ -92,6 +92,7 @@
               <input type="radio" name="payments" v-model="payMethod" value="trans">
               <label>실시간 계좌이체</label>
             </div>
+            <!--
             <div class="ui radio checkbox">
               <input type="radio" name="payments" v-model="payMethod" value="phone" disabled="true">
               <label>휴대폰 소액결제</label>
@@ -104,6 +105,7 @@
               <input type="radio" name="payments" v-model="payMethod" disabled="true">
               <label>페이코 페이 간편결제</label>
             </div>
+            -->
           </div>
         </div>
         <div class="ui segment" v-if="payMethod == 'vbank'">
