@@ -203,6 +203,9 @@ export default {
     // }, 1000)
   },
   methods: {
+    showModalLogin() {
+      this.showLoginModal = true
+    },
     showMobileFilter() {
       this.$router.push(`/filter`)
     },

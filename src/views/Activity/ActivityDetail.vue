@@ -1,6 +1,5 @@
 <template>
   <div id="WekinDetail" v-if="activity">
-    <navbar id="navbar" ref="navbar"></navbar>
     <div class="navbar-custom"></div>
     <div class="wekin swiper-container">
       <div class="swiper-wrapper">
@@ -458,6 +457,7 @@ export default {
         this.$refs.mailRef.showMailComponent(this.activity.title)
       } else {
         alert("로그인이 필요한 서비스 입니다.")
+        this.$parent.$refs.navbar.showModalLogin()
       }
     },
     toggleButton(button) {
@@ -490,6 +490,7 @@ export default {
           .catch(error => console.error(error))
       } else {
         alert("로그인이 필요한 서비스 입니다.")
+        this.$parent.$refs.navbar.showModalLogin()
       }
     },
     getUserFavorite() {
@@ -535,6 +536,7 @@ export default {
         })
       } else {
         alert("로그인이 필요한 서비스 입니다.")
+        this.$parent.$refs.navbar.showModalLogin()
       }
     },
     activeDropdown() {
@@ -573,6 +575,7 @@ export default {
         }
       } else {
         alert("로그인이 필요한 서비스 입니다.")
+        this.$parent.$refs.navbar.showModalLogin()
       }
     },
     checkForm() {
@@ -705,12 +708,14 @@ export default {
           .catch(error => {
             if (error.response.status == 403) {
               alert("로그인이 필요한 서비스 입니다.")
+              this.$parent.$refs.navbar.showModalLogin()
             } else {
               alert("잠시 후 다시시도해주세요.")
             }
           })
       } else {
         alert("로그인이 필요한 서비스 입니다.")
+        this.$parent.$refs.navbar.showModalLogin()
       }
     },
     dropdownPeopleCount() {
