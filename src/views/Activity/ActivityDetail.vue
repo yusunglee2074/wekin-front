@@ -1,6 +1,5 @@
 <template>
   <div id="WekinDetail" v-if="activity">
-    <navbar id="navbar" ref="navbar"></navbar>
     <div class="navbar-custom"></div>
     <div class="wekin swiper-container">
       <div class="swiper-wrapper">
