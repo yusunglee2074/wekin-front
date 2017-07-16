@@ -51,6 +51,12 @@
           <div class="item" data-value="1">비공개</div>
         </div>
       </div>
+      
+      <!--
+        <input type="checkbox" id="checkbox" v-model="withFacebook">
+        <label for="checkbox" class="default text"> 페이스북에 동시 게재 </label>
+        -->
+
       <button class="ui action negative button floated right" @click="onPostClick()">작성</button>
       <button class="ui basic action button floated right" @click="hideFeedEditor()">취소</button>
     </div>
@@ -81,6 +87,7 @@ export default {
       isFileUploading: false,
       isModifying: false, // 수정모드인지 판별 필수
       docKey: null,
+      withFacebook: false 
     }
   },
   components: {
