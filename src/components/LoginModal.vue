@@ -1,5 +1,8 @@
 <template>
   <div class="modallogin">
+    <div class="ui active inverted dimmer" v-if="isLoading">
+      <div class="ui medium text loader">로그인 중입니다.</div>
+    </div>
     <div class="modal-mask" @click="close" v-show="show" transition="modal">
       <div class="modal-container" @click.stop>
         <div class="modal-header">
@@ -51,7 +54,8 @@ export default {
     return {
       user: {},
       errorMessage: '',
-      showSignupModal: false
+      showSignupModal: false,
+      isLoading: false
     }
   },
   components: {
@@ -88,7 +92,7 @@ export default {
       if (user.emailVerified) {
         this.goToRedirectUrl()
       } else {
-        window.location.href = '/verifyEmail'
+        // window.location.href = '/verifyEmail'
       }
     },
     onLoginFail(error) {
@@ -132,8 +136,9 @@ export default {
         .catch((error) => this.onLoginFail(error))
     },
     onLoginClick() {
+      this.isLoading = true
+      console.log(this.isLoading)
       if (this.checkForm()) {
-        this.isLoading = true
         auth.signIn(this.user.email, this.user.password)
           .then((currentUser) => this.onLoginSuccess(currentUser))
           .catch((error) => this.onLoginFail(error))
@@ -179,11 +184,13 @@ export default {
     transition: all .3s ease;
     font-family: Helvetica, Arial, sans-serif;
     text-align: center;
+    height: 376px;
 }
 
 .modal-header h3 {
-    margin-top: 0;
+    margin-top: 16px;
     color: #42b983;
+
 }
 
 .modal-body {
