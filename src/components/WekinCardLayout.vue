@@ -5,12 +5,14 @@
       </slot>
       <div :style="{ 'background':'url(' + imageUrl + ') center center', 'height': 200 + 'px', 'background-size':'cover'}"></div>
     </a>
-    <a :href="`/activity/${activityKey}`" class="content link">
+    <a :href="`/activity/${activityKey}`" class="content link" style="display: block;">
         <slot name="extra-header">
         </slot>
-        <span class="title">{{title}}</span>
-        <div class="address">{{address}}</div>
-        <div class="name">Maker {{name}}</div>
+        <div class="titlenameaddress">
+          <span class="title">{{title}}</span>
+          <div class="address">{{address}}</div>
+          <div class="name">Maker {{name}}</div>
+        </div>
     </a>
     <slot name="extra-body" class="extra-body">
     </slot>

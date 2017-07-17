@@ -878,7 +878,7 @@ export default {
 
 .ui.text.menu {
   margin: 0px 0px;
-  margin-left: -10px;
+  margin-left: -28px;
   height: 28px;
   min-height: 10px;
   font-size: 16px;
