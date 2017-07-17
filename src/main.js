@@ -15,11 +15,9 @@ import filter from './filter'
 
 import firebase from 'firebase'
 // require('static/fine-uploader/fine-uploader.js')
-require('../static/swiper/js/swiper.min.js')
-require('../static/semantic/dist/semantic.min.js')
-require('./style/common.scss')
-require('./style/media.scss')
-require('./style/variables.scss')
+// require('./style/common.scss')
+// require('./style/media.scss')
+// require('./style/variables.scss')
 require('../static/trumbowyg/dist/trumbowyg.min.js')
 require('../static/trumbowyg/dist/plugins/uploadimage/trumbowyg.uploadimage.js')
 require('../static/trumbowyg/dist/langs/ko.min.js')
@@ -38,6 +36,8 @@ var config = {
 }
 firebase.initializeApp(config)
 
+// 이메일 인증 안할 시 튕겨냄
+/*
 router.afterEach((to, from) => {
   if (to.path !== '/login' && to.path !== '/join') {
     firebase.auth().onAuthStateChanged((currentUser) => {
@@ -51,6 +51,7 @@ router.afterEach((to, from) => {
     })
   }
 })
+*/
 
 Vue.config.productionTip = false
 
