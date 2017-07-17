@@ -461,7 +461,7 @@ div[contenteditable=true] {
         text-overflow: ellipsis;
         /* 여러 줄 자르기 추가 스타일 */
         white-space: normal;
-        max-height: 4.8em;
+        max-height: 8.8em;
         word-wrap: break-word;
         display: -webkit-box; // -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
