@@ -9,7 +9,7 @@
       </div>
       <div class="button-container" v-if="!user">
         <a class="ui button primary" @click="showLoginModal = true">로그인</a>
-        <a class="ui button basic" @click="showSignupModalMethod" href="#">회원가입</a>
+        <a class="ui button basic item linked" @click="showSignupModalMethod" href="#">회원가입</a>
       </div>
       <div class="login-info-container" v-if="user">
         <a :href="`/users/${user.user_key}`" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></a>
@@ -204,13 +204,11 @@ export default {
   },
   methods: {
     showSignupModalMethod() {
-      dataLayer.push({'Click classes': 'item linked'});
       this.showSignupModal = true
     },
     showSignupModalandCloseLoginModal() {
       this.showLoginModal = false 
       this.showSignupModal = true
-      dataLayer.push({'Click classes': 'item linked'});
     },
     showModalLogin() {
       this.showLoginModal = true

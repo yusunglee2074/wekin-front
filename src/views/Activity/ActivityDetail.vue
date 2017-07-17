@@ -70,14 +70,14 @@
                 <!--<div class="item" :data-value="index + 1" v-for="(wekin, index) in selectedWekin.max_user">{{index + 1}}명</div>-->
               </div>
             </div>
-            <button class="negative ui button full-width apply-btn" v-on:click="onApplyBtn()">
+            <button class="negative ui button full-width apply-btn" id="virtualview" v-on:click="onApplyBtn()">
               신청하기
             </button>
           </div>
           <div class="ui segment additional-button-container">
-            <button class="ui basic button full-width" @click="toggleFavorite()">
+            <button class="ui basic button full-width" id="virtualview" @click="toggleFavorite()">
               <i class="icon bookmark" v-bind:class="{remove: !isFavoritedActivity, red: isFavoritedActivity}"></i>관심목록 추가</button>
-            <a class="ui basic button full-width" @click="onMailClick()">
+            <a class="ui basic button full-width" id="virtualview" @click="onMailClick()">
               <i class="icon outline mail"></i>이메일 문의</a>
           </div>
         </div>
@@ -263,7 +263,7 @@
           <button class="ui white button" @click="onMailClick()">
             <i class="icon outline mail"></i>
           </button>
-          <button class="negative ui button mobile-apply-btn" @click="toggleMobileForm()" v-if="!isMobileFormShowing">
+          <button class="negative ui button mobile-apply-btn" id="virtualview"  @click="toggleMobileForm()" v-if="!isMobileFormShowing">
             신청하기
           </button>
         </div>
@@ -453,7 +453,6 @@ export default {
         .catch((error) => console.error(error))
     },
     onMailClick() {
-      dataLayer.push({'Click classes': 'virtualview'})
       if (this.user) {
         this.$refs.mailRef.showMailComponent(this.activity.title)
       } else {
@@ -479,7 +478,6 @@ export default {
       window.open(`https://m.map.naver.com/map.nhn?lat=${location.lat}&lng=${location.lng}`)
     },
     toggleFavorite() {
-      dataLayer.push({'Click classes': 'virtualview'})
       if (this.user) {
         api.toggleFavorite(this.user.user_key, this.$route.params.key)
           .then(result => {
@@ -518,7 +516,6 @@ export default {
       return false
     },
     toggleMobileForm() {
-      dataLayer.push({'Click classes': 'virtualview'})
       if (this.user) {
         this.isMobileFormShowing = !this.isMobileFormShowing
         this.$nextTick(() => {
