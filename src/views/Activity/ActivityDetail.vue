@@ -518,6 +518,7 @@ export default {
       return false
     },
     toggleMobileForm() {
+      dataLayer.push({'Click classes': 'virtualview'})
       if (this.user) {
         this.isMobileFormShowing = !this.isMobileFormShowing
         this.$nextTick(() => {
@@ -545,7 +546,6 @@ export default {
       $('.qna-buttons-container .ui.selection.dropdown').dropdown()
     },
     onApplyBtn() {
-      dataLayer.push({'Click classes': 'virtualview'})
       if (this.user) {
         if (this.checkForm()) {
           if (this.isApplyAvailable) {
