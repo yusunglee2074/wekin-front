@@ -9,7 +9,7 @@
       </div>
       <div class="button-container" v-if="!user">
         <a class="ui button primary" @click="showLoginModal = true">로그인</a>
-        <a class="ui button basic" @click="showSignupModal = true">회원가입</a>
+        <a class="ui button basic" @click="showSignupModal = true" href="#">회원가입</a>
       </div>
       <div class="login-info-container" v-if="user">
         <a :href="`/users/${user.user_key}`" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></a>
@@ -100,7 +100,7 @@
         <modal v-bind:show.sync="showLoginModal"></modal>
         <a class="item linked" @click="showLoginModal = true">로그인</a>
         <modal-signup v-bind:show.sync="showSignupModal"></modal-signup>
-        <a class="item linked" @click="showSignupModal = true">회원가입</a>
+        <a class="item linked" @click="showSignupModal = true" href="#">회원가입</a>
 
         <!--<div class="loading"></div>-->
       </div>
