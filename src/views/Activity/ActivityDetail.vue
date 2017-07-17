@@ -453,6 +453,7 @@ export default {
         .catch((error) => console.error(error))
     },
     onMailClick() {
+      dataLayer.push({'Click classes': 'virtualview'})
       if (this.user) {
         this.$refs.mailRef.showMailComponent(this.activity.title)
       } else {
@@ -478,6 +479,7 @@ export default {
       window.open(`https://m.map.naver.com/map.nhn?lat=${location.lat}&lng=${location.lng}`)
     },
     toggleFavorite() {
+      dataLayer.push({'Click classes': 'virtualview'})
       if (this.user) {
         api.toggleFavorite(this.user.user_key, this.$route.params.key)
           .then(result => {
@@ -543,6 +545,7 @@ export default {
       $('.qna-buttons-container .ui.selection.dropdown').dropdown()
     },
     onApplyBtn() {
+      dataLayer.push({'Click classes': 'virtualview'})
       if (this.user) {
         if (this.checkForm()) {
           if (this.isApplyAvailable) {
