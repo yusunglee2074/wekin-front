@@ -70,6 +70,7 @@
     "timeago.js": "^3.0.1",
     "ts-loader": "^2.1.0",
     "typescript": "^2.3.4",
+    "uglifyjs-webpack-plugin": "^0.4.6",
     "url-loader": "^0.5.8",
     "util": "^0.10.3",
     "vue": "^2.3.3",
