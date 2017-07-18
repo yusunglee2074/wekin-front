@@ -15,9 +15,11 @@ import filter from './filter'
 
 import firebase from 'firebase'
 // require('static/fine-uploader/fine-uploader.js')
-// require('./style/common.scss')
-// require('./style/media.scss')
-// require('./style/variables.scss')
+require('../static/swiper/js/swiper.min.js')
+require('../static/semantic/dist/semantic.min.js')
+require('./style/common.scss')
+require('./style/media.scss')
+require('./style/variables.scss')
 require('../static/trumbowyg/dist/trumbowyg.min.js')
 require('../static/trumbowyg/dist/plugins/uploadimage/trumbowyg.uploadimage.js')
 require('../static/trumbowyg/dist/langs/ko.min.js')
