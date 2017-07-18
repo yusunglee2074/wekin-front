@@ -89,7 +89,27 @@
       </div>
       <div class="ui tab overview active" data-tab="first">
         <div class="title-mobile-container">
-          <h2>{{activity.title}}</h2>
+          <h2>{{activity.title}}
+            <div class="ui icon top floated right pointing inline dropdown feed-menu">
+              <i class="ellipsis vertical icon"></i>
+              <div class="menu">
+                <div class="header">공유하기</div>
+                <div class="item" @click="onFacebookShareClick()">
+                  <img class="facebookLogoBtn" src="/static/images/ic-facebook.png"> 페이스북
+                </div>
+                <div class="item" @click="snsShare('google')">
+                  <img class="facebookLogoBtn" src="/static/images/ic-google.png"> 구글
+                </div>
+                <div class="item" @click="snsShare('kakaostory')">
+                  <img class="facebookLogoBtn" src="/static/images/ic-kakaostory.png"> 카카오스토리
+                </div>
+                <div class="item" @click="snsShare('naver')">
+                  <img class="facebookLogoBtn" src="/static/images/ic-naver.png"> 네이버
+                </div>
+              </div>
+            </div>
+          
+          </h2>
           <p v-if="activity.address_detail">
             <i class="icon marker"></i>{{activity.address}}
           </p>
