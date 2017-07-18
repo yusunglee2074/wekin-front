@@ -141,8 +141,8 @@
         <div class="ui divider"></div>
         <h4>상세 설명</h4>
         <p class="explain-detail pre" v-bind:class="{ expanded: isExpanded }" v-html="activity.intro_detail"></p>
-        <a class="expand-btn link" v-if="isExpanded" @click="toggleExpend()">접기</a>
         <a class="expand-btn link" v-if="!isExpanded" @click="toggleExpend()">펼치기</a>
+        <a class="expand-btn link" v-if="isExpanded" @click="toggleExpend()">접기</a>
         <div class="ui divider"></div>
         <h4>세부일정</h4>
         <div class="schedules">
@@ -381,7 +381,7 @@ export default {
       isMyQuestionOnlyChecked: false,
       mySwiper: null,
       isApplyAvailable: true,
-      isExpanded: false,
+      isExpanded: true,
       isSmsNotiChecked: false,
       isEmailNotiChecked: false,
       activity: {
