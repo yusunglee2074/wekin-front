@@ -15,6 +15,9 @@
             <div class="ui input">
               <input type="password" placeholder="비밀번호" v-model="user.password">
             </div>
+            <div class="ui input">
+              <input type="password" placeholder="비밀번호 확인" v-model="user.password2">
+            </div>
             <div class="color secondary">{{errorMessage}}</div>
             <div class="ui small feed">
               <button class="negative ui button" @click="onSignUpClick()">가입하기</button>
@@ -45,7 +48,8 @@ export default {
       user: {
         email: null,
         name: null, 
-        password: null 
+        password: null,
+        password2: null 
       },
       errorMessage: '',
       isAgreed: false,
@@ -68,12 +72,15 @@ export default {
     checkForm() {
       if (!(this.user.email &&
         this.user.password &&
+        this.user.password2 &&
         this.user.name)) {
         this.errorMessage = "모든 폼을 입력해주세요."
       } else if (!Validation.checkEmailValidation(this.user.email)) {
         this.errorMessage = "이메일 형식을 확인해주세요."
       } else if (!this.isAgreed) {
         alert("약관에 동의해주세요.")
+      } else if (this.password != this.password2) {
+        alert("비밀번호 2개가 일치하지 않습니다.")
       } else {
         return true
       }
@@ -106,8 +113,8 @@ export default {
     },
     onSignUpSuccess(result) {
       this.isLoading = false
-      alert('가입이 완료되었습니다. 서비스 이용을 위해 이메일 인증을 완료해주세요.')
-      window.location.href = '/verifyEmail'
+      alert('가입이 완료되었습니다.')
+      window.location.reload()
     },
     onSignUpFail(error) {
       this.isLoading = false
@@ -174,8 +181,8 @@ export default {
 }
 
 .modal-container {
-    width: 350px;
-    height: 330px;
+    width: 300px;
+    height: 376px;
     margin: 40px auto 0;
     padding: 20px 30px;
     background-color: #fff;

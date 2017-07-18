@@ -92,6 +92,7 @@ export default {
       if (user.emailVerified) {
         this.goToRedirectUrl()
       } else {
+        window.location.reload()
         // window.location.href = '/verifyEmail'
       }
     },

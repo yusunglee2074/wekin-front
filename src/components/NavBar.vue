@@ -97,9 +97,7 @@
         <a href="/manual" class="item linked" tag="div" exact>등록방법</a>
       </div>
       <div class="right menu" v-if="!user">
-        <modal v-bind:show.sync="showLoginModal"></modal>
         <a class="item linked" @click="showLoginModal = true">로그인</a>
-        <modal-signup v-bind:show.sync="showSignupModal"></modal-signup>
         <a class="item linked" @click="showSignupModalMethod" href="#">회원가입</a>
 
         <!--<div class="loading"></div>-->
