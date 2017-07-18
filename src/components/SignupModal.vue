@@ -79,7 +79,7 @@ export default {
         this.errorMessage = "이메일 형식을 확인해주세요."
       } else if (!this.isAgreed) {
         alert("약관에 동의해주세요.")
-      } else if (this.password != this.password2) {
+      } else if (this.user.password != this.user.password2) {
         alert("비밀번호 2개가 일치하지 않습니다.")
       } else {
         return true
