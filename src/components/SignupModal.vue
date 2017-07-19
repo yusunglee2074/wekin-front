@@ -24,8 +24,8 @@
               <div class="ui checkbox agreement-checkbox">
                 <input type="checkbox" name="example">
                 <label class="label-for-signup">
-                  <a href="/policy/term" tag="a">이용약관</a>과
-                  <a href="policy/privacy" tag="a">개인정보취급방침</a>에 동의합니다.</label>
+                  <a href="/policy/term" tag="a" target="_blank">이용약관</a>과
+                  <a href="policy/privacy" tag="a" target="_blank">개인정보취급방침</a>에 동의합니다.</label>
             </div>
           </div>
         </div>
