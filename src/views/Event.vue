@@ -1,14 +1,17 @@
 <template>
   <div class="about">
-    <div class="navbar-custom"></div>
-    <img id="about" :src="`/static/images/promotion/${imageIndex}.png`">
+    <event-list></event-list>
   </div>
 
 </template>
 
 
 <script>
+import EventList from '../components/EventList.vue'
 export default {
+  components: {
+    'event-list': EventList 
+  },
   data() {
     return {
       imageIndex: null
@@ -17,7 +20,6 @@ export default {
   methods: {
     getImageWithPageIndex() {
       this.imageIndex = this.$route.params.key
-      console.log(this.imageIndex)
     }
   },
   mounted() {
