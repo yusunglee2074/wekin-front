@@ -40,7 +40,7 @@ import Filter from 'views/Filter.vue'
 import Search from 'views/Search.vue'
 import About from 'views/About.vue'
 import Manual from 'views/Manual.vue'
-import Event from 'views/Event.vue'
+import EventList from 'components/EventList.vue'
 // import Meta from 'vue-meta'
 
 Vue.use(Router)
@@ -195,8 +195,8 @@ export default new Router({
     },
     {
       path: '/event/:key',
-      name: 'Event',
-      component: Event
+      name: 'EventList',
+      component: EventList
     }
   ]
 })
