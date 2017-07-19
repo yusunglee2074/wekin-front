@@ -41,7 +41,7 @@ export default {
   methods: {
     sendEmail() {
       this.isSending = true
-      let target = 'haneu89@naver.com'
+      let target = 'wekin@wekiner.com'
       let title = this.title
       let message = `위킨명 : ${this.title}<br/>메일주소 : ${this.email}<br/>이름 : ${this.name}<br/>전화번호 : ${this.phone}<br/>내용 : ${this.content}`
       fetch('https://wekin-api-prod-dot-wekinproject.appspot.com/v1/util/mail', {
