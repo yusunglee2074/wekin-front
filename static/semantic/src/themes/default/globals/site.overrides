@@ -1,0 +1,7 @@
+/*******************************
+        Global Overrides
+*******************************/
+
+/*--- Colors ---*/
+@weeken-primary      : #00A29A;
+@primaryColor        : @weeken-primary;
