@@ -9,7 +9,7 @@
       </div>
       <div class="button-container" v-if="!user">
         <a class="ui button primary" @click="showLoginModal = true">로그인</a>
-        <a class="ui button basic item linked" @click="showSignupModalMethod">회원가입</a>
+        <a class="ui button basic item linked" id="signupbutton" @click="showSignupModalMethod">회원가입</a>
       </div>
       <div class="login-info-container" v-if="user">
         <a :href="`/users/${user.user_key}`" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></a>
@@ -263,6 +263,11 @@ export default {
 @import '../style/variables';
 @import '../style/typography';
 @import '../style/cross-browsing';
+
+
+#signupbutton {
+ margin-left: 10px;
+}
 
 .fullHeight {
   height: 100%;
