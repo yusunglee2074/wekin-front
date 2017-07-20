@@ -142,7 +142,7 @@
         </div>
         <div class="ui divider"></div>
         <div class="settings__list">
-          <label class="required">날짜&amp원인원</label>
+          <label class="required">날짜&amp인원</label>
           <span>정기/일회성 및 인원 설정</span>
         </div>
         <div class="ui segment wekinSchedules" v-for="(wekinSchedule, index) in wekinSchedules" v-bind:key="wekinSchedule.wekin_key" :id="[`schedule--${index}`]">
@@ -165,15 +165,15 @@
             </div>
           </div>
           <div class="settings__list limit">
-            <label>최대~최소인원</label>
+            <label>최소~최대인원</label>
             <div class="limit-user-container flex">
-              <div class="ui input flex-f1">
-                <label>최대 인원</label>
-                <input type="text" :id="['max_user--' + index]">
-              </div>
               <div class="ui input flex-f1" style="margin-top:12px;">
                 <label>최소 인원</label>
-                <input type="text" :id="['min_user--' + index]">
+                <input type="text" :id="['min_user--' + index]" v-on:keypress="isNumber(event)">
+              </div>
+              <div class="ui input flex-f1">
+                <label>최대 인원</label>
+                <input type="text" :id="['max_user--' + index]" v-on:keypress="isNumber(event)">
               </div>
             </div>
           </div>
@@ -249,6 +249,16 @@ export default {
     FireUpload
   },
   methods: {
+    isNumber: function(evt) {
+      evt = (evt) ? evt : window.event;
+      var charCode = (evt.which) ? evt.which : evt.keyCode;
+      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+        evt.preventDefault();;
+        alert("숫자만 입력 가능합니다.")
+      } else {
+        return true;
+      }
+    },
     imageCallback(event, trumbowyg) {
       Storage.imageUpload(event, task => {
         let url = task.snapshot.downloadURL
@@ -300,6 +310,7 @@ export default {
         this.request.preparation &&
         this.request.address &&
         this.request.meetArea &&
+        this.request.category &&
         this.request.refundPolicy &&
         this.request.price)) {
         alert('필수 항목을 채워주세요.')
@@ -318,9 +329,13 @@ export default {
           let dueDate = $(`#endDate--${i}`).calendar('get date')
           let maxUser = $(`#max_user--${i}`).val()
           let minUser = $(`#min_user--${i}`).val()
+          if (minUser > maxUser) {
+            alert("최소, 최대 인원을 확인해주세요.")
+            break;
+          }
 
           if (startDate == null || dueDate == null || maxUser == null || minUser == null) {
-            alert("위킨 정보를 확인해주세요.")
+            alert("위킨 날짜와 인원  정보를 확인해주세요.")
             break;
           } else {
             hasWekin = true
