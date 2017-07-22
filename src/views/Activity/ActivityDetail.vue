@@ -70,7 +70,10 @@
                 <!--<div class="item" :data-value="index + 1" v-for="(wekin, index) in selectedWekin.max_user">{{index + 1}}명</div>-->
               </div>
             </div>
-            <button class="negative ui button full-width apply-btn" id="virtualview" v-on:click="onApplyBtn()">
+            <button class="negative ui button full-width apply-btn" id="membershipvirtualview" v-on:click="onApplyBtn()" v-if="user">
+              신청하기
+            </button>
+            <button class="negative ui button full-width apply-btn" id="virtualview" v-on:click="onApplyBtn()" v-if="!user">
               신청하기
             </button>
           </div>
@@ -283,7 +286,10 @@
           <button class="ui white button" @click="onMailClick()">
             <i class="icon outline mail"></i>
           </button>
-          <button class="negative ui button mobile-apply-btn" id="virtualview"  @click="toggleMobileForm()" v-if="!isMobileFormShowing">
+          <button class="negative ui button mobile-apply-btn" id="membershipvirtualview"  @click="toggleMobileForm()" v-if="!isMobileFormShowing && user">
+            신청하기
+          </button>
+          <button class="negative ui button mobile-apply-btn" id="virtualview"  @click="toggleMobileForm()" v-if="!isMobileFormShowing && !user">
             신청하기
           </button>
         </div>
