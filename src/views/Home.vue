@@ -384,6 +384,9 @@ export default {
     },
     initSwiper() {
       this.popularWekins = new Swiper('.pop-wekins.swiper-container', {
+        freeMode: true,
+        freeModeMomentumRatio: 0.2,
+        resistance: false,
         slidesPerView: 3,
         spaceBetween: 20,
         breakpoints: {
@@ -393,6 +396,9 @@ export default {
         }
       })
       this.newWekins = new Swiper('.new-wekins.swiper-container', {
+        freeMode: true,
+        freeModeMomentumRatio: 0.2,
+        resistance: false,       
         slidesPerView: 3,
         spaceBetween: 20,
         breakpoints: {
