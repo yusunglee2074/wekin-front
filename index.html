@@ -29,31 +29,31 @@
 </head>
 
 <body>
+    <!-- facebook js SDK) -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : 489794721361592,
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v2.10'
+        });
+        FB.AppEvents.logPageView();
+      };
+
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <!--facebook js SDK) -->
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KF96QLX"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-  <!-- facebook js SDK) -->
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId            : '489794721361592',
-        autoLogAppEvents : true,
-        xfbml            : true,
-        version          : 'v2.8'
-      });
-      FB.AppEvents.logPageView();
-    };
-
-(function(d, s, id){
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-</script>
-<!--facebook js SDK) -->
   <div id="app"></div>
   <!-- built files will be auto injected -->
   <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>

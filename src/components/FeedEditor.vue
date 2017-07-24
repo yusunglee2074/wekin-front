@@ -1,7 +1,7 @@
 <template>
   <div class="ui modal feed-editor">
     <div class="ui active inverted dimmer" v-if="isFileUploading">
-      <div class="ui text loader">업로드중</div>
+      <div class="ui text loader">잠시만 기다려주세요.</div>
     </div>
     <div class="textarea">
       <textarea placeholder="이야기를 남겨주세요." v-model="content">
@@ -40,6 +40,7 @@
       <div class="flex-space"></div>
       <span class="ui star top right rating"></span>
     </div>
+
     <div class="ui divider"></div>
     <div class="feed-editor__linear-container bottom">
       <div class="ui selection dropdown private">
@@ -52,13 +53,13 @@
         </div>
       </div>
       
-      <!--
-        <input type="checkbox" id="checkbox" v-model="withFacebook">
-        <label for="checkbox" class="default text"> 페이스북에 동시 게재 </label>
-        -->
 
       <button class="ui action negative button floated right" @click="onPostClick()">작성</button>
       <button class="ui basic action button floated right" @click="hideFeedEditor()">취소</button>
+    <div>
+      <input type="checkbox" id="checkbox" style="margin-top: 12px" v-model="withFacebook">
+      <label for="checkbox" class="default text" style="color: rgb(59, 89, 152)"> FaceBook 동시 게재 </label>
+    </div>
     </div>
   </div>
 </template>
@@ -130,6 +131,67 @@ export default {
         api.updateDoc(this.docKey, postParams)
           .then(res => window.location.href = this.$route.fullPath)
           .catch(err => console.err(err))
+      } else if (this.withFacebook) {
+      this.isFileUploading = true      
+
+        function statusChangeCallback(response) {
+          if (response.status === 'connected') {
+            let firebaseUploadedImages = []
+            postParams.image_url.forEach(
+              function (value) { firebaseUploadedImages.push(value) }
+            )
+            var photoID = []
+            var message = String(postParams.content)
+            testAPI(firebaseUploadedImages, photoID, message);
+          } else {
+            FB.login(function(response) {
+              let firebaseUploadedImages = []
+              postParams.image_url.forEach(
+                function (value) { firebaseUploadedImages.push(value) }
+              )
+              var photoID = []
+              var message = String(postParams.content)
+              testAPI(firebaseUploadedImages, photoID, message);
+              // handle the response
+            }, {scope: 'public_profile,email,publish_actions'});
+          }
+        }
+        FB.getLoginStatus(function(response) {
+          statusChangeCallback(response);
+        });
+
+
+        // 이미지 업로드가 다되고 불러지는 콜백 함수
+        function imageUploadDone(photoID, message) {
+          let attached_media = [{"media_fbid":"1651173841621010"}]
+          var photoID = photoID || ""
+          FB.api('/me/feed', 'POST', { "message": message, "attached_media":  photoID }, function(response) {
+            api.postDoc(postParams)
+              .then(res => window.location.reload())
+              .catch(err => console.log(err))
+          }
+          )
+        }
+
+        // 로그인 된후 실행시킬 테스트 API
+        function testAPI(postURL, photoID, message) {
+          if (postURL.length === 0) {
+            imageUploadDone([], message)
+          } else {
+            postURL.forEach(
+              function (imageURL) { 
+                FB.api('/me/photos', 'POST', { "url": imageURL, "published": false}, function(response) {
+                  photoID.push({"media_fbid": response.id})
+                  if (photoID.length === postURL.length) {
+                    imageUploadDone(photoID, message)
+                  }
+                })
+              }
+            );
+          }
+        }
+
+
       } else {  // 일반모드이면 생성
         api.postDoc(postParams)
           .then(res => window.location.href = this.$route.fullPath)
