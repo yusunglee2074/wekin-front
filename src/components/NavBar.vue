@@ -46,13 +46,13 @@
           <a :href="`/`" class="item link" exact v-on:click.native="toggleMobileMenu()">위키너 모드 전환</a>
         </div>
       </div>
-      <a href="/" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨 홈</a>
-      <a href="/activity" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨</a>
-      <a href="/feed" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">피드</a>
-      <a href="/customer" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">고객센터</a>
-      <a href="/manual" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">등록방법</a>
-      <a href="/notification" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()" v-if="user">알림</a>
-      <div class="item link" v-if="user" @click="onLogoutClick()">로그아웃</div>
+      <router-link :to="{ name: 'Home' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨 홈</router-link>
+      <router-link :to="{ name: 'Activity' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨</router-link>
+      <router-link :to="{ name: 'Feed' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">피드</router-link>
+      <router-link :to="{ name: 'Customer' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">고객센터</router-link>
+      <router-link :to="{ name: 'Manual' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">등록방법</router-link>
+      <router-link :to="{ name: 'Notification' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()" v-if="user">알림</router-link>
+      <div class="item link" v-if="user" Customer@click="onLogoutClick()">로그아웃</div>
     </div>
     <div class="ui menu mobile-nav">
       <button class="side-menu" @click="toggleMobileMenu()">
@@ -78,9 +78,9 @@
     <!-- 모바일 끝 -->
   
     <div class="pc-nav ui stackable menu menu-container">
-      <a href="/">
+      <router-link :to="{ name: 'Home' }">
         <img class="item logo" src="/static/images/logo-115x30.png"></img>
-      </a>
+      </router-link>
       <div class="item search-container">
         <div class="ui">
           <div class="ui icon input">
@@ -91,10 +91,10 @@
         </div>
       </div>
       <div class="menu">
-        <a href="/activity" class="item linked" tag="div" exact>위킨</a>
-        <a href="/feed" class="item linked" tag="div" exact>피드</a>
-        <a href="/customer" class="item linked" tag="div" exact>고객센터</a>
-        <a href="/manual" class="item linked" tag="div" exact>등록방법</a>
+        <router-link :to="{ name: 'Activity' }" class="item linked" tag="div" exact>위킨</router-link>
+        <router-link :to="{ name: 'Feed' }" class="item linked" tag="div" exact>피드</router-link>
+        <router-link :to="{ name: 'Customer' }" class="item linked" tag="div" exact>고객센터</router-link>
+        <router-link :to="{ name: 'Manual' }" class="item linked" tag="div" exact>등록방법</router-link>
       </div>
       <div class="right menu" v-if="!user">
         <a class="item linked" @click="showLoginModal = true">로그인</a>
@@ -110,12 +110,12 @@
           <div class="text" v-if="isHostMode">{{ user.Host.name }}</div>
           <div class="menu" v-if="!isHostMode">
             <div class="title">위키너</div>
-            <a :href="`/users/${user.user_key}`" class="item link" exact>MY PAGE</a>
+            <router-link :to="{ name: 'Users', params: { key: user.user_key }}" class="item link" exact>MY PAGE</router-link>
             <div class="divider"></div>
-            <a :href="`/users/${user.user_key}/interest`" class="item link" exact>관심위킨</a>
-            <a :href="`/users/${user.user_key}/board`" class="item link" exact>게시글</a>
-            <a :href="`/settings`" class="item link" exact>프로필 설정</a>
-            <a :href="`/host/request`" class="item link" v-if="!user.Host" exact>메이커 신청하기</a>
+            <router-link :to="{ name: 'UserInterest', params: { key: user.user_key }}" class="item link" exact>관심위킨</router-link>
+            <router-link :to="{ name: 'UserBoard', params: { key: user.user_key }}" class="item link" exact>게시글</router-link>
+            <router-link :to="{ name: 'Settings' }" class="item link" exact>프로필 설정</router-link>
+            <router-link :to="{ name: 'RequestForm' }" class="item link" v-if="!user.Host" exact>메이커 신청하기</router-link>
             <a :href="`/host/admin`" class="item link" v-if="user.Host && user.Host.host_key && user.Host.status == 3" exact>메이커 전환</a>
             <div class="divider"></div>
             <div class="item link" @click="onLogoutClick()">로그아웃</div>

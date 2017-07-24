@@ -116,7 +116,8 @@
         </h3>
         <div class="pop-wekins swiper-container">
           <div class="swiper-wrapper">
-            <a :href="`/activity/${wekin.activity_key}`" tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in activities" v-bind:key="wekin.activity_key">
+            <div tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in activities" v-bind:key="wekin.activity_key">
+              <router-link class="ui card pointer swiper-slide" :to="{ name: 'ActivityDetail', params: { key: wekin.activity_key }}">
               <div class="image">
                 <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.image[0]})`}"></div>
                 <div class="backImage overlayer"></div>
@@ -138,7 +139,8 @@
                   <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 3" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="schedule.wekin_key">{{schedule.start_date | formatDateKo}}</span>
                 </div>
               </div>
-            </a>
+            </router-link>
+            </div>
           </div>
         </div>
         <div class="prev-btn" v-on:click="popularWekins.slidePrev()">
@@ -156,7 +158,8 @@
         </h3>
         <div class="new-wekins swiper-container">
           <div class="swiper-wrapper">
-            <a :href="`/activity/${wekin.activity_key}`" tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in newestActivities" v-bind:key="index">
+            <div :href="`/activity/${wekin.activity_key}`" tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in newestActivities" v-bind:key="index">
+              <router-link class="ui card pointer swiper-slide" :to="{ name: 'ActivityDetail', params: { key: wekin.activity_key }}">
               <div class="image">
                 <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.image[0]})`}"></div>
                 <div class="backImage overlayer"></div>
@@ -178,7 +181,8 @@
                   <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 3" v-bind:key="index" style="padding-right:8px;">{{schedule.start_date | formatDateKo}}</span>
                 </div>
               </div>
-            </a>
+              </router-link>
+            </div>
           </div>
         </div>
         <div class="prev-btn" v-on:click="newWekins.slidePrev()">

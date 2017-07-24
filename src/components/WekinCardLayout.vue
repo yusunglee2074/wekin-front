@@ -1,11 +1,11 @@
 <template>
   <div class="card">
-    <a :href="`/activity/${activityKey}`" class="image link">
+    <router-link :to="{ name: 'ActivityDetail', params: { key: activityKey }}" class="image link">
       <slot name="badge">
       </slot>
       <div :style="{ 'background':'url(' + imageUrl + ') center center', 'height': 200 + 'px', 'background-size':'cover'}"></div>
-    </a>
-    <a :href="`/activity/${activityKey}`" class="content link" style="display: block;">
+    </router-link>
+    <router-link :to="{ name: 'AcitivityDetail', params: { key: activityKey }}" class="content link" style="display: block;">
         <slot name="extra-header">
         </slot>
         <div class="titlenameaddress">
@@ -13,7 +13,7 @@
           <div class="address">{{address}}</div>
           <div class="name">Maker {{name}}</div>
         </div>
-    </a>
+    </router-link>
     <slot name="extra-body" class="extra-body">
     </slot>
     <div class="extra content">

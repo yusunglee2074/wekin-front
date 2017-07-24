@@ -149,13 +149,14 @@ export default new Router({
     },
     {
       path: '/users/:key',
+      name: 'Users',
       component: PersonalPage,
       children: [
         { path: '', name: 'PersonalPage', redirect: 'feed' },
-        { path: 'feed', component: PersonalPageFeed },
-        { path: 'interest', component: PersonalPageInterest },
-        { path: 'wekin', component: PersonalPageWekin },
-        { path: 'board', component: PersonalPageBoard }
+        { path: 'feed', name: 'UserFeed', component: PersonalPageFeed },
+        { path: 'interest', name: 'UserInterest', component: PersonalPageInterest },
+        { path: 'wekin', name: 'UserWekin', component: PersonalPageWekin },
+        { path: 'board', name: 'UserBoard', component: PersonalPageBoard }
       ]
     },
     {
