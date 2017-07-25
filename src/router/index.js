@@ -169,14 +169,14 @@ export default new Router({
       component: HostAdmin,
       children: [
         { path: '', name: 'HostAdmin', component: HostHome },
-        { path: 'stats', component: HostStats },
-        { path: 'wekins', component: HostWekinsManagement },
-        { path: 'wekins/add', component: HostWekinAdd },
-        { path: 'wekins/:key', component: HostWekinModify },
-        { path: 'bookings', component: HostBookingsManagement },
-        { path: 'bookings/:key', component: HostBookingMemberList },
-        { path: 'boards', component: HostBoardsManagement },
-        { path: 'settings', component: HostSettings }
+        { path: 'stats', name: 'HostStats', component: HostStats },
+        { path: 'wekins', name: 'HostWekins', component: HostWekinsManagement },
+        { path: 'wekins/add', name: 'HostWekinsAdd', component: HostWekinAdd },
+        { path: 'wekins/:key', name: 'HostWekinsDetail', component: HostWekinModify },
+        { path: 'bookings', name: 'HostBooking', component: HostBookingsManagement },
+        { path: 'bookings/:key', name: 'HostBookingDetail', component: HostBookingMemberList },
+        { path: 'boards', name: 'HostBoards', component: HostBoardsManagement },
+        { path: 'settings', name: 'HostSettings', component: HostSettings }
       ]
     },
     {

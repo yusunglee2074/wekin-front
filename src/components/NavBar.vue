@@ -12,8 +12,8 @@
         <a class="ui button basic item linked" id="signupbutton" @click="showSignupModalMethod">회원가입</a>
       </div>
       <div class="login-info-container" v-if="user">
-        <a :href="`/users/${user.user_key}`" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></a>
-        <a :href="`/users/${user.user_key}`" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="isHostMode" v-bind:style="{'background-image': `url(${user.Host.profile_image})`}"></a>
+        <router-link :to="{ name: 'UserFeed', params: { key: user.user_key }}" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></router-link>
+        <router-link :to="{ name: 'HostAdmin' }" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="isHostMode" v-bind:style="{'background-image': `url(${user.Host.profile_image})`}"></router-link>
         <div class="text" v-if="!isHostMode">{{ user.name }}</div>
         <div class="text" v-else>{{ user.Host.name }}</div>
       </div>
@@ -27,23 +27,23 @@
           메이커
         </a>
         <div class="active content" @click="toggleMobileMenu()" v-if="!isHostMode">
-          <a :href="`/users/${user.user_key}`" class="item" exact>MY PAGE</a>
-          <a :href="`/users/${user.user_key}/interest`" class="item" exact>관심위킨</a>
-          <a :href="`/users/${user.user_key}/board`" class="item" exact>게시글</a>
-          <a :href="`/settings`" class="item" exact>프로필 설정</a>
-          <a :href="`/host/request`" class="item link" v-if="!user.Host || !user.Host.host_key || user.Host.status != 3" exact>메이커 신청하기</a>
-          <a :href="`/host/admin`" class="item link" v-if="user.Host && user.Host.host_key && user.Host.status == 3" exact>메이커 전환</a>
+          <router-link :to="{ name: 'UserFeed', params: { key: user.user_key }}" class="item" exact>MY PAGE</router-link>
+          <router-link :to="{ name: 'UserInterest', params: { key: user.user_key }}" class="item" exact>관심위킨</router-link>
+          <router-link :to="{ name: 'UserBoard', params: { key: user.user_key }}" class="item" exact>게시글</router-link>
+          <router-link :to="{ name: 'Settings' }" class="item" exact>프로필 설정</router-link>
+          <router-link :to="{ name: 'RequestForm' }" class="item link" v-if="!user.Host || !user.Host.host_key || user.Host.status != 3" exact>메이커 신청하기</router-link>
+          <router-link :to="{ name: 'HostAdmin' }" class="item link" v-if="user.Host && user.Host.host_key && user.Host.status == 3" exact v-on:click.native="toggleMobileMenu()">메이커 전환</router-link>
           <!--<div class="item">프로필 수정</div>-->
         </div>
         <div class="active content" v-else>
-          <a :href="`/host/admin`" class="item" exact v-on:click.native="toggleMobileMenu()">MAKER PAGE</a>
+          <router-link :to="{ name: 'HostAdmin' }" class="item" exact v-on:click.native="toggleMobileMenu()">MAKER PAGE</router-link>
           <div class="divider"></div>
-          <a :href="`/host/admin/wekins/add`" class="item" exact v-on:click.native="toggleMobileMenu()">위킨 만들기</a>
-          <a :href="`/host/admin/wekins`" class="item" exact v-on:click.native="toggleMobileMenu()">위킨관리</a>
-          <a :href="`/host/admin/bookings`" class="item" exact v-on:click.native="toggleMobileMenu()">예약관리</a>
-          <a :href="`/host/admin/boards`" class="item" exact v-on:click.native="toggleMobileMenu()">후기 / Q&amp;A관리</a>
-          <a :href="`/host/admin/settings`" class="item" exact v-on:click.native="toggleMobileMenu()">설정</a>
-          <a :href="`/`" class="item link" exact v-on:click.native="toggleMobileMenu()">위키너 모드 전환</a>
+          <router-link :to="{ name: 'HostWekinsAdd' }" class="item" exact v-on:click.native="toggleMobileMenu()">위킨 만들기</router-link>
+          <router-link :to="{ name: 'HostWekins' }" class="item" exact v-on:click.native="toggleMobileMenu()">위킨관리</router-link>
+          <router-link :to="{ name: 'HostBooking' }" class="item" exact v-on:click.native="toggleMobileMenu()">예약관리</router-link>
+          <router-link :to="{ name: 'HostBoards' }" class="item" exact v-on:click.native="toggleMobileMenu()">후기 / Q&amp;A관리</router-link>
+          <router-link :to="{ name: 'HostSettings' }" class="item" exact v-on:click.native="toggleMobileMenu()">설정</router-link>
+          <router-link :to="{ name: 'Home' }" class="item link" exact v-on:click.native="toggleMobileMenu()">위키너 모드 전환</router-link>
         </div>
       </div>
       <router-link :to="{ name: 'Home' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨 홈</router-link>
@@ -52,15 +52,15 @@
       <router-link :to="{ name: 'Customer' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">고객센터</router-link>
       <router-link :to="{ name: 'Manual' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">등록방법</router-link>
       <router-link :to="{ name: 'Notification' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()" v-if="user">알림</router-link>
-      <div class="item link" v-if="user" Customer@click="onLogoutClick()">로그아웃</div>
+      <div class="item link" v-if="user" @click="onLogoutClick()">로그아웃</div>
     </div>
     <div class="ui menu mobile-nav">
       <button class="side-menu" @click="toggleMobileMenu()">
         <i class="content icon"></i>
       </button>
-      <a href="/">
+      <router-link :to="{ name: 'Home' }">
         <img class="item logo" src="/static/images/logo-134x35.png"></img>
-      </a>
+      </router-link>
       <button class="search-btn">
         <i class="search icon" @click="showMobileSearch()"></i>
       </button>
@@ -69,10 +69,10 @@
       </button>
     </div>
     <div class="ui menu mobile-sub-nav" v-if="!isHostMode">
-      <a href="/activity" class="link" tag="div" exact>위킨</a>
-      <a href="/feed" class="link" tag="div" exact>피드</a>
-      <a href="/customer" class="link" tag="div" exact>고객센터</a>
-      <a href="/manual" class="link" tag="div" exact>등록방법</a>
+      <router-link :to="{ name: 'Activity' }" class="link" exact>위킨</router-link>
+      <router-link :to="{ name: 'Feed' }" class="link" exact>피드</router-link>
+      <router-link :to="{ name: 'Customer' }" class="link" exact>고객센터</router-link>
+      <router-link :to="{ name: 'Manual' }" class="link" exact>등록방법</router-link>
     </div>
   
     <!-- 모바일 끝 -->
@@ -110,7 +110,7 @@
           <div class="text" v-if="isHostMode">{{ user.Host.name }}</div>
           <div class="menu" v-if="!isHostMode">
             <div class="title">위키너</div>
-            <router-link :to="{ name: 'Users', params: { key: user.user_key }}" class="item link" exact>MY PAGE</router-link>
+            <router-link :to="{ name: 'UserFeed', params: { key: user.user_key }}" class="item link" exact>MY PAGE</router-link>
             <div class="divider"></div>
             <router-link :to="{ name: 'UserInterest', params: { key: user.user_key }}" class="item link" exact>관심위킨</router-link>
             <router-link :to="{ name: 'UserBoard', params: { key: user.user_key }}" class="item link" exact>게시글</router-link>
@@ -122,14 +122,14 @@
           </div>
           <div class="menu" v-else>
             <div class="title">메이커</div>
-            <a :href="`/host/admin`" class="item link" exact>MAKER PAGE</a>
+            <router-link :to="{ name: 'HostAdmin' }" class="item link" exact>MAKER PAGE</router-link>
             <div class="divider"></div>
-            <a :href="`/host/admin/wekins/add`" class="item link" exact>위킨 만들기</a>
-            <a :href="`/host/admin/wekins`" class="item link" exact>위킨관리</a>
-            <a :href="`/host/admin/bookings`" class="item link" exact>예약관리</a>
-            <a :href="`/host/admin/boards`" class="item link" exact>후기 / Q&amp;A관리</a>
-            <a :href="`/host/admin/settings`" class="item link" exact>설정</a>
-            <a :href="`/`" class="item link" exact>위키너 모드 전환</a>
+            <router-link :to="{ name: 'HostWekinsAdd' }" class="item link" exact>위킨 만들기</router-link>
+            <router-link :to="{ name: 'HostWekins' }" class="item link" exact>위킨관리</router-link>
+            <router-link :to="{ name: 'HostBooking' }" class="item link" exact>예약관리</router-link>
+            <router-link :to="{ name: 'HostBoards' }" class="item link" exact>후기 / Q&amp;A관리</router-link>
+            <router-link :to="{ name: 'HostSettings' }" class="item link" exact>설정</router-link>
+            <router-link :to="{ name: 'Home' }" class="item link" exact>위키너 모드 전환</router-link>
             <div class="divider"></div>
             <div class="item link" @click="onLogoutClick()">로그아웃</div>
           </div>
