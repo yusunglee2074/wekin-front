@@ -38,8 +38,12 @@
             <p v-if="activity.address">
               <i class="icon marker"></i>{{activity.address}}
             </p>
-            <p v-if="wekins.length">
+            <p v-if="wekins.length && activity.isteamorpeople === 'people'">
               <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}명 (최소 {{wekins[0].min_user || selectedWekin.min_user}}명)
+              <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
+            </p>
+            <p v-if="wekins.length && activity.isteamorpeople === 'team'">
+              <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}팀 (최소 {{wekins[0].min_user || selectedWekin.min_user}}팀)
               <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
             </p>
             <!--<p v-show="Object.keys(selectedWekin).length == 0 && wekins.length">
@@ -65,7 +69,7 @@
               <div class="default text">인원선택</div>
               <div class="menu">
                 <!-- FIXME: 현재 유저 JOIN 완료시 수정  -->
-                <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)" v-bind:key="index">{{index + 1}}명</div>
+                <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)" v-bind:key="index">{{index + 1}}명(팀)</div>
                 <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) == 0" data-value="closed">마감</div>
                 <!--<div class="item" :data-value="index + 1" v-for="(wekin, index) in selectedWekin.max_user">{{index + 1}}명</div>-->
               </div>

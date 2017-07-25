@@ -65,7 +65,8 @@
         </div>
         <div class="ui segment">
           <span class="label">신청인원</span>
-          <span class="label floated right">{{this.$route.params.peopleCount}}인</span>
+          <span v-if="this.activity.isteamorpeople === 'people'" class="label floated right">{{this.$route.params.peopleCount}}인</span>
+          <span v-if="this.activity.isteamorpeople === 'team'" class="label floated right">{{this.$route.params.peopleCount}}팀</span>
         </div>
       </div>
       <div class="column">

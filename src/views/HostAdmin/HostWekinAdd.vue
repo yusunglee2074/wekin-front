@@ -144,6 +144,17 @@
           <label class="required">날짜&amp인원</label>
           <span>정기/일회성 및 인원 설정</span>
         </div>
+          <div>
+            <div style="font-size:16px;">
+              <span>모집 단위(가격 책정) </span>
+              <span> &ensp;&ensp;&ensp;    </span>
+              <input type="radio" id="one" value="people" v-model="request.picked">
+              <label for="one">명&ensp;</label>
+              <input type="radio" id="two" value="team" v-model="request.picked">
+              <label for="two">팀</label>
+              </br>
+            </div>
+          </div>
         <div class="ui segment wekinSchedules" v-for="(wekinSchedule, index) in wekinSchedules" v-bind:key="wekinSchedule.wekin_key" :id="[`schedule--${index}`]">
           <div class="settings__list">
             <label>날짜선택</label>
@@ -216,13 +227,14 @@ export default {
       isFileUploading: false,
       wekinSchedules: 1,
       request: {
-        refundPolicy: ''
+        refundPolicy: '',
+        picked: 'people' 
       },
       refundPolicyData: '', // 서버에서 불러오는 환불정보.
       refundPolicyTemp: '', // 작성중이던 환불정보
       wekins: [],
       startDate: [],
-      endDate: []
+      endDate: [],
     }
   },
   computed: {
@@ -344,6 +356,7 @@ export default {
             refund_policy: this.request.refundPolicy,
             price: this.request.price,
             category: this.request.category,
+            isteamorpeople: this.request.picked,
             wekins: wekins
           }
           console.log(params.category)
