@@ -108,7 +108,7 @@ export default {
   text-overflow: ellipsis;
   white-space: normal;
   line-height: 1.2;
-  height: 44px;
+  max-height: 42px;
   text-align: left;
   word-wrap: break-word;
   display: -webkit-box;
