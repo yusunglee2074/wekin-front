@@ -43,7 +43,8 @@
         <a class="expand-btn link" v-if="!isExpanded && !isTooShort" @click="onExpandClick()">더보기</a>
         <div class="ui images" v-if="feed.image_url">
           <a class="link" v-for="(image, index) in feed.image_url" v-bind:key="index" v-if="index < MAX_IMAGE_COUNT" @click="showImageLightBox()">
-            <img :src="image" v-if="!(feed.image_url.length > MAX_IMAGE_COUNT && index == 3)">
+            <img :src="image" v-if="!(feed.image_url.length > MAX_IMAGE_COUNT && index == 3) && index === 0" style="width: 81%; height: 81%;">
+            <img :src="image" v-if="!(feed.image_url.length > MAX_IMAGE_COUNT && index == 3) && index > 0">
           </a>
           <a class="link image-cover" v-if="feed.image_url.length > MAX_IMAGE_COUNT" @click="showImageLightBox()">
             <img :src="feed.image_url[MAX_IMAGE_COUNT]">
