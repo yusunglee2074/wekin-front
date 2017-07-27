@@ -158,7 +158,7 @@ export default {
         }
         FB.getLoginStatus(function(response) {
           statusChangeCallback(response);
-        });
+        }, false);
 
 
         // 이미지 업로드가 다되고 불러지는 콜백 함수
