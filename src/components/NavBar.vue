@@ -1,5 +1,8 @@
 <template>
   <div class="navbar" v-bind:class="{ fullHeight: isMobileMenuShowing || isMobileSearchShowing }">
+    <div class="ui active inverted dimmer" v-if="isLoading">
+      <div class="ui medium text loader">잠시만 기다려주세요.</div>
+    </div>
     <div class="back-layer" v-bind:class="{ fullHeight: isMobileMenuShowing || isMobileSearchShowing }" @click="toggleMobileMenu()"></div>
     <!-- 모바일 버전 ! -->
     <div class="ui vertical accordion menu mobile" v-if="isMobileMenuShowing">
@@ -147,6 +150,8 @@ import auth from 'src/auth'
 import NotificationLayout from 'components/NotificationLayout.vue'
 import LoginModal from './LoginModal.vue'
 import SignupModal from './SignupModal.vue'
+import firebase from 'firebase'
+import api from 'api'
 
 export default {
   data() {
@@ -160,7 +165,8 @@ export default {
       searchKeyword: '',
       isLoginHiding: true,
       showLoginModal: false,
-      showSignupModal: false
+      showSignupModal: false,
+      isLoading: false 
     }
   },
   components: {
@@ -186,6 +192,33 @@ export default {
     }
   },
   mounted() {
+    let self = this
+    firebase.auth().getRedirectResult().then(function(result) {
+      if (result.credential) {
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        var token = result.credential.accessToken;
+        // ...
+      }
+      // The signed-in user info.
+      var user = result.user;
+      if (user) {
+        self.loadingTogle()
+      }
+      user.getIdToken().then(token => {
+        api.frontsignUp(token, user.displayName, user.photoURL).then(User => {
+          window.location.reload()
+        })
+      })
+    }).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // The email of the user's account used.
+      var email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      var credential = error.credential;
+      // ...
+    });
     this.fetchData()
     $('.ui.dropdown').dropdown({
       action: 'hide'
@@ -201,6 +234,9 @@ export default {
     // }, 1000)
   },
   methods: {
+    loadingTogle() {
+      this.isLoading = !this.isLoading
+    },
     showSignupModalMethod() {
       this.showSignupModal = true
     },
