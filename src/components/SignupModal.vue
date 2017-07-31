@@ -90,6 +90,8 @@ export default {
         alert("약관에 동의해주세요.")
       } else if (this.user.password != this.user.password2) {
         alert("비밀번호 2개가 일치하지 않습니다.")
+      } else if (this.user.password.length < 6) {
+        alert("비밀번호는 6자리 이상이여야 합니다.")
       } else {
         return true
       }
