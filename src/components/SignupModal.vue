@@ -1,5 +1,8 @@
 <template>
   <div class="modalsignup">
+    <div class="ui active inverted dimmer" v-if="isLoading">
+      <div class="ui medium text loader">회원가입 중 입니다.</div>
+    </div>
     <div class="modal-mask" @click="close" v-show="show" transition="modal">
       <div class="modal-container" @click.stop>
         <div class="modal-header">
@@ -29,12 +32,12 @@
             </div>
           </div>
         </div>
-        <div class="social-login-container">
+        <!--<div class="social-login-container">
           <span class="ui horizontal divider">
             또는
           </span>
           <img class="link" style="width: 15%; height: auto;" src="static/images/logo-facebook-68x68.png" @click="onFacebookJoinClick()">
-        </div>
+        </div>-->
       </div>
     </div>
 
