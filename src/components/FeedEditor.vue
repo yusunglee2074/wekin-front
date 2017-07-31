@@ -435,7 +435,7 @@ export default {
     }
   }
   .not-mobile {
-    display: block;
+    display: none;
   }
 
 }
