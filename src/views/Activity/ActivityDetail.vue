@@ -736,6 +736,10 @@ export default {
               },
               user_key: this.user.user_key
             }
+            api.getMaker(this.activity.host_key).then(response => {
+              api.sendSms(response.tel,'메이커님!' + this.activity.title + ' 위킨에 QnA가 작성되었습니다. 내용:' + String(this.content).slice(0, 18) + '...')
+            })
+            api.sendSms('010-5175-1130', '대표님, "' + this.activity.title +  '"' + ' 위킨에 QnA가 작성되었습니다. 내용:' + String(this.content).slice(0, 18) + '...' )
             this.questions.rows.unshift(qna)
             this.content = null
           })

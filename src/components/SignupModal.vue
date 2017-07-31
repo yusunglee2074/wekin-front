@@ -1,34 +1,43 @@
 <template>
   <div class="modalsignup">
+    <div class="ui active inverted dimmer" v-if="isLoading">
+      <div class="ui medium text loader">회원가입 중 입니다.</div>
+    </div>
     <div class="modal-mask" @click="close" v-show="show" transition="modal">
       <div class="modal-container" @click.stop>
         <div class="modal-header">
           <h3>회원가입</h3>
         </div>
         <div class="modal-body">
-            <div class="ui input">
-              <input type="email" placeholder="이메일" v-model="user.email">
-            </div>
-            <div class="ui input">
-              <input type="text" placeholder="이름" v-model="user.name">
-            </div>
-            <div class="ui input">
-              <input type="password" placeholder="비밀번호" v-model="user.password">
-            </div>
-            <div class="ui input">
-              <input type="password" placeholder="비밀번호 확인" v-model="user.password2">
-            </div>
-            <div class="color secondary">{{errorMessage}}</div>
-            <div class="ui small feed">
-              <button class="negative ui button" @click="onSignUpClick()">가입하기</button>
-              <div class="ui checkbox agreement-checkbox">
-                <input type="checkbox" name="example">
-                <label class="label-for-signup">
-                  <a href="/policy/term" tag="a" target="_blank">이용약관</a>과
-                  <a href="policy/privacy" tag="a" target="_blank">개인정보취급방침</a>에 동의합니다.</label>
+          <div class="ui input">
+            <input type="email" placeholder="이메일" v-model="user.email">
+          </div>
+          <div class="ui input">
+            <input type="text" placeholder="이름" v-model="user.name">
+          </div>
+          <div class="ui input">
+            <input type="password" placeholder="비밀번호" v-model="user.password">
+          </div>
+          <div class="ui input">
+            <input type="password" placeholder="비밀번호 확인" v-model="user.password2">
+          </div>
+          <div class="color secondary">{{errorMessage}}</div>
+          <div class="ui small feed">
+            <button class="negative ui button" @click="onSignUpClick()">가입하기</button>
+            <div class="ui checkbox agreement-checkbox">
+              <input type="checkbox" name="example">
+              <label class="label-for-signup">
+                <a href="/policy/term" tag="a" target="_blank">이용약관</a>과
+                <a href="policy/privacy" tag="a" target="_blank">개인정보취급방침</a>에 동의합니다.</label>
             </div>
           </div>
         </div>
+        <!--<div class="social-login-container">
+          <span class="ui horizontal divider">
+            또는
+          </span>
+          <img class="link" style="width: 15%; height: auto;" src="static/images/logo-facebook-68x68.png" @click="onFacebookJoinClick()">
+        </div>-->
       </div>
     </div>
 
@@ -81,6 +90,8 @@ export default {
         alert("약관에 동의해주세요.")
       } else if (this.user.password != this.user.password2) {
         alert("비밀번호 2개가 일치하지 않습니다.")
+      } else if (this.user.password.length < 6) {
+        alert("비밀번호는 6자리 이상이여야 합니다.")
       } else {
         return true
       }
@@ -100,8 +111,6 @@ export default {
     onFacebookJoinClick() {
       this.isLoading = true
       auth.loginWithFacebook()
-        .then((currentUser) => window.location.href = '/')
-        .catch((error) => this.onLoginFail(error))
     },
     getErrorMessage(error) {
       switch (error) {
@@ -156,6 +165,8 @@ export default {
         .catch((error) => this.onLoginFail(error))
     },
   },
+  updated() {
+  },
   mounted() {
     $('.agreement-checkbox').checkbox({
       onChange: () => {
@@ -182,7 +193,7 @@ export default {
 
 .modal-container {
     width: 300px;
-    height: 376px;
+    height: 460px;
     margin: 40px auto 0;
     padding: 20px 30px;
     background-color: #fff;

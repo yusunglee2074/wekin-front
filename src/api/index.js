@@ -243,10 +243,10 @@ export default {
     return axios.delete(`${BASE_API_URL}/activity/front/${activityKey}`)
       .then(res => res.data)
   },
-  // signUp (accessToken, name, profileImage) {
-  //   return axios.post(`${BASE_API_URL}/user/front/signUp`, { accessToken: accessToken, name: name, profileImage: profileImage })
-  //     .then(res => res.data)
-  // },
+  frontsignUp (accessToken, name, profileImage) {
+    return axios.post(`${BASE_API_URL}/user/front/signUp`, { accessToken: accessToken, name: name, profileImage: profileImage })
+      .then(res => res.data)
+  },
   signUp (email, password, name) {
     return axios.post(`${BASE_API_URL}/user/front/join`, { email: email, name: name, password: password })
       .then(res => res.data)

@@ -138,7 +138,6 @@ export default {
     },
     onLoginClick() {
       this.isLoading = true
-      console.log(this.isLoading)
       if (this.checkForm()) {
         auth.signIn(this.user.email, this.user.password)
           .then((currentUser) => this.onLoginSuccess(currentUser))

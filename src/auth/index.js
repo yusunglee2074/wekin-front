@@ -108,14 +108,19 @@ export default {
     let provider = new firebase.auth.FacebookAuthProvider()
     provider.addScope('email')
     provider.addScope('user_birthday')
+    provider.addScope('publish_actions')
+    firebase.auth().signInWithRedirect(provider);
+    /*
     return firebase.auth().signInWithPopup(provider)
       .then(credential => {
         return credential.user.getIdToken().then(token => {
-          return api.signUp(token, credential.user.displayName, credential.user.photoURL)
+          return api.frontsignUp(token, credential.user.displayName, credential.user.photoURL)
             .then(currentUser => currentUser)
             .catch(() => credential.user)
         })
       })
+      */
+    //window.location.href = '?success'
   },
   loginWithGoogle () {
     let provider = new firebase.auth.GoogleAuthProvider()

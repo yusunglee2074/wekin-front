@@ -56,7 +56,7 @@
 
       <button class="ui action negative button floated right" @click="onPostClick()">작성</button>
       <button class="ui basic action button floated right" @click="hideFeedEditor()">취소</button>
-    <div>
+    <div class="not-mobile">
       <input type="checkbox" id="checkbox" style="margin-top: 12px" v-model="withFacebook">
       <label for="checkbox" class="default text" style="color: rgb(59, 89, 152)"> FaceBook 동시 게재 </label>
     </div>
@@ -158,7 +158,7 @@ export default {
         }
         FB.getLoginStatus(function(response) {
           statusChangeCallback(response);
-        });
+        }, false);
 
 
         // 이미지 업로드가 다되고 불러지는 콜백 함수
@@ -434,6 +434,10 @@ export default {
       }
     }
   }
+  .not-mobile {
+    display: none;
+  }
+
 }
 </style>
 <style lang="scss">
