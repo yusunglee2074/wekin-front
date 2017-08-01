@@ -15,6 +15,7 @@
         <textarea placeholder="문의하실 내용을 입력해주세요." v-model="content"></textarea>
       </div>
     </div>
+    <button class="ui negative button" @click="close()">취소</button>
     <button class="ui primary button" @click="sendEmail()">보내기</button>
   
     <div class="ui active inverted dimmer" v-if="isSending">
@@ -39,6 +40,9 @@ export default {
     this.title = this.$route.query.title
   },
   methods: {
+    close() {
+      $('.ui.modal.mail').modal('hide')
+    },
     sendEmail() {
       this.isSending = true
       let target = 'wekin@wekiner.com'
@@ -91,11 +95,6 @@ export default {
   border: 1px solid #7D7D7D;
 }
 
-.ui.primary.button {
-  float: right;
-  margin-right: -4px;
-  width: 150px;
-}
 
 body {
   padding: 8px 16px;
