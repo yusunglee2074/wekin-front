@@ -58,6 +58,7 @@ export default {
         .then(response => {
           if (response.success === true) {
             this.$router.go(-1)
+            window.location.reload()
           } else {
             alert("인증번호가 일치하지 않습니다.")
             this.verifyNumber = ''
