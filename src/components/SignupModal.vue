@@ -16,7 +16,7 @@
             <input type="text" placeholder="이름" v-model="user.name">
           </div>
           <div class="ui input">
-            <input type="password" placeholder="비밀번호" v-model="user.password">
+            <input type="password" ref="password" placeholder="비밀번호 영숫자 6자이상" v-model="user.password">
           </div>
           <div class="ui input">
             <input type="password" placeholder="비밀번호 확인" v-model="user.password2">
@@ -92,6 +92,14 @@ export default {
         alert("비밀번호 2개가 일치하지 않습니다.")
       } else if (this.user.password.length < 6) {
         alert("비밀번호는 6자리 이상이여야 합니다.")
+        this.user.password = ''
+        this.user.password2 = ''
+        this.$refs.password.focus();
+      } else if (this.user.password.search(/[0-9]/g) < 0 || this.user.password.search(/[a-z]/ig) < 0) {
+        alert("비밀번호는 영문, 숫자 조합이여야 합니다.")
+        this.user.password = ''
+        this.user.password2 = ''
+        this.$refs.password.focus();
       } else {
         return true
       }
