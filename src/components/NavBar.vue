@@ -61,7 +61,7 @@
       <button class="side-menu" @click="toggleMobileMenu()">
         <i class="content icon"></i>
       </button>
-      <router-link :to="{ name: 'Home' }">
+      <router-link :to="{ name: 'Home' }" class="toobig">
         <img class="item logo" src="/static/images/logo-134x35.png"></img>
       </router-link>
       <button class="search-btn">
@@ -427,6 +427,8 @@ a.a-active {
     background: none;
     outline: none;
     border: none;
+    width: 44px;
+    height: 34px;
   }
   .mobile-nav .search-btn {
     position: absolute;
@@ -448,6 +450,14 @@ a.a-active {
   }
   .mobile-nav .logo {
     width: 134px;
+    margin-top: 2px;
+    height: auto
+  }
+  .mobile-nav .toobig {
+    position: fixed;
+    top: 0%;
+    left: 34%;
+    width: 134px!important;
     margin-top: 2px;
     height: auto
   }
