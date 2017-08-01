@@ -179,15 +179,15 @@ export default {
       return this.$route.fullPath.includes("/activity")
     },
     user() {
-      if (typeof window !== 'undefined') {
-        this.$nextTick(() => {
-          setTimeout(() => {
-            $('.ui.dropdown').dropdown({
-              action: 'hide'
-            })
-          }, 100)
-        })
-      }
+      this.$nextTick(() => {
+        setTimeout(() => {
+          $('.ui.dropdown').dropdown({
+            action: 'hide'
+          })
+        }, 100)
+      })
+      console.log("computed 실행")
+
       return this.$store.state.user
     }
   },

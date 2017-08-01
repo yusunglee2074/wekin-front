@@ -12,6 +12,7 @@ import NavBar from './components/NavBar.vue'
 import FootBar from './components/FootBar.vue'
 import router from './router'
 import filter from './filter'
+import api from 'api'
 
 import firebase from 'firebase'
 // require('static/fine-uploader/fine-uploader.js')
@@ -39,21 +40,22 @@ var config = {
 firebase.initializeApp(config)
 
 // 이메일 인증 안할 시 튕겨냄
-/*
+
 router.afterEach((to, from) => {
   if (to.path !== '/login' && to.path !== '/join') {
     firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) { // 유저가 있는지 판단.
-        if (currentUser.emailVerified) { // 이메일 인증 여부 확인
-
-        } else if (currentUser.providerData[0].providerId === 'password') {
-          router.push('/verifyEmail')
-        }
+        api.getUser().then( response => {
+          if (response.phone_valid) { // 이메일 인증 여부 확인
+          } else if (currentUser.providerData[0].providerId === 'password') {
+            router.push('/verify/phonenumber')
+          }
+        })
       }
     })
   }
 })
-*/
+
 
 Vue.config.productionTip = false
 
