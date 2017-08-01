@@ -44,7 +44,6 @@ firebase.initializeApp(config)
 router.afterEach((to, from) => {
   if (to.path !== '/login' && to.path !== '/join') {
     firebase.auth().onAuthStateChanged((currentUser) => {
-      console.log(currentUser)
       if (currentUser) { // 유저가 있는지 판단.
         api.getUser().then( response => {
           if (response.phone_valid) { // 이메일 인증 여부 확인
