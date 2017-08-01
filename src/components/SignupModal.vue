@@ -131,7 +131,9 @@ export default {
     onSignUpSuccess(result) {
       this.isLoading = false
       alert('가입이 완료되었습니다.')
-      window.location.reload()
+      this.$parent.showSignupModal = false
+      // this.$router.push({ name: "VerifyPhoneNumber" })
+      window.location.href = '/verify/phonenumber'
     },
     onSignUpFail(error) {
       this.isLoading = false
