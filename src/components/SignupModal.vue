@@ -132,8 +132,9 @@ export default {
       this.isLoading = false
       alert('가입이 완료되었습니다.')
       this.$parent.showSignupModal = false
-      // this.$router.push({ name: "VerifyPhoneNumber" })
-      window.location.href = '/verify/phonenumber'
+      // this.$router.push({ name: "VerifyPhoneNumber", force: true })
+      this.$router.go({ path: "/verify/phonenumber", force: true })
+      // window.location.href = '/verify/phonenumber'
     },
     onSignUpFail(error) {
       this.isLoading = false
