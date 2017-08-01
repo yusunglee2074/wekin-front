@@ -9,6 +9,7 @@ import Login from 'views/Auth/Login.vue'
 import Join from 'views/Auth/Join.vue'
 import ForgotPassword from 'views/Auth/ForgotPassword.vue'
 import VerifyEmail from 'views/Auth/VerifyEmail.vue'
+import VerifyPhoneNumber from 'views/Auth/VerifyPhone.vue'
 import Activity from 'views/Activity/Activity.vue'
 import ActivityDetail from 'views/Activity/ActivityDetail.vue'
 import Payment from 'views/Payments/Payment.vue'
@@ -116,6 +117,11 @@ export default new Router({
       path: '/verifyEmail',
       name: 'VerifyEmail',
       component: VerifyEmail
+    },
+    {
+      path: '/verify/phonenumber',
+      name: 'VerifyPhoneNumber',
+      component: VerifyPhoneNumber
     },
     {
       path: '/findPassword',
