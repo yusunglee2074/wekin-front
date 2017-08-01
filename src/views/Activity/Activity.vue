@@ -846,6 +846,8 @@ export default {
   }
   .categoryformobile {
     display: inherit;
+    width: 94%;
+    margin-left: 8px;
   }
 }
 
