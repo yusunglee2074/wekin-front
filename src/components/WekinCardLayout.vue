@@ -5,7 +5,7 @@
       </slot>
       <div :style="{ 'background':'url(' + imageUrl + ') center center', 'height': 200 + 'px', 'background-size':'cover'}"></div>
     </router-link>
-    <router-link :to="{ name: 'AcitivityDetail', params: { key: activityKey }}" class="content link" style="display: block;">
+    <router-link :to="{ name: 'ActivityDetail', params: { key: activityKey }}" class="content link" style="display: block;">
         <slot name="extra-header">
         </slot>
         <div class="titlenameaddress">
