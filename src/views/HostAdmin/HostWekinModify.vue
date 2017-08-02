@@ -188,11 +188,12 @@
         <div class="ui divider"></div>
         <!--<button class="ui primary button floated right save-btn">확인</button>
                                                             <button class="ui primary button floated right save-btn">삭제요청</button>-->
-        <p>진행중인 경우 수정사항을 위킨으로 보내주세요.</p>
+        <p>위킨 승인 후에는 수정사항을 위킨으로 보내주세요.</p>
+        <p>빠르게 처리해드리겠습니다.</p>
+        <p>010-5108-2668 / wekin@wekiner.com</p>
         <button class="ui primary button floated right save-btn" @click="sendForm()" v-if="activity.status !=3">저장</button>
         <button class="ui negative button floated right save-btn" @click="deleteForm()" v-if="activity.status !=3">삭제</button>
-        <button class="ui negative button floated right save-btn" @click="onConfirmClick()" v-if="activity.status ==3">확인</button>
-        <p>010-5108-2668 / wekiner@wekiner.com</p>
+        <button class="ui negative button floated right save-btn" @click="onConfirmClick()" v-if="activity.status ==3" style="width: 100px;">뒤로가기</button>
         <div class="clear"></div>
       </div>
     </host-card-layout>
