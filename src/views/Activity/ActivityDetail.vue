@@ -145,8 +145,8 @@
             </span>
             <p class="pre">{{activity.Host.introduce}}</p>
             <p class="pre">{{activity.Host.history}}</p>
-            <p v-if="activity.Host.home_page" target="_blank">홈페이지 : {{activity.Host.home_page}}</p>
-            <p v-if="activity.Host.sns" target="_blank">SNS : {{activity.Host.sns}}</p>
+            <p v-if="activity.Host.home_page" target="_blank">홈페이지 : <a :href="`${activity.Host.home_page}`" target="_blank"> {{activity.Host.home_page}}</a></p>
+            <p v-if="activity.Host.sns" target="_blank">SNS : <a :href="`${activity.Host.sns}`" target="_blank">{{activity.Host.sns}}</a></p>
           </div>
         </div>
         <div class="ui divider"></div>
