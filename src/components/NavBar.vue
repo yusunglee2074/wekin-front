@@ -34,7 +34,8 @@
           <router-link :to="{ name: 'UserInterest', params: { key: user.user_key }}" class="item" exact>관심위킨</router-link>
           <router-link :to="{ name: 'UserBoard', params: { key: user.user_key }}" class="item" exact>게시글</router-link>
           <router-link :to="{ name: 'Settings' }" class="item" exact>프로필 설정</router-link>
-          <router-link :to="{ name: 'RequestForm' }" class="item link" v-if="!user.Host || !user.Host.host_key || user.Host.status != 3" exact>메이커 신청하기</router-link>
+          <router-link :to="{ path: '/customer' }" class="item link" v-if="user.Host.status === 1" exact>메이커 신청 처리 중</router-link>
+          <router-link :to="{ name: 'RequestForm' }" class="item link" v-if="!user.Host" exact>메이커 신청하기</router-link>
           <router-link :to="{ name: 'HostAdmin' }" class="item link" v-if="user.Host && user.Host.host_key && user.Host.status == 3" exact v-on:click.native="toggleMobileMenu()">메이커 전환</router-link>
           <!--<div class="item">프로필 수정</div>-->
         </div>
@@ -119,6 +120,7 @@
             <router-link :to="{ name: 'UserBoard', params: { key: user.user_key }}" class="item link" exact>게시글</router-link>
             <router-link :to="{ name: 'Settings' }" class="item link" exact>프로필 설정</router-link>
             <router-link :to="{ name: 'RequestForm' }" class="item link" v-if="!user.Host" exact>메이커 신청하기</router-link>
+          <router-link :to="{ path: '/customer' }" class="item link" v-if="user.Host.status === 1" exact>메이커 신청 처리 중</router-link>
             <a :href="`/host/admin`" class="item link" v-if="user.Host && user.Host.host_key && user.Host.status == 3" exact>메이커 전환</a>
             <div class="divider"></div>
             <div class="item link" @click="onLogoutClick()">로그아웃</div>
