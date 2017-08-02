@@ -68,6 +68,7 @@ import api from 'api'
 import FireUpload from 'components/FireUpload.vue'
 import firebase from 'firebase'
 import { Storage } from 'src/util'
+import moment from 'moment'
 
 export default {
   data() {
@@ -88,7 +89,8 @@ export default {
       isFileUploading: false,
       isModifying: false, // 수정모드인지 판별 필수
       docKey: null,
-      withFacebook: false 
+      withFacebook: false,
+      sendingTime: null
     }
   },
   components: {
@@ -114,6 +116,12 @@ export default {
       })
     },
     onPostClick() {
+      if (this.sendingTime && this.sendingTime - moment() > -30000) {
+        alert("10초에 한번만 작성 가능합니다. 잠시만 기다려주세요.")
+        console.log(this.sendingTime, this.sendingTime - moment())
+        return
+      }
+      this.sendingTime = moment()
       let postParams = {
         activity_key: this.activity.key,
         activity_title: this.activity.title,
@@ -132,8 +140,7 @@ export default {
           .then(res => window.location.href = this.$route.fullPath)
           .catch(err => console.err(err))
       } else if (this.withFacebook) {
-      this.isFileUploading = true      
-
+        this.isFileUploading = true      
         function statusChangeCallback(response) {
           if (response.status === 'connected') {
             let firebaseUploadedImages = []
@@ -159,7 +166,6 @@ export default {
         FB.getLoginStatus(function(response) {
           statusChangeCallback(response);
         }, false);
-
 
         // 이미지 업로드가 다되고 불러지는 콜백 함수
         function imageUploadDone(photoID, message) {
@@ -190,7 +196,6 @@ export default {
             );
           }
         }
-
 
       } else {  // 일반모드이면 생성
         api.postDoc(postParams)
