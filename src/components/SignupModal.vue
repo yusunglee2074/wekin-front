@@ -25,8 +25,9 @@
           <div class="ui small feed">
             <button class="negative ui button" @click="onSignUpClick()">가입하기</button>
             <div class="ui checkbox agreement-checkbox">
-              <input type="checkbox" name="example">
+              <input type="checkbox" name="example" v-model="isAgreed">
               <label class="label-for-signup">
+                본인은 
                 <a href="/policy/term" tag="a" target="_blank">이용약관</a>과
                 <a href="policy/privacy" tag="a" target="_blank">개인정보취급방침</a>에 동의합니다.</label>
             </div>
@@ -126,6 +127,8 @@ export default {
           return "비밀번호는 6자리 이상 입력해주세요."
         case "auth/email-already-in-use":
           return "이미 가입 된 이메일 입니다."
+        case "auth/argument-error":
+          return "이미 가입 된 이메일 입니다."
       }
     },
     onSignUpSuccess(result) {
@@ -179,11 +182,6 @@ export default {
   updated() {
   },
   mounted() {
-    $('.agreement-checkbox').checkbox({
-      onChange: () => {
-        this.isAgreed = !this.isAgreed
-      }
-    })
   }
 }
 </script>
