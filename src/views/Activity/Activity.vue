@@ -552,11 +552,10 @@ export default {
       }
     },
     getActivities() {
-      api.getActivities()
+      api.getActivities(2)
         .then(json => {
           this.isLoading = false
           this.wekins = json.results
-          console.log(this.wekins)
           this.wekinsTemp = json.results
           this.initSortDropdown()
         })

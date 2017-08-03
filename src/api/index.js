@@ -24,8 +24,8 @@ export default {
     return axios.get(`${BASE_API_URL}/wekin/front`)
       .then(res => res.data)
   },
-  getActivities () {
-    return axios.get(`${BASE_API_URL}/activity/front`)
+  getActivities (period) {
+    return axios.get(`${BASE_API_URL}/activity/front/${period}`)
       .then(res => res.data)
   },
   getActivity (activityKey) {
