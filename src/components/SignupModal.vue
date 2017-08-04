@@ -25,9 +25,8 @@
           <div class="ui small feed">
             <button class="negative ui button" @click="onSignUpClick()">가입하기</button>
             <div class="ui checkbox agreement-checkbox">
-              <input type="checkbox" name="example" v-model="isAgreed">
+              <input type="checkbox" style="width:30px; height:30px;" v-model="isAgreed">
               <label class="label-for-signup">
-                본인은 
                 <a href="/policy/term" tag="a" target="_blank">이용약관</a>과
                 <a href="policy/privacy" tag="a" target="_blank">개인정보취급방침</a>에 동의합니다.</label>
             </div>
