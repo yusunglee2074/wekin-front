@@ -136,7 +136,7 @@
         <div class="settings__list">
           <label class="required">가격</label>
           <div class="ui corner labeled input">
-            <input type="number" v-model="request.price">
+            <input type="number" v-model="request.price" v-on:keypress="isNumber(event)">
           </div>
         </div>
         <div class="ui divider"></div>
