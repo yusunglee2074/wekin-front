@@ -196,7 +196,7 @@ import { Location } from 'src/util'
 import _ from 'lodash'
 import moment from 'moment'
 
-const MAX_PRICE = 300000
+const MAX_PRICE = 1500000
 const ONE_DAY_TIME = 86400000
 
 export default {
