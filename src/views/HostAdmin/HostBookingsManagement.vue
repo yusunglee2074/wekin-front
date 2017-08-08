@@ -13,7 +13,7 @@
           </div>
         </div>
         <div style="margin-right: 50px; margin-top: 15px; float: right;">
-          <input type="checkbox" id="hasItBooker" v-model="hasItBooker"><label for="hasItBooker"> 예약자가 있는 위킨만 표시</label>
+          <input type="checkbox" id="hasItBooker" v-model="hasItBooker" v-if="!(wekins && wekins.length == 0)"><label v-if="!(wekins && wekins.length == 0)" for="hasItBooker"> 예약자가 있는 위킨만 표시</label>
         </div>
         <div class="wekin-list-layout" v-if="!hasItBooker" v-bind:class="{ end: new Date(wekin.start_date) <= new Date() }" v-for="wekin in filteredWekins" v-bind:key="wekin.wekin_key">
           <div class="left">
