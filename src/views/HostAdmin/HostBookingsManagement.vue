@@ -12,13 +12,26 @@
             <div class="item" data-value="2">종료</div>
           </div>
         </div>
-        <div class="wekin-list-layout" v-bind:class="{ end: new Date(wekin.start_date) <= new Date() }" v-for="wekin in filteredWekins" v-bind:key="wekin.wekin_key">
+        <div style="margin-right: 50px; margin-top: 15px; float: right;">
+          <input type="checkbox" id="hasItBooker" v-model="hasItBooker"><label for="hasItBooker"> 예약자가 있는 위킨만 표시</label>
+        </div>
+        <div class="wekin-list-layout" v-if="!hasItBooker" v-bind:class="{ end: new Date(wekin.start_date) <= new Date() }" v-for="wekin in filteredWekins" v-bind:key="wekin.wekin_key">
           <div class="left">
             <span class="title">{{wekin.Activity.title}}</span>
             <span class="date">{{wekin.start_date | formatDate}}</span>
+            <span> 신청, 입금대기, 입금완료 인원수 : {{wekin.Orders.length}}</span>
             <!--<span class="time">16:00~18:00</span>-->
           </div>
-          <a :href="'/host/admin/bookings/' + wekin.wekin_key" tag="button" class="ui primary button right">예약자 확인</a>
+          <a :href="'/host/admin/bookings/' + wekin.wekin_key" v-if="!hasItBooker" tag="button" class="ui primary button right">예약자 확인</a>
+        </div>
+        <div class="wekin-list-layout" v-if="hasItBooker" v-bind:class="{ end: new Date(wekin.start_date) <= new Date() }" v-for="wekin in filteredWekins" v-bind:key="wekin.wekin_key">
+          <div class="left" v-if="wekin.Orders.length > 0">
+            <span class="title">{{wekin.Activity.title}}</span>
+            <span class="date">{{wekin.start_date | formatDate}}</span>
+            <span> 신청, 입금대기, 입금완료 인원수 : {{wekin.Orders.length}}</span>
+            <!--<span class="time">16:00~18:00</span>-->
+          </div>
+          <a :href="'/host/admin/bookings/' + wekin.wekin_key" tag="button" class="ui primary button right" v-if="hasItBooker && wekin.Orders.length > 0">예약자 확인</a>
         </div>
         <div class="wekin-list-layout" style="text-align:center;" v-if="wekins && wekins.length == 0">
           <p style="width:100%">진행중인 위킨이 없습니다.</p>
@@ -41,7 +54,8 @@ export default {
       pageLimit: 10,
       isLastPage: false,
       status: "0",
-      now: new Date()
+      now: new Date(),
+      hasItBooker: false 
     }
   },
   computed: {
@@ -56,9 +70,9 @@ export default {
           case "0":
             return wekin
           case "1":
-            return (new Date(wekin.start_date) > this.now)? wekin: false
+            return (new Date(wekin.start_date) > this.now)? wekin : false
           case "2":
-            return (new Date(wekin.start_date) < this.now)? wekin: false
+            return (new Date(wekin.start_date) < this.now)? wekin : false
         }
       })
       if(pagingWekins.length < this.pageLimit) {
@@ -87,7 +101,7 @@ export default {
       api.getAdminBookings(this.user.Host.host_key)
         .then(json => {
           this.wekins = json.results.filter(wekin => {
-            if (wekin.Activity.status == 3) {
+            if (wekin.Activity.status === 3 || wekin.Activity.status === 5) {
               return wekin
             }
           })
