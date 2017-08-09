@@ -2,6 +2,24 @@
   <div class="host-wekin">
     <host-card-layout title="위킨 등록">
       <div slot="content" class="content">
+        <!--
+          <div class="ui selection dropdown wekinStatus" v-if="hostActivities && hostActivities.length != 0">
+            <input name="wekinStatus" type="hidden" value="0">
+            <i class="dropdown icon"></i>
+            <div class="text">전체</div>
+            <div class="menu">
+              <div class="item" data-value="0">전체</div>
+              <div class="item" data-value="1">승인대기</div>
+              <div class="item" data-value="2">반려</div>
+              <div class="item" data-value="3">진행중</div>
+              <div class="item" data-value="5">위킨종료</div>
+            </div>
+          </div>
+          -->
+          <select v-model="selected" class="ui selection dropdown" style="min-height: 3.1714286em;">
+            <option disabled value="">이전 위킨 가져오기</option>
+            <option v-for="activity in recentActivity">{{ activity.title }}</option>
+          </select><div v-on:click="tempmethod()">임시</div>
         <div class="ui active inverted dimmer" v-if="isFileUploading">
           <div class="ui text loader">이미지 업로드중</div>
         </div>
@@ -213,6 +231,7 @@ import {Storage} from 'src/util'
 export default {
   data() {
     return {
+      selected: '',
       koreanCalendar: {
         days: ['일', '월', '화', '수', '목', '금', '토'],
         months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
@@ -235,16 +254,34 @@ export default {
       wekins: [],
       startDate: [],
       endDate: [],
+      recentActivity: [],
+      activity_key: 0 
     }
   },
   computed: {
     user() {
       return this.$store.state.user
+    },
+    hostActivities() {
+      let self = this
+      let hostActivity = this.$store.state.hostActivities
+      if (hostActivity.length < 2) {
+        return hostActivity.forEach(function(value) {
+          self.recentActivity.push({ key: value.activity_key, title: value.title })
+        })
+      } else {
+        hostActivity.slice(-5).forEach(function(value) {
+          self.recentActivity.push({ key: value.activity_key, title: value.title })
+        })
+        return self.recentActivity
+      }
     }
   },
   components: {
     hostCardLayout,
     FireUpload
+  },
+  updated() {
   },
   methods: {
     isNumber: function(evt) {
@@ -383,6 +420,46 @@ export default {
         .then(this.initPolicyCheckbox)
         .catch((error) => console.error(error))
     },
+    getAdminActivity() {
+      api.getAdminActivity(this.activity_key)
+        .then(result => {
+          this.activity = result
+          this.request.title = result.title
+          this.request.schedule = result.schedule
+          this.request.inclusion = result.inclusion
+          this.request.preparation = result.preparation
+          this.request.price = result.price
+          this.request.address = result.address_detail.text
+          this.request.refundPolicy = result.refund_policy
+          this.request.meetArea = result.address_detail.meet_area
+          this.uploadedMainImages = result.main_image.image
+          this.request.category = result.category
+          $('#editor').trumbowyg('html', result.intro_detail);
+
+          api.getAdminWekin(this.$route.params.key)
+            .then(wekins => {
+              this.request.wekins = wekins
+              this.wekinSchedules = wekins.length
+              this.$nextTick(() => {
+                $(".ui.calendar").calendar({
+                  text: this.koreanCalendar
+                })
+                wekins.forEach((wekin, index) => {
+                  $(`#startDate--${index}`).calendar('set date', moment(wekin.start_date).toDate()),
+                    $(`#endDate--${index}`).calendar('set date', moment(wekin.due_date).toDate()),
+                    $(`#max_user--${index}`).val(wekin.max_user),
+                    $(`#min_user--${index}`).val(wekin.min_user)
+                })
+              })
+            })
+            .catch(error => console.error(error))
+        })
+        .catch(error => console.error(error))
+    },
+    set() {
+      this.activity_key = 159
+      return
+    }
   },
   created() {
     this.getPolicy()
