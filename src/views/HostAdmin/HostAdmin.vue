@@ -8,21 +8,21 @@
       <div class="side-bar">
         <img class="ui rounded image" :src="user.Host.profile_image">
         <div class="ui vertical side menu">
-          <a href="/host/admin" class="item" active-class="active" exact>홈</a>
-          <a href="/host/admin/stats" class="item" active-class="active">통계</a>
-          <a href="/host/admin/wekins" class="item" active-class="active">위킨관리</a>
-          <a href="/host/admin/bookings" class="item" active-class="active">예약관리</a>
-          <a href="/host/admin/boards" class="item" active-class="active">후기/Q&amp;A</a>
-          <a href="/host/admin/settings" class="item" active-class="active">설정</a>
+          <router-link :to="{ name: 'HostAdmin' }" class="item" active-class="active" exact>홈</router-link>
+          <router-link :to="{ name: 'HostStats' }" class="item" active-class="active">통계</router-link>
+          <router-link :to="{ name: 'HostWekins' }" class="item" active-class="active">위킨관리</router-link>
+          <router-link :to="{ name: 'HostBooking' }" class="item" active-class="active">예약관리</router-link>
+          <router-link :to="{ name: 'HostBoards' }" class="item" active-class="active">후기/Q&amp;A</router-link>
+          <router-link :to="{ name: 'HostSettings' }" class="item" active-class="active">설정</router-link>
         </div>
       </div>
       <!-- 모바일 메뉴 -->
       <div class="mobile-menu flex">
-        <a href="/host/admin" tag="div" class="f-one" active-class="active" exact>홈</a>
-        <a href="/host/admin/stats" tag="div" class="f-two" active-class="active">통계</a>
-        <a href="/host/admin/wekins" tag="div" active-class="active">위킨관리</a>
-        <a href="/host/admin/bookings" tag="div" active-class="active">예약관리</a>
-        <a href="/host/admin/boards" tag="div" active-class="active">후기/Q&amp;A</a>
+        <router-link :to="{ name: 'HostAdmin' }" tag="div" class="f-one" active-class="active" exact>홈</router-link>
+        <router-link :to="{ name: 'HostStats' }" tag="div" class="f-two" active-class="active">통계</router-link>
+        <router-link :to="{ name: 'HostWekins' }" tag="div" active-class="active">위킨관리</router-link>
+        <router-link :to="{ name: 'HostBooking' }" tag="div" active-class="active">예약관리</router-link>
+        <router-link :to="{ name: 'HostBoards' }" tag="div" active-class="active">후기/Q&amp;A</router-link>
       </div>
       <router-view class="router-view"></router-view>
     </div>

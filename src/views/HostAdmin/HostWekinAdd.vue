@@ -18,7 +18,7 @@
           -->
           <select v-model="selected" class="ui selection dropdown" style="min-height: 3.1714286em;">
             <option disabled value="">이전 위킨 가져오기</option>
-            <option v-for="activity in recentActivity"><div v-on:click="setactivityKeyandCallAPI(activity.key)">{{ activity.title }}</div></option>
+            <option v-for="activity in recentActivity" value="activity.key" v-on:click="setactivityKeyandCallAPI(activity.key)">{{ activity.title }}</option>
           </select>
         <div class="ui active inverted dimmer" v-if="isFileUploading">
           <div class="ui text loader">이미지 업로드중</div>

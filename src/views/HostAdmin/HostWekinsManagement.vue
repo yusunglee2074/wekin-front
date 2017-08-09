@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="flex-space"></div>
-          <a href="/host/admin/wekins/add" tag="button" class="ui primary button">새로운 위킨 만들기</a>
+          <router-link :to="{ name: 'HostWekinsAdd' }" tag="button" class="ui primary button">새로운 위킨 만들기</router-link>
         </div>
 
         <div class="wekin-list-container">
@@ -30,8 +30,8 @@
               <div class="date">{{activity.created_at | formatDate}}</div>
             </div>
             <div class="right">
-              <a :href="'/host/admin/wekins/' + activity.activity_key" tag="button" style="width:100px" class="ui basic button" v-if="activity.status === 1 || activity.status === 2">수정하기</a>
-              <a :href="'/host/admin/wekins/' + activity.activity_key" tag="button" style="width:100px" class="ui basic button" v-else>내용보기</a>
+              <router-link :to="{ name: 'HostWekinsDetail', params: { key: activity.activity_key } }" tag="button" style="width:100px" class="ui basic button" v-if="activity.status === 1 || activity.status === 2">수정하기</router-link>
+              <router-link :to="{ name: 'HostWekinsDetail', params: { key: activity.activity_key } }" tag="button" style="width:100px" class="ui basic button" v-else>내용보기</router-link>
               <div class="status">{{activity.status | activityStatusMsg}}</div>
             </div>
           </div>
