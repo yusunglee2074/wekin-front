@@ -21,7 +21,7 @@ export default {
 
 .filter {
   z-index: 9999;
-  position: absolute;
-  top: 0;
+  position: relative;
+  top: -25px;
 }
 </style>
