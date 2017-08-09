@@ -18,8 +18,8 @@
           -->
           <select v-model="selected" class="ui selection dropdown" style="min-height: 3.1714286em;">
             <option disabled value="">이전 위킨 가져오기</option>
-            <option v-for="activity in recentActivity">{{ activity.title }}</option>
-          </select><div v-on:click="tempmethod()">임시</div>
+            <option v-for="activity in recentActivity"><div v-on:click="setactivityKeyandCallAPI(activity.key)">{{ activity.title }}</div></option>
+          </select>
         <div class="ui active inverted dimmer" v-if="isFileUploading">
           <div class="ui text loader">이미지 업로드중</div>
         </div>
@@ -284,6 +284,8 @@ export default {
   updated() {
   },
   methods: {
+    // 엑티비티 키를 받아서 엑티비티와 위킨을 가져온다음
+    // updated()로 메소드를 실행시키며 TODO: 메소드 실행시킬때 인자가 필요함.
     isNumber: function(evt) {
       evt = (evt) ? evt : window.event;
       var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -456,15 +458,16 @@ export default {
         })
         .catch(error => console.error(error))
     },
-    set() {
-      this.activity_key = 159
-      return
+    setactivityKeyandCallAPI(key) {
+      this.activity_key = key
+      this.getAdminActivity()
     }
   },
   created() {
     this.getPolicy()
   },
   mounted() {
+  console.log(this.hostActivities)
     const _this = this;
     const today = new Date();
 
