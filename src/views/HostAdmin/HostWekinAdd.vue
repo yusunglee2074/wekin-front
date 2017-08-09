@@ -16,10 +16,11 @@
             </div>
           </div>
           -->
-          <select v-model="selected" class="ui selection dropdown" style="min-height: 3.1714286em;">
+          <select v-model.lazy="selected" class="ui selection dropdown" @change="setactivityKeyandCallAPI()" style="min-height: 3.1714286em;">
             <option disabled value="">이전 위킨 가져오기</option>
-            <option v-for="activity in recentActivity" value="activity.key" v-on:click="setactivityKeyandCallAPI(activity.key)">{{ activity.title }}</option>
+            <option v-for="act in recentActivity" v-bind:value="act.key">{{ act.title }}</option>
           </select>
+          
         <div class="ui active inverted dimmer" v-if="isFileUploading">
           <div class="ui text loader">이미지 업로드중</div>
         </div>
@@ -226,6 +227,7 @@
 import hostCardLayout from 'components/HostCardLayout.vue'
 import FireUpload from 'components/FireUpload.vue'
 import api from 'api'
+import moment from 'moment'
 import {Storage} from 'src/util'
 
 export default {
@@ -281,11 +283,7 @@ export default {
     hostCardLayout,
     FireUpload
   },
-  updated() {
-  },
   methods: {
-    // 엑티비티 키를 받아서 엑티비티와 위킨을 가져온다음
-    // updated()로 메소드를 실행시키며 TODO: 메소드 실행시킬때 인자가 필요함.
     isNumber: function(evt) {
       evt = (evt) ? evt : window.event;
       var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -398,7 +396,6 @@ export default {
             isteamorpeople: this.request.picked,
             wekins: wekins
           }
-          console.log(params.category)
           api.addActivity(params)
             .then(result => {
               alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
@@ -438,7 +435,7 @@ export default {
           this.request.category = result.category
           $('#editor').trumbowyg('html', result.intro_detail);
 
-          api.getAdminWekin(this.$route.params.key)
+          api.getAdminWekin(this.activity_key)
             .then(wekins => {
               this.request.wekins = wekins
               this.wekinSchedules = wekins.length
@@ -458,8 +455,8 @@ export default {
         })
         .catch(error => console.error(error))
     },
-    setactivityKeyandCallAPI(key) {
-      this.activity_key = key
+    setactivityKeyandCallAPI() {
+      this.activity_key = this.selected 
       this.getAdminActivity()
     }
   },
@@ -467,7 +464,6 @@ export default {
     this.getPolicy()
   },
   mounted() {
-  console.log(this.hostActivities)
     const _this = this;
     const today = new Date();
 
