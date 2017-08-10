@@ -820,8 +820,8 @@ export default {
 
   .backImage {
     @include respond(small) {
-      height: 130px;
-      border-radius: 4px;
+      // height: 130px;
+      // border-radius: 4px;
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
