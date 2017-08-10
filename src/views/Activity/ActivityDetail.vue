@@ -145,8 +145,8 @@
             </span>
             <p class="pre">{{activity.Host.introduce}}</p>
             <p class="pre">{{activity.Host.history}}</p>
-            <p v-if="activity.Host.home_page">홈페이지 : <a :href="'http://' + `${activity.Host.home_page}`" target="_blank"> {{activity.Host.home_page}}</a></p>
-            <p v-if="activity.Host.sns" target="_blank">SNS : <a :href="'http://' + `${activity.Host.sns}`" target="_blank">{{activity.Host.sns}}</a></p>
+            <p v-if="activity.Host.home_page">홈페이지 : <a :href="hostHomePage" target="_blank"> {{activity.Host.home_page}}</a></p>
+            <p v-if="activity.Host.sns" target="_blank">SNS : <a :href="hostSNS" target="_blank">{{activity.Host.sns}}</a></p>
           </div>
         </div>
         <div class="ui divider"></div>
@@ -374,6 +374,12 @@ export default {
     user() {
       return this.$store.state.user
     },
+    hostHomePage() {
+      return (this.activity.Host.home_page).slice(0, 3) == 'htt' ? this.activity.Host.home_page : ('http://' + this.activity.Host.home_page)
+    },
+    hostSNS() {
+      return (this.activity.Host.sns).slice(0, 3) == 'htt' ? this.activity.Host.sns : ('http://' + this.activity.Host.sns)
+    }
   },
   asyncComputed: {
     filteredQuestions() {
