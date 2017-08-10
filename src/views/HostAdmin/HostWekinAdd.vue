@@ -2,22 +2,8 @@
   <div class="host-wekin">
     <host-card-layout title="위킨 등록">
       <div slot="content" class="content">
-        <!--
-          <div class="ui selection dropdown wekinStatus" v-if="hostActivities && hostActivities.length != 0">
-            <input name="wekinStatus" type="hidden" value="0">
-            <i class="dropdown icon"></i>
-            <div class="text">전체</div>
-            <div class="menu">
-              <div class="item" data-value="0">전체</div>
-              <div class="item" data-value="1">승인대기</div>
-              <div class="item" data-value="2">반려</div>
-              <div class="item" data-value="3">진행중</div>
-              <div class="item" data-value="5">위킨종료</div>
-            </div>
-          </div>
-          -->
           <select v-model.lazy="selected" class="ui selection dropdown" @change="setactivityKeyandCallAPI()" style="min-height: 3.1714286em;">
-            <option disabled value="">이전 위킨 가져오기</option>
+            <option disabled value="" v-if="hostActivities.length !== 0">이전 위킨 가져오기</option>
             <option v-for="act in recentActivity" v-bind:value="act.key">{{ act.title }}</option>
           </select>
           
@@ -52,37 +38,37 @@
           <div class="grouped fields">
             <div class="field">
               <div class="ui radio">
-                <input type="radio" name="fruit" checked="" tabindex="0" value="놀이" v-model="request.category">
-                <label>놀이</label>
+                <input type="radio" id='shfdl' name="fruit" checked="" tabindex="0" value="놀이" v-model="request.category">
+                <label for='shfdl'>놀이</label>
               </div>
               <div class="field">
                 <div class="ui radio">
-                  <input type="radio" name="fruit" tabindex="0" class="hidden" value="도전" v-model="request.category">
-                  <label>도전</label>
+                  <input type="radio" id='ehwjs' name="fruit" tabindex="0" class="hidden" value="도전" v-model="request.category">
+                  <label for='ehwjs'>도전</label>
                 </div>
               </div>
               <div class="field">
                 <div class="ui radio">
-                  <input type="radio" name="fruit" tabindex="0" class="hidden" value="체험" v-model="request.category">
-                  <label>체험</label>
+                  <input type="radio" id='cpgja' name="fruit" tabindex="0" class="hidden" value="체험" v-model="request.category">
+                  <label for='cpgja'>체험</label>
                 </div>
               </div>
               <div class="field">
                 <div class="ui radio">
-                  <input type="radio" name="fruit" tabindex="0" class="hidden" value="문화" v-model="request.category">
-                  <label>문화</label>
+                  <input type="radio" id='ansghk' name="fruit" tabindex="0" class="hidden" value="문화" v-model="request.category">
+                  <label for='ansghk'>문화</label>
                 </div>
               </div>
               <div class="field">
                 <div class="ui radio">
-                  <input type="radio" name="fruit" tabindex="0" class="hidden" value="한강몽땅" v-model="request.category">
-                  <label>한강몽땅</label>
+                  <input type="radio" id='gksrkd' name="fruit" tabindex="0" class="hidden" value="한강몽땅" v-model="request.category">
+                  <label for='gksrkd'>한강몽땅</label>
                 </div>
               </div>
               <div class="field">
                 <div class="ui radio">
-                  <input type="radio" name="fruit" tabindex="0" class="hidden" value="휴식" v-model="request.category">
-                  <label>휴식</label>
+                  <input type="radio" id='gbtlr' name="fruit" tabindex="0" class="hidden" value="휴식" v-model="request.category">
+                  <label for='gbtlr'>휴식</label>
                 </div>
               </div>
             </div>
@@ -174,35 +160,40 @@
               </br>
             </div>
           </div>
-        <div class="ui segment wekinSchedules" v-for="(wekinSchedule, index) in wekinSchedules" v-bind:key="wekinSchedule.wekin_key" :id="[`schedule--${index}`]">
-          <div class="settings__list">
+
+        <div class="ui segment wekinSchedules" v-for="(value, index) in wekins">
+          <div class="settings__list" style="margin-bottom: 5px;">
             <label>날짜선택</label>
-            <div class="ui calendar" :id="['startDate--' + index]">
+            <div class="ui calendar">
               <div class="ui input styled primary left icon">
-                <i class="calendar icon"></i>
-                <input :id="['startDateInput' + index]" type="text">
+                <datepicker id="datepickerId" v-model="wekins[index]['start_date']" wapper-class="ui input styled primary left icon" language="ko" format="MMM dd(D), yyyy"></datepicker>
               </div>
             </div>
-          </div>
-          <div class="settings__list">
-            <label>신청마감일시</label>
-            <div class="ui calendar" :id="['endDate--' + index]">
-              <div class="ui input styled primary left icon">
-                <i class="calendar icon"></i>
-                <input type="text" placeholder="시작날짜를 선택해주세요.">
-              </div>
+            <div style="position: absolute; top:13%; left:72%;">
+              <input id="exit-time" name="exit-time" type="time" v-model="wekins[index]['start_time']">
             </div>
           </div>
+          <div style="text-align:right; color:rgb(204, 51, 0);">시각 선택은 옵션입니다.</div>
+          <div>
+            <label style="font-size: 16px;">신청마감일&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</label>
+            <input type="radio" :id="`one${index}`" value="1" v-model="wekins[index]['due_date']">
+            <label :for="`one${index}`">1일 전&ensp;</label>
+            <input type="radio" :id="`two2${index}`" value="2" v-model="wekins[index]['due_date']">
+            <label :for="`two2${index}`">2일 전&ensp;</label>
+            <input type="radio" :id="`three3${index}`" value="7" v-model="wekins[index]['due_date']">
+            <label :for="`three3${index}`">1주일 전</label>
+          </div>
+
           <div class="settings__list limit">
             <label>최소~최대인원</label>
             <div class="limit-user-container flex">
               <div class="ui input flex-f1" style="margin-top:12px;">
                 <label>최소 인원</label>
-                <input type="text" :id="['min_user--' + index]" placeholder="숫자만 입력 가능합니다" v-on:keypress="isNumber(event)">
+                <input type="text" placeholder="숫자만 입력 가능합니다" v-on:keypress="isNumber(event)" v-model="wekins[index]['min_user']">
               </div>
               <div class="ui input flex-f1">
                 <label>최대 인원</label>
-                <input type="text" :id="['max_user--' + index]" placeholder="숫자만 입력 가능합니다" v-on:keypress="isNumber(event)">
+                <input type="text" placeholder="숫자만 입력 가능합니다" v-on:keypress="isNumber(event)" v-model="wekins[index]['max_user']">
               </div>
             </div>
           </div>
@@ -212,11 +203,22 @@
           </div>
         </div>
         <div class="settings__list">
-          <span class="link" @click="onWekinScheduleAddClick()">+ 위킨 날짜&amp;인원 추가</span>
+          <span class="link" @click="ArrayWekinsAddClick()">+ 위킨 날짜&amp;인원 추가</span>
         </div>
         <div class="ui divider"></div>
+
+
+
+
+
+
+
+
+
+
+
         <!--<button class="ui primary button floated right save-btn">확인</button>
-                                      <button class="ui primary button floated right save-btn">삭제요청</button>-->
+        <button class="ui primary button floated right save-btn">삭제요청</button>-->
         <button class="ui primary button floated right save-btn" @click="sendForm()">신청하기</button>
         <div class="clear"></div>
       </div>
@@ -229,20 +231,12 @@ import FireUpload from 'components/FireUpload.vue'
 import api from 'api'
 import moment from 'moment'
 import {Storage} from 'src/util'
+import Datepicker from 'vuejs-datepicker';
 
 export default {
   data() {
     return {
       selected: '',
-      koreanCalendar: {
-        days: ['일', '월', '화', '수', '목', '금', '토'],
-        months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        monthsShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-        today: '오늘',
-        now: '지금',
-        am: '오전',
-        pm: '오후'
-      },
       uploadedMainImage: null,
       uploadedMainImages: [],
       isFileUploading: false,
@@ -253,20 +247,22 @@ export default {
       },
       refundPolicyData: '', // 서버에서 불러오는 환불정보.
       refundPolicyTemp: '', // 작성중이던 환불정보
-      wekins: [],
-      startDate: [],
-      endDate: [],
+      wekins: [{}],
       recentActivity: [],
-      activity_key: 0 
+      activity_key: 0,
     }
   },
   computed: {
     user() {
       return this.$store.state.user
     },
+    // 시간 비교해서 정렬 후 5개 넣음
     hostActivities() {
       let self = this
       let hostActivity = this.$store.state.hostActivities
+      hostActivity.sort(function(a, b) {
+        return new Date(a.created_at) - new Date(b.created_at)
+      })
       if (hostActivity.length < 2) {
         return hostActivity.forEach(function(value) {
           self.recentActivity.push({ key: value.activity_key, title: value.title })
@@ -280,14 +276,20 @@ export default {
     }
   },
   components: {
+    Datepicker,
     hostCardLayout,
     FireUpload
   },
   methods: {
+    ArrayWekinsAddClick: function () {
+      var lastwekin = this.wekins[this.wekins.length-1]
+      this.wekins.push({ min_user: lastwekin.min_user, max_user: lastwekin.max_user, start_date: lastwekin.start_date, due_date: lastwekin.due_date})
+      return
+    },
     isNumber: function(evt) {
       evt = (evt) ? evt : window.event;
       var charCode = (evt.which) ? evt.which : evt.keyCode;
-      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+      if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
         evt.preventDefault();;
         alert("숫자만 입력 가능합니다.")
       } else {
@@ -312,26 +314,12 @@ export default {
       }
     },
     onWekinScheduleDeleteClick(index) {
-      this.$el.querySelector(`#schedule--${index}`).remove()
-      // this.wekinSchedules--
-    },
-    onWekinScheduleAddClick() {
-      this.wekinSchedules++
-      this.$nextTick(() => {
-        const _this = this;
-        const today = new Date();
-        $("#startDate--" + (this.wekinSchedules - 1).toString()).calendar({
-          text: this.koreanCalendar,
-          endCalendar: $('#endDate--' + (this.wekinSchedules - 1).toString()),
-          onChange: (date) => {
-            $("#endDate--" + (this.wekinSchedules - 1).toString()).calendar({
-              text: this.koreanCalendar,
-              minDate: new Date(),
-              maxDate: date
-            })
-          }
-        })
-      })
+      if (this.wekins.length === 1) {
+        alert("시작 날짜는 최소 하나 이상 있어야합니다.")
+        return
+      }
+      this.wekins.pop(index)
+      
     },
     checkForm() {
       if (!(this.uploadedMainImages.length &&
@@ -350,73 +338,74 @@ export default {
       }
     },
     sendForm() {
+      var haswekin = false 
       if (this.checkForm()) {
         let i = 0
-        let wekins = []
-        let hasWekin = false
-
-        for (; i < this.wekinSchedules; i++) {
-          let startDate = $(`#startDate--${i}`).calendar('get date')
-          let dueDate = $(`#endDate--${i}`).calendar('get date')
-          let maxUser = $(`#max_user--${i}`).val()
-          let minUser = $(`#min_user--${i}`).val()
-          if (minUser > maxUser) {
-            alert("최소, 최대 인원을 확인해주세요.")
-            break;
-          }
-
-          if (startDate == null || dueDate == null || maxUser == null || minUser == null) {
-            alert("위킨 날짜와 인원 정보를 채워주세요.")
-            break;
-          } else {
-            hasWekin = true
-
-            wekins[i] = {
-              start_date: startDate,
-              due_date: dueDate,
-              max_user: maxUser,
-              min_user: minUser
+        for (; i < this.wekins.length; i++) {
+          if (this.wekins[i].start_date && this.wekins[i].due_date && this.wekins[i].min_user &&  this.wekins[i].start_date) {
+            if (this.wekins[i].min_user > this.wekins[i].max_user) {
+              alert(i + 1 + '번째 위킨의 최소인원이 최대인원보다 많습니다.')
+              break;
+            } else if (moment(this.wekins[i].start_date) < moment()) {
+              alert(i + 1 + "번째 위킨의 시작 날짜가 오늘 이전입니다.")
+              break
+            } else {
+              if (this.wekins[i].start_time) {
+                var time = this.wekins[i].start_time.split(':')
+              } else {
+                var time = [0, 0]
+              }
+              this.wekins[i].start_date = moment(this.wekins[i].start_date).set('hour', time[0]).set('minute', time[1]).toString()
+              delete this.wekins[i].start_time
+              this.wekins[i].due_date = moment(this.wekins[i].start_date).subtract(this.wekins[i].due_date, 'days').toString()
+              console.log(i)
+              console.log(this.wekins.length)
+              if (i+1 === this.wekins.length) {
+                haswekin = true
+              }
             }
-          }
-        }
-
-        if (hasWekin) {
-          let params = {
-            host_key: this.user.Host.host_key,
-            main_image: this.uploadedMainImages,
-            title: this.request.title,
-            intro_detail: $('#editor').trumbowyg('html'),
-            schedule: this.request.schedule,
-            inclusion: this.request.inclusion,
-            preparation: this.request.preparation,
-            address_detail: { text: this.request.address, meet_area: this.request.meetArea },
-            refund_policy: this.request.refundPolicy,
-            price: this.request.price,
-            category: this.request.category,
-            isteamorpeople: this.request.picked,
-            wekins: wekins
-          }
-          api.addActivity(params)
-            .then(result => {
-              alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
-              window.location.href = '/host/admin/wekins'
-            }).catch(error => console.error(error))
+        } else {
+          alert(i + 1 + "번째 위킨의 날짜와 인원을 채워주세요.")
+          break
         }
       }
-    },
-    initPolicyCheckbox() {
-      $(".checkbox").checkbox({
-        onChecked: () => {
-          this.refundPolicyTemp = this.request.refundPolicy
-          this.request.refundPolicy = this.refundPolicyData
-        },
-        onUnchecked: () => this.request.refundPolicy = this.refundPolicyTemp
-      })
-    },
-    getPolicy() {
-      api.getPolicy()
-        .then((result) => this.refundPolicyData = result[0].value.body)
-        .then(this.initPolicyCheckbox)
+      if (haswekin) {
+        let params = {
+          host_key: this.user.Host.host_key,
+          main_image: this.uploadedMainImages,
+          title: this.request.title,
+          intro_detail: $('#editor').trumbowyg('html'),
+          schedule: this.request.schedule,
+          inclusion: this.request.inclusion,
+          preparation: this.request.preparation,
+          address_detail: { text: this.request.address, meet_area: this.request.meetArea },
+          refund_policy: this.request.refundPolicy,
+          price: this.request.price,
+          category: this.request.category,
+          isteamorpeople: this.request.picked,
+          wekins: this.wekins
+        }
+        api.addActivity(params)
+          .then(result => {
+            alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
+            window.location.href = '/host/admin/wekins'
+          }).catch(error => console.error(error))
+      }
+    }
+  },
+  initPolicyCheckbox() {
+    $(".checkbox").checkbox({
+      onChecked: () => {
+        this.refundPolicyTemp = this.request.refundPolicy
+        this.request.refundPolicy = this.refundPolicyData
+      },
+      onUnchecked: () => this.request.refundPolicy = this.refundPolicyTemp
+    })
+  },
+  getPolicy() {
+    api.getPolicy()
+      .then((result) => this.refundPolicyData = result[0].value.body)
+      .then(this.initPolicyCheckbox)
         .catch((error) => console.error(error))
     },
     getAdminActivity() {
@@ -437,17 +426,16 @@ export default {
 
           api.getAdminWekin(this.activity_key)
             .then(wekins => {
-              this.request.wekins = wekins
-              this.wekinSchedules = wekins.length
+              console.log(wekins)
               this.$nextTick(() => {
-                $(".ui.calendar").calendar({
-                  text: this.koreanCalendar
-                })
+                this.wekins = [{}]
+                this.wekins.pop()
                 wekins.forEach((wekin, index) => {
-                  $(`#startDate--${index}`).calendar('set date', moment(wekin.start_date).toDate()),
-                    $(`#endDate--${index}`).calendar('set date', moment(wekin.due_date).toDate()),
-                    $(`#max_user--${index}`).val(wekin.max_user),
-                    $(`#min_user--${index}`).val(wekin.min_user)
+                  let TempWekins = {}
+                  TempWekins.start_date = moment(wekin.start_date).format('LL')
+                  TempWekins.max_user = wekin.max_user
+                  TempWekins.min_user = wekin.min_user
+                  this.wekins.push(TempWekins)
                 })
               })
             })
@@ -466,20 +454,6 @@ export default {
   mounted() {
     const _this = this;
     const today = new Date();
-
-    $('#startDate--0').calendar({
-      text: this.koreanCalendar,
-      endCalendar: $('#endDate--0'),
-      minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
-      onChange: (date) => {
-        $('#endDate--0').calendar({
-          text: this.koreanCalendar,
-          minDate: new Date(),
-          maxDate: date
-        })
-      }
-    })
-
     // editor configuration
     $.trumbowyg.svgPath = '/static/trumbowyg/dist/ui/icons.svg';
     $('#editor').trumbowyg({
@@ -517,6 +491,8 @@ export default {
 @import '../../style/variables';
 @import '../../style/cross-browsing';
 @import '/static/trumbowyg/dist/ui/trumbowyg.min.css';
+
+
 
 [contentEditable=true]:empty:not(:focus):before {
   content: attr(data-text)
@@ -635,6 +611,9 @@ export default {
 }
 </style>
 <style lang="scss">
+#datepickerId {
+  width: 170px;
+}
 .wekin-uploader {
   height: 36px;
   width: 100%;
