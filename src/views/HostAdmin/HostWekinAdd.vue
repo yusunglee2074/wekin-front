@@ -166,15 +166,20 @@
             <label>날짜선택</label>
             <div class="ui calendar">
               <div class="ui input styled primary left icon">
+                <i v-show="!wekins[index]['start_date']" class="icon calendar wekin-calendar-icon"></i>
                 <datepicker id="datepickerId" v-model="wekins[index]['start_date']" wapper-class="ui input styled primary left icon" language="ko" format="MMM dd(D), yyyy"></datepicker>
               </div>
             </div>
-            <!-- <div class="ui compact menu"> -->
+          </div>
+          <div class="settings__list timeSelectList">
+            <label>시간선택</label>
               <select class="timeSelector1" v-model="wekins[index]['startTimeDay']">
+                <option class="item">-</option>
                 <option class="item" value="12">오전</option>
                 <option class="item" value="0">오후</option>
               </select>
               <select class="timeSelector2" v-model="wekins[index]['startTimeHour']">
+                <option class="item">-</option>
                 <option class="item" value="01">1시</option>
                 <option class="item" value="02">2시</option>
                 <option class="item" value="03">3시</option>
@@ -189,6 +194,7 @@
                 <option class="item" value="12">12시</option>
               </select>
               <select class="timeSelector3" v-model="wekins[index]['startTimeMinute']">
+                <option class="item">-</option>
                 <option class="item" value="00">정각</option>
                 <option class="item" value="10">10분</option>
                 <option class="item" value="20">20분</option>
@@ -196,9 +202,8 @@
                 <option class="item" value="40">40분</option>
                 <option class="item" value="50">50분</option>
               </select>
-            <!-- </div> -->
           </div>
-          <div style="text-align:right; color:rgb(204, 51, 0);">시각 선택은 옵션입니다.</div>
+          <div style="text-align:center; color:rgb(204, 51, 0); margin-bottom: 10px;">시각 선택은 옵션입니다.</div>
           <div>
             <label style="font-size: 16px;">신청마감일&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</label>
             <input type="radio" :id="`one${index}`" value="1" v-model="wekins[index]['due_date']">
@@ -343,7 +348,7 @@ export default {
         alert("시작 날짜는 최소 하나 이상 있어야합니다.")
         return
       }
-      this.wekins.pop(index)
+      this.wekins.splice(index, 1)
       
     },
     checkForm() {
@@ -632,9 +637,25 @@ export default {
       flex-direction: column;
     }
   }
+  .vdp-datepicker {
+    margin-top: 5px;
+  }
+
+  .timeSelector1,
+  .timeSelector2,
+  .timeSelector3 {
+    margin-top: 5px;
+  }
 }
-</style>
-<style lang="scss">
+
+.wekin-calendar-icon {
+  position: relative;
+  z-index: 10000;
+}
+
+.timeSelectList {
+  margin-bottom: 5px !important;
+}
 
 .timeSelector1,
 .timeSelector2,
@@ -642,12 +663,23 @@ export default {
   border: 1px solid #00a29a;
   background-color: #fff;
   margin-left: 2px;
+  height: 38px;
+  width: 100%;
+  text-align: right;
+}
+
+
+</style>
+<style lang="scss">
+.vdp-datepicker {
+  width: 100%;
 }
 
 #datepickerId {
-  width: 135px;
+  width: 100%;
   padding-right: 10px !important;
 }
+
 .wekin-uploader {
   height: 36px;
   width: 100%;
