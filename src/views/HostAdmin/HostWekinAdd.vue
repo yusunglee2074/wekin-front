@@ -141,7 +141,7 @@
         <div class="settings__list">
           <label class="required">가격</label>
           <div class="ui corner labeled input">
-            <input type="number" v-model="request.price" v-on:keypress="isNumber(event)">
+            <input type="number" v-model="request.price" v-on:keypress="isNumber($event)">
           </div>
         </div>
         <div class="ui divider"></div>
@@ -219,11 +219,11 @@
             <div class="limit-user-container flex">
               <div class="ui input flex-f1" style="margin-top:12px;">
                 <label>최소 인원</label>
-                <input type="text" placeholder="숫자만 입력 가능합니다" v-on:keypress="isNumber(event)" v-model="wekins[index]['min_user']">
+                <input type="text" placeholder="숫자만 입력 가능합니다" v-on:keypress="isNumber($event)" v-model="wekins[index]['min_user']">
               </div>
               <div class="ui input flex-f1">
                 <label>최대 인원</label>
-                <input type="text" placeholder="숫자만 입력 가능합니다" v-on:keypress="isNumber(event)" v-model="wekins[index]['max_user']">
+                <input type="text" placeholder="숫자만 입력 가능합니다" v-on:keypress="isNumber($event)" v-model="wekins[index]['max_user']">
               </div>
             </div>
           </div>
@@ -360,9 +360,10 @@ export default {
         this.request.address &&
         this.request.meetArea &&
         this.request.refundPolicy &&
-        this.request.category &&
-        this.request.price)) {
+        this.request.category)) {
         alert('필수 항목을 채워주세요.')
+      } else if (this.request.price == "") {
+        alert("가격란에는 숫자만 입력 부탁드립니다.")
       } else {
         return true
       }
@@ -373,7 +374,8 @@ export default {
         let i = 0
         for (; i < this.wekins.length; i++) {
           if (this.wekins[i].start_date && this.wekins[i].due_date && this.wekins[i].min_user &&  this.wekins[i].start_date) {
-            if (this.wekins[i].min_user > this.wekins[i].max_user) {
+            
+            if (Number(this.wekins[i].min_user) > Number(this.wekins[i].max_user)) {
               alert(i + 1 + '번째 위킨의 최소인원이 최대인원보다 많습니다.')
               break;
             } else if (moment(this.wekins[i].start_date) < moment()) {
@@ -418,7 +420,7 @@ export default {
           .then(result => {
             alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
             window.location.href = '/host/admin/wekins'
-          }).catch(error => console.error(error))
+          }).catch(error => alert(error + error.message + "정말로 죄송합니다. 메이커님 내부 오류가 발생했습니다. 카카오톡이나 전화로 언제든지 문의 주시면 바로 도와드리겠습니다."))
       }
     }
   },
