@@ -50,6 +50,10 @@ export default (Vue) => {
       weekdaysShort: ['일', '월', '화', '수', '목', '금', '토']
     })
     var m = moment(date)
+    if (m.format('MM/DD(ddd) HH:mm').slice(-5) === "00:00") {
+      let customTime = m.format('MM/DD(ddd)')
+      return customTime
+    }
     return m.format('MM/DD(ddd) HH:mm')
   })
 

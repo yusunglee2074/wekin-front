@@ -79,7 +79,7 @@
               <div class="default text">인원선택</div>
               <div class="menu">
                 <!-- FIXME: 현재 유저 JOIN 완료시 수정  -->
-                <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)" v-bind:key="index">{{index + 1}}<span v-if="activity.isteamorpeople === 'team'">팀</span><span v-if="activity.isteamorpeople !== 'team'">명</span></div>
+                <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)" v-bind:key="index">{{index + 1}} <span v-if="activity.isteamorpeople === 'team'">팀</span><span v-if="activity.isteamorpeople !== 'team'">명</span></div>
                 <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) == 0" data-value="closed">마감</div>
                 <!--<div class="item" :data-value="index + 1" v-for="(wekin, index) in selectedWekin.max_user">{{index + 1}}명</div>-->
               </div>
