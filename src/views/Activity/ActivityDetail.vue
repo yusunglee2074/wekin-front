@@ -55,12 +55,22 @@
             <p v-show="Object.keys(selectedWekin).length">
               {{selectedWekin.due_date | formatDateTimeKo}}까지 신청해주세요.
             </p>
-            <div class="ui selection dropdown styled full-width schedule">
+            <div class="ui selection dropdown styled full-width schedule" v-show="wekins.length">
               <input type="hidden" name="schedule">
               <i class="dropdown icon"></i>
               <div class="default text">날짜선택</div>
               <div class="menu">
-                <div class="item" v-for="(wekin, index) in wekins" v-bind:key="wekin.wekin_key" :data-value="wekin.wekin_key" v-if="new Date(wekin.start_date) >= new Date()">{{wekin.start_date | formatDateTimeKo}}</div>
+                <div class="item"
+                     v-for="(wekin, index) in wekins"
+                     v-bind:key="wekin.wekin_key"
+                     :data-value="wekin.wekin_key"
+                     v-if="new Date(wekin.start_date) >= new Date()"
+                     :class="{ deadlineOver: new Date() > new Date(wekin.due_date) }">
+                  {{wekin.start_date | formatDateTimeKo}}
+                  <span v-if="new Date() > new Date(wekin.due_date)"
+                        style="color: #ccc;"> (마감)
+                  </span>
+                </div>
               </div>
             </div>
             <div class="ui selection dropdown styled full-width peopleCount" v-if="Object.keys(selectedWekin).length">
@@ -74,7 +84,10 @@
                 <!--<div class="item" :data-value="index + 1" v-for="(wekin, index) in selectedWekin.max_user">{{index + 1}}명</div>-->
               </div>
             </div>
-            <button class="negative ui button full-width apply-btn" id="membershipvirtualview" v-on:click="onApplyBtn()" v-if="user">
+            <button class="negative ui button full-width apply-btn"
+                    id="membershipvirtualview"
+                    v-on:click="onApplyBtn()"
+                    v-if="user">
               신청하기
             </button>
             <button class="negative ui button full-width apply-btn" id="virtualview" v-on:click="onApplyBtn()" v-if="!user">
@@ -311,7 +324,17 @@
           <i class="dropdown icon"></i>
           <div class="default text">날짜선택</div>
           <div class="menu">
-            <div class="item" v-for="wekin in wekins" v-bind:key="wekin.wekin_key" :data-value="wekin.wekin_key" v-if="new Date(wekin.start_date) >= new Date()">{{wekin.start_date | formatDateTimeKo}} ({{wekin.max_user - wekin.current_user}}남음)</div>
+            <div class="item"
+                 v-for="wekin in wekins"
+                 v-bind:key="wekin.wekin_key"
+                 :data-value="wekin.wekin_key"
+                 v-if="new Date(wekin.start_date) >= new Date()"
+                 :class="{ deadlineOver: new Date() > new Date(wekin.due_date) }">
+              {{wekin.start_date | formatDateTimeKo}} ({{wekin.max_user - wekin.current_user}}남음)
+              <span v-if="new Date() > new Date(wekin.due_date)"
+                    style="color: #ccc;"> (마감)
+              </span>
+            </div>
             <!--<div class="item" v-for="wekin in wekins" :data-value="wekin.wekin_key">{{wekin.start_date | formatDateKo}}</div>
                                                               // TODO: 위킨 data value 테스트 -->
           </div>
@@ -573,6 +596,10 @@ export default {
                 })
               }
             })
+          $('.ui.dropdown.schedule .deadlineOver')
+            .dropdown({
+              action: 'hide'
+            })
         })
       } else {
         alert("로그인이 필요한 서비스 입니다.")
@@ -777,40 +804,44 @@ export default {
       $('.ui.dropdown.schedule')
         .dropdown({
           onChange: (value) => {
-            var wekin = _.find(this.wekins, (wekin) => {
-              return wekin.wekin_key == value
-            })
-            this.selectedWekin = wekin
-            this.$nextTick(() => {
-              this.dropdownPeopleCount()
-              this.getAttendWekiners()
+              var wekin = _.find(this.wekins, (wekin) => {
+                return wekin.wekin_key == value
+              })
+              this.selectedWekin = wekin
+              this.$nextTick(() => {
+                this.dropdownPeopleCount()
+                this.getAttendWekiners()
 
-              if ((this.selectedWekin.max_user - this.selectedWekin.current_user) == 0) {
-                this.isApplyAvailable = false
-                $('.apply-btn')
-                  .removeClass('negative')
-                  .addClass('primary')
-                  .text('대기 신청하기')
+                if ((this.selectedWekin.max_user - this.selectedWekin.current_user) == 0) {
+                  this.isApplyAvailable = false
+                  $('.apply-btn')
+                    .removeClass('negative')
+                    .addClass('primary')
+                    .text('대기 신청하기')
 
-                api.isRequestedWaiting(this.selectedWekin.wekin_key)
-                  .then((isRequested) => {
-                    if (isRequested.result) {
-                      this.isRequested = true
-                      $('.apply-btn')
-                        .removeClass('negative')
-                        .addClass('primary')
-                        .text('대기 신청 취소하기')
-                    }
-                  }).catch((error) => console.error(error))
-              } else {
-                this.isApplyAvailable = true
-                $('.apply-btn')
-                  .removeClass('primary')
-                  .addClass('negative')
-                  .text('신청하기')
-              }
-            })
+                  api.isRequestedWaiting(this.selectedWekin.wekin_key)
+                    .then((isRequested) => {
+                      if (isRequested.result) {
+                        this.isRequested = true
+                        $('.apply-btn')
+                          .removeClass('negative')
+                          .addClass('primary')
+                          .text('대기 신청 취소하기')
+                      }
+                    }).catch((error) => console.error(error))
+                } else {
+                  this.isApplyAvailable = true
+                  $('.apply-btn')
+                    .removeClass('primary')
+                    .addClass('negative')
+                    .text('신청하기')
+                }
+              })
           }
+        })
+      $('.ui.dropdown.schedule .deadlineOver')
+        .dropdown({
+          action: 'hide'
         })
     }
   },
@@ -867,6 +898,14 @@ export default {
 <style lang=scss scoped>
 @import '../../style/variables';
 @import '../../style/cross-browsing';
+
+.deadlineOver {
+  color: #ccc !important;
+  cursor: default !important;
+}
+.deadlineOver:hover {
+  background-color: #fff !important;
+} 
 
 .menu .item img.facebookLogoBtn {
   width: 30px;
