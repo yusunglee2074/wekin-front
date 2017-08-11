@@ -2,8 +2,8 @@
   <div class="host-wekin">
     <host-card-layout title="위킨 등록">
       <div slot="content" class="content">
-          <select v-model.lazy="selected" class="ui selection dropdown" @change="setactivityKeyandCallAPI()" style="min-height: 3.1714286em;">
-            <option disabled value="" v-if="hostActivities.length !== 0">이전 위킨 가져오기</option>
+          <select v-model.lazy="selected" v-if="hostActivities.length" class="ui selection dropdown" @change="setactivityKeyandCallAPI()" style="min-height: 3.1714286em; width: 90%;">
+            <option disabled value="">이전 위킨 가져오기</option>
             <option v-for="act in recentActivity" v-bind:value="act.key">{{ act.title }}</option>
           </select>
           
@@ -169,8 +169,36 @@
                 <datepicker id="datepickerId" v-model="wekins[index]['start_date']" wapper-class="ui input styled primary left icon" language="ko" format="MMM dd(D), yyyy"></datepicker>
               </div>
             </div>
-            <div style="position: absolute; top:13%; left:72%;">
-              <input id="exit-time" name="exit-time" type="time" v-model="wekins[index]['start_time']">
+            <div class="ui compact menu">
+              <select class="" v-model="wekins[index]['startTimeDay']">
+                낮 
+                <option class="item" value="12">낮</option>
+                <option class="item" value="0">밤</option>
+              </select>
+              <select class="" v-model="wekins[index]['startTimeHour']">
+                시 
+                <option class="item" value="01">1시</option>
+                <option class="item" value="02">2시</option>
+                <option class="item" value="03">3시</option>
+                <option class="item" value="04">4시</option>
+                <option class="item" value="05">5시</option>
+                <option class="item" value="06">6시</option>
+                <option class="item" value="07">7시</option>
+                <option class="item" value="08">8시</option>
+                <option class="item" value="09">9시</option>
+                <option class="item" value="10">10시</option>
+                <option class="item" value="11">11시</option>
+                <option class="item" value="12">12시</option>
+              </select>
+              <select class="" v-model="wekins[index]['startTimeMinute']">
+                분 
+                <option class="item" value="00">정각</option>
+                <option class="item" value="10">10분</option>
+                <option class="item" value="20">20분</option>
+                <option class="item" value="30">30분</option>
+                <option class="item" value="40">40분</option>
+                <option class="item" value="50">50분</option>
+              </select>
             </div>
           </div>
           <div style="text-align:right; color:rgb(204, 51, 0);">시각 선택은 옵션입니다.</div>
@@ -259,7 +287,7 @@ export default {
     // 시간 비교해서 정렬 후 5개 넣음
     hostActivities() {
       let self = this
-      let hostActivity = this.$store.state.hostActivities
+      let hostActivity = this.$store.getters.hostActivities
       hostActivity.sort(function(a, b) {
         return new Date(a.created_at) - new Date(b.created_at)
       })
@@ -278,7 +306,7 @@ export default {
   components: {
     Datepicker,
     hostCardLayout,
-    FireUpload
+    FireUpload,
   },
   methods: {
     ArrayWekinsAddClick: function () {
@@ -350,16 +378,15 @@ export default {
               alert(i + 1 + "번째 위킨의 시작 날짜가 오늘 이전입니다.")
               break
             } else {
-              if (this.wekins[i].start_time) {
-                var time = this.wekins[i].start_time.split(':')
+              if (this.wekins[i].startTimeHour > 0) {
+                var timeSum = this.wekins[i].startTimeDay+this.wekins[i].startTimeHour + ':' + this.wekins[i].startTimeMinute
+                var time = timeSum.split(':')
               } else {
                 var time = [0, 0]
               }
               this.wekins[i].start_date = moment(this.wekins[i].start_date).set('hour', time[0]).set('minute', time[1]).toString()
               delete this.wekins[i].start_time
               this.wekins[i].due_date = moment(this.wekins[i].start_date).subtract(this.wekins[i].due_date, 'days').toString()
-              console.log(i)
-              console.log(this.wekins.length)
               if (i+1 === this.wekins.length) {
                 haswekin = true
               }
