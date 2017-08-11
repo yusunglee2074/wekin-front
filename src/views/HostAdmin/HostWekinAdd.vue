@@ -161,7 +161,7 @@
             </div>
           </div>
 
-        <div class="ui segment wekinSchedules" v-for="(value, index) in wekins">
+          <div class="ui segment wekinSchedules" v-for="(value, index) in wekins">  
           <div class="settings__list" style="margin-bottom: 5px;">
             <label>날짜선택</label>
             <div class="ui calendar">
@@ -169,14 +169,12 @@
                 <datepicker id="datepickerId" v-model="wekins[index]['start_date']" wapper-class="ui input styled primary left icon" language="ko" format="MMM dd(D), yyyy"></datepicker>
               </div>
             </div>
-            <div class="ui compact menu">
-              <select class="" v-model="wekins[index]['startTimeDay']">
-                낮 
-                <option class="item" value="12">낮</option>
-                <option class="item" value="0">밤</option>
+            <!-- <div class="ui compact menu"> -->
+              <select class="timeSelector1" v-model="wekins[index]['startTimeDay']">
+                <option class="item" value="12">오전</option>
+                <option class="item" value="0">오후</option>
               </select>
-              <select class="" v-model="wekins[index]['startTimeHour']">
-                시 
+              <select class="timeSelector2" v-model="wekins[index]['startTimeHour']">
                 <option class="item" value="01">1시</option>
                 <option class="item" value="02">2시</option>
                 <option class="item" value="03">3시</option>
@@ -190,8 +188,7 @@
                 <option class="item" value="11">11시</option>
                 <option class="item" value="12">12시</option>
               </select>
-              <select class="" v-model="wekins[index]['startTimeMinute']">
-                분 
+              <select class="timeSelector3" v-model="wekins[index]['startTimeMinute']">
                 <option class="item" value="00">정각</option>
                 <option class="item" value="10">10분</option>
                 <option class="item" value="20">20분</option>
@@ -199,7 +196,7 @@
                 <option class="item" value="40">40분</option>
                 <option class="item" value="50">50분</option>
               </select>
-            </div>
+            <!-- </div> -->
           </div>
           <div style="text-align:right; color:rgb(204, 51, 0);">시각 선택은 옵션입니다.</div>
           <div>
@@ -229,7 +226,7 @@
             <div class="flex-space"></div>
             <button class="ui button negative" @click="onWekinScheduleDeleteClick(index)">삭제</button>
           </div>
-        </div>
+          </div>  
         <div class="settings__list">
           <span class="link" @click="ArrayWekinsAddClick()">+ 위킨 날짜&amp;인원 추가</span>
         </div>
@@ -638,8 +635,18 @@ export default {
 }
 </style>
 <style lang="scss">
+
+.timeSelector1,
+.timeSelector2,
+.timeSelector3 {
+  border: 1px solid #00a29a;
+  background-color: #fff;
+  margin-left: 2px;
+}
+
 #datepickerId {
-  width: 170px;
+  width: 135px;
+  padding-right: 10px !important;
 }
 .wekin-uploader {
   height: 36px;
