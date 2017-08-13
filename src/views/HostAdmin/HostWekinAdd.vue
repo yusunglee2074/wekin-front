@@ -2,7 +2,7 @@
   <div class="host-wekin">
     <host-card-layout title="위킨 등록">
       <div slot="content" class="content">
-          <select v-model.lazy="selected" v-if="hostActivities.length" class="ui selection dropdown" @change="setactivityKeyandCallAPI()" style="min-height: 3.1714286em; width: 90%;">
+          <select v-model.lazy="selected" v-if="hostActivities" class="ui selection dropdown" @change="setactivityKeyandCallAPI()" style="min-height: 3.1714286em; width: 90%;">
             <option disabled value="">이전 위킨 가져오기</option>
             <option v-for="act in recentActivity" v-bind:value="act.key">{{ act.title }}</option>
           </select>
@@ -294,9 +294,10 @@ export default {
         return new Date(a.created_at) - new Date(b.created_at)
       })
       if (hostActivity.length < 2) {
-        return hostActivity.forEach(function(value) {
+        hostActivity.forEach(function(value) {
           self.recentActivity.push({ key: value.activity_key, title: value.title })
         })
+        return self.recentActivity
       } else {
         hostActivity.slice(-5).forEach(function(value) {
           self.recentActivity.push({ key: value.activity_key, title: value.title })
