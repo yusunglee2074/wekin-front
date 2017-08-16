@@ -2,46 +2,27 @@
   <div>
     <host-card-layout title="예약 관리">
       <div slot="content" class="content">
-        <div class="ui selection dropdown bookingStatus" v-if="wekins && wekins.length != 0">
-          <input name="gender" type="hidden" value="0">
-          <i class="dropdown icon"></i>
-          <div class="text">전체</div>
-          <div class="menu">
-            <div class="item" data-value="0">전체</div>
-            <div class="item" data-value="1">진행중</div>
-            <div class="item" data-value="2">종료</div>
-          </div>
-        </div>
-        <div style="margin-right: 50px; margin-top: 15px; float: right;">
-          <input type="checkbox" id="hasItBooker" v-model="hasItBooker" v-if="!(wekins && wekins.length == 0)"><label v-if="!(wekins && wekins.length == 0)" for="hasItBooker"> 예약자가 있는 위킨만 표시</label>
-        </div>
-        <div class="wekin-list-layout" v-if="!hasItBooker" v-bind:class="{ end: new Date(wekin.start_date) <= new Date() }" v-for="wekin in filteredWekins" v-bind:key="wekin.wekin_key">
+        <div class="wekin-list-layout" v-if="!hasItBooker" v-bind:class="{ end: new Date(wekin.start_date) <= new Date() }" v-for="wekin in wekins" v-bind:key="wekin.wekin_key">
           <div class="left">
             <span class="title">{{wekin.Activity.title}}</span>
-            <span class="date">{{wekin.start_date | formatDate}}</span>
-            <span> 신청, 입금대기, 입금완료 인원수 : {{wekin.Orders.length}}</span>
-            <!--<span class="time">16:00~18:00</span>-->
+            <span class="date">{{wekin.start_date | formatDateTimeKo}}</span>
+            <p><span> 결제대기 인원 : </span>{{ getReadyPeople(wekin.Orders) }} 명</p>
+            <p><span> 결제완료 인원 : </span><span :style="getPaidPeople(wekin.Orders) > 0 ? paidStyle : ''">{{ getPaidPeople(wekin.Orders) }} 명</span></p>
           </div>
-          <a :href="'/host/admin/bookings/' + wekin.wekin_key" v-if="!hasItBooker" tag="button" class="ui primary button right">예약자 확인</a>
-        </div>
-        <div class="wekin-list-layout" v-if="hasItBooker" v-bind:class="{ end: new Date(wekin.start_date) <= new Date() }" v-for="wekin in filteredWekins" v-bind:key="wekin.wekin_key">
-          <div class="left" v-if="wekin.Orders.length > 0">
-            <span class="title">{{wekin.Activity.title}}</span>
-            <span class="date">{{wekin.start_date | formatDate}}</span>
-            <span> 신청, 입금대기, 입금완료 인원수 : {{wekin.Orders.length}}</span>
-            <!--<span class="time">16:00~18:00</span>-->
-          </div>
-          <a :href="'/host/admin/bookings/' + wekin.wekin_key" tag="button" class="ui primary button right" v-if="hasItBooker && wekin.Orders.length > 0">예약자 확인</a>
+          <router-link :to="{ name: 'HostBookingDetail', params: { key: wekin.wekin_key }}" v-if="!hasItBooker" class="ui primary button right">예약자 확인</router-link>
         </div>
         <div class="wekin-list-layout" style="text-align:center;" v-if="wekins && wekins.length == 0">
-          <p style="width:100%">진행중인 위킨이 없습니다.</p>
+          <p style="width:100%">예약이 진행된 위킨이 없습니다.</p>
+        </div>
+        <div class="wekin-list-layout" style="text-align:center;">
+          <p style="width:100%">예약자분이 계시는 위킨만 표시됩니다.</p>
         </div>
       </div>
-      <div slot="extra" class="ui basic button more-btn" v-if="!isLastPage" @click="getMoreBookings()">더보기</div>
     </host-card-layout>
   </div>
 </template>
 <script>
+import moment from 'moment'
 import hostCardLayout from 'components/HostCardLayout.vue'
 import api from 'api'
 
@@ -49,13 +30,15 @@ export default {
   data() {
     return {
       wekins: [],
-      pagingWekins: [],
       currentLength: 0,
       pageLimit: 10,
       isLastPage: false,
       status: "0",
       now: new Date(),
-      hasItBooker: false 
+      hasItBooker: false,
+      paidStyle: {
+        'color': 'red'
+      }
     }
   },
   computed: {
@@ -64,6 +47,7 @@ export default {
     },
   },
   asyncComputed: {
+    /*
     filteredWekins() {
       let pagingWekins = this.pagingWekins.filter((wekin) => {
         switch (this.status) {
@@ -82,45 +66,52 @@ export default {
       }
       return pagingWekins
     }
+    */
   },
   components: {
     hostCardLayout
   },
   methods: {
-    getMoreBookings() {
-      let nextLength = this.currentLength + this.pageLimit
-      for (this.currentLength; this.currentLength < nextLength; this.currentLength++) {
-        if (this.currentLength < this.wekins.length) {
-          this.pagingWekins.push(this.wekins[this.currentLength])
-        } else {
-          this.isLastPage = true
+    getReadyPeople: function (OrderList) {
+      let count = 0
+      for (let i = 0; i < OrderList.length; i++) {
+        if (OrderList[i].status === 'ready') {
+          count++
         }
       }
+      return count
+    },
+    getPaidPeople: function (OrderList) {
+      let count = 0
+      for (let i = 0; i < OrderList.length; i++) {
+        if (OrderList[i].status === 'paid') {
+          count++
+        }
+      }
+      return count
     },
     getAdminBookings() {
       api.getAdminBookings(this.user.Host.host_key)
         .then(json => {
-          this.wekins = json.results.filter(wekin => {
-            if (wekin.Activity.status === 3 || wekin.Activity.status === 5) {
+          let wekins = json.results.filter(wekin => {
+            if ((wekin.Activity.status === 3 || wekin.Activity.status === 5) && wekin.Orders.length !== 0) {
               return wekin
             }
           })
-          this.getMoreBookings()
-          this.initDropdown()
+          console.log(wekins)
+          wekins.sort(function compare(a, b) {
+            if (moment(a.start_date) > moment(b.start_date)) {
+              return 1;
+            }
+            if (moment(a.start_date) < moment(b.start_date)) {
+              return -1;
+            }
+            return 0;
+          })
+          this.wekins = wekins
         })
         .catch(error => console.error(error))
     },
-    initDropdown() {
-      this.$nextTick(() => {
-        setTimeout(() => {
-          $('.ui.dropdown.bookingStatus').dropdown({
-            onChange: (value) => {
-              this.status = value
-            }
-          })
-        }, 500)
-      })
-    }
   },
   created() {
     this.getAdminBookings()
@@ -162,15 +153,16 @@ export default {
   }
   .title {
     @include font-weight(medium);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     padding-top: 4px;
-    padding-bottom: 12px;
+    padding-bottom: 8px;
   }
   .address,
   .date,
   .time {
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 31px;
   }
   .button {
     margin-top: -7px;
