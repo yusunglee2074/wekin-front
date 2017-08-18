@@ -98,7 +98,6 @@ export default {
               return wekin
             }
           })
-          console.log(wekins)
           wekins.sort(function compare(a, b) {
             if (moment(a.start_date) > moment(b.start_date)) {
               return 1;

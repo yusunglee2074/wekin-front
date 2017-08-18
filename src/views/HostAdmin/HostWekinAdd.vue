@@ -174,8 +174,8 @@
           <div class="settings__list timeSelectList">
             <label>시간선택</label>
               <select class="timeSelector1" v-model="wekins[index]['startTimeDay']">
-                <option class="item" value="12">오전</option>
-                <option class="item" value="0">오후</option>
+                <option class="item" value="0">오전</option>
+                <option class="item" value="12">오후</option>
               </select>
               <select class="timeSelector2" v-model="wekins[index]['startTimeHour']">
                 <option class="item" value="01">1시</option>
@@ -381,16 +381,14 @@ export default {
               break
             } else {
               if (this.wekins[i].startTimeHour && this.wekins[i].startTimeMinute) {
-                var timeSum = this.wekins[i].startTimeDay+this.wekins[i].startTimeHour + ':' + this.wekins[i].startTimeMinute
+                var timeSum = Number(this.wekins[i].startTimeDay)+Number(this.wekins[i].startTimeHour) + ':' + this.wekins[i].startTimeMinute
                 var time = timeSum.split(':')
-              } else if (this.wekins[i].startTimeHour) {
-                var time = [this.wekins[i].startTimeHour, 0]
-              } else if (this.wekins[i].startTimeDay) {
-                var time = [0, 0]
+              } else if (this.wekins[i].startTimeHour && this.wekins[i].startTimeDay) {
+                var time = [Number(this.wekins[i].startTimeHour) + Number(this.wekins[i].startTimeDay), 0]
               } else {
                 var time = [0, 0]
               }
-              this.wekins[i].start_date = moment(this.wekins[i].start_date).set('hour', time[0]).set('minute', time[1]).toString()
+              this.wekins[i].start_date = moment(this.wekins[i].start_date).set({ 'hour': String(time[0]), 'minute': String(time[1]) })
               delete this.wekins[i].start_time
               this.wekins[i].due_date = moment(this.wekins[i].start_date).subtract(this.wekins[i].due_date, 'days').toString()
               if (i+1 === this.wekins.length) {
@@ -459,13 +457,27 @@ export default {
 
           api.getAdminWekin(this.activity_key)
             .then(wekins => {
-              console.log(wekins)
               this.$nextTick(() => {
                 this.wekins = [{}]
                 this.wekins.pop()
                 wekins.forEach((wekin, index) => {
                   let TempWekins = {}
                   TempWekins.start_date = moment(wekin.start_date).format('LL')
+                  let hours = moment(wekin.start_date).format('HH')
+                  if (hours > 12) {
+                    if( hours > 19) {
+                      TempWekins.startTimeHour = (hours - 12)
+
+                    } else {
+                      TempWekins.startTimeHour = '0' + (hours - 12)
+                    }
+                    TempWekins.startTimeDay = '12' 
+                  } else {
+                    TempWekins.startTimeHour = hours
+                    TempWekins.startTimeDay = '0'
+                  }
+                  TempWekins.due_date = moment(moment(wekin.start_date) - moment(wekin.due_date)).format('D') - 1
+                  TempWekins.startTimeMinute = moment(wekin.start_date).format('mm') 
                   TempWekins.max_user = wekin.max_user
                   TempWekins.min_user = wekin.min_user
                   this.wekins.push(TempWekins)
