@@ -174,12 +174,10 @@
           <div class="settings__list timeSelectList">
             <label>시간선택</label>
               <select class="timeSelector1" v-model="wekins[index]['startTimeDay']">
-                <option class="item">-</option>
                 <option class="item" value="12">오전</option>
                 <option class="item" value="0">오후</option>
               </select>
               <select class="timeSelector2" v-model="wekins[index]['startTimeHour']">
-                <option class="item">-</option>
                 <option class="item" value="01">1시</option>
                 <option class="item" value="02">2시</option>
                 <option class="item" value="03">3시</option>
@@ -194,7 +192,6 @@
                 <option class="item" value="12">12시</option>
               </select>
               <select class="timeSelector3" v-model="wekins[index]['startTimeMinute']">
-                <option class="item">-</option>
                 <option class="item" value="00">정각</option>
                 <option class="item" value="10">10분</option>
                 <option class="item" value="20">20분</option>
@@ -383,9 +380,13 @@ export default {
               alert(i + 1 + "번째 위킨의 시작 날짜가 오늘 이전입니다.")
               break
             } else {
-              if (this.wekins[i].startTimeHour > 0) {
+              if (this.wekins[i].startTimeHour && this.wekins[i].startTimeMinute) {
                 var timeSum = this.wekins[i].startTimeDay+this.wekins[i].startTimeHour + ':' + this.wekins[i].startTimeMinute
                 var time = timeSum.split(':')
+              } else if (this.wekins[i].startTimeHour) {
+                var time = [this.wekins[i].startTimeHour, 0]
+              } else if (this.wekins[i].startTimeDay) {
+                var time = [0, 0]
               } else {
                 var time = [0, 0]
               }
@@ -421,7 +422,7 @@ export default {
           .then(result => {
             alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
             window.location.href = '/host/admin/wekins'
-          }).catch(error => alert(error + error.message + "정말로 죄송합니다. 메이커님 내부 오류가 발생했습니다. 카카오톡이나 전화로 언제든지 문의 주시면 바로 도와드리겠습니다."))
+          }).catch(error => alert('에러 메세지' + error + error.message + "정말로 죄송합니다. 메이커님 내부 오류가 발생했습니다. 카카오톡이나 전화로 언제든지 문의 주시면 바로 도와드리겠습니다."))
       }
     }
   },
