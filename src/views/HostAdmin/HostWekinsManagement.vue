@@ -47,6 +47,7 @@
 <script>
 import hostCardLayout from 'components/HostCardLayout.vue'
 import api from 'api'
+import moment from 'moment'
 
 export default {
   data() {
@@ -61,7 +62,17 @@ export default {
   },
   computed: {
     hostActivities() {
-      return this.$store.state.hostActivities
+      let sortedActivities = this.$store.state.hostActivities
+      sortedActivities.sort(function compare(a, b) {
+        if (moment(a.created_at) > moment(b.created_at)) {
+          return 1;
+        }
+        if (moment(a.created_at) < moment(b.created_at)) {
+          return -1;
+        }
+        return 0;
+      })
+      return sortedActivities
     }
   },
   asyncComputed: {
