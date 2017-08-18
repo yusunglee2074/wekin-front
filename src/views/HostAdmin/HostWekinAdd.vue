@@ -311,7 +311,15 @@ export default {
   methods: {
     ArrayWekinsAddClick: function () {
       var lastwekin = this.wekins[this.wekins.length-1]
-      this.wekins.push({ min_user: lastwekin.min_user, max_user: lastwekin.max_user, start_date: lastwekin.start_date, due_date: lastwekin.due_date})
+      this.wekins.push({ 
+        min_user: lastwekin.min_user, 
+        max_user: lastwekin.max_user, 
+        start_date: lastwekin.start_date, 
+        due_date: lastwekin.due_date, 
+        startTimeDay: lastwekin.startTimeDay,
+        startTimeHour: lastwekin.startTimeHour,
+        startTimeMinute: lastwekin.startTimeMinute,
+      })
       return
     },
     isNumber: function(evt) {
