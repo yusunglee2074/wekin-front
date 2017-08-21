@@ -10,7 +10,7 @@ const BOARD_TYPE_NOTICE = 0
 
 axios.interceptors.request.use((config) => {
   config.headers.common['x-access-token'] = localStorage.getItem('accessToken')
-  return Promise.resolve(config)
+  return config
 }, (error) => {
   return Promise.reject(error)
 })
