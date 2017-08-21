@@ -557,6 +557,7 @@ export default {
           this.isLoading = false
           this.wekins = json.results
           this.wekinsTemp = json.results
+          this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
           this.initSortDropdown()
         })
         .catch(err => console.error(err))
@@ -574,11 +575,8 @@ export default {
                 case 1: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
                   this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
                   break;
-                case 2: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-                  this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
-                  break;
                 case 3: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-                  this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
+                  this.wekins = this.wekinsTemp 
                   break;
                 case 4: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
                   // console.log(this.wekins)
