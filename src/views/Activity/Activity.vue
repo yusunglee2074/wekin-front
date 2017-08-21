@@ -569,7 +569,7 @@ export default {
             onChange: (value) => {
               switch (Number(value)) {
                 case 0: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-                  this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
+                  this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
                   // console.log('00000임')
                   break;
                 case 1: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
