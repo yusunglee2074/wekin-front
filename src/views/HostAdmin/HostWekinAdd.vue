@@ -427,7 +427,7 @@ export default {
         api.addActivity(params)
           .then(result => {
             alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
-            window.location.href = '/host/admin/wekins'
+            this.$router.push({ name: 'HostWekins' })
           }).catch(error => alert('에러 메세지' + error + error.message + "정말로 죄송합니다. 메이커님 내부 오류가 발생했습니다. 카카오톡이나 전화로 언제든지 문의 주시면 바로 도와드리겠습니다."))
       }
     }
