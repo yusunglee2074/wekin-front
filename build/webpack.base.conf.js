@@ -77,5 +77,6 @@ module.exports = {
       'window.jQuery': 'jquery',
       jQuery: 'jquery'
     }),
+    new ExtractTextPlugin("style.css")
   ]
 }
