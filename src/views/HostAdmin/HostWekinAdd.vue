@@ -141,7 +141,7 @@
         <div class="settings__list">
           <label class="required">가격</label>
           <div class="ui corner labeled input">
-            <input type="number" v-model="request.price" v-on:keypress="isNumber($event)">
+            <input type="number" v-model="request.price" v-on:keypress="isNumber($event)" placeholder="숫자만 입력 가능합니다.">
           </div>
         </div>
         <div class="ui divider"></div>
@@ -323,9 +323,8 @@ export default {
       return
     },
     isNumber: function(evt) {
-      evt = (evt) ? evt : window.event;
       var charCode = (evt.which) ? evt.which : evt.keyCode;
-      if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
+      if ((evt.which != 46 || evt.key == '.') && (evt.which < 48 || evt.which > 57)) {
         evt.preventDefault();;
         alert("숫자만 입력 가능합니다.")
       } else {
@@ -427,8 +426,8 @@ export default {
         api.addActivity(params)
           .then(result => {
             alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
-            this.$router.push({ name: 'HostWekins' })
-          }).catch(error => alert('에러 메세지' + error + error.message + "정말로 죄송합니다. 메이커님 내부 오류가 발생했습니다. 카카오톡이나 전화로 언제든지 문의 주시면 바로 도와드리겠습니다."))
+            window.location.href = '/host/admin'
+          }).catch(error => alert('에러 메세지' + error + error.message + "정말 죄송합니다. 메이커님 내부적인 오류가 발생했습니다.\n 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다."))
       }
     }
   },

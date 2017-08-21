@@ -142,7 +142,7 @@
         <div class="settings__list">
           <label class="required">가격</label>
           <div class="ui corner labeled input">
-            <input type="number" v-model="request.price" v-on:keypress="isNumber($event)">
+            <input type="number" v-model="request.price" v-on:keypress="isNumber($event)" placeholder="숫자만 입력 가능합니다.">
           </div>
         </div>
         <div class="ui divider"></div>
@@ -317,7 +317,7 @@ export default {
       if (confirm("삭제 하시겠습니까?")) {
         api.deleteActivity(this.$route.params.key).then(() => {
           alert('삭제 되었습니다.')
-          window.location.href = '/host/admin/wekins'
+          window.location.href = '/host/admin'
         }).catch(error => console.error(error))
       }
     },
@@ -335,9 +335,7 @@ export default {
       return
     },
     isNumber: function(evt) {
-      evt = (evt) ? evt : window.event;
-      var charCode = (evt.which) ? evt.which : evt.keyCode;
-      if ((charCode > 31 && (charCode < 48 || charCode > 57))) {
+      if ((evt.which != 46 || evt.key == '.') && (evt.which < 48 || evt.which > 57)) {
         evt.preventDefault();;
         alert("숫자만 입력 가능합니다.")
       } else {
@@ -441,7 +439,7 @@ export default {
         api.updateActivity(this.$route.params.key, params)
           .then(result => {
             alert('위킨 수정이 완료되었습니다.')
-            window.location.href = '/host/admin/wekins'
+            window.location.href = '/host/admin'
           }).catch(error => console.error(error))
       }
     }
