@@ -842,9 +842,13 @@ export default {
     }
   }
   .categoryformobile {
-    display: inherit;
-    width: 94%;
-    margin-left: 8px;
+    position: fixed;
+    top: 115px;
+    display: block;
+    z-index: 1000;
+    background-color: white;
+    width: 93%;
+    min-height: 50px;
   }
 }
 
@@ -878,9 +882,9 @@ export default {
 .ui.text.menu {
   margin: 0px 0px;
   margin-left: -28px;
-  height: 28px;
+  height: 50px;
   min-height: 10px;
-  font-size: 16px;
+  font-size: 13px;
   .item {
     text-align: center;
     width: 16.66%;
