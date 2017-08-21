@@ -20,7 +20,7 @@
         </div>
 
         <div class="wekin-list-container">
-          <div class="wekin-list-layout" v-for="activity in filteredActivities" v-bind:key="activity.activity_key">
+          <div class="wekin-list-layout" v-for="activity in hostActivities" v-bind:key="activity.activity_key">
             <div class="left">
               <div class="ui red label" v-if="activity.status == 3">{{activity.status | activityStatusLabel}}</div>
               <div class="ui primary label" v-if="activity.status == 2 || activity.status == 1">{{activity.status | activityStatusLabel}}</div>
@@ -40,7 +40,6 @@
           </div>
         </div>
       </div>
-      <div slot="extra" class="ui basic button more-btn" v-if="!isLastPage" @click="getMoreActivities()">더보기</div>
     </host-card-layout>
   </div>
 </template>
@@ -63,6 +62,7 @@ export default {
   computed: {
     hostActivities() {
       let sortedActivities = this.$store.getters.hostActivities
+      console.log(sortedActivities)
       sortedActivities.sort(function compare(a, b) {
         if (moment(a.created_at) > moment(b.created_at)) {
           return 1;
@@ -76,21 +76,6 @@ export default {
     }
   },
   asyncComputed: {
-    filteredActivities() {
-      let pagingActivities = this.pagingActivities.filter((activity) => {
-        if(this.status == "0") {
-          return activity
-        } else if(activity.status == Number(this.status)){
-          return activity
-        }
-      })
-      if(pagingActivities.length < this.pageLimit) {
-        setTimeout(() => {
-          this.getMoreActivities()
-        }, 500)
-      }
-      return pagingActivities
-    }
   },
   filters: {
     activityStatusLabel(status) {
@@ -126,16 +111,6 @@ export default {
     hostCardLayout
   },
   methods: {
-    getMoreActivities() {
-      let nextLength = this.currentLength + this.pageLimit
-      for (this.currentLength; this.currentLength < nextLength; this.currentLength++) {
-        if (this.currentLength < this.hostActivities.length) {
-          this.pagingActivities.push(this.hostActivities[this.currentLength])
-        } else {
-          this.isLastPage = true
-        }
-      }
-    },
     initDropdown() {
       $('.ui.dropdown.wekinStatus').dropdown({
         onChange: (value)=> {
@@ -145,16 +120,6 @@ export default {
     }
   },
   mounted() {
-    this.$store.watch(() => {
-      if(this.hostActivities !== undefined && !this.isWatched) {
-        this.isWatched = true
-        this.getMoreActivities()
-
-        setTimeout(() => {
-          this.initDropdown()
-        }, 500)
-      }
-    })
   }
 }
 </script>
