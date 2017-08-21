@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     hostActivities() {
-      let sortedActivities = this.$store.state.hostActivities
+      let sortedActivities = this.$store.getters.hostActivities
       sortedActivities.sort(function compare(a, b) {
         if (moment(a.created_at) > moment(b.created_at)) {
           return 1;
