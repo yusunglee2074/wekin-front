@@ -149,7 +149,7 @@
           </a>
         </div>
       </div>
-      <div class="ui clearing segment rect" style="margin-top:144px;">
+      <div class="ui clearing segment rect">
         <div class="ui selection dropdown styled sort">
           <input name="sort" type="hidden" value="0">
           <i class="dropdown icon"></i>
@@ -876,6 +876,9 @@ export default {
 
   .list {
     left: inherit;
+  }
+  .ui.clearing.segment.rect {
+    margin-top: 144px;
   }
 }
 
