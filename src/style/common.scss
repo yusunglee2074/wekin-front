@@ -1,6 +1,6 @@
 @import './variables';
 @import './cross-browsing';
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(https://cdn.rawgit.com/theeluwin/NotoSansKR-Hestia/master/stylesheets/NotoSansKR-Hestia.css);
 
 // media queries
 @media only screen and (max-width: 767px) {
@@ -19,7 +19,7 @@
 
 // font
 h1, h2, h3, h4, h5, div, span, label, p, div {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Noto Sans Korean', sans-serif;
   font-weight: 400;
   color: rgb(27, 28, 29)
 }
@@ -27,7 +27,7 @@ a {
   color: $color-primary;
 }
 strong {
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Noto Sans Korean', sans-serif;
   font-weight: 500;
 }
 
