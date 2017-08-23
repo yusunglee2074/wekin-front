@@ -76,10 +76,12 @@
           <div class="active title">
             <!--<i class="dropdown icon"></i>-->
             가격
+	    <br>
+	    <br>
           </div>
           <div class="active content">
-            <div id="price" class="ui double range"></div>
-            <p id="display-d"></p>
+	    <vueslider v-model="slider.value" v-bind="slider"></vueslider>
+	    <h3><small>선택가격: </small>{{ slider.value[0] }} ~ {{ slider.value[1] }}만원</h3>
           </div>
         </div>
         <div class="ui styled accordion">
@@ -195,8 +197,8 @@ import api from 'api'
 import { Location } from 'src/util'
 import _ from 'lodash'
 import moment from 'moment'
+import vueslider from 'vue-slider-component'
 
-const MAX_PRICE = 1500000
 const ONE_DAY_TIME = 86400000
 
 export default {
@@ -218,8 +220,6 @@ export default {
         pm: '오후'
       },
       wekins: [],
-      startPrice: 0,
-      endPrice: MAX_PRICE,
       peopleCount: 0,
       peopleCheckList: [true, false, false, false, false, false],
       isLoading: true,
@@ -244,16 +244,39 @@ export default {
       },
       locationFilter: ["전체"],
       categoryCheck: '',
+      slider: {
+	value: [0, 150],
+	width: '100%',
+	height: 8,
+	dotSize: 16,
+	min: 0,
+	max: 200,
+	disabled: false,
+	show: true,
+	tooltip: 'always',
+	formatter: '{value}만원',
+	bgStyle: {
+	  backgroundColor: '#fff',
+	  boxShadow: 'inset 0.5px 0.5px 3px 1px rgba(0,0,0,.36)'
+	},
+	tooltipStyle: {
+	  backgroundColor: '#999',
+	  borderColor: '#666'
+	},
+	processStyle: {
+	  backgroundColor: 'rgb(0, 162, 154)'
+	}
+      },
     }
   },
   asyncComputed: {
     filteredWekin() {
       return this.wekins.filter((wekin) => {
-        if (this.isInPrice(wekin) &&
-          this.isInCurrentLocation(wekin) &&
-          this.isInArea(wekin) &&
-          this.isInPeople(wekin) &&
-          this.isInDate(wekin) &&
+	if (this.isInPrice(wekin) &&
+	  this.isInCurrentLocation(wekin) &&
+	  this.isInArea(wekin) &&
+	  this.isInPeople(wekin) &&
+	  this.isInDate(wekin) &&
           this.isInCategory(wekin)) {
           return wekin
         }
@@ -284,17 +307,14 @@ export default {
     },
     resetFilter() {
       this.clearPeopleCheck()
+      this.slider.value = [0, 150]
       this.clearLocationCheck()
       this.address = ''
       this.locationCheck.all = true
       this.peopleCheck.six = true
       this.endDate = null
-      this.startPrice = 0
-      this.endPrice = MAX_PRICE
       this.locationFilter = ["전체"]
       this.categoryCheck = ''
-      $('#price').range('set valueDouble', 0, MAX_PRICE);
-      $('#display-d').html(`0원 ~ ${MAX_PRICE}+`);
       $(".thumb").trigger("click");
       $("#rangestart").calendar('clear')
       $("#rangeend").calendar('clear')
@@ -366,10 +386,10 @@ export default {
     },
     isInPrice(activity) {
       if(activity) {
-        if (activity.price >= this.startPrice && activity.price <= this.endPrice) {
+        if (activity.price >= this.slider.value[0] * 10000 && activity.price <= this.slider.value[1] * 10000) {
           return true
         }
-        if (this.startPrice >= MAX_PRICE) {
+        if (this.slider.value[0] >= 10000000) {
           return true
         }
         return false
@@ -554,38 +574,38 @@ export default {
     getActivities() {
       api.getActivities(2)
         .then(json => {
-          this.isLoading = false
-          this.wekins = json.results
-          this.wekinsTemp = json.results
-          this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
-          this.initSortDropdown()
-        })
-        .catch(err => console.error(err))
+	  this.isLoading = false
+	  this.wekins = json.results
+	  this.wekinsTemp = json.results
+	  this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
+	  this.initSortDropdown()
+	})
+	.catch(err => console.error(err))
     },
     initSortDropdown() {
       setTimeout(() => {
-        this.$nextTick(() => {
-          $(".ui.dropdown.sort").dropdown({
-            onChange: (value) => {
-              switch (Number(value)) {
-                case 0: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-                  this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
-                  // console.log('00000임')
-                  break;
-                case 1: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-                  this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
-                  break;
-                case 3: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-                  this.wekins = this.wekinsTemp 
-                  break;
-                case 4: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-                  // console.log(this.wekins)
-                  this.wekins = _.orderBy(this.wekins, ['price'], ['desc']);
-                  break;
-                case 5: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-                  this.wekins = _.orderBy(this.wekins, ['price'], ['asc']);
-                  break;
-              }
+	this.$nextTick(() => {
+	  $(".ui.dropdown.sort").dropdown({
+	    onChange: (value) => {
+	      switch (Number(value)) {
+		case 0: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
+		  this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
+		  // console.log('00000임')
+		  break;
+		case 1: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
+		  this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
+		  break;
+		case 3: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
+		  this.wekins = this.wekinsTemp 
+		  break;
+		case 4: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
+		  // console.log(this.wekins)
+		  this.wekins = _.orderBy(this.wekins, ['price'], ['desc']);
+		  break;
+		case 5: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
+		  this.wekins = _.orderBy(this.wekins, ['price'], ['asc']);
+		  break;
+	      }
             }
           })
         })
@@ -594,7 +614,8 @@ export default {
   },
   components: {
     wekinCardLayout,
-    Navb
+    Navb,
+    vueslider
   },
   created() {
   },
@@ -653,28 +674,6 @@ export default {
       text: this.koreanCalendar,
       onChange: (date, text, mode) => {
         this.endDate = date
-      }
-    })
-    $('#price').range({
-      min: 0,
-      max: MAX_PRICE,
-      start: params.startPrice || 0,
-      doubleStart: params.endPrice || MAX_PRICE,
-      step: 5000,
-      verbose: true,
-      debug: true,
-      onChange: function (value) {
-        var
-          $self = $(this),
-          firstVal = $self.range('get thumb value'),
-          secVal = $self.range('get thumb value', 'second');
-        vue.startPrice = firstVal
-        vue.endPrice = secVal
-        if (secVal >= MAX_PRICE) {
-          $('#display-d').html(`${firstVal}원 ~ ${secVal}+`);
-        } else {
-          $('#display-d').html(`${firstVal}원 ~ ${secVal}원`);
-        }
       }
     })
   }
