@@ -15,7 +15,7 @@
       상세 이미지 
     </h4>
     <div id="imagediv">
-      <img id="image" :src="`/static/images/promotion/${ imageIndex }.png`">
+      <img id="image" :src="`${ banners[imageIndex].value.detailUrl }`">
     </div>
   </div>
 
