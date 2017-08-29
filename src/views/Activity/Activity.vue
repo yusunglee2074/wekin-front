@@ -34,12 +34,12 @@
           </div>
           <div class="active content">
             <div class="button-container">
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '한강몽땅'}" @click="toggleCheckList(categoryCheck, 0, '한강몽땅')">한강몽땅</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '놀이'}" @click="toggleCheckList(categoryCheck, 0, '놀이')">놀이</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '도전'}" @click="toggleCheckList(categoryCheck, 0, '도전')">도전</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '체험'}" @click="toggleCheckList(categoryCheck, 0, '체험')">체험</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '문화'}" @click="toggleCheckList(categoryCheck, 0, '문화')">문화</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '휴식'}" @click="toggleCheckList(categoryCheck, 0, '휴식')">휴식</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '축제'}" @click="toggleCheckList(categoryCheck, 0, '축제')">축제</button>
             </div>
           </div>
         </div>
@@ -131,9 +131,6 @@
       </div>
       <div class="categoryformobile">
         <div class="ui text menu">
-          <a v-bind:class="{isClicked: this.categoryCheck === '한강몽땅'}" class="item" id="fourlettercategory" @click="toggleCheckList(categoryCheck, 0, '한강몽땅')">
-            한강몽땅 
-          </a>
           <a v-bind:class="{isClicked: this.categoryCheck === '놀이'}" class="item" @click="toggleCheckList(categoryCheck, 0, '놀이')">
             놀이
           </a>
@@ -148,6 +145,9 @@
           </a>
           <a v-bind:class="{isClicked: this.categoryCheck === '휴식'}" class="item" @click="toggleCheckList(categoryCheck, 0, '휴식')">
             휴식 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '축제'}" class="item" id="fourlettercategory" @click="toggleCheckList(categoryCheck, 0, '축제')">
+            축제 
           </a>
         </div>
       </div>
@@ -521,7 +521,7 @@ export default {
           case "휴식":
             this.togglecategory(text)
             break;
-          case "한강몽땅":
+          case "축제":
             this.togglecategory(text)
             break;
         }

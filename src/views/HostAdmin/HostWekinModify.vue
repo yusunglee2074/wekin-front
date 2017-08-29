@@ -62,8 +62,8 @@
               </div>
               <div class="field">
                 <div class="ui radio">
-                  <input type="radio" id='gksrkd' name="fruit" tabindex="0" class="hidden" value="한강몽땅" v-model="request.category">
-                  <label for='gksrkd'>한강몽땅</label>
+                  <input type="radio" id='gksrkd' name="fruit" tabindex="0" class="hidden" value="축제" v-model="request.category">
+                  <label for='gksrkd'>축제</label>
                 </div>
               </div>
               <div class="field">
