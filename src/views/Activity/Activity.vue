@@ -146,7 +146,7 @@
           <a v-bind:class="{isClicked: this.categoryCheck === '휴식'}" class="item" @click="toggleCheckList(categoryCheck, 0, '휴식')">
             휴식 
           </a>
-          <a v-bind:class="{isClicked: this.categoryCheck === '축제'}" class="item" id="fourlettercategory" @click="toggleCheckList(categoryCheck, 0, '축제')">
+          <a v-bind:class="{isClicked: this.categoryCheck === '축제'}" class="item" @click="toggleCheckList(categoryCheck, 0, '축제')">
             축제 
           </a>
         </div>
@@ -842,12 +842,13 @@ export default {
   }
   .categoryformobile {
     position: fixed;
-    top: 115px;
+    top: 110px;
+    left: 14px;
     display: block;
     z-index: 1000;
     background-color: white;
-    width: 95%;
-    min-height: 50px;
+    width: 100%;
+    min-height: 45px;
   }
 }
 
@@ -882,7 +883,7 @@ export default {
 }
 
 .ui.text.menu {
-  margin: 0px 0px;
+  margin: -3px 0px;
   margin-left: -28px;
   height: 50px;
   min-height: 10px;
