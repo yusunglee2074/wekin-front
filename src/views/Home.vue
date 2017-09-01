@@ -7,7 +7,7 @@
     <div class="banners swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(banner, index) in banners">
-          <a :href="`event/${index}`"><div class="swiper-slide" v-bind:style="{ backgroundImage: `url(${banner.url})`, backgroundSize:'cover', backgroundPosition: 'center' }"></div></a>
+          <a :href="`event/${banner.order}`"><div class="swiper-slide" v-bind:style="{ backgroundImage: `url(${banner.url})`, backgroundSize:'cover', backgroundPosition: 'center' }"></div></a>
         </div>
       </div>
       <div class="swiper-pagination" slot="pagination"></div>
@@ -291,6 +291,9 @@ export default {
     loadMainBanners() {
       api.getMainBanners()
         .then(banners => {
+          banners.sort(function (a, b) {
+            return a.value.order - b.value.order
+          })
           banners.forEach(banner => {
             this.banners.push(banner.value)
           })

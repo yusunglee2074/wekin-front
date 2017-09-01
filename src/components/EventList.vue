@@ -5,7 +5,7 @@
         <div class="ui middle aligned animated list">
           <div class="item">
             <div class="content">
-                <router-link :to="{ name: 'EventList', params: { key: index }}"><div class="header" style="margin-bottom: 2px">{{ banner.description }}</div></router-link>
+                <router-link :to="{ name: 'EventList', params: { key: banner.value.order }}"><div class="header" style="margin-bottom: 2px">{{ banner.description }}</div></router-link>
             </div>
           </div>
         </div>
@@ -15,7 +15,7 @@
       상세 이미지 
     </h4>
     <div id="imagediv">
-      <img id="image" :src="`${ banners[imageIndex].value.detailUrl }`">
+      <img id="image" :src="`${ banners[imageIndex - 1].value.detailUrl }`">
     </div>
   </div>
 
@@ -38,6 +38,10 @@ export default {
     loadMainBanners() {
       api.getMainBanners()
         .then(banners => {
+          console.log(banners)
+          banners.sort(function (a, b) {
+            return a.value.order - b.value.order
+          })
           banners.forEach((banner, index) => {
             this.banners.push(banner)
           })
