@@ -9,8 +9,8 @@ export default {
    * 이메일 인증 메일도 함께 전송한다.
    * @param {user} user
    */
-  signUp (email, password, userName) {
-    return api.signUp(email, password, userName)
+  signUp (email, password, userName, USER) {
+    return api.signUp(email, password, userName, USER)
             .then(customToken => firebase.auth().signInWithCustomToken(customToken))
             .then(currentUser => { 
               currentUser.sendEmailVerification() 
