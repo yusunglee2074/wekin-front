@@ -5,29 +5,6 @@
     </div>
     <div class="modal-mask" @click="close" v-show="show" transition="modal">
       <div class="modal-container" @click.stop>
-        <!--<div class="modal-body">
-          <div class="ui input">
-            <input type="email" placeholder="이메일" v-model="user.email">
-          </div>
-          <div class="ui input">
-            <input type="text" placeholder="이름" v-model="user.name">
-          </div>
-          <div class="ui input">
-          </div>
-          <div class="ui input">
-          </div>
-          <div class="color secondary">{{errorMessage}}</div>
-          <div class="ui small feed">
-            <button class="negative ui button" @click="onSignUpClick()">가입하기</button>
-            <div class="ui checkbox agreement-checkbox">
-              <input type="checkbox" style="width:30px; height:30px;" v-model="isAgreed">
-              <label class="label-for-signup">
-                <a href="/policy/term" tag="a" target="_blank">이용약관</a>과
-                <a href="policy/privacy" tag="a" target="_blank">개인정보취급방침</a>에 동의합니다.</label>
-            </div>
-          </div>
-        </div>
-        -->
           <fieldset class="inputField">
             <div>
               <div class="inputDefault">
@@ -57,8 +34,14 @@
                 </span>
               </div>
               <div class="inputDefault gender">
-                <button class="ui teal basic button genderButton" @click="genderSelect(0)">남자</button>
-                <button class="ui teal basic button genderButton" @click="genderSelect(1)">여자</button>
+                <button class="ui basic button genderButton" :class="{ 
+                  pink: user.gender === 0,
+                  teal: user.gender !== 0
+                  }" @click="genderSelect(0)">남자</button>
+                <button class="ui basic button genderButton" :class="{ 
+                  pink: user.gender === 1,
+                  teal: user.gender !== 1 
+                  }" @click="genderSelect(1)">여자</button>
               </div>
               <div class="inputDefault">
                   <input class="realInputDefault setLikeSpan" type="number" v-model.number="user.birthday.year" @blur="isYear($event)" placeholder="출생년도">
@@ -72,7 +55,7 @@
               </div>
               <div class="inputDefault lastInputDeleteBottomBorder">
                 <span>
-                  <input class="realInputDefault" type="text" v-model="user.email_company" placeholder="기업이메일">
+                  <input class="realInputDefault" type="text" v-model="user.email_company" placeholder="기업이메일(옵션)">
                 </span>
               </div>
             </div>
@@ -246,8 +229,6 @@ export default {
     },
     getErrorMessage(error) {
       switch (error) {
-        case "auth/weak-password":
-          return "비밀번호는 6자리 이상 입력해주세요."
         case "auth/email-already-exists":
           return "이미 가입 된 이메일 입니다."
         case "auth/argument-error":
@@ -480,6 +461,10 @@ export default {
   border-left-style: solid;
   border-left-width: 1px;
   border-right-style: none;
+}
+
+.clickedButton {
+  border-color: black;
 }
 
 
