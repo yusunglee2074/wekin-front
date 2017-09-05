@@ -12,7 +12,7 @@
       </div>
       <div class="button-container" v-if="!user">
         <a class="ui button primary" @click="showLoginModal = true">로그인</a>
-        <a class="ui button basic item linked" id="signupbutton" @click="showSignupModalMethod">회원가입</a>
+        <a class="ui button basic item linked" id="signupbutton" @click="showSignupModalMethod2">회원가입</a>
       </div>
       <div class="login-info-container" v-if="user">
         <router-link :to="{ name: 'UserFeed', params: { key: user.user_key }}" tag="div" class="ui circular background profile image link" @click.native="toggleMobileMenu()" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></router-link>
@@ -102,7 +102,7 @@
       </div>
       <div class="right menu" v-if="!user">
         <a class="item linked" @click="showLoginModal = true">로그인</a>
-        <a class="item linked" @click="showSignupModalMethod">회원가입</a>
+        <a class="item linked" @click="showSignupModalMethod2">회원가입</a>
 
         <!--<div class="loading"></div>-->
       </div>
@@ -143,6 +143,7 @@
       </div>
     </div>
   <modal v-bind:show.sync="showLoginModal"></modal>
+  <modal-signup2 v-bind:show.sync="showSignupModal2"></modal-signup2>
   <modal-signup v-bind:show.sync="showSignupModal"></modal-signup>
   </div>
 </template>
@@ -152,6 +153,7 @@ import auth from 'src/auth'
 import NotificationLayout from 'components/NotificationLayout.vue'
 import LoginModal from './LoginModal.vue'
 import SignupModal from './SignupModal.vue'
+import SignupModal2 from './SignupModal-new.vue'
 import firebase from 'firebase'
 import api from 'api'
 
@@ -168,13 +170,15 @@ export default {
       isLoginHiding: true,
       showLoginModal: false,
       showSignupModal: false,
+      showSignupModal2: false,
       isLoading: false 
     }
   },
   components: {
     NotificationLayout,
     'modal': LoginModal,
-    'modal-signup': SignupModal
+    'modal-signup': SignupModal,
+    'modal-signup2': SignupModal2
   },
   computed: {
     isActivityPage() {
@@ -240,6 +244,9 @@ export default {
     },
     showSignupModalMethod() {
       this.showSignupModal = true
+    },
+    showSignupModalMethod2() {
+      this.showSignupModal2 = true
     },
     showSignupModalandCloseLoginModal() {
       this.showLoginModal = false 
