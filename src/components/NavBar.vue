@@ -193,37 +193,40 @@ export default {
         }, 100)
       })
 
-      return this.$store.state.user
+      return this.$store.getters.user
     }
   },
   mounted() {
     let self = this
-    firebase.auth().getRedirectResult().then(function(result) {
-      if (result.credential) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        var token = result.credential.accessToken;
-        // ...
-      }
-      // The signed-in user info.
-      var user = result.user;
-      if (user) {
-        self.loadingTogle()
-      }
-      user.getIdToken().then(token => {
-        api.frontsignUp(token, user.displayName, user.photoURL).then(User => {
-          window.location.reload()
+    firebase.auth().getRedirectResult()
+      .then(function(result) {
+        if (result.credential) {
+          // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+          var token = result.credential.accessToken;
+          // ...
+        }
+        // The signed-in user info.
+        var user = result.user;
+        if (user) {
+          self.loadingTogle()
+        }
+        user.getIdToken().then(token => {
+          self.loadingTogle()
+          api.frontsignUp(token, user.displayName, user.photoURL).then(User => {
+            window.location.reload()
+          })
         })
       })
-    }).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-      // ...
-    });
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
     this.fetchData()
     $('.ui.dropdown').dropdown({
       action: 'hide'
