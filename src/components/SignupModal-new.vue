@@ -68,21 +68,12 @@
                   <button class="ui teal basic button phoneButton" @click="sendSms()">인증</button>
                 </span>
               </div>
-                <div v-if="user.isPhoneSmsSent" :style="{ fontSize: 11 + 'px', textAlign: 'left' }">
-인증번호를 발송했습니다.<br>인증번호가 오지 않으면 입력하신 정보가 정확한지 확인하여 주세요.
-                </div>
               <div class="inputDefault">
                 <span>
                   <input class="realInputDefault" type="number" style="width: 210px;" v-model="verifySmsNumber" placeholder="인증번호">
                   <button class="ui teal basic button phoneButton" @click="confirmVerifyNumber()" >확인</button>
                 </span>
               </div>
-            </div>
-            <div v-if="phoneVerify" :style="{ marginLeft: 20 + 'px', fontSize: 11 + 'px', textAlign: 'left' }">
-              인증 성공했습니다.
-            </div>
-            <div v-else-if="phoneVerify === false" :style="{ marginLeft: 20 + 'px', fontSize: 11 + 'px', textAlign: 'left' }">
-              인증 실패했습니디.
             </div>
           </fieldset>
           <div class="color secondary">{{errorMessage}}</div>
@@ -238,10 +229,10 @@ export default {
     onSignUpSuccess(result) {
       this.isLoading = false
       alert('가입이 완료되었습니다.')
-      this.$parent.showSignupModal2 = false
+      // this.$parent.showSignupModal2 = false
       // this.$router.push({ name: "VerifyPhoneNumber", force: true })
-      this.$router.go({ path: "/verify/phonenumber", force: true })
-      // window.location.href = '/verify/phonenumber'
+      // this.$router.go({ path: "/verify/phonenumber", force: true })
+      window.location.reload()
     },
     onSignUpFail(error) {
       this.isLoading = false
@@ -316,9 +307,11 @@ export default {
         .then(response => {
           if (response.success === true) {
             this.phoneVerify = true
+            this.errorMessage = "인증에 성공하였습니다."
           } else {
             this.phoneVerify = false
             this.verifySmsNumber = ''
+            this.errorMessage = "인증실패, 입력정보를 확인해주세요."
           }
         })
     }
