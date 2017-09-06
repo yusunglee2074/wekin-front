@@ -259,6 +259,7 @@ import api from 'api'
 import moment from 'moment'
 import {Storage} from 'src/util'
 import Datepicker from 'vuejs-datepicker';
+import auth from './../../auth'
 
 export default {
   data() {
@@ -423,11 +424,21 @@ export default {
           isteamorpeople: this.request.picked,
           wekins: this.wekins
         }
-        api.addActivity(params)
-          .then(result => {
-            alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
-            window.location.href = '/host/admin'
-          }).catch(error => alert('에러 메세지' + error + error.message + "정말 죄송합니다. 메이커님 내부적인 오류가 발생했습니다.\n 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다."))
+        auth.getCurrentUser()
+          .then( user => {
+            console.log(user)
+            api.addActivity(params)
+              .then(result => {
+                alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
+                window.location.href = '/host/admin'
+              }).catch(error => {
+                alert('에러 메세지' + error + error.message + "정말 죄송합니다. 메이커님 내부적인 오류가 발생했습니다.\n 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다.")
+              })
+          })
+          .catch( error => {
+            console.log(error)
+            alert('에러 메세지' + error + error.message + "정말 죄송합니다. 메이커님 내부적인 오류가 발생했습니다.\n 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다.")
+          })
       }
     }
   },
