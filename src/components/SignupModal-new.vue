@@ -78,6 +78,8 @@
           </fieldset>
           <div class="color secondary">{{errorMessage}}</div>
           <button class="positive ui button" style="background-color: rgb(0,154,140); width: 140px; margin-bottom: 9px;" @click="onSignUpClick()">가입하기</button>
+          <span>&nbsp또는&nbsp</span>
+          <span style="padding-top: 20px"><img src="./../../static/images/logo-facebook-68x68.png" class="snsLoginButton" @click="signInWithFacebook()"></span>
           <div class="ui fitted checkbox">
             <input type="checkbox" v-model="isAgreed">
             <label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -145,6 +147,16 @@ export default {
     }
   },
   methods: {
+    signInWithFacebook() {
+      var provider = new firebase.auth.FacebookAuthProvider()
+      provider.addScope('publish_actions');
+      firebase.auth().signInWithRedirect(provider)
+      firebase.auth().getRedirectResult()
+        .then( result => {
+          console.log("이유성" + result)
+        })
+        .catch( error => next(error) )
+    },
     isRightEmail(event) {
       if (!Validation.checkEmailValidation(this.user.email)) {
         this.errorMessage = "이메일 형식을 확인해주세요."
@@ -458,6 +470,11 @@ export default {
 
 .clickedButton {
   border-color: black;
+}
+
+.snsLoginButton {
+  width: 24px;
+  height: auto;
 }
 
 
