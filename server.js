@@ -13,7 +13,6 @@ app.get('*.js', function(req, res, next) {
 
 app.use(serveStatic(path.join(__dirname, 'dist')));
 app.get('/*', function(req, res){
-  console.log('어어어엉')
     res.sendFile(__dirname + '/dist/index.html');
 });
 
