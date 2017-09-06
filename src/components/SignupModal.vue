@@ -104,14 +104,6 @@ export default {
         return true
       }
     },
-    onLoginSuccess(user) {
-      this.isLoading = false
-      if (user.emailVerified) {
-        this.goToRedirectUrl()
-      } else {
-        window.location.href = '/verifyEmail'
-      }
-    },
     onLoginFail(error) {
       this.isLoading = false
       this.errorMessage = this.getErrorMessage(error.code)
@@ -134,8 +126,9 @@ export default {
       this.isLoading = false
       alert('가입이 완료되었습니다.')
       this.$parent.showSignupModal = false
-      // this.$router.push({ name: "VerifyPhoneNumber", force: true })
-      this.$router.go({ path: "/verify/phonenumber", force: true })
+      this.$parent.isMobileMenuShowing = false
+      this.$router.push({ name: "VerifyPhoneNumber", force: true })
+      // this.$router.go({ path: "/verify/phonenumber", force: true })
       // window.location.href = '/verify/phonenumber'
     },
     onSignUpFail(error) {

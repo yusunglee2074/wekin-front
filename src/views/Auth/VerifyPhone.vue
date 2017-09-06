@@ -58,7 +58,7 @@ export default {
         .then(response => {
           if (response.success === true) {
             // this.$router.push({ name: "Home", force: true })
-            window.location.href = '/'
+            window.location.replace("/")
           } else {
             alert("인증번호가 일치하지 않습니다.")
             this.verifyNumber = ''
