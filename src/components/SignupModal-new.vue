@@ -151,11 +151,6 @@ export default {
       var provider = new firebase.auth.FacebookAuthProvider()
       provider.addScope('publish_actions');
       firebase.auth().signInWithRedirect(provider)
-      firebase.auth().getRedirectResult()
-        .then( result => {
-          console.log("이유성" + result)
-        })
-        .catch( error => next(error) )
     },
     isRightEmail(event) {
       if (!Validation.checkEmailValidation(this.user.email)) {
