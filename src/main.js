@@ -47,7 +47,10 @@ router.afterEach((to, from) => {
       if (currentUser) { // 유저가 있는지 판단.
         api.getUser().then( response => {
           if (response.phone_valid) { // 이메일 인증 여부 확인
-          } else if (currentUser.providerData[0].providerId === 'password') {
+            // ㅇ제공업체의 사용자 프로필정보 가져오기 providerdata
+          //} else if (currentUser.providerData[0].providerId === 'password') {
+            //router.push('/verify/phonenumber')
+          } else {
             router.push('/verify/phonenumber')
           }
         })
