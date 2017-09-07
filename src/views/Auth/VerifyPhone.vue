@@ -27,6 +27,7 @@
 import { mapGetters } from 'vuex'
 import auth from 'src/auth'
 import moment from 'moment'
+import api from './../../api'
 
 
 export default {
@@ -57,8 +58,15 @@ export default {
       auth.verifySmsCode(this.phoneNumber, this.verifyNumber)
         .then(response => {
           if (response.success === true) {
+            api.saveProfile(this.$store.getters.user.user_key, { phone: this.phoneNumber, phone_valid: true })
+              .then( result => {
+                window.location.href = '/'
+              })
+              .catch( error => {
+                console.log(error + moment().format())
+                alert(error + moment().format() + "죄송합니다. 사이트 아래 주소의 오픈카톡으로 연락주시면 바로 해결해드리겠습니다.")
+              })
             // this.$router.push({ name: "Home", force: true })
-            window.location.href = '/'
           } else {
             alert("인증번호가 일치하지 않습니다.")
             this.verifyNumber = ''
