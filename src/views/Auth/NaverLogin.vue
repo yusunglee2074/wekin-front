@@ -2,7 +2,14 @@
   <div id="naverlogin">
     <div class="navbar-custom"></div>
     <div>
-      <h1>가입중입니다.</h1>
+      <div class="ui segment" style="margin-top: 300px;">
+        <div class="ui active inverted dimmer">
+          <div class="ui large text loader">잠시만 기다려주세요.</div>
+        </div>
+        <p></p>
+        <p></p>
+        <p></p>
+      </div>
     </div>
   </div>
 </template>
