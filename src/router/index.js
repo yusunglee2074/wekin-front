@@ -6,6 +6,8 @@ import FeedDetail from 'views/FeedDetail.vue'
 import Customer from 'views/Customer.vue'
 import Policy from 'views/Policy.vue'
 import Login from 'views/Auth/Login.vue'
+import KakaoLogin from 'views/Auth/KakaoLogin.vue'
+import NaverLogin from 'views/Auth/NaverLogin.vue'
 import Join from 'views/Auth/Join.vue'
 import ForgotPassword from 'views/Auth/ForgotPassword.vue'
 import VerifyEmail from 'views/Auth/VerifyEmail.vue'
@@ -107,6 +109,16 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/auth/kakao',
+      name: 'KakaoLogin',
+      component: KakaoLogin
+    },
+    {
+      path: '/auth/naver',
+      name: 'NaverLogin',
+      component: NaverLogin
     },
     {
       path: '/join',
