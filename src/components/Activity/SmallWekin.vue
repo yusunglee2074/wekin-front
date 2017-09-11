@@ -5,7 +5,7 @@
         <div class="ui content slide masked reveal image">
           <div class="back-image" :style="`background-image:url(${this.activity.main_image.image[0]})`"></div>
         </div>
-        <div class="content">
+        <div class="content" style="min-height:100px">
           <a class="header" style="font-size: 15px;">{{ activity.title }}</a>
           <div class="meta">
             <span class="date">￦ {{ activity.price | joinComma }}</span>
