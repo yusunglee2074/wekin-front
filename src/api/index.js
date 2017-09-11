@@ -16,6 +16,10 @@ axios.interceptors.request.use((config) => {
 })
 
 export default {
+  dbCreateWithIdToken (idToken) {
+    return axios.post(`${BASE_API_URL}/user/front/signUp/dbCreateWithIdtoken`, { idToken })
+      .then( res => res.data )
+  },
   getUser () {
     return axios.get(`${BASE_API_URL}/user/front/verify`)
       .then(res => res.data)
@@ -246,6 +250,9 @@ export default {
   frontsignUp (accessToken, name, profileImage) {
     return axios.post(`${BASE_API_URL}/user/front/signUp`, { accessToken: accessToken, name: name, profileImage: profileImage })
       .then(res => res.data)
+  },
+  kakaoLogin (code, type) {
+    return axios.get(`${BASE_API_URL}/user/front/signUp/kakao/${code}/${type}`)
   },
   signUp (email, password, name, USER) {
     return axios.post(`${BASE_API_URL}/user/front/join`, { email: email, name: name, password: password, userObject: USER })
