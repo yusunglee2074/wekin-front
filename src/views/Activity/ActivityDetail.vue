@@ -201,6 +201,11 @@
         <p> 이메일 : wekin@wekiner.com </p>
         <p> 카카오톡 : @wekiner </p>
         <div class="ui divider"></div>
+        <h4>'{{ activity.category }}' 카테고리 관련 위킨</h4>
+        <div class="mobile-small-wekin">
+          <smallWekin :activity="activity" v-for="activity in activities" :key="activity.activity_key" style="margin:0 auto;"></smallWekin>
+          <br style="clear: left;" />
+        </div>
       </div>
       <div class="ui tab review" data-tab="second">
         <review-layout :review="review" v-for="(review, index) in reviews" v-bind:key="index" v-if="reviews.length >= 0"></review-layout>
@@ -363,13 +368,15 @@
 <script>
 import reviewLayout from 'components/ReviewLayout.vue'
 import mailComponent from 'components/MailComponent.vue'
+import smallWekin from 'components/Activity/SmallWekin.vue'
 import api from 'api'
 import _ from 'lodash'
 
 export default {
   components: {
     reviewLayout,
-    mailComponent
+    mailComponent,
+    smallWekin
   },
   filters: {
     qnaStatus(answer) {
@@ -437,6 +444,7 @@ export default {
           }
         }
       },
+      activities: [],
       selectedWekin: {},
       wekiners: [],
       wekins: [],
@@ -685,6 +693,13 @@ export default {
       api.getActivity(this.$route.params.key)
         .then(activity => this.activity = activity)
         .then(this.initBanner)
+        .then(() => {
+          api.getActivities(2)
+          .then(json => {
+            let tempList  = _.filter(json.results, ['category', this.activity.category]);
+            this.activities = _.sampleSize(tempList, 3)
+          })
+        })
         .catch(err => console.error(err))
     },
     getReviews() {
@@ -1337,6 +1352,10 @@ h2 {
 @media only screen and (max-width: 991px) {
   .navbar-custom {
     margin-bottom: 90px;
+  }
+  .mobile-small-wekin {
+    left: 10%;
+    position: relative;
   }
   .info-container {
     max-width: inherit!important;
