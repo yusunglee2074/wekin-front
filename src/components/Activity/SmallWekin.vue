@@ -1,17 +1,19 @@
 <template>
-  <div class='mobile-wekin'>
-    <div class="ui card float-left mobile-wekins" style="float:left; margin-top:10px; margin-right:10px;">
-      <div class="ui content slide masked reveal image">
-        <div class="back-image" :style="`background-image:url(${this.activity.main_image.image[0]})`"></div>
-      </div>
-      <div class="content">
-        <a class="header" style="font-size: 15px;">{{ activity.title }}</a>
-        <div class="meta">
-          <span class="date">￦ {{ activity.price | joinComma }}</span>
+  <router-link :to="{ name: 'ActivityDetail', params: { key:  activity.activity_key }}" class="image link">
+    <div class='mobile-wekin'>
+      <div class="ui card float-left mobile-wekins" style="float:left; margin-top:10px; margin-right:10px;">
+        <div class="ui content slide masked reveal image">
+          <div class="back-image" :style="`background-image:url(${this.activity.main_image.image[0]})`"></div>
+        </div>
+        <div class="content">
+          <a class="header" style="font-size: 15px;">{{ activity.title }}</a>
+          <div class="meta">
+            <span class="date">￦ {{ activity.price | joinComma }}</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>

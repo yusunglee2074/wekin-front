@@ -465,6 +465,9 @@ export default {
       isDropdownClicked: false
     }
   },
+  watch: {
+    '$route': 'getActivity'
+  },
   methods: {
      snsShare(sns_type) {
       var title = $("#ogTitle").attr('content');
