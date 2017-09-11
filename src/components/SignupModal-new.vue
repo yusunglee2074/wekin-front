@@ -80,6 +80,8 @@
           <button class="positive ui button" style="background-color: rgb(0,154,140); width: 140px; margin-bottom: 9px;" @click="onSignUpClick()">가입하기</button>
           <span>&nbsp또는&nbsp</span>
           <span style="padding-top: 20px"><img src="./../../static/images/logo-facebook-68x68.png" class="snsLoginButton" @click="signInWithFacebook()"></span>
+          <span style="padding-top: 20px"><img src="./../../static/images/logo-kakao-68x68.png" class="snsLoginButton" @click="signInWithKakao()"></span>
+          <span style="padding-top: 20px"><img src="./../../static/images/logo-naver-68x68.png" class="snsLoginButton" @click="signInWithNaver()"></span>
           <div class="ui fitted checkbox">
             <input type="checkbox" v-model="isAgreed">
             <label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -102,6 +104,8 @@ import auth from 'src/auth'
 import firebase from 'firebase'
 import { Validation } from 'src/util'
 import moment from 'moment'
+import axios from 'axios'
+import api from './../api'
 
 export default {
   name: 'modalsignup2',
@@ -147,6 +151,12 @@ export default {
     }
   },
   methods: {
+    signInWithNaver() {
+      window.location.href = "https://nid.naver.com/oauth2.0/authorize?client_id=rTHYGlmyZuVKSzR4_45d&redirect_uri=http://175.195.139.99:8080/auth/naver&response_type=code&state=wekin"
+    },
+    signInWithKakao() {
+      window.location.href = "https://kauth.kakao.com/oauth/authorize?client_id=75c0694ad636bcca94fa48cbc7c9d8cf&redirect_uri=http://175.195.139.99:8080/auth/kakao&response_type=code"
+    },
     signInWithFacebook() {
       var provider = new firebase.auth.FacebookAuthProvider()
       provider.addScope('publish_actions');
@@ -178,12 +188,6 @@ export default {
     close: function () {
       this.$emit('update:show', false)
     },
-    initKakaoLogin() {
-      Kakao.init('b799fcbeb4b6ed28e6e286a1cb70bfc0')
-    },
-    initNaverLogin() {
-
-    },
     checkForm() {
       if (!(this.user.email &&
         this.user.password &&
@@ -211,7 +215,7 @@ export default {
         this.errorMessage = "성별을 선택해 주세요."
       } else if (!this.user.birthday.year || !this.user.birthday.day || !this.user.birthday.month) {
         this.errorMessage = "생일을 입력해 주세요."
-      } else if (!this.phoneVerify) {
+      } else if (this.phoneVerify) {
         this.errorMessage = "휴대폰 인증을 진행해 주세요."
       } else {
         return true
@@ -239,7 +243,7 @@ export default {
       // this.$parent.showSignupModal2 = false
       // this.$router.push({ name: "VerifyPhoneNumber", force: true })
       // this.$router.go({ path: "/verify/phonenumber", force: true })
-      window.location.reload()
+      // window.location.reload()
     },
     onSignUpFail(error) {
       this.isLoading = false
@@ -248,6 +252,7 @@ export default {
     onSignUpClick() {
       if (this.checkForm()) {
         this.isLoading = true
+        console.log(this.user)
         auth.signUp(
           this.user.email,
           this.user.password,
@@ -270,17 +275,6 @@ export default {
     onGoogleClick() {
       this.isLoading = true
       auth.loginWithGoogle()
-        .then((currentUser) => this.goToRedirectUrl())
-        .catch((error) => this.onLoginFail(error))
-    },
-    onNaverClick() {
-      auth.loginWithNaver()
-        .then((currentUser) => console.log(currentUser))
-        .catch((error) => this.onLoginFail(error))
-    },
-    onKakaoClick() {
-      this.isLoading = true
-      auth.loginWithKakao()
         .then((currentUser) => this.goToRedirectUrl())
         .catch((error) => this.onLoginFail(error))
     },
