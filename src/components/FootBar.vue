@@ -28,7 +28,7 @@
             <span class="item">(주)위키너</span>
             <span class="item">대표이사 : 강동완 </span>
             <span class="item">사업자등록번호 : 549-88-00686</span>
-            <span class="item">통신판매업신고 : 제 2017-수원영통-0556</span>
+            <span class="item">통신판매업신고 : 제 2017-수원영통-0556 호</span>
           </div>
           <div class="ui horizontal small divided company-info list pc">
             <span class="item">경기도 수원시 영통구 에듀타운로 101, 103동 217호</span>
