@@ -81,7 +81,7 @@
           </div>
           <div class="active content">
 	    <vueslider v-model="slider.value" v-bind="slider"></vueslider>
-	    <h3><small>선택가격: </small>{{ slider.value[0] }} ~ {{ slider.value[1] }}만원</h3>
+	    <h3><small>선택가격: </small>{{ slider.value[0] }} ~ {{ slider.value[1] === 20 ? '제한없음' : slider.value[1] + '만원' }}</h3>
           </div>
         </div>
         <div class="ui styled accordion">
@@ -245,27 +245,27 @@ export default {
       locationFilter: ["전체"],
       categoryCheck: '',
       slider: {
-	value: [0, 150],
-	width: '100%',
-	height: 8,
-	dotSize: 16,
-	min: 0,
-	max: 200,
-	disabled: false,
-	show: true,
-	tooltip: 'always',
-	formatter: '{value}만원',
-	bgStyle: {
-	  backgroundColor: '#fff',
-	  boxShadow: 'inset 0.5px 0.5px 3px 1px rgba(0,0,0,.36)'
-	},
-	tooltipStyle: {
-	  backgroundColor: '#999',
-	  borderColor: '#666'
-	},
-	processStyle: {
-	  backgroundColor: 'rgb(0, 162, 154)'
-	}
+        value: [0, 20],
+        width: '100%',
+        height: 8,
+        dotSize: 13,
+        min: 0,
+        max: 20,
+        disabled: false,
+        show: true,
+        tooltip: 'always',
+        formatter: '{value}만원',
+        bgStyle: {
+          backgroundColor: '#fff',
+          boxShadow: 'inset 0.5px 0.5px 3px 1px rgba(0,0,0,.36)'
+        },
+        tooltipStyle: {
+          backgroundColor: '#999',
+          borderColor: '#666'
+        },
+        processStyle: {
+          backgroundColor: 'rgb(0, 162, 154)'
+        }
       },
     }
   },
@@ -386,13 +386,15 @@ export default {
     },
     isInPrice(activity) {
       if(activity) {
-        if (activity.price >= this.slider.value[0] * 10000 && activity.price <= this.slider.value[1] * 10000) {
+        if (activity.price >= this.slider.value[0] * 10000 && this.slider.value[1] === 20) {
           return true
-        }
-        if (this.slider.value[0] >= 10000000) {
+        } else if (activity.price >= this.slider.value[0] * 10000 && activity.price <= this.slider.value[1] * 10000) {
           return true
-        }
-        return false
+        } else if (this.slider.value[0] >= 10000000) {
+          return true
+        } else {
+          return false
+        }   
       }
     },
     isInCurrentLocation(activity) {
