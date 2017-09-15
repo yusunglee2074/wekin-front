@@ -9,6 +9,10 @@
           <span class="link" @click="onFollowingClick()">팔로우 {{followingCount}}명</span>
           <span class="link" @click="onFollowerClick()">팔로워 {{followerCount}}명</span>
         </div>
+        <div class="follow-container">
+          <span>위킨 포인트 {{ user.point.point }} P</span>
+          <span>기업 포인트 {{ user.point.point_special }} P <span style="font-size: 12px;">포인트 사용내역</span></span>
+        </div>
         <div class="introduce pc">{{user.introduce}}</div>
       </div>
     </div>
@@ -26,9 +30,11 @@ import followingModal from 'components/FollowingModal.vue'
 import api from 'api'
 
 export default {
-  props: [
-    'user'
-  ],
+  computed: {
+    user() {
+      return this.$store.state.user
+    }
+  },
   data() {
     return {
       followingCount: 0,
