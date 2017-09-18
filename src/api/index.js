@@ -391,6 +391,12 @@ export default {
     })
       .then(res => res.data)
   },
+  requestPointUse(value, type) {
+    return axios.post(`${BASE_API_URL}/point/front/use`, {
+      value: value,
+      type: type
+    })
+  },
   requestRefund (userKey, params) {
     return axios.post(`${BASE_API_URL}/order/refund`)
       .then(res => res.data)
