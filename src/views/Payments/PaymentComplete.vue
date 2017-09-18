@@ -11,7 +11,7 @@
         </div>
         <div class="payment-result-container__list">
           <label>결제 요청</label>
-          <span class="floated right">{{rsp.amount | joinComma}}원</span>
+          <span class="floated right">{{rsp.amount| joinComma}}(+ {{ usePoint }} P)원</span>
         </div>
         <div class="ui divider"></div>
         <p>실패 사유 : {{rsp.fail_reason}}</p>
@@ -25,7 +25,7 @@
         </div>
         <div class="payment-result-container__list">
           <label>결제 금액</label>
-          <span class="floated right">{{rsp.paid_amount || rsp.amount | joinComma}}원</span>
+          <span class="floated right">{{rsp.paid_amount || rsp.amount | joinComma}}(+ {{ usePoint }} P)원</span>
         </div>
         <div class="payment-result-container__list">
           <label>신청 결과</label>
@@ -44,7 +44,7 @@
         </div>
         <div class="payment-result-container__list">
           <label>결제 금액</label>
-          <span class="floated right">{{rsp.paid_amount | joinComma}}원</span>
+          <span class="floated right">{{rsp.paid_amount | joinComma}}(+ {{ usePoint }} P)원</span>
         </div>
         <div class="payment-result-container__list">
           <label>신청 결과</label>
@@ -79,26 +79,53 @@
 import api from 'api'
 
 export default {
+  data() {
+    return {
+    }
+  },
   asyncComputed: {
     rsp() {
       if (this.$route.query.imp_uid) {
         return this.verifyOrder()
       } else {
+        if (this.$route.params.rsp.status != 'failed') {
+          api.requestPointUse(-1 * this.$route.params.point_value, this.$route.params.point_type === 'company' ? '1' : '0')
+            .then(response => {
+            })
+            .catch(error => {
+              api.sendEmail("lys0333@gmail.com", "위킨 포인트 에러3", new Date() + this.$store.getters.user.email + this.orderKey + JSON.stringify(error))
+            })
+        } else {
+          api.sendEmail("lys0333@gmail.com", "위킨 포인트 에러2", new Date() + this.$store.getters.user.email + this.orderKey + JSON.stringify(error))
+        }
         return this.$route.params.rsp
       }
     },
     user() {
       return this.$store.state.user
+    },
+    usePoint() {
+      return this.$route.params.point_value
     }
   },
   methods: {
     verifyOrder() {
       let orderKey = this.$route.query.merchant_uid
       let impUID = this.$route.query.imp_uid
-      return api.verifyOrder(orderKey, impUID)
+      api.verifyOrder(orderKey, impUID)
         .then((result) => {
-          console.log(result.data)
-         return result.data
+          if (result.data.status != 'failed') {
+            api.requestPointUse()
+              .then(response => {
+                return result.data
+              })
+              .catch(error => {
+                api.sendEmail("lys0333@gmail.com", "위킨 포인트 에러", new Date() + this.$store.getters.user.email + this.orderKey + JSON.stringify(error))
+                return result.data
+              })
+          } else {
+            window.alert(result)
+          }
         })
         .catch((error) => console.error(error))
     }
