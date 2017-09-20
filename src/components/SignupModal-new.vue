@@ -215,7 +215,7 @@ export default {
         this.errorMessage = "성별을 선택해 주세요."
       } else if (!this.user.birthday.year || !this.user.birthday.day || !this.user.birthday.month) {
         this.errorMessage = "생일을 입력해 주세요."
-      } else if (this.phoneVerify) {
+      } else if (!this.phoneVerify) {
         this.errorMessage = "휴대폰 인증을 진행해 주세요."
       } else {
         return true
@@ -243,13 +243,14 @@ export default {
       // this.$parent.showSignupModal2 = false
       // this.$router.push({ name: "VerifyPhoneNumber", force: true })
       // this.$router.go({ path: "/verify/phonenumber", force: true })
-      // window.location.reload()
+      window.location.reload()
     },
     onSignUpFail(error) {
       this.isLoading = false
       this.errorMessage = this.getErrorMessage(error.code)
     },
     onSignUpClick() {
+      console.log(123)
       if (this.checkForm()) {
         this.isLoading = true
         console.log(this.user)
