@@ -197,7 +197,7 @@
         <div class="ui divider"></div>
         <h4>문의사항</h4>
         <p>위킨 연락처</p>
-        <p> 전화번호 : 031-377-0410 </p>
+        <p> 전화번호 : 031-211-0410 </p>
         <p> 이메일 : wekin@wekiner.com </p>
         <p> 카카오톡 : @wekiner </p>
         <div class="ui divider"></div>
