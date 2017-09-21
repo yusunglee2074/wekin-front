@@ -93,8 +93,17 @@ export default {
                 resolve(result)
               })
           })
+          .catch( error => reject(error))
         } else {
-          reject()
+          firebase.auth().currentUser.getToken(true)
+          .then( token => {
+            localStorage.setItem('accessToken', token)
+            api.getUser()
+              .then(result => {
+                resolve(result)
+              })
+          })
+          .catch( error => reject(error))
         }
       })
     })
