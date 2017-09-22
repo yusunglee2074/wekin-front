@@ -64,7 +64,7 @@ export default new Router({
       component: About
     },
     {
-      path: '/manual',
+      path: '/manual/:key',
       name: 'Manual',
       component: Manual
     },
