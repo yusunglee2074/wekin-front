@@ -1,7 +1,8 @@
 <template>
   <div class="about">
     <div class="navbar-custom"></div>
-    <img id="about" src="/static/images/maker_manual.jpg">
+    <img id="about" src="/static/images/maker_manual.jpg" v-show="key === 1">
+    <img id="about" src="/static/images/manual2.jpg" v-show="key === 2">
     <div>
     <a href="http://facebook.com/Wekin-1369310116471093"><img id="icon" src="/static/images/facebook_icon.png"></a>
     <a href="http://pf.kakao.com/_xmQxjZxl"><img id="icon" src="/static/images/kakao_icon.png"></a>
@@ -16,8 +17,15 @@
 
 <script>
 export default {
-  methods: {
-  }
+  data() {
+    return {
+      key: null
+    }
+  },
+  mounted() {
+    console.log(this.$route.params.key)
+    this.key = this.$route.params.key
+  },
 }
 </script>
 
