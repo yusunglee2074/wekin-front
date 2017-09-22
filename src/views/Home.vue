@@ -130,13 +130,13 @@
               </div>
               <div class="content">
                 <span class="right floated">
-                  ￦ {{ wekin.price | joinComma }}
+                  ￦ {{ wekin.base_price | joinComma }}
                 </span>
                 <span>
                   <strong class="title">{{wekin.title}}</strong>
                 </span>
                 <div class="description">
-                  <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 3" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="schedule.wekin_key">{{schedule.start_date | formatDateKo}}</span>
+                  <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 3" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="schedule.wekin_key">{{schedule | formatDateKo}}</span>
                 </div>
               </div>
             </router-link>
@@ -178,7 +178,7 @@
                   <strong class="title">{{wekin.title}}</strong>
                 </span>
                 <div class="description">
-                  <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 3" v-bind:key="index" style="padding-right:8px;">{{schedule.start_date | formatDateKo}}</span>
+                  <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 3" v-bind:key="index" style="padding-right:8px;">{{schedule | formatDateKo}}</span>
                 </div>
               </div>
               </router-link>
@@ -269,11 +269,9 @@ export default {
   methods: {
     isEndSchedule(schedule) {
       let now = +moment()
-      let startDate = moment(schedule.start_date).toDate().getTime()
+      let startDate = moment(schedule).toDate().getTime()
+      console.log(startDate - now)
       if ((startDate - now) < 0) {
-        return true
-      }
-      if (schedule.max_user == schedule.current_user) {
         return true
       }
       return false
@@ -281,7 +279,7 @@ export default {
     isCommingSchedule(schedule) {
       if (!this.isEndSchedule(schedule)) {
         let now = +moment()
-        let startDate = moment(schedule.start_date).toDate().getTime()
+        let startDate = moment(schedule).toDate().getTime()
         if ((startDate - now) < ONE_DAY_TIME) {
           return true
         }
