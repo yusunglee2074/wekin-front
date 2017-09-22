@@ -614,6 +614,7 @@ export default {
         if (this.checkForm()) {
           if (this.isApplyAvailable) {
             if (this.checkLoginState()) {
+              //TODO: wekin api call
               this.$router.push({
                 name: 'Payment',
                 path: `/activity/${this.$route.params.key}/payment`,
