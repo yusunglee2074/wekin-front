@@ -18,14 +18,14 @@ exports.imageUpload = (file, paramCallback, progressCallback) => {
   let tPath130 = 'img/image130/' + dPath + '.png'
   var percent = 0
 
-  fireUpload(file, path, null, (snap) => {
+  fireUpload(file, path, (callback2) => {
+    paramCallback(callback2)
+  }, (snap) => {
     let progress = (snap.bytesTransferred / snap.totalBytes) * 100
     percent = percent + progress
     progressCallback(percent)
   })
-  makeThumbNailImage(file, tPath730, 730, (callback2) => {
-    paramCallback(callback2)
-  }
+  makeThumbNailImage(file, tPath730, 730, null 
   , (snap) => {
     let progress = (snap.bytesTransferred / snap.totalBytes) * 100
     percent = percent + progress
@@ -57,6 +57,7 @@ function fireUpload (file, paramPath, callback, progressCallback) {
   let storageRef = firebase.storage().ref()
   let imageRef = storageRef.child(paramPath)
   let uploadTask = imageRef.put(file)
+  uploadTask.then( result => console.log(result))
 
   uploadTask.on('state_changed', (snap) => {
         // let bodyProgress = document.getElementsByClassName('nprogress');
