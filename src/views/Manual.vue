@@ -11,7 +11,6 @@
     <a href="http://post.naver.com/wekiner"><img id="icon" src="/static/images/post_icon.png"></a>
     </div>
   </div>
-
 </template>
 
 
@@ -19,11 +18,14 @@
 export default {
   data() {
     return {
-      key: null
+    }
+  },
+  computed: {
+    key() {
+      return this.$route.params.key
     }
   },
   mounted() {
-    console.log(this.$route.params.key)
     this.key = this.$route.params.key
   },
 }
