@@ -53,7 +53,12 @@
                   </select>
                   <input id="birthdayDay" class="realInputDefault setLikeSpan" type="number" v-model.number="user.birthday.day" @blur="isDay($event)" placeholder="일" style="margin-left: 20px;">
               </div>
-              <div class="inputDefault lastInputDeleteBottomBorder">
+              <div class="inputDefault lastInputDeleteBottomBorder" v-if="!areUCompany">
+                <span style="font-size: 13px;">
+                  (옵션)위킨과 제휴 중인 기업 회원 이십니까? <button @click="getCompanyEmail()">확인</button>
+                </span>
+              </div>
+              <div class="inputDefault lastInputDeleteBottomBorder" v-if="areUCompany">
                 <span>
                   <input class="realInputDefault" type="text" v-model="user.email_company" placeholder="기업이메일(옵션)">
                 </span>
@@ -148,9 +153,13 @@ export default {
       isLoading: false,
       sendingTime: null,
       phoneVerify: null,
+      areUCompany: false,
     }
   },
   methods: {
+    getCompanyEmail() {
+      this.areUCompany = !this.areUCompany
+    },
     signInWithNaver() {
       window.location.href = "https://nid.naver.com/oauth2.0/authorize?client_id=rTHYGlmyZuVKSzR4_45d&redirect_uri=http://175.195.139.99:8080/auth/naver&response_type=code&state=wekin"
     },
