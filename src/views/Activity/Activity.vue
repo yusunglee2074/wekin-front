@@ -574,11 +574,12 @@ export default {
     getActivities() {
       api.getActivities(2)
         .then(json => {
-	  this.isLoading = false
-	  this.wekins = json.results
-	  this.wekinsTemp = json.results
-	  this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
-	  this.initSortDropdown()
+          console.log(json)
+          this.isLoading = false
+          this.wekins = json.data
+          this.wekinsTemp = json.data
+          this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
+          this.initSortDropdown()
 	})
 	.catch(err => console.error(err))
     },
