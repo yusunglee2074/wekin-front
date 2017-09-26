@@ -73,11 +73,11 @@
         <div class="ui segment">
           <div>
             <span>활동 가격</span>
-            <span class="floated right" v-if="activity.price">{{activity.price | joinComma}}원</span>
+            <span class="floated right" v-if="activity.base_price">{{activity.base_price | joinComma}}원</span>
           </div>
           <div style="margin-top:10px;">
             <span>포인트 사용</span>
-            <span class="floated right" v-if="activity.price">
+            <span class="floated right" v-if="activity.base_price">
               <input type="radio" id="normal" v-model="point.type" value="normal" @click="checkMinusPoint()"><label for="normal">일반포인트</label>
               <input type="radio" id="company" v-model="point.type" value="company" @click="checkMinusPoint()"><label for="company">기업포인트</label>
               <div class="ui mini icon input">
@@ -93,7 +93,7 @@
           </div>
           <div class="ui divider"></div>
           <span>최종 가격</span>
-          <span class="floated right" v-if="activity.price">{{(activity.price * this.$route.params.peopleCount - point.value) | joinComma }}원</span>
+          <span class="floated right" v-if="activity.base_price">{{(activity.price * this.$route.params.peopleCount - point.value) | joinComma }}원</span>
           <div id="error-message" v-if="point.errorMessage" style="color: red;">{{ point.errorMessage }}</div>
         </div>
         <div class="ui segment how-payments flex">
