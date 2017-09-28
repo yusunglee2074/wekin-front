@@ -136,7 +136,7 @@
                   <strong class="title">{{wekin.title}}</strong>
                 </span>
                 <div class="description">
-                  <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 3" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="schedule.wekin_key">{{schedule | formatDateKo}}</span>
+                  <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 3" style="padding-right:8px;" :class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" :key="index">{{schedule | formatDateKo}}</span>
                 </div>
               </div>
             </router-link>
@@ -270,7 +270,6 @@ export default {
     isEndSchedule(schedule) {
       let now = +moment()
       let startDate = moment(schedule).toDate().getTime()
-      console.log(startDate - now)
       if ((startDate - now) < 0) {
         return true
       }
@@ -321,6 +320,7 @@ export default {
             if (activity.rating_avg == null) {
               activity.rating_avg = 0
             }
+            this.deleteBeforeTodayDate(activity.start_date_list)
             return activity
           })
 
@@ -343,6 +343,7 @@ export default {
             if (activity.rating_avg == null) {
               activity.rating_avg = 0
             }
+            this.deleteBeforeTodayDate(activity.start_date_list)
             return activity
           })
 
@@ -483,7 +484,20 @@ export default {
           endPrice: endPrice,
         }
       })
-    }
+    },
+    deleteBeforeTodayDate(dateList) {
+      let today = moment()
+      let length = dateList.length
+      for (let i = 0; i < length; i++) {
+        let startDate = dateList[i]
+        if (moment(startDate).isBefore(today)) {
+          dateList.splice(0, 1)
+          i--
+        } else {
+          break
+        }
+      }
+    },
   },
   mounted() {
     this.getNewestActivity()
