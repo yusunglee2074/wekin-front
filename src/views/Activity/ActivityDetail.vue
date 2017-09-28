@@ -38,50 +38,44 @@
             <p v-if="activity.address">
               <i class="icon marker"></i>{{activity.address}}
             </p>
-            <p v-if="wekins.length && activity.isteamorpeople === 'people'">
-              <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}명 (최소 {{wekins[0].min_user || selectedWekin.min_user}}명)
-              <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
-            </p>
-            <p v-if="wekins.length && activity.isteamorpeople === 'team'">
-              <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}팀 (최소 {{wekins[0].min_user || selectedWekin.min_user}}팀)
-              <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
-            </p>
-            <!--<p v-show="Object.keys(selectedWekin).length == 0 && wekins.length">
-                                    <i class="icon users"></i>{{wekins[0].max_user}}명 (최소 {{wekins[0].min_user}}명)
-                                  </p>-->
             <p>
-              <i class="icon won"></i>{{activity.price | joinComma}}원
+              <i class="icon won"></i>{{activity.base_price | joinComma}}원
             </p>
+            <p>최소 인원, 최대인원 해야함</p>
             <p v-show="Object.keys(selectedWekin).length">
               {{selectedWekin.due_date | formatDateTimeKo}}까지 신청해주세요.
             </p>
-            <div class="ui selection dropdown styled full-width schedule" v-show="wekins.length">
-              <input type="hidden" name="schedule">
-              <i class="dropdown icon"></i>
-              <div class="default text">날짜선택</div>
-              <div class="menu">
-                <div class="item"
-                     v-for="(wekin, index) in wekins"
-                     v-bind:key="wekin.wekin_key"
-                     :data-value="wekin.wekin_key"
-                     v-if="new Date(wekin.start_date) >= new Date()"
-                     :class="{ deadlineOver: new Date() > new Date(wekin.due_date) }">
-                  {{wekin.start_date | formatDateTimeKo}}
-                  <span v-if="new Date() > new Date(wekin.due_date)"
-                        style="color: #ccc;"> (마감)
-                  </span>
-                </div>
+            <div class="ui calendar">
+                <p style="font-size: 14px;">날짜선택</p>
+              <div class="ui input styled primary left icon">
+                <i v-show="!requestData.selectedDate" class="icon calendar wekin-calendar-icon"></i>
+                <datepicker v-model="requestData.selectedDate" id="datepickerId" wapper-class="ui input styled primary left icon" language="ko" format="MMM dd(D), yyyy"></datepicker>
               </div>
             </div>
-            <div class="ui selection dropdown styled full-width peopleCount" v-if="Object.keys(selectedWekin).length">
-              <input type="hidden" name="gender">
-              <i class="dropdown icon"></i>
-              <div class="default text">인원선택</div>
-              <div class="menu">
-                <!-- FIXME: 현재 유저 JOIN 완료시 수정  -->
-                <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)" v-bind:key="index">{{index + 1}} <span v-if="activity.isteamorpeople === 'team'">팀</span><span v-if="activity.isteamorpeople !== 'team'">명</span></div>
-                <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) == 0" data-value="closed">마감</div>
-                <!--<div class="item" :data-value="index + 1" v-for="(wekin, index) in selectedWekin.max_user">{{index + 1}}명</div>-->
+            <div v-show="requestData.selectedDate">
+              시각 선택 해야함
+              <select v-model="requestData.startTime">
+                <option v-for="(item, index) in startTimeList" :value="item">
+                  {{ item | formatTime}}
+                </option>
+              </select>
+            </div>
+            <div v-show="requestData.startTime">
+              <p style="font-size: 14px;">옵션선택</p>
+              <select v-model="requestData.selectedOption">
+                <option value="sample" disabled>옵션을 선택해주세요</option>
+                <option v-for="(item, index) in activity.base_price_option" :value="item">
+                  {{ item.name }}
+                </option>
+              </select>
+            </div>
+            <div v-show="requestData.selectedOption !== 'sample'">
+              <p>수량선택</p>
+              <div>
+                {{ requestData.selectedOption }} 
+                <button>빼기</button>
+                <input type="number">
+                <button>더하기</button>
               </div>
             </div>
             <button class="negative ui button full-width apply-btn"
@@ -133,16 +127,8 @@
           <p v-if="activity.address_detail">
             <i class="icon marker"></i>{{activity.address}}
           </p>
-            <p v-if="wekins.length && activity.isteamorpeople === 'people'">
-              <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}명 (최소 {{wekins[0].min_user || selectedWekin.min_user}}명)
-              <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
-            </p>
-            <p v-if="wekins.length && activity.isteamorpeople === 'team'">
-              <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}팀 (최소 {{wekins[0].min_user || selectedWekin.min_user}}팀)
-              <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
-            </p>
           <p>
-            <i class="icon won"></i>{{activity.price | joinComma}}원
+            <i class="icon won"></i>{{activity.base_price | joinComma}}원
           </p>
           <div class="ui divider"></div>
         </div>
@@ -365,11 +351,14 @@ import reviewLayout from 'components/ReviewLayout.vue'
 import mailComponent from 'components/MailComponent.vue'
 import api from 'api'
 import _ from 'lodash'
+import Datepicker from 'vuejs-datepicker';
+import moment from 'moment';
 
 export default {
   components: {
     reviewLayout,
-    mailComponent
+    mailComponent,
+    Datepicker
   },
   filters: {
     qnaStatus(answer) {
@@ -394,6 +383,12 @@ export default {
     }
   },
   computed: {
+    startTimeList() {
+      if(this.requestData.selectedDate) {
+        let dayOfWeek = moment(this.requestData.selectedDate).format('dd')
+        return this.activity.base_week_option[dayOfWeek].start_time
+      }
+    },
     user() {
       return this.$store.state.user
     },
@@ -439,7 +434,6 @@ export default {
       },
       selectedWekin: {},
       wekiners: [],
-      wekins: [],
       reviews: [],
       questions: {
         rows: []
@@ -454,7 +448,12 @@ export default {
       isFavoritedActivity: false,
       isRequested: false, // 예약 요청되었는지 여부
       peopleCount: 0,
-      isDropdownClicked: false
+      isDropdownClicked: false,
+      requestData: {
+        selectedOption: 'sample',
+        selectedDate: null,
+        startTime: null,
+      },
     }
   },
   methods: {
@@ -900,6 +899,10 @@ export default {
 @import '../../style/variables';
 @import '../../style/cross-browsing';
 
+.wekin-calendar-icon {
+  position: relative;
+  z-index: 10000;
+}
 .deadlineOver {
   color: #ccc !important;
   cursor: default !important;
