@@ -175,11 +175,11 @@
           :imageUrl="wekin.main_image.image[0]"
           :favorite="wekin.Favorites"
           :rating="Math.round(wekin.rating_avg) || 0"
-          :reviewCount="wekin.review_count"
+          :reviewCount="wekin.review_count || 0"
           v-for="(wekin, index) in filteredWekin" v-bind:key="wekin.wekin_key">
-          <span class="right floated price" slot="extra-header">￦ {{wekin.price | joinComma}}</span>
+          <span class="right floated price" slot="extra-header">￦ {{wekin.base_price | joinComma}}</span>
           <div class="content extra-body" slot="extra-body">
-            <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 4" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="schedule.wekin_key">{{schedule.start_date | formatDateKo}}</span>
+            <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 4" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="index">{{schedule | formatDateKo}}</span>
           </div>
         </wekin-card-layout>
         <div class="ui active inverted dimmer" v-if="isLoading">
@@ -272,12 +272,12 @@ export default {
   asyncComputed: {
     filteredWekin() {
       return this.wekins.filter((wekin) => {
-	if (this.isInPrice(wekin) &&
-	  this.isInCurrentLocation(wekin) &&
-	  this.isInArea(wekin) &&
-	  this.isInPeople(wekin) &&
-	  this.isInDate(wekin) &&
-          this.isInCategory(wekin)) {
+        if (this.isInPrice(wekin) &&
+          this.isInCurrentLocation(wekin) &&
+          this.isInArea(wekin) &&
+          this.isInPeople(wekin) &&
+          this.isInDate(wekin) &&
+          this.isInCategory(wekin) ) {
           return wekin
         }
       })
@@ -286,11 +286,8 @@ export default {
   methods: {
     isEndSchedule(schedule) {
       let now = +moment()
-      let startDate = moment(schedule.start_date).toDate().getTime()
+      let startDate = moment(schedule).toDate().getTime()
       if ((startDate - now) < 0) {
-        return true
-      }
-      if (schedule.max_user == schedule.current_user) {
         return true
       }
       return false
@@ -298,7 +295,7 @@ export default {
     isCommingSchedule(schedule) {
       if (!this.isEndSchedule(schedule)) {
         let now = +moment()
-        let startDate = moment(schedule.start_date).toDate().getTime()
+        let startDate = moment(schedule).toDate().getTime()
         if ((startDate - now) < ONE_DAY_TIME) {
           return true
         }
@@ -386,7 +383,7 @@ export default {
     },
     isInPrice(activity) {
       if(activity) {
-        if (activity.price >= this.slider.value[0] * 10000 && activity.price <= this.slider.value[1] * 10000) {
+        if (activity.base_price >= this.slider.value[0] * 10000 && activity.base_price <= this.slider.value[1] * 10000) {
           return true
         }
         if (this.slider.value[0] >= 10000000) {
@@ -576,9 +573,12 @@ export default {
         .then(json => {
           console.log(json)
           this.isLoading = false
-          this.wekins = json.data
-          this.wekinsTemp = json.data
-          this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
+          this.wekinsTemp = json
+          this.wekins = _.orderBy(json, ['created_at'], ['desc']);
+          this.wekins = this.wekins.map( wekin => {
+            this.deleteBeforeTodayDate(wekin.start_date_list)
+            return wekin
+          })
           this.initSortDropdown()
 	})
 	.catch(err => console.error(err))
@@ -601,17 +601,30 @@ export default {
 		  break;
 		case 4: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
 		  // console.log(this.wekins)
-		  this.wekins = _.orderBy(this.wekins, ['price'], ['desc']);
+		  this.wekins = _.orderBy(this.wekins, ['base_price'], ['desc']);
 		  break;
 		case 5: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-		  this.wekins = _.orderBy(this.wekins, ['price'], ['asc']);
+		  this.wekins = _.orderBy(this.wekins, ['base_price'], ['asc']);
 		  break;
 	      }
             }
           })
         })
       }, 1000)
-    }
+    },
+    deleteBeforeTodayDate(dateList) {
+      let today = moment()
+      let length = dateList.length
+      for (let i = 0; i < length; i++) {
+        let startDate = dateList[i]
+        if (moment(startDate).isBefore(today)) {
+          dateList.splice(0, 1)
+          i--
+        } else {
+          break
+        }
+      }
+    },
   },
   components: {
     wekinCardLayout,
