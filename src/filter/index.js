@@ -31,6 +31,10 @@ export default (Vue) => {
     return new Date(date).toLocaleDateString()
   })
 
+  Vue.filter('formatTime', date => {
+    return moment(date).format('hh:mm') 
+  })
+
   Vue.filter('formatTimer', seconds => {
     return moment.utc(seconds * 1000).format('HH:mm:ss')
   })
