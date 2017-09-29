@@ -49,18 +49,27 @@
                 <p style="font-size: 14px;">날짜선택</p>
               <div class="ui input styled primary left icon">
                 <i v-show="!requestData.selectedDate" class="icon calendar wekin-calendar-icon"></i>
-                <datepicker v-model="requestData.selectedDate" id="datepickerId" wapper-class="ui input styled primary left icon" language="ko" format="MMM dd(D), yyyy"></datepicker>
+                <datepicker 
+                  v-model="requestData.selectedDate" 
+                  id="datepickerId" 
+                  wapper-class="ui input styled primary left icon" 
+                  language="ko" 
+                  format="MMM dd(D), yyyy"
+                  placeholder="        날짜선택"
+                  :disabled="calendar">
+                </datepicker>
               </div>
             </div>
             <div v-show="requestData.selectedDate">
-              시각 선택 해야함
+              <p style="font-size: 14px;">시작시각</p>
               <select v-model="requestData.startTime">
+                <option value="sample" disabled>시작시각</option>
                 <option v-for="(item, index) in startTimeList" :value="item">
                   {{ item | formatTime}}
                 </option>
               </select>
             </div>
-            <div v-show="requestData.startTime">
+            <div v-show="requestData.startTime !== 'sample'">
               <p style="font-size: 14px;">옵션선택</p>
               <select v-model="requestData.selectedOption">
                 <option value="sample" disabled>옵션을 선택해주세요</option>
@@ -383,6 +392,15 @@ export default {
     }
   },
   computed: {
+    calendar() {
+      let result = {
+        to: moment(this.activity.start_date).toDate(),
+        from: moment(this.activity.end_date).toDate(),
+        dates: this.activity.datesList,
+        days: this.activity.days 
+      }
+      return result
+    },
     startTimeList() {
       if(this.requestData.selectedDate) {
         let dayOfWeek = moment(this.requestData.selectedDate).format('dd')
@@ -450,9 +468,9 @@ export default {
       peopleCount: 0,
       isDropdownClicked: false,
       requestData: {
+        startTime: 'sample',
         selectedOption: 'sample',
         selectedDate: null,
-        startTime: null,
       },
     }
   },
@@ -683,7 +701,44 @@ export default {
     },
     getActivity() {
       api.getActivity(this.$route.params.key)
-        .then(activity => this.activity = activity)
+        .then(activity => {
+          this.activity = activity
+          this.activity.datesList = []
+          this.activity.days = []
+          let dates = this.activity.close_dates
+          for (let i=0; i < dates.length; i++) {
+            activity.datesList.push(moment(dates[i]).toDate())
+          }
+          for (let item in this.activity.base_week_option) {
+            if (Object.keys(this.activity.base_week_option[item]).length == 0) {
+              console.log(Object.keys(this.activity.base_week_option[item]).length)
+              console.log(this.activity.days)
+              switch (item) {
+                case 'Su':
+                  this.activity.days.push(0)
+                  break
+                case 'Mo':
+                  this.activity.days.push(1)
+                  break
+                case 'Tu':
+                  this.activity.days.push(2)
+                  break
+                case 'We':
+                  this.activity.days.push(3)
+                  break
+                case 'Th':
+                  this.activity.days.push(4)
+                  break
+                case 'Fr':
+                  this.activity.days.push(5)
+                  break
+                case 'Sa':
+                  this.activity.days.push(6)
+                  break
+              }
+            }
+          }
+        })
         .then(this.initBanner)
         .catch(err => console.error(err))
     },
@@ -731,18 +786,6 @@ export default {
     getAttendWekiners() {
       api.getAttendWekiners(this.selectedWekin.wekin_key)
         .then(wekiners => this.wekiners = wekiners)
-        .catch(err => console.error(err))
-    },
-    getWekins() {
-      api.getWekins(this.$route.params.key)
-        .then(wekins => {
-          this.wekins = wekins
-          setTimeout(() => {
-            this.$nextTick(() => {
-              this.dropdownSchedule()
-            })
-          }, 1000)
-        })
         .catch(err => console.error(err))
     },
     postQnA() {
@@ -845,8 +888,7 @@ export default {
         })
     }
   },
-  mounted() {
-    this.getWekins()
+  created() {
     this.getActivity()
     this.getReviews()
     this.getQnas()
