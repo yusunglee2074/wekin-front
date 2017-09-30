@@ -702,6 +702,7 @@ export default {
     getActivity() {
       api.getActivity(this.$route.params.key)
         .then(activity => {
+          console.log(activity)
           this.activity = activity
           this.activity.datesList = []
           this.activity.days = []
@@ -710,9 +711,7 @@ export default {
             activity.datesList.push(moment(dates[i]).toDate())
           }
           for (let item in this.activity.base_week_option) {
-            if (Object.keys(this.activity.base_week_option[item]).length == 0) {
-              console.log(Object.keys(this.activity.base_week_option[item]).length)
-              console.log(this.activity.days)
+            if (!this.activity.base_week_option[item].min_user) {
               switch (item) {
                 case 'Su':
                   this.activity.days.push(0)
