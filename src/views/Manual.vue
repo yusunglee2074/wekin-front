@@ -1,8 +1,8 @@
 <template>
   <div class="about">
     <div class="navbar-custom"></div>
-    <img id="about" src="/static/images/maker_manual.jpg" v-show="key === 1">
-    <img id="about" src="/static/images/manual2.jpg" v-show="key === 2">
+    <img id="about" src="/static/images/maker_manual.jpg" v-show="isOne">
+    <img id="about" src="/static/images/manual2.jpg" v-show="isTwo">
     <div>
     <a href="http://facebook.com/Wekin-1369310116471093"><img id="icon" src="/static/images/facebook_icon.png"></a>
     <a href="http://pf.kakao.com/_xmQxjZxl"><img id="icon" src="/static/images/kakao_icon.png"></a>
@@ -18,16 +18,31 @@
 export default {
   data() {
     return {
+      key: null 
     }
   },
   computed: {
-    key() {
-      return this.$route.params.key
+    isOne() {
+      if (this.key == 1){
+        return true
+      }
+    },
+    isTwo() {
+      if (this.key == 2){
+        return true
+      }
     }
+  },
+  created() {
   },
   mounted() {
     this.key = this.$route.params.key
   },
+  beforeUpdate() {
+    this.key = this.$route.params.key
+  },
+  methods: {
+  }
 }
 </script>
 

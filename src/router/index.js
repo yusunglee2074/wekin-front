@@ -155,7 +155,6 @@ export default new Router({
     },
     {
       path: '/users/:key',
-      name: 'Users',
       component: PersonalPage,
       children: [
         { path: '', name: 'PersonalPage', redirect: 'feed' },
