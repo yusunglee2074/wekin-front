@@ -4,7 +4,23 @@
 
     <div v-show="page === 1">
       제목 <input type="text" v-model="activity.title">
-      카테고리 <input type="text" v-model="activity.category1">
+      카테고리
+      <select v-model="activity.category1">
+        <option value="투어/여행">투어/여행</option>
+        <option value="익스트림 (레저)">익스트림 (레저)</option>
+        <option value="스포츠 (구기종목)">스포츠 (구기종목)</option>
+        <option value="음악">음악</option>
+        <option value="댄스">댄스</option>
+        <option value="뷰티">뷰티</option>
+        <option value="요리">요리</option>
+        <option value="아트">아트</option>
+        <option value="축제">축제</option>
+        <option value="힐링">힐링</option>
+        <option value="아웃도어">아웃도어</option>
+        <option value="요가/피트니스">요가/피트니스</option>
+        <option value="소품제작">소품제작</option>
+      </select>
+      
       기본 가격 <input type="number" v-model="activity.basePrice">
       환불규정 <textarea type="text" v-model="refundPolicyData" v-show="wekinRefund"></textarea> 
       <textarea type="text" v-model="activity.refund_policy" v-show="!wekinRefund"></textarea>
@@ -66,11 +82,11 @@
       <input type="checkbox" v-model="checkedDays" value="Fr">금요일
       <input type="checkbox" v-model="checkedDays" value="Sa">토요일
       <input type="checkbox" v-model="checkedDays" value="Su">일요일
-      <div v-for="index in checkedDays">
+      <div v-for="index, data in checkedDays">
         <div>
           <p>{{ index }}</p>
           최소인원 <input type="number" v-model="activity.baseWeekOption[index].min_user"> ~ 최대인원 <input type="number" v-model="activity.baseWeekOption[index].max_user">
-          시작 시각 <input type="time" v-model="activity.baseWeekOption[index].start_time"> 시각에 대한 추가가격 <input type="number" v-model="activity.baseWeekOption[index].price_with_time"> <button>추가</button>
+          시작 시각 <input type="time" v-model="activity.baseWeekOption[index].start_time[data]"> 시각에 대한 추가가격 <input type="number" v-model="activity.baseWeekOption[index].price_with_time[data]"> <button>추가</button>
         </div>
       </div>
       자동으로 등록되는 날짜중 휴무일이 있다면 선택해주세요.
@@ -118,7 +134,15 @@ export default {
       activity: {
         meetAddress: '',
         address: '',
-        baseWeekOption: { Su: {}, Tu: {}, We: {}, Th: {}, Fr: {}, Sa: {}, Mo: {} },
+        baseWeekOption: { 
+          Su: { price_with_time: [], start_time: [] },
+          Tu: { price_with_time: [], start_time: [] },
+          We: { price_with_time: [], start_time: [] },
+          Th: { price_with_time: [], start_time: [] },
+          Fr: { price_with_time: [], start_time: [] },
+          Sa: { price_with_time: [], start_time: [] },
+          Mo: { price_with_time: [], start_time: [] } 
+        },
         basePriceOption: [{}],
         baseExtraPriceOption: [{}],
         baseMinUser: null,
