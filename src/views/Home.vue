@@ -128,7 +128,7 @@
                   <span class="reviewCount">{{wekin.review_count}}</span>
                 </div>
               </div>
-              <div class="content">
+              <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px;">
                 <span class="right floated">
                   ￦ {{ wekin.base_price | joinComma }}
                 </span>
@@ -170,7 +170,7 @@
                 <span class="reviewCount">{{wekin.review_count}}</span>
               </div>-->
               </div>
-              <div class="content">
+              <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px;">
                 <span class="right floated">
                   ￦ {{ wekin.base_price | joinComma }}
                 </span>
@@ -182,6 +182,32 @@
                 </div>
               </div>
               </router-link>
+            </div>
+          </div>
+        </div>
+        <div class="prev-btn" v-on:click="newWekins.slidePrev()">
+          <i class="icon angle left"></i>
+        </div>
+        <div class="next-btn" v-on:click="newWekins.slideNext()">
+          <i class="icon angle right"></i>
+        </div>
+      </div>
+
+      <div class="ui container new-wekin-container">
+        <h3 class="ui header">
+          <div class="header-label-bar"></div>
+          <span class="header-label">위킨 뉴스</span>
+        </h3>
+        <div class="new-wekins swiper-container">
+          <div class="swiper-wrapper">
+            <div @click="goLink(news.link_url)" class="ui card pointer swiper-slide" v-for="(news, index) in news.data" v-bind:key="index">
+                <div class="image">
+                  <div class="backImage mainImage" v-bind:style="{'background-image':`url(${news.thumbnail_url})`}"></div>
+                  <div class="backImage overlayer"></div>
+                </div>
+                <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px;">
+                  <span>{{ news.title }}</span>
+                </div>
             </div>
           </div>
         </div>
@@ -205,7 +231,7 @@
                 <div class="backImage mainImage" v-bind:style="{'background-image':`url(${maker.Activities[0].main_image.image[0]})`}"></div>
                 <div class="backImage ui circular image makerProfile" v-bind:style="{'background-image':`url(${maker.profile_image})`}"></div>
               </div>
-              <div class="content">
+              <div class="content" style="border: solid 1px #d5d5d5; max-height: 36px;">
               <!--<span class="right floated maker-follow">
                                                                                           팔로우 100
                                                                                         </span>-->
@@ -264,9 +290,13 @@ export default {
         am: '오전',
         pm: '오후'
       },
+      news: [],
     }
   },
   methods: {
+    goLink(url) {
+      window.open(url)
+    },
     isEndSchedule(schedule) {
       let now = +moment()
       let startDate = moment(schedule).toDate().getTime()
@@ -355,6 +385,13 @@ export default {
               this.initRating()
             }, 1000)
           })
+        })
+        .catch(err => console.error(err))
+    },
+    getNews() {
+      api.getNews()
+        .then(news => {
+          this.news = news
         })
         .catch(err => console.error(err))
     },
@@ -501,6 +538,7 @@ export default {
   },
   mounted() {
     this.getNewestActivity()
+    this.getNews()
     this.getPopularActivity()
     this.getPopularMaker()
     this.loadPopularFeed()
@@ -868,7 +906,7 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.2)
+    background: rgba(0, 0, 0, 0.1)
   }
 }
 
