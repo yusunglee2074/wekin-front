@@ -36,6 +36,10 @@ export default {
     return axios.get(`${BASE_API_URL}/activity/front/${activityKey}`)
       .then(res => res.data)
   },
+  getNews () {
+    return axios.get(`${BASE_API_URL}/news`)
+      .then(res => res.data)
+  },
   getAdminActivity (activityKey) {
     return axios.get(`${BASE_API_URL}/admin/front/activity/${activityKey}`)
       .then(res => res.data)
