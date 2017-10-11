@@ -13,6 +13,7 @@ import FootBar from './components/FootBar.vue'
 import router from './router'
 import filter from './filter'
 import api from 'api'
+import auth from './auth'
 
 import firebase from 'firebase'
 // require('static/fine-uploader/fine-uploader.js')
@@ -46,7 +47,7 @@ router.afterEach((to, from) => {
   if (to.path !== '/login' && to.path !== '/join') {
     firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) { // 유저가 있는지 판단.
-        api.getUser().then( response => {
+        auth.getCurrentUser().then( response => {
           if (response.phone_valid) { // 이메일 인증 여부 확인
             // ㅇ제공업체의 사용자 프로필정보 가져오기 providerdata
           //} else if (currentUser.providerData[0].providerId === 'password') {
