@@ -1,11 +1,16 @@
 <template>
-  <div>
+  <div style="margin-top:100px; margin-left:200px; max-width:1000px;">
     현재페이지: {{ page }} <button @click="1 < page ? page-- : page">이전</button><button @click="10 > page ? page++ : page">다음</button>
 
     <div v-show="page === 1">
-      제목 <input type="text" v-model="activity.title">
-      카테고리
-      <select v-model="activity.category1">
+      <h2>기본적인 정보 입력해주세요.</h2>
+      <h3>위킨 제목</h3>
+      <div class="ui input focus" style="width:300px;">
+        <input type="text" v-model="activity.title">
+      </div>
+      <h3>카테고리</h3>
+      <select v-model="activity.category1" class="ui dropdown" style="width: 300px;">
+        <option value="" disabled>카테고리</option>
         <option value="투어/여행">투어/여행</option>
         <option value="익스트림 (레저)">익스트림 (레저)</option>
         <option value="스포츠 (구기종목)">스포츠 (구기종목)</option>
@@ -20,26 +25,51 @@
         <option value="요가/피트니스">요가/피트니스</option>
         <option value="소품제작">소품제작</option>
       </select>
-      
-      기본 가격 <input type="number" v-model="activity.basePrice">
-      환불규정 <textarea type="text" v-model="refundPolicyData" v-show="wekinRefund"></textarea> 
-      <textarea type="text" v-model="activity.refund_policy" v-show="!wekinRefund"></textarea>
+      <h3>기본가격</h3>
+      <div class="ui input focus" style="width:300px;">
+      <input type="number" v-model="activity.basePrice">
+      </div>
+      <h3>환불규정</h3>
+      <textarea type="text" v-model="refundPolicyData" v-show="wekinRefund" style="width:300px; height:80px;"></textarea> 
+      <textarea type="text" v-model="activity.refund_policy" v-show="!wekinRefund" style="width:300px; height:80px;"></textarea>
       <button @click="wekinRefund = !wekinRefund">위킨환불규정 사용</button> 
     </div>
 
     <div v-show="page === 2">
-      <div id="editor"></div>
+    <h2>상세정보를 사진과 함께 작성해주세요.</h2>
+    <h3>상세 정보</h3>
+      <div style="width:440px;">
+        <div id="editor"></div>
+      </div>
     </div>
 
     <div v-show="page === 3">
-      준비물 <input type="text" v-model="activity.preparation">
-      포함/불포함 <input type="text" v-model="activity.inclusion">
-      상세 일정 <input type="text" v-model="activity.schedule">
+      <h2>준비물 외 아래 정보를 작성해주세요.</h2>
+      <h3>준비물</h3>
+      <div class="ui input focus" style="width:300px;">
+        <input type="text" v-model="activity.preparation">
+      </div>
+      <h3>포함/불포함 사항</h3>
+      <div class="ui input focus" style="width:300px;">
+        <input type="text" v-model="activity.inclusion">
+      </div>
+      <h3>상세 일정</h3>
+      <div class="ui input focus" style="width:300px;">
+        <input type="text" v-model="activity.schedule">
+      </div>
     </div>
 
     <div v-show="page === 4">
-      활동장소 <input type="text" v-model="activity.address">
-      집결지 <input type="text" v-model="activity.meetAddress" id="meetAddress"> <button @click="sameAddress()">활동장소와 같음</button>
+      <h2>활동장소를 입력해주세요. 혹시 활동전 집결지가 있다면 같이 작성해주세요.</h2>
+      <h3>활동장소</h3>
+      <div class="ui input focus" style="width:300px;">
+        <input type="text" v-model="activity.address">
+      </div>
+      <h3>집결지</h3>
+      <div class="ui input focus" style="width:300px;">
+        <input type="text" v-model="activity.meetAddress" id="meetAddress">
+      </div>
+      <button @click="sameAddress()">활동장소와 같음</button>
     </div>
 
     <div v-show="page === 5">
@@ -47,24 +77,72 @@
         <img style="width:100%;height:100%" :src="imageUrl">
         <i class="icon close link" style="position:absolute; top:0;right:0" @click="deleteImage(index)"></i>
       </div>
-      메인 이미지
+      <h2>사이트 첫페이지, 상세페이지에 노출시킬 이미지들을 업로드해주세요.</h2>
+      <h3>이미지</h3>
       <FireUpload :imageUrl="uploadedMainImage" @update:imageUrl="val => uploadedMainImages.push(val)"></FireUpload>
     </div>
 
     <div v-show="page === 6">
+      <h2>게시시작일과 종료일을 입력해주세요.</h2>
       <div v-show="isTicket === true">
-        티켓 유효기간 <input type="date" v-model="activity.ticketDueDate">
-        티켓 발행 수<input type="number" v-model="activity.ticketMaxApply">
+        <h3>티켓 유효기간</h3>
+        <div class="ui calendar">
+          <div class="ui input styled primary left icon">
+            <datepicker 
+              v-model="activity.startDate" 
+              id="datepickerId" 
+              wapper-class="ui input styled primary left icon" 
+              language="ko" 
+              format="MMM dd(D), yyyy"
+              placeholder="날짜선택">
+            </datepicker>
+          </div>
+        </div>
+        <h3>최대 발행 수</h3>
+        <div class="ui input focus" style="width:300px;">
+          <input type="number" v-model="activity.ticketMaxApply">
+        </div>
         <button @click="isTicket = false">날짜형식으로 변환</button>
       </div>
       <div v-show="isTicket === false">
-        활동 등록 날짜
-        <input type="date" v-model="activity.startDate"> 부터
-        <input type="date" v-model="activity.endDate"> 까지
-        <input type="time" v-model="activity.baseStartTime"> 시작시각
-         <input type="number" v-model="activity.dueDate"> 시작일로부터 접수 마감 날짜
-         <input type="number" v-model="activity.baseMinUser"> 최소인원 
-         <input type="number" v-model="activity.baseMaxUser"> 최대인원 
+        <h3>등록 시작 날짜</h3>
+        <div class="ui calendar">
+          <div class="ui input styled primary left icon">
+            <datepicker 
+              v-model="activity.startDate" 
+              id="datepickerId" 
+              wapper-class="ui input styled primary left icon" 
+              language="ko" 
+              format="MMM dd(D), yyyy"
+              placeholder="날짜선택">
+            </datepicker>
+          </div>
+        </div>
+        <h3>등록 만료 날짜</h3>
+        <div class="ui calendar">
+          <div class="ui input styled primary left icon">
+            <datepicker 
+              v-model="activity.endDate" 
+              id="datepickerId" 
+              wapper-class="ui input styled primary left icon" 
+              language="ko" 
+              format="MMM dd(D), yyyy"
+              placeholder="날짜선택">
+            </datepicker>
+          </div>
+        </div>
+        <h3>몇 일전에 접수 마감 시킬까요?</h3>
+        <div class="ui input focus" style="width:300px;">
+          <input type="number" v-model="activity.dueDate"> 
+        </div>
+        <h3>최소인원</h3>
+        <div class="ui input focus" style="width:300px;">
+          <input type="number" v-model="activity.baseMinUser"> 
+        </div>
+        <h3>최대인원</h3>
+        <div class="ui input focus" style="width:300px;">
+          <input type="number" v-model="activity.baseMaxUser">  
+        </div>
         <button @click="isTicket = true">티켓형식으로 변환</button>
       </div>
       <div v-show="isTicket === null">
@@ -74,7 +152,8 @@
     </div>
 
     <div v-show="page === 7">
-      시작날짜부터 종료일까지 아래 선택한 요일들이 등록됩니다.
+      <h2>전 페이지에서 지정한 시작일 ~ 종료일 사이의 활동요일을 선택해주세요.</h2>
+      <h3>요일 선택</h3>
       <input type="checkbox" v-model="checkedDays" value="Mo">월요일
       <input type="checkbox" v-model="checkedDays" value="Tu">화요일
       <input type="checkbox" v-model="checkedDays" value="We">수요일
@@ -83,31 +162,80 @@
       <input type="checkbox" v-model="checkedDays" value="Sa">토요일
       <input type="checkbox" v-model="checkedDays" value="Su">일요일
       <div v-for="index, data in checkedDays">
-        <div>
-          <p>{{ index }}</p>
-          최소인원 <input type="number" v-model="activity.baseWeekOption[index].min_user"> ~ 최대인원 <input type="number" v-model="activity.baseWeekOption[index].max_user">
-          시작 시각 <input type="time" v-model="activity.baseWeekOption[index].start_time[data]"> 시각에 대한 추가가격 <input type="number" v-model="activity.baseWeekOption[index].price_with_time[data]"> <button>추가</button>
+        <div style="border-style: groove; width:210px; float:left;">
+          <h3>{{ tempWeekData[index] }}</h3>
+          <p>최소인원<p>
+          <div class="ui input focus" style="width:150px; height:24px; margin-bottom:6px;">
+            <input type="number" v-model="activity.baseWeekOption[index].min_user">
+          </div>
+          <p>최대인원</p>
+          <div class="ui input focus" style="width:150px; height:24px; margin-bottom:6px;">
+            <input type="number" v-model="activity.baseWeekOption[index].max_user">
+          </div>
+          <div style="border-style: groove;">
+          <p>시작 시각</p>
+          <div class="ui input focus" style="width:150px; height:24px; margin-bottom:6px;">
+            <input type="time" v-model="activity.baseWeekOption[index].start_time[0]">
+          </div>
+          <p>시각 추가가격</p>
+          <div class="ui input focus" style="width:150px; height:24px; margin-bottom:6px;">
+            <input type="number" v-model="activity.baseWeekOption[index].price_with_time[0]">
+          </div>
+        </div>
+          <!-- TODO: 시작시각, 가격 리스트로 받아야하는데 추가 버튼 눌렀을때 어떻게? -->
         </div>
       </div>
-      자동으로 등록되는 날짜중 휴무일이 있다면 선택해주세요.
-        <input type="date" v-model="activity.closeDates"> 까지
+      <div style="clear: both;">
+        <br>
+        
+        <h3>영업 휴무일을 선택해주세요.</h3>
+            <datepicker 
+              v-model="tempEndDate" 
+              id="datepickerId" 
+              wapper-class="ui input styled primary left icon" 
+              language="ko" 
+              format="MMM dd(D), yyyy"
+              placeholder="날짜선택">
+            </datepicker>
+            <div v-for="(index, data) in activity.closeDates">
+            {{ index }}
+            {{ data }}
+            <button>삭제</button>
+</div>
+      </div>
     </div>
 
     <div v-show="page === 8">
-      상품에 대한 옵션 가격이 있나요?
-      예를 들면 A코스 B코스
+      <h2>위킨 옵션이 있나요?</h2>
       <button @click="activity.basePriceOption.push({})">추가</button>
-      <div v-for="(value, index) in activity.basePriceOption">
-        옵션 명 <input type="text" v-model="activity.basePriceOption[index]['name']"> 옵션 추가가격 <input type="number" v-model="activity.basePriceOption[index]['price']"> <button @click="deletePriceOption(index)">제거</button>
+      <div v-for="(value, index) in activity.basePriceOption" style="width:400px;">
+        <p>옵션 이름</p>
+        <div class="ui input focus" style="width:300px;">
+          <input type="text" v-model="activity.basePriceOption[index]['name']">
+        </div>
+        <p>추가가격</p>
+        <div class="ui input focus" style="width:300px;">
+          <input type="number" v-model="activity.basePriceOption[index]['price']">
+        </div>
+        <button @click="deletePriceOption(index)">제거</button>
+        <div class="ui section divider"></div>
       </div>
     </div>
 
     <div v-show="page === 9">
-      마지막으로 마지막 결제에 대한 추가 옵션 가격이 있나요?
-      예를 들면 대인, 소인...
+      <h2>결제 추가 옵션 사항이 있나요?</h2>
       <button @click="activity.baseExtraPriceOption.push({})">추가</button>
-      <div v-for="(value, index) in activity.baseExtraPriceOption">
-        옵션 명 <input type="text" v-model="activity.baseExtraPriceOption[index]['name']"> 옵션 추가가격 <input type="number" v-model="activity.baseExtraPriceOption[index]['price']"> <button @click="deleteExtraPriceOption(index)">제거</button>
+      <div v-for="(value, index) in activity.baseExtraPriceOption" style="width:400px;">
+        <p>옵션 이름</p>
+        <div class="ui input focus" style="width:300px;">
+          <input type="text" v-model="activity.baseExtraPriceOption[index]['name']">
+        </div>
+        <p>옵션 추가가격</p>
+        <div class="ui input focus" style="width:300px;">
+          <input type="number" v-model="activity.baseExtraPriceOption[index]['price']">
+        </div>
+        <button @click="deleteExtraPriceOption(index)">제거</button>
+        <div class="ui section divider"></div>
       </div>
     </div>
 
@@ -147,22 +275,41 @@ export default {
         baseExtraPriceOption: [{}],
         baseMinUser: null,
         baseMaxUser: null,
-        closeDates: [moment()]
+        closeDates: []
       },
       wekinRefund: false,
       refundPolicyData: '',
       uploadedMainImages: [],
       uploadedMainImage: null,
       checkedDays: [],
+      tempWeekData: { 
+          Su: "일요일",
+          Tu: "화요일",
+          We: "수요일",
+          Th: "목요일",
+          Fr: "금요일",
+          Sa: "토요일",
+          Mo: "월요일"
+      },
     }
   },
   computed: {
+    tempEndDate: {
+      get() {
+        return null
+      },
+      set(newDate) {
+        this.activity.closeDates.push(newDate)
+        return null
+      }
+    },
     user() {
       return this.$store.state.user
     },
   },
   components: {
-    FireUpload 
+    FireUpload,
+    Datepicker
   },
   methods: {
     submit() {
@@ -189,7 +336,7 @@ export default {
         base_price_option: this.activity.basePriceOption,
         base_extra_price_option: this.activity.baseExtraPriceOption,
         base_week_option: this.activity.baseWeekOption,
-        close_dates: [this.activity.closeDates],
+        close_dates: this.activity.closeDates,
         is_it_ticket: this.isTicket,
         ticket_due_date: this.activity.ticketDueDate,
         ticket_max_apply: this.activity.ticketMaxApply
