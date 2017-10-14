@@ -7,7 +7,12 @@
     <div class="banners swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(banner, index) in banners">
-          <a :href="`event/${banner.order}`"><div class="swiper-slide" v-bind:style="{ backgroundImage: `url(${banner.url})`, backgroundSize:'cover', backgroundPosition: 'center' }"></div></a>
+          <div v-if="banner.externalLink">
+            <a :href="banner.externalLink" target="_blank"><div class="swiper-slide" v-bind:style="{ backgroundImage: `url(${banner.url})`, backgroundSize:'cover', backgroundPosition: 'center' }"></div></a>
+          </div>
+          <div v-else>
+            <a :href="`event/${banner.order}`"><div class="swiper-slide" v-bind:style="{ backgroundImage: `url(${banner.url})`, backgroundSize:'cover', backgroundPosition: 'center' }"></div></a>
+          </div>
         </div>
       </div>
       <div class="swiper-pagination" slot="pagination"></div>
