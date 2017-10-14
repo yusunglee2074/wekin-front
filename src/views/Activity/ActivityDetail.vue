@@ -38,55 +38,65 @@
             <p v-if="activity.address">
               <i class="icon marker"></i>{{activity.address}}
             </p>
-            <p>
-              <i class="icon won"></i>{{activity.base_price | joinComma}}원
-            </p>
-            <p>최소 인원, 최대인원 해야함</p>
-            <p v-show="Object.keys(selectedWekin).length">
-              {{selectedWekin.due_date | formatDateTimeKo}}까지 신청해주세요.
-            </p>
             <div class="ui calendar">
-                <p style="font-size: 14px;">날짜선택</p>
-              <div class="ui input styled primary left icon">
+              <p style="font-size: 14px; margin: 6px 0 2px 0;">날짜 선택</p>
+              <div class="ui input styled primary left icon" style="width: 260px;">
                 <i v-show="!requestData.selectedDate" class="icon calendar wekin-calendar-icon"></i>
                 <datepicker 
                   v-model="requestData.selectedDate" 
                   id="datepickerId" 
-                  wapper-class="ui input styled primary left icon" 
+                  wapper-class="" 
                   language="ko" 
                   format="MMM dd(D), yyyy"
                   placeholder="        날짜선택"
-                  :disabled="calendar">
+                  :disabled="calendar"
+                  v-on:input="resetSelection">
                 </datepicker>
               </div>
             </div>
             <div v-show="requestData.selectedDate">
-              <p style="font-size: 14px;">시작시각</p>
-              <select v-model="requestData.startTime">
+              <p style="font-size: 14px; margin: 6px 0 2px 0;">시작 시각</p>
+              <select v-model="requestData.startTime" class="">
                 <option value="sample" disabled>시작시각</option>
-                <option v-for="(item, index) in startTimeList" :value="item">
-                  {{ item | formatTime}}
+                <option v-for="(item, index) in startTimeList" :value="[index, item]">
+                  {{ index | formatTime}} ( {{ item >= 0 ? '+ ' + item : item }} 원)
                 </option>
               </select>
             </div>
             <div v-show="requestData.startTime !== 'sample'">
-              <p style="font-size: 14px;">옵션선택</p>
+              <p style="font-size: 14px; margin: 6px 0 2px 0;">코스 선택</p>
               <select v-model="requestData.selectedOption">
                 <option value="sample" disabled>옵션을 선택해주세요</option>
-                <option v-for="(item, index) in activity.base_price_option" :value="item">
-                  {{ item.name }}
+                <option v-for="(item, index) in activity.base_price_option" :value="[item.name, item.price]">
+                  {{ item.name + '(+ ' + item.price + '원)' }}
                 </option>
               </select>
             </div>
             <div v-show="requestData.selectedOption !== 'sample'">
-              <p>수량선택</p>
-              <div>
-                {{ requestData.selectedOption }} 
-                <button>빼기</button>
-                <input type="number">
-                <button>더하기</button>
+              <p style="font-size: 14px; margin: 6px 0 2px 0;">수량 선택</p>
+              <div style="border: 0.5px solid Gainsboro; padding: 10px 10px;">
+                <div v-for="(item, index) in activity.base_extra_price_option">
+                  <div style="height:22px;">
+                    <span style="float: left">{{ item.price > 0 ? item.name + '(' + '+' + item.price + '원)' : item.name + '(' + item.price + '원)' }}</span>
+                    <div style="float: right">
+                      <span>₩ {{ +requestData.startTime[1] + +activity.base_price + +item.price + +requestData.selectedOption[1] | joinComma }}</span>
+                      <button @click="requestData.selectedExtraOption[index] > 0 ? requestData.selectedExtraOption[index]-- : null">-</button>
+                      <input type="number" v-model=requestData.selectedExtraOption[index] style="width: 28px;">
+                      <button @click="requestData.selectedExtraOption[index]++">+</button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+            <div v-show="finalPrice >0" style="text-align:right; margin-top:20px;">
+              <h3>활동 가격 ₩ {{ finalPrice | joinComma }} </h3>
+            
+            
+            </div>
+            <div v-if="requestData.selectedDate">
+              <p style="font-size:13px; margin-top:12px;">해당날짜 예약가능 인원 {{ activity.base_week_option[requestData.selectedYoil].max_user - requestData.currentUserOfSelectedDate  }}명</p>
+            </div>
+            
             <button class="negative ui button full-width apply-btn"
                     id="membershipvirtualview"
                     v-on:click="onApplyBtn()"
@@ -197,7 +207,9 @@
         <p> 카카오톡 : @wekiner </p>
         <div class="ui divider"></div>
       </div>
-      <div class="ui tab review" data-tab="second">
+      야호
+      <div class="ui review">
+        야호
         <review-layout :review="review" v-for="(review, index) in reviews" v-bind:key="index" v-if="reviews.length >= 0"></review-layout>
         <div v-if="reviews.length == 0" style="text-align: center;color: #979797;">아직 작성 된 후기가 없습니다.</div>
         <button class="ui basic button more-btn" @click="getReviews(reviewPage++)" v-if="!isLastReview">더보기</button>
@@ -358,6 +370,7 @@
 <script>
 import reviewLayout from 'components/ReviewLayout.vue'
 import mailComponent from 'components/MailComponent.vue'
+import auth from './../../auth';
 import api from 'api'
 import _ from 'lodash'
 import Datepicker from 'vuejs-datepicker';
@@ -392,9 +405,21 @@ export default {
     }
   },
   computed: {
+    finalPrice() {
+      let extraOption = this.requestData.selectedExtraOption
+      let finalPrice = 0
+      for (let item in extraOption) {
+        if (extraOption[item] !== 0) {
+          finalPrice += extraOption[item] * (+this.activity.base_price + +this.requestData.selectedOption[1] + +this.requestData.startTime[1] + +this.activity.base_extra_price_option[item].price)
+          
+        }
+      }
+      this.requestData.finalPrice = finalPrice
+      return finalPrice 
+    },
     calendar() {
       let result = {
-        to: moment(this.activity.start_date).toDate(),
+        to: moment().toDate(),
         from: moment(this.activity.end_date).toDate(),
         dates: this.activity.datesList,
         days: this.activity.days 
@@ -404,7 +429,12 @@ export default {
     startTimeList() {
       if(this.requestData.selectedDate) {
         let dayOfWeek = moment(this.requestData.selectedDate).format('dd')
-        return this.activity.base_week_option[dayOfWeek].start_time
+        let result = {}
+        let selectedDay = this.activity.base_week_option[dayOfWeek]
+        for (let i = 0; i < selectedDay.start_time.length; i++) {
+          result[selectedDay.start_time[i]] = selectedDay.price_with_time[i]
+        }
+        return result 
       }
     },
     user() {
@@ -434,6 +464,7 @@ export default {
   },
   data() {
     return {
+      tabPage: 0,
       isMyQuestionOnlyChecked: false,
       mySwiper: null,
       isApplyAvailable: true,
@@ -450,7 +481,6 @@ export default {
           }
         }
       },
-      selectedWekin: {},
       wekiners: [],
       reviews: [],
       questions: {
@@ -468,14 +498,41 @@ export default {
       peopleCount: 0,
       isDropdownClicked: false,
       requestData: {
+        selectedYoil: null,
+        currentUserOfSelectedDate: 0,
         startTime: 'sample',
         selectedOption: 'sample',
         selectedDate: null,
+        selectedExtraOption: {
+          0: 0,
+          1: 0,
+          2: 0
+        },
       },
     }
   },
   methods: {
-     snsShare(sns_type) {
+    getCurrentNumberOfBookingUsers() {
+      api.getCurrentNumberOfBookingUsers(this.$route.params.key, this.requestData.selectedDate)
+        .then( result => {
+          this.requestData.currentUserOfSelectedDate = result.date
+        })
+        .catch( error => console.log(error.response.data) )
+    },
+    resetSelection(evnt) {
+      if (evnt) {
+        this.requestData.selectedYoil = moment(this.requestData.selectedDate).format('dd')
+        this.getCurrentNumberOfBookingUsers()
+        this.requestData.startTime = 'sample'
+        this.requestData.selectedOption = 'sample'
+        this.requestData.selectedExtraOption = {
+          0: 0,
+          1: 0,
+          2: 0
+        }
+      }
+    },
+    snsShare(sns_type) {
       var title = $("#ogTitle").attr('content');
       var href = window.location.href;
       var loc = "";
@@ -628,44 +685,57 @@ export default {
     },
     onApplyBtn() {
       if (this.user) {
-        if (this.checkForm()) {
-          if (this.isApplyAvailable) {
-            if (this.checkLoginState()) {
-              //TODO: wekin api call
-              this.$router.push({
-                name: 'Payment',
-                path: `/activity/${this.$route.params.key}/payment`,
-                params: {
-                  peopleCount: this.peopleCount,
-                  selectedWekin: this.selectedWekin
+        auth.getCurrentUser()
+          .then( result => {
+            if (this.checkForm()) {
+              if (this.isApplyAvailable) {
+                if (this.checkLoginState()) {
+                  let params = this.requestData
+                  params.activity_key = this.activity.activity_key
+                  api.postWekin(params)
+                    .then( result => {
+                      // requestData에 위킨키 추가
+                      this.requestData.wekin_key = result.data.wekin_key || result.data[1][0].wekin_key
+                      this.requestData.amount = result.data.pay_amount || result.data[1][0].pay_amount
+                      this.$router.push({
+                        name: 'Payment',
+                        path: `/activity/${this.$route.params.key}/payment`,
+                        params: {
+                          requestData: this.requestData
+                        }
+                      })
+                    })
+                    .catch( error => alert(error) )
+                } else {
+                  this.$router.push(`/login`)
                 }
-              })
+              } else {
+                if (this.isRequested && confirm("정말 취소하시겠습니까?")) { // 대기신청 취소
+                  api.cancelWaiting(this.selectedWekin.wekin_key)
+                    .then((result) => console.log(result))
+                    .catch((error) => console.error(error))
+                  this.isRequested = false
+                  $('.apply-btn')
+                    .removeClass('negative')
+                    .addClass('primary')
+                    .text('대기 신청하기')
+                } else {  // 대기 신청 화면
+                  $('.ui.modal.waiting-modal').modal('show')
+                }
+              }
             } else {
-              this.$router.push(`/login`)
+              alert("해당 날짜에 예약이 꽉 찼습니다 죄송합니다.")
             }
-          } else {
-            if (this.isRequested && confirm("정말 취소하시겠습니까?")) { // 대기신청 취소
-              api.cancelWaiting(this.selectedWekin.wekin_key)
-                .then((result) => console.log(result))
-                .catch((error) => console.error(error))
-              this.isRequested = false
-              $('.apply-btn')
-                .removeClass('negative')
-                .addClass('primary')
-                .text('대기 신청하기')
-            } else {  // 대기 신청 화면
-              $('.ui.modal.waiting-modal').modal('show')
-            }
-          }
-        }
+          })
       } else {
         alert("로그인이 필요한 서비스 입니다.")
         this.$parent.$refs.navbar.showModalLogin()
       }
     },
     checkForm() {
-      if (this.peopleCount === 0 && !this.isRequested && this.isApplyAvailable) {
-        alert('인원을 선택해주세요.')
+      let currentUser = this.requestData.currentUserOfSelectedDate
+      let maxUser = this.activity.base_week_option[this.requestData.selectedYoil].max_user
+      if (this.finalPrice === 0 || maxUser - currentUser < 1) {
         return false
       }
       return true
@@ -702,13 +772,12 @@ export default {
     getActivity() {
       api.getActivity(this.$route.params.key)
         .then(activity => {
-          console.log(activity)
           this.activity = activity
           this.activity.datesList = []
           this.activity.days = []
           let dates = this.activity.close_dates
           for (let i=0; i < dates.length; i++) {
-            activity.datesList.push(moment(dates[i]).toDate())
+            activity.datesList.push(moment(dates[i], 'YYMMDD').add(9, 'h').toDate())
           }
           for (let item in this.activity.base_week_option) {
             if (!this.activity.base_week_option[item].min_user) {
@@ -901,9 +970,6 @@ export default {
         $('.ui.sticky').sticky()
       })
     }, 1000)
-    // this.mySwiper = new Swiper('.swiper-container', {
-    //   slidesPerView: 1,
-    // })
     $('.menu .item').tab();
     if (window.location.hash == "#review") {
       $('.menu .item').tab('change tab', 'second');
