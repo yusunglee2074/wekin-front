@@ -15,7 +15,7 @@
     </a>
     <div class="info">
       <span>{{review.User.name}}</span>
-      <span class="wekinTitle">{{review.activity_title | cuttingText}}</span>
+      <span class="wekinTitle">{{review.activity_title }}</span>
       <p style="margin-top:4px">{{review.created_at | formatDate}}</p>
     </div>
     <div class="ui star top right rating" :data-rating="review.activity_rating"></div>
