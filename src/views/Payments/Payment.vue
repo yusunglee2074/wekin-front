@@ -7,7 +7,7 @@
         <div class="ui segment activity-info">
           <span class="label">신청 활동</span>
           <div class="ui divider"></div>
-          <span class="label">{{activity.title}}</span>
+          <span class="label">{{ activity.title }}</span>
           <div class="ui form">
             <div class="inline field">
               <label>신청날짜</label>
@@ -15,11 +15,11 @@
             </div>
             <div class="inline field">
               <label>집결지</label>
-              <span v-if="activity.address_detail">{{activity.address_detail.text}}</span>
+              <span v-if="activity.address_detail">{{ activity.address_detail.text }}</span>
             </div>
             <div class="inline field">
               <label>활동 날짜</label>
-              <span v-if="selectedWekin">{{selectedWekin.start_date | formatDate}}</span>
+              <span>{{ requestData.selectedDate | formatDateWithMoment }}</span>
             </div>
           </div>
         </div>
@@ -63,17 +63,15 @@
             </div>
           </div>
         </div>
-        <div class="ui segment">
-          <span class="label">신청인원</span>
-          <span v-if="this.activity.isteamorpeople === 'people'" class="label floated right">{{this.$route.params.peopleCount}}인</span>
-          <span v-if="this.activity.isteamorpeople === 'team'" class="label floated right">{{this.$route.params.peopleCount}}팀</span>
+        <div class="">
+          <!-- TODO: 신청 활동정보 표시-->
         </div>
       </div>
       <div class="column">
         <div class="ui segment">
           <div>
             <span>활동 가격</span>
-            <span class="floated right" v-if="activity.base_price">{{activity.base_price | joinComma}}원</span>
+            <span class="floated right" v-if="activity.base_price">{{ requestData.finalPrice | joinComma}}원</span>
           </div>
           <div style="margin-top:10px;">
             <span>포인트 사용</span>
@@ -93,7 +91,7 @@
           </div>
           <div class="ui divider"></div>
           <span>최종 가격</span>
-          <span class="floated right" v-if="activity.base_price">{{(activity.price * this.$route.params.peopleCount - point.value) | joinComma }}원</span>
+          <span class="floated right" v-if="activity.base_price">{{ requestData.finalPrice - point.value | joinComma }}원</span>
           <div id="error-message" v-if="point.errorMessage" style="color: red;">{{ point.errorMessage }}</div>
         </div>
         <div class="ui segment how-payments flex">
@@ -170,7 +168,6 @@ export default {
       isAgreed: false,
       activity: {},
       payMethod: "card",
-      user: {},
       requestUser: {
         name: '',
         email: '',
@@ -195,7 +192,13 @@ export default {
   computed: {
     selectedWekin() {
       return this.$route.params.selectedWekin
-    }
+    },
+    requestData() {
+      return this.$route.params.requestData
+    },
+    user() {
+      return this.$store.state.user
+    },
   },
   created() {
     this.getActivity()
@@ -247,8 +250,9 @@ export default {
     },
     getUser() {
       auth.getCurrentUser().then(user => {
-        this.user = user
-      }).catch(error => console.error(error))
+      }).catch(error => {
+        window.reload()
+      })
     },
     onPhoneClick() {
       if (this.requestUser.phoneValid && confirm("전화번호를 재인증 하시겠습니까?")) {
@@ -335,7 +339,7 @@ export default {
             refund_bank: this.requestUser.refundBank,
             refund_holder: this.requestUser.refundHolder,
           }
-          api.requestOrder(this.user.user_key, this.selectedWekin.wekin_key, this.$route.params.peopleCount, refundInfo)
+          api.requestOrder(this.user.user_key, this.requestData.wekin_key, this.requestData.amount, refundInfo)
             .then((result) => {
               IMP.request_pay({
                 pg: 'html5_inicis',
@@ -394,7 +398,7 @@ export default {
         this.requestUser.phoneValid = this.user.phone_valid
       }
     })
-    if (this.$route.params.peopleCount == undefined) {
+    if (this.$route.params.requestData == undefined) {
       alert('잘못 된 접근입니다.')
       window.location.href = `/activity/${this.$route.params.key}`
     }
