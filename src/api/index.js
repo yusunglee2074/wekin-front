@@ -28,6 +28,10 @@ export default {
     return axios.get(`${BASE_API_URL}/wekin/front`)
       .then(res => res.data)
   },
+  getCurrentNumberOfBookingUsers (key, date) {
+    return axios.get(`${BASE_API_URL}/wekin/${key}/${date}`)
+      .then(res => res.data)
+  },
   postWekin (params) {
     return axios.post(`${BASE_API_URL}/wekin`, { params })
       .then(res => res.data)
