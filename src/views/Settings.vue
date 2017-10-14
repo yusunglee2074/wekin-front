@@ -191,7 +191,6 @@ export default {
     verifySmsCode() {
       auth.verifySmsCode(this.formUser.phone, this.formUser.phonVerificationCode)
         .then((data) => {
-          console.log(data)
           if (data.success) {
             this.formUser.phoneValid = true
             this.stopTimer()
