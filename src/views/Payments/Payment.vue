@@ -265,7 +265,7 @@ export default {
               IMP.request_pay({
                 pg: 'html5_inicis',
                 pay_method: this.payMethod,
-                escrow: true,
+                // escrow: true,
                 merchant_uid: result.order_id,
                 name: this.activity.title,
                 amount: result.order_receipt_price,
