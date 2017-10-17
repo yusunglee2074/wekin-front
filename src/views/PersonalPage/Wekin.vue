@@ -8,7 +8,7 @@
       <div class="ui three doubling cards" v-if="orders.length >= 0">
         <div class="card card--reservation" v-for="order in orders" v-if="isCancelable(order)" v-bind:key="order.order_key">
           <div class="header">
-            {{order.Wekin.Activity.title}}
+            {{order.WekinNew.ActivityNew.title}}
           </div>
           <div class="content">
             <div class="card--reservation__label">
@@ -17,11 +17,11 @@
             </div>
             <div class="card--reservation__label flex">
               <label>집결지</label>
-              <span>{{order.Wekin.Activity.address_detail.text}}</span>
+              <span>{{order.WekinNew.ActivityNew.address_detail.text}}</span>
             </div>
             <div class="card--reservation__label">
               <label>활동 날짜</label>
-              <span>{{order.Wekin.start_date | formatDate}}</span>
+              <span>{{order.WekinNew.start_date | formatDate}}</span>
             </div>
             <div class="ui divider"></div>
             <div class="card--reservation__label">
@@ -36,7 +36,7 @@
             <div class="card--reservation__buttons">
               <button class="ui basic button" v-if="order.order_pay_method == 'vbank'" @click="goToPaymentCompletedPage(order)">계좌안내</button>
               <button class="ui basic button" v-if="isCancelable(order)" @click="cancelOrder(order)">참가취소</button>
-              <!--<a :to="`/activity/${order.Wekin.Activity.activity_key}`" tag="button" class="ui basic button">참가취소</a>-->
+              <!--<a :to="`/activity/${order.WekinNew.ActivityNew.activity_key}`" tag="button" class="ui basic button">참가취소</a>-->
             </div>
           </div>
         </div>
@@ -55,17 +55,13 @@
         </div>
       </div>
       <div class="ui three doubling cards">
-        <!--<wekin-card-layout :title="activity.title" :address="activity.address_detail.text" :name="activity.Host.host_name" :imageUrl="activity.mainImage.image" v-for="activity in activities">
-                                          <div slot="badge" class="complete-badge">완료</div>
-                                          <button class="ui basic right floated button" slot="action-btn">후기작성</button>
-                                        </wekin-card-layout>-->
-        <wekin-card-layout :title="order.wekin_name" :address="order.Wekin.Activity.address" :name="order.wekin_host_name" :imageUrl="order.Wekin.Activity.main_image.image[0]" :activityKey="order.Wekin.activity_key" v-for="order in completedActivity" v-bind:key="order.order_key">
+        <wekin-card-layout :title="order.wekin_name" :address="order.WekinNew.ActivityNew.address" :name="order.wekin_host_name" :imageUrl="order.WekinNew.ActivityNew.main_image.image[0]" :activityKey="order.WekinNew.activity_key" v-for="order in completedActivityNew" v-bind:key="order.order_key">
           <div slot="badge" class="complete-badge">완료</div>
-          <button class="ui basic right floated button" slot="action-btn" @click="onWriteReviewClick(order.Wekin.Activity)">후기작성</button>
+          <button class="ui basic right floated button" slot="action-btn" @click="onWriteReviewClick(order.WekinNew.ActivityNew)">후기작성</button>
         </wekin-card-layout>
         <!--<button class="ui basic more button">더보기</button>-->
       </div>
-      <p v-if="completedActivity && completedActivity.length == 0" style="padding-top:32px;font-size: 15px;color: #979797;;text-align:center">완료 된 위킨이 없습니다.</p>
+      <p v-if="completedActivityNew && completedActivityNew.length == 0" style="padding-top:32px;font-size: 15px;color: #979797;;text-align:center">완료 된 위킨이 없습니다.</p>
     </div>
     <feed-editor ref="feedEditor"></feed-editor>
   </div>
@@ -74,6 +70,7 @@
 import wekinCardLayout from 'components/WekinCardLayout.vue'
 import feedEditor from 'components/FeedEditor.vue'
 import api from 'api'
+import moment from 'moment'
 import _ from 'lodash'
 
 export default {
@@ -87,7 +84,8 @@ export default {
   computed: {
     isExistCancelable() {
       return _.find(this.orders, (order) => {
-        if ((order.status == "paid" || order.status == "ready") && new Date(order.Wekin.start_date) > new Date()) {
+        console.log(order.status, order.WekinNew.start_date, "이유성")
+        if ((order.status == "paid" || order.status == "ready") && moment(order.WekinNew.start_date) > moment()) {
           return order
         }
       })
@@ -98,10 +96,10 @@ export default {
     feedEditor
   },
   asyncComputed: {
-    completedActivity() {
-      let now = new Date()
+    completedActivityNew() {
+      let now = moment()
       return this.orders.filter((order) => {
-        if ((order.status == "paid" || order.status == "been") && new Date(order.Wekin.start_date) < now) {
+        if ((order.status == "paid" || order.status == "been") && moment(order.WekinNew.start_date) < now) {
           return order
         }
       })
@@ -139,7 +137,7 @@ export default {
         .catch((error) => alert("활동 번호를 확인해주세요."))
     },
     isCancelable(order) {
-      if ((order.status == 'paid' || order.status == 'ready') && new Date(order.Wekin.start_date) > new Date()) {
+      if ((order.status == 'paid' || order.status == 'ready') && new Date(order.WekinNew.start_date) > new Date()) {
         return true
       }
       return false
