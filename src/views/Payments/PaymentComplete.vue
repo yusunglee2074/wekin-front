@@ -97,7 +97,6 @@ export default {
       let impUID = this.$route.query.imp_uid
       return api.verifyOrder(orderKey, impUID)
         .then((result) => {
-          console.log(result.data)
          return result.data
         })
         .catch((error) => console.error(error))
