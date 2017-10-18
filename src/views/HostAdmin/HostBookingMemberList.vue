@@ -6,17 +6,17 @@
           <img class="ui middle aligned circular image profile" :src="wekiner.User.profile_image">
           <div class="f1">
             <div class="column">
-              <span class="name">{{wekiner.User.name}}</span>
-              <span class="ui basic label">{{wekiner.Wekin.Activity.title}}</span>
+              <span class="name">{{ wekiner.User.name }}</span>
+              <span class="ui basic label">{{ wekiner.ActivityNew.title }}</span>
             </div>
             <div class="column">
-              <span class="date">예약시각 : {{wekiner.order_at | formatDateTimeKo }}</span>
+              <span class="date">예약시각 : {{wekiner.start_date | formatDateTimeKo }}</span>
               <span class="phone">번호 : {{wekiner.User.phone}}</span>
               <span class="email">E-mail : {{wekiner.User.email}}</span>
             </div>
           </div>
-          <div class="status" v-if="wekiner.status === 'paid'" style="color: red;">결제완료</div>
-          <div class="status" v-if="wekiner.status === 'ready'">예약완료</div>
+          <div class="status" v-if="wekiner.state === 'finish'" style="color: red;">결제완료</div>
+          <div class="status" v-if="wekiner.state === 'booking'">예약완료</div>
         </div>
         <p v-if="wekiners.length == 0" style="padding-top:32px;font-size: 15px;color: #979797;text-align:center">예약자가 없습니다.</p>
       </div>
@@ -39,8 +39,11 @@ export default {
   },
   methods: {
     getAttendWekiner() {
-      api.getAttendWekiners(this.$route.params.key)
-        .then(wekiners => this.wekiners = wekiners)
+      api.getAttendWekiners(this.$route.params.activity_key)
+        .then(wekiners => {
+          console.log("이유성", wekiners.data)
+          this.wekiners = wekiners.data
+        })
         .catch(error => console.error(error))
     }
   },
