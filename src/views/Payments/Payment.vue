@@ -362,7 +362,8 @@ export default {
                         params: {
                           rsp: rsp,
                           point_value: this.point.value, 
-                          point_type: this.point.type
+                          point_type: this.point.type,
+                          wekin_key: this.requestData.wekin_key
                         }
                       })
                     })

@@ -95,7 +95,7 @@ export default {
     }
   },
   mounted () {
-    api.requestPointUse(-1 * this.$route.params.point_value, this.$route.params.point_type === 'company' ? '1' : '0')
+    api.requestPointUse(-1 * this.$route.params.point_value, this.$route.params.point_type === 'company' ? '1' : '0', this.$route.params.wekin_key)
       .then(response => {
       })
       .catch(error => {
