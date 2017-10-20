@@ -94,7 +94,7 @@ export default {
       api.getAdminBookings(this.user.Host.host_key)
         .then(json => {
           let activities = json.data.filter(activity => {
-            if ((activity.status === 3 || activity.status === 5) && activity.WekinNews.length !== 0) {
+            if ((activity.status === 3 || activity.status === 5) && activity.WekinNews.length > 0) {
               return activity
             }
           })
