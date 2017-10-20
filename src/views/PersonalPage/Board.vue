@@ -6,10 +6,10 @@
     <div class="ui tab active" id="first" data-tab="first">
       <div class="result-container" v-if="qnas && qnas.length">
         <!--<a :href="`/activity/${qna.Activity.activity_key}`" tag="div" class="result-container__list link" v-for="qna in qnas">-->
-         <a :href="`/activity/${qna.Activity.activity_key}#qna`" tag="div" class="result-container__list link" v-for="(qna, index) in qnas" v-bind:key="index">
+         <a :href="`/activity/${qna.ActivityNew.activity_key}#qna`" tag="div" class="result-container__list link" v-for="(qna, index) in qnas" v-bind:key="index">
           <img class="ui image aligned top" v-if="qna.Activity" :src="qna.Activity.main_image.image[0]">
           <div class="content">
-            <span class="title">{{qna.Activity.title}}</span>
+            <span class="title">{{qna.ActivityNew.title}}</span>
             <div>
               <span class="name">by {{qna.User.name}}</span>
               <span class="date">{{qna.created_at | formatDate}}</span>
