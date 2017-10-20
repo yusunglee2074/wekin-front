@@ -19,7 +19,6 @@
         <option value="뷰티">뷰티</option>
         <option value="요리">요리</option>
         <option value="아트">아트</option>
-        <option value="축제">축제</option>
         <option value="힐링">힐링</option>
         <option value="아웃도어">아웃도어</option>
         <option value="요가/피트니스">요가/피트니스</option>
@@ -134,14 +133,6 @@
         <h3>몇 일전에 접수 마감 시킬까요?</h3>
         <div class="ui input focus" style="width:300px;">
           <input type="number" v-model="activity.dueDate"> 
-        </div>
-        <h3>최소인원</h3>
-        <div class="ui input focus" style="width:300px;">
-          <input type="number" v-model="activity.baseMinUser"> 
-        </div>
-        <h3>최대인원</h3>
-        <div class="ui input focus" style="width:300px;">
-          <input type="number" v-model="activity.baseMaxUser">  
         </div>
         <button @click="isTicket = true">티켓형식으로 변환</button>
       </div>
