@@ -85,21 +85,7 @@ export default {
   },
   asyncComputed: {
     rsp() {
-      if (this.$route.query.imp_uid) {
-        return this.verifyOrder()
-      } else {
-        if (this.$route.params.rsp.status != 'failed') {
-          api.requestPointUse(-1 * this.$route.params.point_value, this.$route.params.point_type === 'company' ? '1' : '0')
-            .then(response => {
-            })
-            .catch(error => {
-              api.sendEmail("lys0333@gmail.com", "위킨 포인트 에러3", new Date() + this.$store.getters.user.email + this.orderKey + JSON.stringify(error))
-            })
-        } else {
-          api.sendEmail("lys0333@gmail.com", "위킨 포인트 에러2", new Date() + this.$store.getters.user.email + this.orderKey + JSON.stringify(error))
-        }
-        return this.$route.params.rsp
-      }
+      return this.$route.params.rsp
     },
     user() {
       return this.$store.state.user
@@ -107,6 +93,14 @@ export default {
     usePoint() {
       return this.$route.params.point_value
     }
+  },
+  mounted () {
+    api.requestPointUse(-1 * this.$route.params.point_value, this.$route.params.point_type === 'company' ? '1' : '0')
+      .then(response => {
+      })
+      .catch(error => {
+        api.sendEmail("lys0333@gmail.com", "위킨 포인트 에러3", new Date() + this.$store.getters.user.email + this.orderKey + JSON.stringify(error))
+      })
   },
   methods: {
     verifyOrder() {
