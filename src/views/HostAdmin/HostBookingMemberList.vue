@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="status" v-if="wekiner.state === 'finish'" style="color: red;">결제완료</div>
-          <div class="status" v-if="wekiner.state === 'booking'">예약완료</div>
+          <div class="status" v-if="wekiner.state === 'ready' || 'booking'">예약완료</div>
         </div>
         <p v-if="wekiners.length == 0" style="padding-top:32px;font-size: 15px;color: #979797;text-align:center">예약자가 없습니다.</p>
       </div>
