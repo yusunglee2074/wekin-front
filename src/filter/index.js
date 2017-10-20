@@ -48,7 +48,7 @@ export default (Vue) => {
       weekdays: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
       weekdaysShort: ['일', '월', '화', '수', '목', '금', '토']
     })
-    var m = moment(date).subtract(9, 'hours')
+    var m = moment(date)
     return m.format('MM/DD(ddd)')
   })
 
@@ -57,7 +57,7 @@ export default (Vue) => {
       weekdays: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
       weekdaysShort: ['일', '월', '화', '수', '목', '금', '토']
     })
-    var m = moment(date).subtract(9, 'hours')
+    var m = moment(date)
     if (m.format('MM/DD(ddd) HH:mm').slice(-5) === "00:00") {
       let customTime = m.format('MM/DD(ddd)')
       return customTime
