@@ -1,10 +1,25 @@
 <template>
   <div id="personal-page-feed">
     <div class="ui pointing secondary menu menu--wide">
-      <a class="item active" data-tab="first">예약</a>
-      <a class="item" data-tab="second">활동 완료</a>
+      <a class="item active" data-tab="first">결제 완료</a>
+      <a class="item" data-tab="second">대기 신청</a>
+      <a class="item" data-tab="third">활동 완료</a>
     </div>
     <div class="ui tab active" id="first" data-tab="first">
+      <div class="ui three doubling cards">
+        <wekin-card-layout 
+          :title="wekin.ActivityNew.title" 
+          :address="wekin.ActivityNew.address" 
+          :name="wekin.ActivityNew.Host.name" 
+          :imageUrl="wekin.ActivityNew.main_image.image[0]" 
+          :activityKey="wekin.ActivityNew.activity_key"
+          v-for="wekin in wekinNews" v-bind:key="wekin.wekin_key"
+          v-if="isNotStartAndPaid(wekin)">
+        </wekin-card-layout>
+      </div>
+      <p v-show="emptyFirstTabToggle === 1" style="padding-top:32px;font-size: 15px;color: #979797;text-align:center">결제한 위킨이 없습니다.</p>
+    </div>
+    <div class="ui tab" id="second" data-tab="second">
       <div class="ui three doubling cards" v-if="orders.length >= 0">
         <div class="card card--reservation" v-for="order in orders" v-if="isCancelable(order)" v-bind:key="order.order_key">
           <div class="header">
@@ -44,7 +59,7 @@
       <p v-if="!isExistCancelable" style="padding-top:32px;font-size: 15px;color: #979797;text-align:center">예약하신 위킨이 없습니다.</p>
       <!--<button class="ui basic more button">더보기</button>-->
     </div>
-    <div class="ui tab" id="second" data-tab="second">
+    <div class="ui tab" id="third" data-tab="third">
       <div class="ui segment order-code">
         <span>위킨 활동 후기는 메이커에게 큰 힘이 됩니다.</span>
         <div class="ui action floated right input">
@@ -55,9 +70,15 @@
         </div>
       </div>
       <div class="ui three doubling cards">
-        <wekin-card-layout :title="order.wekin_name" :address="order.WekinNew.ActivityNew.address" :name="order.wekin_host_name" :imageUrl="order.WekinNew.ActivityNew.main_image.image[0]" :activityKey="order.WekinNew.activity_key" v-for="order in completedActivityNew" v-bind:key="order.order_key">
-          <div slot="badge" class="complete-badge">완료</div>
-          <button class="ui basic right floated button" slot="action-btn" @click="onWriteReviewClick(order.WekinNew.ActivityNew)">후기작성</button>
+        <wekin-card-layout 
+          :title="wekin.ActivityNew.title" 
+          :address="wekin.ActivityNew.address" 
+          :name="wekin.ActivityNew.Host.name" 
+          :imageUrl="wekin.ActivityNew.main_image.image[0]" 
+          :activityKey="wekin.ActivityNew.activity_key"
+          v-for="wekin in wekinNews" v-bind:key="wekin.wekin_key"
+          v-if="isStartAndPaid(wekin)">
+          <button class="ui basic right floated button" slot="action-btn" @click="onWriteReviewClick(wekin.ActivityNew)">후기작성</button>
         </wekin-card-layout>
         <!--<button class="ui basic more button">더보기</button>-->
       </div>
@@ -79,12 +100,14 @@ export default {
       activities: [],
       orders: [],
       orderUid: null,
+      wekinNews: [],
+      emptyFirstTabToggle: 1,
+      emptyThridTabToggle: 1
     }
   },
   computed: {
     isExistCancelable() {
       return _.find(this.orders, (order) => {
-        console.log(order.status, order.WekinNew.start_date, "이유성")
         if ((order.status == "paid" || order.status == "ready") && moment(order.WekinNew.start_date) > moment()) {
           return order
         }
@@ -122,6 +145,20 @@ export default {
     }
   },
   methods: {
+    isNotStartAndPaid(wekin) {
+      if (moment(wekin.start_date) > moment() && wekin.state === 'paid') {
+        this.emptyFirstTabToggle = 0 
+        return true
+      }
+      return false
+    },
+    isStartAndPaid(wekin) {
+      if (moment(wekin.start_date) < moment() && wekin.state === 'paid') {
+        this.emptyThridTabToggle = 0 
+        return true
+      }
+      return false
+    },
     // getUserActivities() {
     //   api.getUserActivities(this.$route.params.key)
     //     .then(json => this.activities = json.results)
@@ -177,10 +214,17 @@ export default {
           })
           .catch(err => console.error(err))
       }
+    },
+    getWekinNews() {
+      api.getUserWekinNews(this.$route.params.key)
+        .then( result => {
+          this.wekinNews = result.data
+        })
     }
   },
   created() {
     this.getUserOrders()
+    this.getWekinNews()
   },
   mounted() {
     $('.menu .item').tab()
@@ -236,8 +280,9 @@ export default {
 }
 
 .tab#first {}
+.tab#second {}
 
-.tab#second {
+.tab#third {
   .ui.segment {
     height: 65px;
     span {
