@@ -33,6 +33,7 @@ import HostWekinsManagement from 'views/HostAdmin/HostWekinsManagement.vue'
 import HostWekinModify from 'views/HostAdmin/HostWekinModify.vue'
 import HostWekinAdd from 'views/HostAdmin/HostWekinAdd.vue'
 import HostWekinAddNew from 'views/HostAdmin/HostWekinAdd-new.vue'
+import HostWekinModifyNew from 'views/HostAdmin/HostWekinModify-new.vue'
 import HostBookingsManagement from 'views/HostAdmin/HostBookingsManagement.vue'
 import HostBookingMemberList from 'views/HostAdmin/HostBookingMemberList.vue'
 import HostBoardsManagement from 'views/HostAdmin/HostBoardsManagement.vue'
@@ -202,6 +203,11 @@ export default new Router({
       path: 'wekins/add/V2', 
       name: 'HostWekinsAddNew', 
       component: HostWekinAddNew 
+    },
+    { 
+      path: 'wekins/add/V2/:key', 
+      name: 'HostWekinsModifyNew', 
+      component: HostWekinModifyNew 
     },
     {
       path: '/host/:key',
