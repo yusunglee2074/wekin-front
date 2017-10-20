@@ -64,6 +64,10 @@ export default {
     return axios.get(`${BASE_API_URL}/activity/front/${activityKey}/wekin`)
       .then(res => res.data)
   },
+  getUserWekinNews (userKey) {
+    return axios.get(`${BASE_API_URL}/wekin/${userKey}`)
+      .then(res => res.data)
+  },
   searchActivity (keyword) {
     return axios.get(`${BASE_API_URL}/activity/front`, {
       params: {
@@ -403,10 +407,11 @@ export default {
     })
       .then(res => res.data)
   },
-  requestPointUse(value, type) {
+  requestPointUse(value, type, wekin_key) {
     return axios.post(`${BASE_API_URL}/point/front/use`, {
       value: value,
-      type: type
+      type: type,
+      wekin_key: wekin_key || null
     })
   },
   requestRefund (userKey, params) {
