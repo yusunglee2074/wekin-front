@@ -9,7 +9,7 @@
         <input type="text" v-model="activity.title">
       </div>
       <h3>카테고리</h3>
-      <select v-model="activity.category1" class="ui dropdown" style="width: 300px;">
+      <select v-model="activity.category" class="ui dropdown" style="width: 300px;">
         <option value="" disabled>카테고리</option>
         <option value="투어/여행">투어/여행</option>
         <option value="익스트림 (레저)">익스트림 (레저)</option>
@@ -26,7 +26,7 @@
       </select>
       <h3>기본가격</h3>
       <div class="ui input focus" style="width:300px;">
-      <input type="number" v-model="activity.basePrice">
+        <input type="number" v-model="activity.base_price">
       </div>
       <h3>환불규정</h3>
       <textarea type="text" v-model="refundPolicyData" v-show="wekinRefund" style="width:300px; height:80px;"></textarea> 
@@ -35,8 +35,8 @@
     </div>
 
     <div v-show="page === 2">
-    <h2>상세정보를 사진과 함께 작성해주세요.</h2>
-    <h3>상세 정보</h3>
+      <h2>상세정보를 사진과 함께 작성해주세요.</h2>
+      <h3>상세 정보</h3>
       <div style="width:440px;">
         <div id="editor"></div>
       </div>
@@ -88,7 +88,7 @@
         <div class="ui calendar">
           <div class="ui input styled primary left icon">
             <datepicker 
-              v-model="activity.startDate" 
+              v-model="activity.start_date" 
               id="datepickerId" 
               wapper-class="ui input styled primary left icon" 
               language="ko" 
@@ -108,7 +108,7 @@
         <div class="ui calendar">
           <div class="ui input styled primary left icon">
             <datepicker 
-              v-model="activity.startDate" 
+              v-model="activity.start_date" 
               id="datepickerId" 
               wapper-class="ui input styled primary left icon" 
               language="ko" 
@@ -121,7 +121,7 @@
         <div class="ui calendar">
           <div class="ui input styled primary left icon">
             <datepicker 
-              v-model="activity.endDate" 
+              v-model="activity.end_date" 
               id="datepickerId" 
               wapper-class="ui input styled primary left icon" 
               language="ko" 
@@ -132,7 +132,7 @@
         </div>
         <h3>몇 일전에 접수 마감 시킬까요?</h3>
         <div class="ui input focus" style="width:300px;">
-          <input type="number" v-model="activity.dueDate"> 
+          <input type="number" v-model="activity.due_date"> 
         </div>
         <button @click="isTicket = true">티켓형식으로 변환</button>
       </div>
@@ -174,121 +174,121 @@
   <div class="seven fields">
     <div class="field" :class="{ disabled: !checkedDaysInclude('Mo') }">
       <label>최소인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Mo'].min_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Mo'].min_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Tu') }">
       <label>최소인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Tu'].min_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Tu'].min_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('We') }">
       <label>최소인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['We'].min_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['We'].min_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Th') }">
       <label>최소인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Th'].min_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Th'].min_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Fr') }">
       <label>최소인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Fr'].min_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Fr'].min_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Sa') }">
       <label>최소인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Sa'].min_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Sa'].min_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Su') }">
       <label>최소인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Su'].min_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Su'].min_user">
     </div>
   </div>
   <div class="seven fields">
     <div class="field" :class="{ disabled: !checkedDaysInclude('Mo') }">
       <label>최대인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Mo'].max_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Mo'].max_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Tu') }">
       <label>최대인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Tu'].max_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Tu'].max_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('We') }">
       <label>최대인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['We'].max_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['We'].max_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Th') }">
       <label>최대인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Th'].max_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Th'].max_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Fr') }">
       <label>최대인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Fr'].max_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Fr'].max_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Sa') }">
       <label>최대인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Sa'].max_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Sa'].max_user">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Su') }">
       <label>최대인원</label>
-      <input type="number" placeholder="## 명" v-model="activity.baseWeekOption['Su'].max_user">
+      <input type="number" placeholder="## 명" v-model="activity.base_week_option['Su'].max_user">
     </div>
   </div>
   <div class="seven fields">
     <div class="field" :class="{ disabled: !checkedDaysInclude('Mo') }">
       <label>시작시각</label>
-      <input type="time" placeholder="" v-model="activity.baseWeekOption['Mo'].start_time[0]">
+      <input type="time" placeholder="" v-model="activity.base_week_option['Mo'].start_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Tu') }">
       <label>시작시각</label>
-      <input type="time" placeholder="" v-model="activity.baseWeekOption['Tu'].start_time[0]">
+      <input type="time" placeholder="" v-model="activity.base_week_option['Tu'].start_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('We') }">
       <label>시작시각</label>
-      <input type="time" placeholder="" v-model="activity.baseWeekOption['We'].start_time[0]">
+      <input type="time" placeholder="" v-model="activity.base_week_option['We'].start_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Th') }">
       <label>시작시각</label>
-      <input type="time" placeholder="" v-model="activity.baseWeekOption['Th'].start_time[0]">
+      <input type="time" placeholder="" v-model="activity.base_week_option['Th'].start_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Fr') }">
       <label>시작시각</label>
-      <input type="time" placeholder="" v-model="activity.baseWeekOption['Fr'].start_time[0]">
+      <input type="time" placeholder="" v-model="activity.base_week_option['Fr'].start_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Sa') }">
       <label>시작시각</label>
-      <input type="time" placeholder="" v-model="activity.baseWeekOption['Sa'].start_time[0]">
+      <input type="time" placeholder="" v-model="activity.base_week_option['Sa'].start_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Su') }">
       <label>시작시각</label>
-      <input type="time" placeholder="" v-model="activity.baseWeekOption['Su'].start_time[0]">
+      <input type="time" placeholder="" v-model="activity.base_week_option['Su'].start_time[0]">
     </div>
   </div>
   <div class="seven fields">
     <div class="field" :class="{ disabled: !checkedDaysInclude('Mo') }">
       <label>해당 시각 추가가격</label>
-      <input type="number" placeholder="#### 원" v-model="activity.baseWeekOption['Mo'].price_with_time[0]">
+      <input type="number" placeholder="#### 원" v-model="activity.base_week_option['Mo'].price_with_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Tu') }">
       <label>해당 시각 추가가격</label>
-      <input type="number" placeholder="#### 원" v-model="activity.baseWeekOption['Tu'].price_with_time[0]">
+      <input type="number" placeholder="#### 원" v-model="activity.base_week_option['Tu'].price_with_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('We') }">
       <label>해당 시각 추가가격</label>
-      <input type="number" placeholder="#### 원" v-model="activity.baseWeekOption['We'].price_with_time[0]">
+      <input type="number" placeholder="#### 원" v-model="activity.base_week_option['We'].price_with_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Th') }">
       <label>해당 시각 추가가격</label>
-      <input type="number" placeholder="#### 원" v-model="activity.baseWeekOption['Th'].price_with_time[0]">
+      <input type="number" placeholder="#### 원" v-model="activity.base_week_option['Th'].price_with_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Fr') }">
       <label>해당 시각 추가가격</label>
-      <input type="number" placeholder="#### 원" v-model="activity.baseWeekOption['Fr'].price_with_time[0]">
+      <input type="number" placeholder="#### 원" v-model="activity.base_week_option['Fr'].price_with_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Sa') }">
       <label>해당 시각 추가가격</label>
-      <input type="number" placeholder="#### 원" v-model="activity.baseWeekOption['Sa'].price_with_time[0]">
+      <input type="number" placeholder="#### 원" v-model="activity.base_week_option['Sa'].price_with_time[0]">
     </div>
     <div class="field" :class="{ disabled: !checkedDaysInclude('Su') }">
       <label>해당 시각 추가가격</label>
-      <input type="number" placeholder="#### 원" v-model="activity.baseWeekOption['Su'].price_with_time[0]">
+      <input type="number" placeholder="#### 원" v-model="activity.base_week_option['Su'].price_with_time[0]">
     </div>
   </div>
 </div>
@@ -311,24 +311,24 @@
             </datepicker>
           </div>
         </div>
-            <div v-for="(data, index) in activity.closeDates">
+            <div v-for="(data, index) in activity.close_dates">
               {{ data | formatDateWithMoment }}
-              <button @click="activity.closeDates.splice(index, 1)">삭제</button>
+              <button @click="activity.close_dates.splice(index, 1)">삭제</button>
             </div>
           </div>
         </div>
 
-        <div v-show="page === 8">
+    <div v-show="page === 8">
       <h2>위킨 옵션이 있나요?</h2>
-      <button @click="activity.basePriceOption.push({})">추가</button>
-      <div v-for="(value, index) in activity.basePriceOption" style="width:400px;">
+      <button @click="activity.base_price_option.push({})">추가</button>
+      <div v-for="(value, index) in activity.base_price_option" style="width:400px;">
         <p>옵션 이름</p>
         <div class="ui input focus" style="width:300px;">
-          <input type="text" v-model="activity.basePriceOption[index]['name']">
+          <input type="text" v-model="activity.base_price_option[index]['name']">
         </div>
         <p>추가가격</p>
         <div class="ui input focus" style="width:300px;">
-          <input type="number" v-model="activity.basePriceOption[index]['price']">
+          <input type="number" v-model="activity.base_price_option[index]['price']">
         </div>
         <button @click="deletePriceOption(index)">제거</button>
         <div class="ui section divider"></div>
@@ -337,15 +337,15 @@
 
     <div v-show="page === 9">
       <h2>결제 추가 옵션 사항이 있나요?</h2>
-      <button @click="activity.baseExtraPriceOption.push({})">추가</button>
-      <div v-for="(value, index) in activity.baseExtraPriceOption" style="width:400px;">
+      <button @click="activity.base_extra_price_option.push({})">추가</button>
+      <div v-for="(value, index) in activity.base_extra_price_option" style="width:400px;">
         <p>옵션 이름</p>
         <div class="ui input focus" style="width:300px;">
-          <input type="text" v-model="activity.baseExtraPriceOption[index]['name']">
+          <input type="text" v-model="activity.base_extra_price_option[index]['name']">
         </div>
         <p>옵션 추가가격</p>
         <div class="ui input focus" style="width:300px;">
-          <input type="number" v-model="activity.baseExtraPriceOption[index]['price']">
+          <input type="number" v-model="activity.base_extra_price_option[index]['price']">
         </div>
         <button @click="deleteExtraPriceOption(index)">제거</button>
         <div class="ui section divider"></div>
@@ -353,7 +353,7 @@
     </div>
 
     <div v-show="page === 10">
-      <button @click="submit()">확인</button>
+      <button @click="submit()">수정요청</button>
       페이지 이동 <input type="select">      
     </div>
 
@@ -375,20 +375,22 @@ export default {
       activity: {
         meetAddress: '',
         address: '',
-        baseWeekOption: { 
-          Su: { price_with_time: [], start_time: [] },
-          Tu: { price_with_time: [], start_time: [] },
-          We: { price_with_time: [], start_time: [] },
-          Th: { price_with_time: [], start_time: [] },
-          Fr: { price_with_time: [], start_time: [] },
-          Sa: { price_with_time: [], start_time: [] },
-          Mo: { price_with_time: [], start_time: [] } 
+        base_week_option: { 
+          Su: { min_user: null, max_user: null, price_with_time: [], start_time: [] },
+          Tu: { min_user: null, max_user: null, price_with_time: [], start_time: [] },
+          We: { min_user: null, max_user: null, price_with_time: [], start_time: [] },
+          Th: { min_user: null, max_user: null, price_with_time: [], start_time: [] },
+          Fr: { min_user: null, max_user: null, price_with_time: [], start_time: [] },
+          Sa: { min_user: null, max_user: null, price_with_time: [], start_time: [] },
+          Mo: { min_user: null, max_user: null, price_with_time: [], start_time: [] } 
         },
-        basePriceOption: [{}],
-        baseExtraPriceOption: [{}],
+        base_price_option: [{}],
+        base_extra_price_option: [{}],
         baseMinUser: 0,
         baseMaxUser: 0,
-        closeDates: []
+        close_dates: [],
+        category: null,
+        base_price: 0,
       },
       wekinRefund: false,
       refundPolicyData: '',
@@ -412,9 +414,7 @@ export default {
         return null
       },
       set(newDate) {
-        console.log(moment(newDate).format())
-        console.log(typeof newDate)
-        this.activity.closeDates.push(newDate)
+        this.activity.close_dates.push(newDate)
         return null
       }
     },
@@ -434,7 +434,7 @@ export default {
       // TODO: 제출전 형식 검사 해야함
       let params = {
         host_key: this.user.Host.host_key,
-        main_image: { image: this.uploadedMainImages },
+        main_image: this.uploadedMainImages,
         title: this.activity.title,
         intro_detail: $('#editor').trumbowyg('html'),
         schedule: this.activity.schedule,
@@ -443,40 +443,58 @@ export default {
         address_detail: { text: this.activity.address, meet_area: this.activity.meetAddress },
         refund_policy: this.activity.refund_policy || this.refundPolicyData,
         isteamorpeople: 'people',
-        category1: this.activity.category1,
-        category2: '임시 카테고리',
-        start_date: this.activity.startDate,
-        end_date: this.activity.endDate,
-        due_date: this.activity.dueDate,
+        category1: this.activity.category,
+        category2: this.activity.activity_key,
+        start_date: this.activity.start_date,
+        end_date: this.activity.end_date,
+        due_date: this.activity.due_date,
         base_start_time: this.activity.baseStartTime,
-        base_price: this.activity.basePrice,
-        base_min_user: this.activity.baseMinUser,
-        base_max_user: this.activity.baseMaxUser,
-        base_price_option: this.activity.basePriceOption,
-        base_extra_price_option: this.activity.baseExtraPriceOption,
-        base_week_option: this.activity.baseWeekOption,
-        close_dates: this.activity.closeDates,
+        base_price: this.activity.base_price,
+        base_min_user: 0,
+        base_max_user: 0,
+        base_price_option: this.activity.base_price_option,
+        base_extra_price_option: this.activity.base_extra_price_option,
+        base_week_option: this.activity.base_week_option,
+        close_dates: this.activity.close_dates,
         is_it_ticket: this.isTicket,
         ticket_due_date: this.activity.ticketDueDate,
-        ticket_max_apply: this.activity.ticketMaxApply
+        ticket_max_apply: this.activity.ticketMaxApply,
+        // 수정요청  status 9
+        status: 9 
       }
-      api.addActivity(params)
-        .then(result => {
-          alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
-          window.location.href = '/host/admin'
-        }).catch(error => alert('에러 메세지' + error + error.message + moment().format() + "정말 죄송합니다. 메이커님 내부 오류가 발생했습니다.\n 해당 화면을 캡쳐해서 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다. 다시한번 불편드려 죄송합니다."))
+      for (let i = 0; i < params.close_dates; i++) {
+        params.close_dates[i] = Number(params.close_dates[i])
+      }
+      if (this.activity.status === 1) {
+        params.status = 1
+        api.updateActivity(this.activity.activity_key, params)
+          .then(result => {
+            alert('위킨 수정이 완료되었습니다.')
+            window.location.href = '/host/admin'
+          })
+          .catch(error => {
+            alert('에러 메세지' + error + error.message + moment().format() + "정말 죄송합니다. 메이커님 내부 오류가 발생했습니다.\n 해당 화면을 찍어서 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다. 다시한번 불편드려 죄송합니다.")
+            return
+          })
+      } else {
+        api.addActivity(params)
+          .then(result => {
+            alert('위킨 수정 신청이 접수되었습니다.')
+            window.location.href = '/host/admin'
+          }).catch(error => alert('에러 메세지' + error + error.message + moment().format() + "정말 죄송합니다. 메이커님 내부 오류가 발생했습니다.\n 해당 화면을 찍어서 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다. 다시한번 불편드려 죄송합니다."))
+      }
     },
     deleteExtraPriceOption(index) {
       if (index === 0) {
         return
       }
-      this.activity.baseExtraPriceOption.splice(index, 1)
+      this.activity.base_extra_price_option.splice(index, 1)
     },
     deletePriceOption(index) {
       if (index === 0) {
         return
       }
-      this.activity.basePriceOption.splice(index, 1)
+      this.activity.base_price_option.splice(index, 1)
     },
     sameAddress() {
       this.activity.meetAddress = this.activity.address
@@ -489,7 +507,6 @@ export default {
     },
     imageCallback(event, trumbowyg) {
       Storage.imageUpload(event, task => {
-        console.log(task)
         let url = task.snapshot.downloadURL
         let img = url.substring(0, url.indexOf('token') - 1)
         trumbowyg.execCmd('insertImage', img)
@@ -499,6 +516,29 @@ export default {
   },
   created() {
     this.getPolicy()
+    let activities = this.$store.getters.hostActivities
+    for (let i = 0; i < activities.length; i++) {
+      if (activities[i].activity_key === this.$route.params.key) {
+        this.activity = Object.assign({}, activities[i])
+        this.activity.address = String(activities[i].address_detail.text)
+        this.activity.meetAddress = String(activities[i].address_detail.meet_area)
+        this.uploadedMainImages = Object.assign({}, activities[i].main_image)
+        for (let week in activities[i].base_week_option) {
+          if (activities[i].base_week_option[String(week)].min_user > 0) {
+            // 위킨 수정시 요일 옵션 자동으로 채워지게 해야함kkkkkkkkkkkkkkkkkkkk
+            this.checkedDays.push(String(week))
+          }
+        }
+        let tempLength = activities[i].close_dates.length
+        this.activity.close_dates = []
+        for (let y = 0; y < tempLength; y++) {
+          let tmp = activities[i].close_dates[y]
+          this.activity.close_dates.push(moment("20" + tmp.slice(1, 3) + "-" + tmp.slice(3, 5) + "-" + tmp.slice(5, 7)).format())
+        }
+        setTimeout(function(){ $('#editor').trumbowyg('html', activities[i].intro_detail) }, 1000);
+        break;
+      }
+    }
   },
   mounted() {
     $.trumbowyg.svgPath = '/static/trumbowyg/dist/ui/icons.svg';
