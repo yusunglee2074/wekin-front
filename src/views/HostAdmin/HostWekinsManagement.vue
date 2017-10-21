@@ -25,12 +25,13 @@
               <div class="ui red label" v-if="activity.status == 3">{{activity.status | activityStatusLabel}}</div>
               <div class="ui primary label" v-if="activity.status == 2 || activity.status == 1">{{activity.status | activityStatusLabel}}</div>
               <div class="ui label" v-if="activity.status == 5">{{activity.status | activityStatusLabel}}</div>
+              <div class="ui grey label" v-if="activity.status == 9">{{activity.status | activityStatusLabel}}</div>
               <div class="title">{{activity.title}}</div>
               <div class="address">{{activity.address_detail.text}}</div>
               <div class="date">{{activity.created_at | formatDate}}</div>
             </div>
             <div class="right">
-              <router-link :to="{ name: 'HostWekinsModifyNew', params: { key: activity.activity_key } }" tag="button" style="width:100px" class="ui basic button">수정하기</router-link>
+              <router-link :to="{ name: 'HostWekinsModifyNew', params: { key: activity.activity_key } }" v-if="activity.status < 6" tag="button" style="width:100px" class="ui basic button">수정하기</router-link>
             </div>
           </div>
           <div class="wekin-list-layout" v-if="hostActivities && hostActivities.length == 0">
@@ -60,7 +61,6 @@ export default {
   computed: {
     hostActivities() {
       let sortedActivities = this.$store.getters.hostActivities
-      console.log(sortedActivities)
       sortedActivities.sort(function compare(a, b) {
         if (moment(a.created_at) > moment(b.created_at)) {
           return 1;
@@ -88,6 +88,8 @@ export default {
           return "삭제"
         case 5:
           return "위킨종료"
+        case 9:
+          return "수정신청 진행 중 (승인 후 수정 신청한 기존 위킨은 사라집니다)"
       }
     },
     activityStatusMsg(status) {
@@ -102,6 +104,8 @@ export default {
           return "삭제 요청"
         case 5:
           return "기간 종료"
+        case 9:
+          return "수정 신청"
       }
     }
   },
