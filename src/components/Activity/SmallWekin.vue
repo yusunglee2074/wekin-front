@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'ActivityDetail', params: { key:  activity.activity_key }}" class="image link">
+  <a :href="`${activity.activity_key}`" class="image link">
     <div class='mobile-wekin'>
       <div class="ui card float-left mobile-wekins" style="float:left; margin-top:10px; margin-right:10px;">
         <div class="ui content slide masked reveal image">
@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-  </router-link>
+  </a>
 </template>
 
 <script>
