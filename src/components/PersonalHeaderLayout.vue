@@ -12,6 +12,7 @@
         <div class="follow-container">
           <span>위킨 포인트 {{ user.point.point }} P</span>
           <span>기업 포인트 {{ user.point.point_special }} P <span style="font-size: 12px;">포인트 사용내역</span></span>
+          <point-change :user_key="user.user_key"></point-change>
         </div>
         <div class="introduce pc">{{user.introduce}}</div>
       </div>
@@ -27,6 +28,7 @@
 <script>
 import followerModal from 'components/FollowerModal.vue'
 import followingModal from 'components/FollowingModal.vue'
+import pointChange from 'components/PointChangeHistory.vue'
 import api from 'api'
 
 export default {
@@ -79,6 +81,7 @@ export default {
     '$route': ['getFollowerCount', 'getFollowingCount']
   },
   components: {
+    pointChange,
     followerModal,
     followingModal,
   }
