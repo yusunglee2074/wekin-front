@@ -29,7 +29,6 @@ export default {
   methods: {
   },
   mounted() {
-    console.log(this.activity.main_image.image[0])
   }
 }
 </script>
