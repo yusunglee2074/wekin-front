@@ -657,10 +657,10 @@ export default {
       }, 500)
     }
     if (params.startPrice) {
-      this.startPrice = params.startPrice
+      this.slider.value[0] = params.startPrice
     }
     if (params.endPrice) {
-      this.endPrice = params.endPrice
+      this.slider.value[1] = params.endPrice
     }
     $('#rangestart').calendar({
       type: 'date',

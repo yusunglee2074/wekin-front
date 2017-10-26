@@ -75,8 +75,8 @@
         가격
       </div>
       <div class="active content">
-        <div id="price" class="ui double range"></div>
-        <p id="display-d"></p>
+	    <vueslider v-model="slider.value" v-bind="slider"></vueslider>
+	    <h3><small>선택가격: </small>{{ slider.value[0] }} ~ {{ slider.value[1] === 20 ? '제한없음' : slider.value[1] + '만원' }}</h3>
       </div>
     </div>
     <div class="ui styled accordion">
@@ -95,33 +95,6 @@
         </div>
       </div>
     </div>
-    <div class="ui styled accordion location">
-      <div class="active title">
-        <!--<i class="dropdown icon"></i>-->
-        내주변
-      </div>
-      <div class="active content">
-        <div class="ui buttons">
-          <div id="search" class="ui basic primary button" v-on:click="showLocationPopup = !showLocationPopup">{{address}}</div>
-          <div id="gps" class="ui top right teal pointing icon button" @click="getGeoLocation()">
-            <i class="compass icon"></i>
-          </div>
-        </div>
-        <div class="ui segment popup-box" v-if="showLocationPopup">
-          <span>현재 설정된 주소가 맞지 않으신가요?</span>
-          <div class="ui action input">
-            <input type="text" placeholder="동명을 입력하세요">
-            <button class="ui basic icon button">
-              <i class="search icon"></i>
-            </button>
-          </div>
-          <button id="search" class="ui primary button">
-            <i class="icon compass"></i>
-            현재위치 자동 검색
-          </button>
-        </div>
-      </div>
-    </div>
     <div class="flex action-btn-container">
       <button class="ui button basic reset-btn f1" @click="resetFilter()">초기화</button>
       <button class="ui button negative apply-btn f1" @click="applyFilter()">적용</button>
@@ -129,6 +102,8 @@
   </div>
 </template>
 <script>
+import vueslider from 'vue-slider-component'
+
 const MAX_PRICE = 300000
 
 export default {
@@ -175,6 +150,29 @@ export default {
       },
       locationFilter: ["전체"],
       categoryCheck: '',
+      slider: {
+        value: [0, 20],
+        width: '100%',
+        height: 8,
+        dotSize: 13,
+        min: 0,
+        max: 20,
+        disabled: false,
+        show: true,
+        tooltip: 'always',
+        formatter: '{value}만',
+        bgStyle: {
+          backgroundColor: '#fff',
+          boxShadow: 'inset 0.5px 0.5px 3px 1px rgba(0,0,0,.36)'
+        },
+        tooltipStyle: {
+          backgroundColor: '#999',
+          borderColor: '#666'
+        },
+        processStyle: {
+          backgroundColor: 'rgb(0, 162, 154)'
+        }
+      },
     }
   },
   methods: {
@@ -183,8 +181,8 @@ export default {
       let locationCheck = this.locationCheck
       let startDate = this.startDate
       let endDate = this.endDate
-      let startPrice = this.startPrice
-      let endPrice = this.endPrice
+      let startPrice = this.slider.value[0]
+      let endPrice = this.slider.value[1]
       let people = this.peopleCount
       let category = this.categoryCheck
       this.$router.push({
@@ -392,7 +390,10 @@ export default {
         this.endDate = date
       }
     })
-  }
+  },
+  components: {
+    vueslider
+  },
 }
 </script>
 <style lang="scss" scoped>
