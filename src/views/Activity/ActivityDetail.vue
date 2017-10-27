@@ -59,7 +59,7 @@
               <select v-model="requestData.startTime" class="">
                 <option value="sample" disabled>시작시각</option>
                 <option v-for="(item, index) in startTimeList" :value="[index, item]">
-                  {{ index | formatTime}} ( {{ item >= 0 ? '+ ' + item : item }} 원)
+                  {{ index }} ( {{ item >= 0 ? '+ ' + item : item }} 원)
                 </option>
               </select>
             </div>
@@ -783,7 +783,7 @@ export default {
             activity.datesList.push(moment(dates[i], 'YYMMDD').add(9, 'h').toDate())
           }
           for (let item in this.activity.base_week_option) {
-            if (!this.activity.base_week_option[item].min_user) {
+            if (!this.activity.base_week_option[item].start_time.length) {
               switch (item) {
                 case 'Su':
                   this.activity.days.push(0)
