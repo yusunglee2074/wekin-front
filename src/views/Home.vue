@@ -226,9 +226,9 @@
         </h3>
         <div class="makers swiper-container">
           <div class="swiper-wrapper">
-            <router-link :to="{ name: 'hostPage', params: { key: maker.host_key}}" tag="div" class="ui card pointer swiper-slide" v-for="(maker, index) in makers" v-bind:key="maker.host_key" v-if="maker && maker.Activities[0]">
+            <router-link :to="{ name: 'hostPage', params: { key: maker.host_key}}" tag="div" class="ui card pointer swiper-slide" v-for="(maker, index) in makers" v-bind:key="maker.host_key" v-if="maker && maker.ActivityNews[0]" style="margin-right:30px;width:168px;">
               <div class="image">
-                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${maker.Activities[0].main_image.image[0]})`}"></div>
+                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${maker.ActivityNews[0].main_image.image[0]})`}"></div>
                 <div class="backImage ui circular image makerProfile" v-bind:style="{'background-image':`url(${maker.profile_image})`}"></div>
               </div>
               <div class="content" style="border: solid 1px #d5d5d5; max-height: 36px;">
