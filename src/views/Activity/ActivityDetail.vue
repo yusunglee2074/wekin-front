@@ -687,6 +687,19 @@ export default {
       $('.qna-buttons-container .ui.selection.dropdown').dropdown()
     },
     onApplyBtn() {
+      if (!this.requestData.selectedDate) {
+        window.alert("날짜를 선택해주세요.")
+        return
+      } else if (this.requestData.startTime === 'sample') {
+        window.alert("시각을 선택해주세요.")
+        return
+      } else if (this.requestData.selectedOption === 'sample') {
+        window.alert("코스옵션을 선택해주세요.")
+        return
+      } else if (this.requestData.selectedExtraOption[0] == 0 && this.requestData.selectedExtraOption[1] == 0 && this.requestData.selectedExtraOption[2] == 0 ) {
+        window.alert("인원옵션을 선택해주세요.")
+        return
+      }
       if (this.user) {
         auth.getCurrentUser()
           .then( result => {
@@ -708,7 +721,9 @@ export default {
                         }
                       })
                     })
-                    .catch( error => alert(error) )
+                    .catch( error => {
+                      alert(moment().format() + error + "\n내부적인 오류가 발생했습니다.\n위키너님 죄송합니다.\n해당 화면을 휴대폰으로 찍어\n카카오톡 @위킨에 보내주시면 빠르게 도와드리겠습니다.\n다시한번 죄송합니다.") 
+                    })
                 } else {
                   this.$router.push(`/login`)
                 }
@@ -726,8 +741,6 @@ export default {
                   $('.ui.modal.waiting-modal').modal('show')
                 }
               }
-            } else {
-              alert("해당 날짜에 예약이 꽉 찼습니다 죄송합니다.")
             }
           })
       } else {
