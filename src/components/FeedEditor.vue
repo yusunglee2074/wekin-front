@@ -1,12 +1,18 @@
 <template>
   <div class="ui modal feed-editor">
-    <div class="ui active inverted dimmer" v-if="isFileUploading">
-      <div class="ui text loader">잠시만 기다려주세요.</div>
+    <div class="ui active inverted dimmer" v-show="isFileUploading">
+      <div class="ui text loader">Uploading......
+        <br>
+        용량이 큰 파일은 시간이 소요될 수 있습니다.</div>
     </div>
     <div class="textarea">
       <textarea placeholder="이야기를 남겨주세요." v-model="content">
       </textarea>
     </div>
+
+
+
+    <!--
     <div class="feed-editor__linear-container">
       <FireUpload :imageUrl="uploadedImage" @update:imageUrl="val => uploadedImages.push(val)" @progress="progress" v-bind:class="{ attatchedImage: uploadedImages.length, attatchedVideo: Object.keys(uploadedMedia).length}"></FireUpload>
       <div class="ui basic media buttons" v-if="!uploadedImages.length">
@@ -28,6 +34,39 @@
         </div>
       </div>
     </div>
+    -->
+    <div class="feed-editor__linear-container">
+      <!--이미지 업로드 버튼-->
+      <div class="ui positive basic button imageUploadButton">
+        <span style="display:table-cell;vertical-align:middle;"><i class="file image outline icon"></i> 이미지</span>
+        <input class="imageUploadInput" type="file" v-on:change="fireStorage" accept="image/*" multiple></input>
+      </div>
+      <div class="ui positive basic button imageUploadButton">
+        <span style="display:table-cell;vertical-align:middle;"><i class="file video outline icon"></i> 동영상</span>
+        <input class="imageUploadInput" type="file" v-on:change="fireStorage" accept="video/*"></input>
+      </div>
+      <!--이미지 보여주는 부분-->
+      <div>
+        <div class="ui card" v-for="image in uploadedImages" style="width: 90px; height:90px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top">
+          <div style="left:4px;top:4px;background: white;width:92%;height:92%;z-index:222;position:absolute;">
+            <img :src="image" style="width:100%;height:100%">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="ui card" v-show="uploadedMedia.length !== 0" style="width: 90px; height:90px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top">
+          <div style="left:4px;top:4px;background: white;width:92%;height:92%;z-index:222;position:absolute;">
+            <img src="./../../static/icon/Play_Icon_FlatGreen.png" style="width:100%;height:100%">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
     <div class="ui divider"></div>
     <div class="feed-editor__linear-container search">
       <!--<button class="ui basic button">위킨 찾기</button>-->
@@ -75,7 +114,7 @@ export default {
     return {
       uploadedImage: '',
       uploadedImages: [],
-      uploadedMedia: {},
+      uploadedMedia: '',
       defaultPrivateMode: false,
       content: null,
       images: null,
@@ -97,6 +136,54 @@ export default {
     FireUpload
   },
   methods: {
+    fireStorage (e) {
+      let self = this
+      this.isFileUploading  = true
+      let files = e.target.files
+      let fileUploadCompleteNumber = 0
+      if (files.length > 6) {
+        window.alert("파일은 6장까지만 업로드 가능합니다.")
+        self.isFileUploading = false
+        return
+      }
+      // 이미지 어레이 받아서 하나씩 firebase에 업로드 후 url 저장한다.
+      // TODO: 썸네일 만들어서 저장하는 처리 같이해야한다.
+      if (files[0].type.slice(0, 5) === 'video') {
+        let file = files[0]
+        let tempRef = firebase.storage().ref()
+        let videoPath = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getSeconds() + new Date().getMilliseconds()
+        let videoRef = tempRef.child('video/' + videoPath)
+        let uploadTask = videoRef.put(file)
+        uploadTask.on('state_changed', function(snapshot){
+        }, function(error) {
+        }, function() {
+          fileUploadCompleteNumber += 1
+          var downloadURL = uploadTask.snapshot.downloadURL
+          self.uploadedMedia = downloadURL 
+          if (fileUploadCompleteNumber === files.length) {
+            self.isFileUploading = false
+          }
+        })
+        return
+      }
+      for (let i = 0; i < files.length; i++) {
+        let file = files[i]
+        let tempRef = firebase.storage().ref()
+        let imagePath = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getSeconds() + new Date().getMilliseconds()
+        let imageRef = tempRef.child('img/image/' + imagePath)
+        let uploadTask = imageRef.put(file)
+        uploadTask.on('state_changed', function(snapshot){
+        }, function(error) {
+        }, function() {
+          fileUploadCompleteNumber += 1
+          var downloadURL = uploadTask.snapshot.downloadURL
+          self.uploadedImages.push(downloadURL + '?alt=media') 
+          if (fileUploadCompleteNumber === files.length) {
+            self.isFileUploading = false
+          }
+        })
+      }
+    },
     progress(value) {
       this.isFileUploading = true
       if (value >= 100) {
@@ -116,6 +203,10 @@ export default {
       })
     },
     onPostClick() {
+      if (this.content.length < 5) {
+        window.alert("내용은 5글자 이상이여야 합니다.")
+        return
+      }
       if (this.sendingTime && this.sendingTime - moment() > -30000) {
         alert("10초에 한번만 작성 가능합니다. 잠시만 기다려주세요.")
         console.log(this.sendingTime, this.sendingTime - moment())
@@ -283,6 +374,22 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.imageUploadButton{
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.imageUploadButton input.imageUploadInput{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
 @import '../style/variables.scss';
 @import '../style/cross-browsing.scss';
 
