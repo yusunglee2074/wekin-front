@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/ico-cate-healing </title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M44,4.76596194e-13 C42.884188,5.8177397 40.6548037,10.9819194 37.6580014,15 L6.50574452,15 C3.5090507,10.9819194 1.27970105,5.8177397 0.1639,4.70854071e-13 L44,0 L44,4.76596194e-13 Z" id="path-1"></path>
+        <path d="M1.77975057,6.4219 C1.07579738,4.39569174 0.501885517,2.24623705 0.0752,1.18983567e-12 L28.5172,0 L28.5172,6.4219 L1.77975057,6.4219 L1.77975057,6.4219 Z" id="path-3"></path>
+        <path d="M1.13525167,0 C0.398842059,2.35868146 0,4.88233747 0,7.50554074 C0,10.498989 0.519468506,13.3629068 1.46732673,16 L22,16 L22,0 L1.13525167,0 Z" id="path-5"></path>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/ico-cate-healing-">
+            <g transform="translate(0.000000, 1.000000)">
+                <path d="M21.8164,42 C33.4144,42 42.8164,32.598 42.8164,21 C42.8164,9.402 33.4144,0 21.8164,0 C10.2184,0 0.8164,9.402 0.8164,21 C0.8164,32.598 10.2184,42 21.8164,42 Z" id="Stroke-1" stroke="#FFFFFF" stroke-width="2"></path>
+                <g id="Group-27" transform="translate(0.000000, 12.000000)">
+                    <g id="Group-5" transform="translate(0.000000, 10.000000)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Clip-4"></g>
+                        <path d="M45.4209,4.4736 C45.4209,4.4736 41.3729,2.5506 22.5449,10.7496 C22.5449,10.7496 12.9289,14.3926 -0.8361,13.3806" id="Stroke-3" stroke="#FFFFFF" stroke-width="1.5" mask="url(#mask-2)"></path>
+                    </g>
+                    <g id="Group-11" transform="translate(0.000000, 12.000000)">
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
+                        </mask>
+                        <g id="Clip-10"></g>
+                        <path d="M0.0752,3.5869 C0.0752,3.5869 12.0182,0.4489 25.7832,5.5099 C25.7832,5.5099 27.1002,5.9149 28.5172,6.4219" id="Stroke-9" stroke="#FFFFFF" stroke-width="1.5" mask="url(#mask-4)"></path>
+                    </g>
+                    <g id="Group-14">
+                        <mask id="mask-6" fill="white">
+                            <use xlink:href="#path-5"></use>
+                        </mask>
+                        <g id="Clip-13"></g>
+                        <polyline id="Stroke-12" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round" mask="url(#mask-6)" points="-6 13.504 8.80382501 3 21 16"></polyline>
+                    </g>
+                    <path d="M24.5771,10.792 C24.5771,8.953 26.0691,7.459 27.9101,7.459 C29.7501,7.459 31.2431,8.953 31.2431,10.792 C31.2431,12.634 29.7501,14.125 27.9101,14.125 C26.0701,14.125 24.5771,12.634 24.5771,10.792 Z" id="Stroke-15" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <polyline id="Stroke-17" stroke="#FFFFFF" stroke-linecap="round" points="27.7207 17.7144 27.7207 12.0004 26.6497 10.9284"></polyline>
+                    <path d="M29.0605,10.8989 L27.7205,11.9999" id="Stroke-19" stroke="#FFFFFF" stroke-linecap="round"></path>
+                    <polyline id="Stroke-21" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" points="34.6211 9.8687 35.6281 11.1107 36.5921 9.9217"></polyline>
+                    <path d="M35.5352,15.625 L35.5662,11.094 L35.5352,15.625 Z" id="Stroke-23" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <polygon id="Stroke-25" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" points="35.6074 12.5 32.2594 12.5 33.9334 8.275 35.6074 4.386 37.2804 8.444 38.9534 12.5"></polygon>
+                </g>
+                <g id="Group-32" transform="translate(12.000000, 5.000000)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.7461,7.5 C16.0721,7.5 17.1491,5.989 17.1491,4.806 C17.1491,3.624 16.0721,2.388 14.7461,2.388 C13.6071,2.388 12.6561,2.96 12.4111,3.908 C12.1591,3.764 11.8611,3.607 11.5411,3.607 C10.6581,3.607 9.9391,4.766 9.9391,5.554 C9.9391,6.343 10.6581,7.5 11.5411,7.5 L14.7461,7.5 Z" id="Stroke-28"></path>
+                    <path d="M4.9473,5.5 C6.2733,5.5 7.3503,4.289 7.3503,3.105 C7.3503,1.923 6.2733,0.838 4.9473,0.838 C3.8083,0.838 2.8573,1.485 2.6123,2.434 C2.3603,2.289 2.0623,2.17 1.7423,2.17 C0.8593,2.17 0.1403,3.046 0.1403,3.835 C0.1403,4.624 0.8593,5.5 1.7423,5.5 L4.9473,5.5 Z" id="Stroke-30"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

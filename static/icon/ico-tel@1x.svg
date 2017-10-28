@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/1195_ico-tel@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/1195_ico-tel" stroke="#595959" stroke-width="1.5">
+            <g id="icon/ico-tel" transform="translate(1.000000, 1.000000)">
+                <path d="M6.86155856,11.5937278 C8.32631561,13.0584849 10.2446921,14.2702483 10.9139195,13.5966355 C11.8734669,12.6353339 12.2200431,11.7346833 14.3356084,13.4380116 C16.4511736,15.1404627 14.743079,16.9435392 13.5142619,17.6338169 C12.191595,18.3775977 7.96095351,18.2474608 4.00698657,14.2908626 C0.0521425385,10.3281246 -0.16937568,6.1376668 0.591070046,4.68869755 C1.20153167,3.52303161 3.03943707,1.70592156 4.73750272,3.82674943 C6.43907678,5.9431918 5.89225604,6.61452588 4.93183151,7.57670462 C4.26084998,8.24593194 5.39680151,10.1254624 6.86155856,11.5937278 Z" id="Stroke-1"></path>
+                <path d="M17.8628361,9.2258483 C17.8628361,4.33689273 13.8992211,0.376786092 9.01289683,0.376786092" id="Stroke-3" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M14.3153266,8.81984862 C14.3153266,6.11958058 12.1208025,3.92343811 9.41487016,3.92343811" id="Stroke-5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

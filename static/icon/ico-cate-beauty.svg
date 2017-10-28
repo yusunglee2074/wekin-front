@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/ico-cate-beauty</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/ico-cate-beauty" stroke="#FFFFFF">
+            <g transform="translate(1.000000, 1.000000)">
+                <path d="M21,42 C32.598,42 42,32.598 42,21 C42,9.402 32.598,0 21,0 C9.402,0 0,9.402 0,21 C0,32.598 9.402,42 21,42 Z" id="Stroke-1" stroke-width="2"></path>
+                <path d="M17.835,22.4341 C17.835,17.6121 21.744,13.7041 26.566,13.7041 C31.388,13.7041 35.297,17.6121 35.297,22.4341 C35.297,27.2561 31.388,31.1651 26.566,31.1651 C21.744,31.1651 17.835,27.2561 17.835,22.4341 Z" id="Stroke-3" stroke-width="1.5"></path>
+                <path d="M20.8066,22.4341 C20.8066,19.2541 23.3866,16.6761 26.5666,16.6761 C29.7456,16.6761 32.3246,19.2541 32.3246,22.4341 C32.3246,25.6151 29.7456,28.1931 26.5666,28.1931 C23.3866,28.1931 20.8066,25.6151 20.8066,22.4341 Z" id="Stroke-5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M29.752,21.1973 L24.879,26.0713" id="Stroke-7" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M30.0156,22.9155 L26.5976,26.3355" id="Stroke-9" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polygon id="Stroke-11" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="13.4219 18.2539 9.4219 18.2539 9.4219 13.1579 13.4219 14.4219"></polygon>
+                <path d="M13.4219,20.7275 C13.4219,21.0185 13.1869,21.2535 12.8959,21.2535 L9.9479,21.2535 C9.6569,21.2535 9.4219,21.0185 9.4219,20.7275 L9.4219,18.7805 C9.4219,18.4895 9.6569,18.2535 9.9479,18.2535 L12.8959,18.2535 C13.1869,18.2535 13.4219,18.4895 13.4219,18.7805 L13.4219,20.7275 Z" id="Stroke-13" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M14.4219,30.5513 C14.4219,30.9393 14.1079,31.2543 13.7199,31.2543 L9.1239,31.2543 C8.7359,31.2543 8.4219,30.9393 8.4219,30.5513 L8.4219,21.9563 C8.4219,21.5683 8.7359,21.2543 9.1239,21.2543 L13.7199,21.2543 C14.1079,21.2543 14.4219,21.5683 14.4219,21.9563 L14.4219,30.5513 Z" id="Stroke-15" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polygon id="Stroke-17" stroke-linecap="round" stroke-linejoin="round" points="14.4219 9.8843 14.4219 8.4403 15.8299 9.1613 17.1579 9.8843 15.7909 10.6053 14.4219 11.3283"></polygon>
+                <polygon id="Stroke-19" stroke-linecap="round" stroke-linejoin="round" points="19.4219 9.8843 19.4219 8.4403 17.8959 9.1613 16.5079 9.8843 17.9639 10.6053 19.4219 11.3283"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

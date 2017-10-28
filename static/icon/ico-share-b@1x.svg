@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="26px" viewBox="0 0 24 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/ico-share-w-b@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="icon/ico-share-w-b" stroke="#333333">
+            <g id="icon/ico-share-w" transform="translate(1.000000, 1.000000)">
+                <g id="Group-2" transform="translate(0.556390, 0.132212)">
+                    <g id="Group" transform="translate(6.404285, 11.561537)" stroke-width="1.5">
+                        <path d="M3.70608156,12.1776956 L3.70608156,1.39334554" id="Stroke-3"></path>
+                        <path d="M3.84248989,0.0281407841 L0.361499288,3.55552327" id="Stroke-1"></path>
+                        <path d="M7.32322557,3.55552327 L3.84251822,0.0281407841" id="Stroke-2"></path>
+                    </g>
+                    <g id="Group-7" stroke-width="2">
+                        <path d="M6.33014883,21.4394464 L3.42323214,21.4394464 C1.53209342,21.4394464 0,19.8901855 0,17.9807782 L0,3.45698331 C0,1.54715483 1.53209342,0 3.42323214,0 L17.2675352,0 C19.1578399,0 20.6907673,1.54715483 20.6907673,3.45698331 L20.6907673,17.9807782 C20.6907673,19.8901855 19.1578399,21.4394464 17.2675352,21.4394464 L14.4119433,21.4394464" id="Stroke-5"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

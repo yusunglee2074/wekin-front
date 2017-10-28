@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/ico-compass@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons/ico-compass" stroke="#FFFFFF">
+            <g>
+                <path d="M24.6645527,12.9308873 C24.6645527,6.45023937 19.4114808,1.19703273 12.9306982,1.19703273 C6.45062467,1.19703273 1.19731636,6.45047574 1.19731636,12.9308873 C1.19731636,19.4117042 6.45055731,24.6652145 12.9306982,24.6652145 C19.4115481,24.6652145 24.6645527,19.4119405 24.6645527,12.9308873 Z" id="Stroke-1" stroke-width="2"></path>
+                <g id="compass" transform="translate(7.800000, 6.933333)" stroke-width="1.8" stroke-linecap="round">
+                    <path d="M2.75528273,2.93931201 L7.64358168,8.15387953" id="Stroke-3"></path>
+                    <path d="M7.64372492,8.15403231 L10.0794593,0.341348166" id="Stroke-5"></path>
+                    <path d="M10.0793876,0.34130997 L2.75535435,2.9394266" id="Stroke-7"></path>
+                    <path d="M2.75528273,2.93931201 L7.64358168,8.15387953" id="Stroke-9"></path>
+                    <path d="M7.64372492,8.15403231 L0.319333533,10.7525309" id="Stroke-11"></path>
+                    <path d="M0.319297724,10.7524163 L2.75539016,2.93935021" id="Stroke-13"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

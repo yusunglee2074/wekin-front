@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/1200_input-check-a@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/1200_input-check-a" stroke-width="1.5" stroke="#00C58E">
+            <g id="icon/input-check">
+                <g id="Group-3" transform="translate(6.000000, 8.000000)" stroke-linecap="round">
+                    <path d="M4.12085071,6.54878262 L10.3463179,0.322970655" id="Stroke-1"></path>
+                    <path d="M0.507914815,2.93619145 L4.12067835,6.54861026" id="Stroke-2"></path>
+                </g>
+                <path d="M21.1982593,10.9737222 C21.1982593,5.3268771 16.6210611,0.749796296 10.9739259,0.749796296 C5.32740188,0.749796296 0.75,5.3270808 0.75,10.9737222 C0.75,16.6207987 5.32742952,21.198463 10.9739259,21.198463 C16.6210334,21.198463 21.1982593,16.6210024 21.1982593,10.9737222 Z" id="Stroke-3"></path>
+            </g>
+        </g>
+    </g>
+</svg>

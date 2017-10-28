@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="70px" height="70px" viewBox="0 0 70 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/ico-waiting@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/ico-waiting">
+            <g>
+                <circle id="Oval-5" fill="#FFFFFF" cx="21.5" cy="35.5" r="3.5"></circle>
+                <circle id="Oval-5-Copy" fill="#FFFFFF" cx="35.5" cy="35.5" r="3.5"></circle>
+                <circle id="Oval-5-Copy-2" fill="#FFFFFF" cx="48.5" cy="35.5" r="3.5"></circle>
+                <circle id="Oval-6" stroke="#FFFFFF" stroke-width="3" cx="35" cy="35" r="33.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

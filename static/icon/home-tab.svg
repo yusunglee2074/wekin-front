@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="32px" viewBox="0 0 48 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Overrides/Tab Bar/Icons/Unselected/1@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="1.42108547e-13" width="19.2307692" height="13.8683432"></rect>
+        <path d="M2.5,12.0192308 L22.5,12.0192308 L22.5,24.0384615 L2.5,24.0384615 L2.5,12.0192308 Z M12.5,0 L25,12.0192308 L0,12.0192308 L12.5,0 Z" id="path-3"></path>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Overrides/Tab-Bar/Icons/Unselected/1">
+            <g id="icon/Tab-Bar/home" transform="translate(12.000000, 4.000000)">
+                <g id="Combined-Shape" transform="translate(2.884615, 10.207101)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Mask"></g>
+                    <path d="M9.61538462,6.50961538 C7.76735488,6.50961538 6.26923077,8.00773949 6.26923077,9.85576923 L6.26923077,16.9563609 C6.26923077,18.8043907 7.76735488,20.3025148 9.61538462,20.3025148 C11.4634144,20.3025148 12.9615385,18.8043907 12.9615385,16.9563609 L12.9615385,9.85576923 C12.9615385,8.00773949 11.4634144,6.50961538 9.61538462,6.50961538 Z" stroke="#333333" mask="url(#mask-2)"></path>
+                </g>
+                <mask id="mask-4" fill="white">
+                    <use xlink:href="#path-3"></use>
+                </mask>
+                <use id="Combined-Shape" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xlink:href="#path-3"></use>
+            </g>
+        </g>
+    </g>
+</svg>

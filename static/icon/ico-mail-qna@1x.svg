@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="19px" viewBox="0 0 28 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #C7C7C7;">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/1191_ico-mail-qna@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons/1191_ico-mail-qna" stroke="#FFFFFF">
+            <g id="icons/ico-mail-qna">
+                <g id="Group-3">
+                    <path d="M8.68405797,8.30117647 L1.2173913,17.3211204" id="Stroke-3" stroke-width="1.5" stroke-linecap="round"></path>
+                    <path d="M26.9449275,8.30117647 L19.4782609,17.3211204" id="Stroke-3" stroke-width="1.5" stroke-linecap="round" transform="translate(23.211594, 12.811148) scale(-1, 1) translate(-23.211594, -12.811148) "></path>
+                    <path d="M27,17.026229 L27,2.06647685 C27,1.48410864 26.5012962,1 25.8710202,1 L2.12950891,1 C1.4990577,1 1,1.48428592 1,2.06647685 L1,17.026229 C1,17.6087164 1.49883784,18.0927059 2.12950891,18.0927059 L25.8710202,18.0927059 C26.501516,18.0927059 27,17.6088937 27,17.026229 Z" id="Stroke-5" stroke-width="2"></path>
+                    <path d="M2.43478261,1.18588235 L12.4752784,10.3879783 C12.9414998,10.7067633 13.3865079,10.9496471 13.978595,10.9496471 C14.5706821,10.9496471 15.1038433,10.7334312 15.4823831,10.3879783 L25.8222222,1.50302624" id="Stroke-7" stroke-width="1.5" stroke-linecap="round"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
