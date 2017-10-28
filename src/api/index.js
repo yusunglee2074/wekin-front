@@ -414,6 +414,9 @@ export default {
       wekin_key: wekin_key || null
     })
   },
+  getPointHistory(user_key, month) {
+    return axios.get(`${BASE_API_URL}/point/detail/${ user_key }/${ month }`)
+  },
   requestRefund (userKey, params) {
     return axios.post(`${BASE_API_URL}/order/refund`)
       .then(res => res.data)
