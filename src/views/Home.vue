@@ -193,12 +193,12 @@
         </div>
       </div>
 
-      <div class="ui container new-wekin-container">
+      <div class="ui container news-container">
         <h3 class="ui header">
           <div class="header-label-bar"></div>
           <span class="header-label">위킨 뉴스</span>
         </h3>
-        <div class="new-wekins swiper-container">
+        <div class="news swiper-container">
           <div class="swiper-wrapper">
             <div @click="goLink(news.link_url)" class="ui card pointer swiper-slide" v-for="(news, index) in news.data" v-bind:key="index">
                 <div class="image">
@@ -211,10 +211,10 @@
             </div>
           </div>
         </div>
-        <div class="prev-btn" v-on:click="newWekins.slidePrev()">
+        <div class="prev-btn" v-on:click="newNews.slidePrev()">
           <i class="icon angle left"></i>
         </div>
-        <div class="next-btn" v-on:click="newWekins.slideNext()">
+        <div class="next-btn" v-on:click="newNews.slideNext()">
           <i class="icon angle right"></i>
         </div>
       </div>
@@ -275,6 +275,7 @@ export default {
       popularWekins: null,
       mySwiper: null,
       newWekins: null,
+      newNews: null,
       popularFeed: [],
       newestActivities: [],
       activities: [],
@@ -439,6 +440,18 @@ export default {
         }
       })
       this.newWekins = new Swiper('.new-wekins.swiper-container', {
+        freeMode: true,
+        freeModeMomentumRatio: 0.2,
+        resistance: false,       
+        slidesPerView: 3,
+        spaceBetween: 20,
+        breakpoints: {
+          767: {
+            slidesPerView: 'auto'
+          }
+        }
+      })
+      this.newNews = new Swiper('.news.swiper-container', {
         freeMode: true,
         freeModeMomentumRatio: 0.2,
         resistance: false,       
