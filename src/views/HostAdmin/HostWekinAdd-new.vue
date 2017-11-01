@@ -576,12 +576,8 @@ export default {
         }
       } else {
         for (let i in week) {
-          if (this.checkedDays.includes(i)) {
-            week[i].price_with_time.push("0")
-            week[i].start_time.push(null)
-          } else {
-            week[i] = { price_with_time: ['0'], start_time: [null], min_user: '0', max_user: '0' }
-          }
+          week[i].price_with_time.push(null)
+          week[i].start_time.push(null)
         }
       }
     },
@@ -654,7 +650,7 @@ export default {
         category1: this.activity.category1,
         category2: '임시 카테고리',
         start_date: this.activity.startDate,
-        end_date: this.activity.endDate,
+        end_date: moment(this.activity.endDate).add(1, 'days').format(),
         due_date: this.activity.dueDate,
         base_start_time: this.activity.baseStartTime,
         base_price: this.activity.basePrice,
@@ -668,6 +664,17 @@ export default {
         ticket_due_date: this.activity.ticketDueDate,
         ticket_max_apply: this.activity.ticketMaxApply,
         detail_question: this.detailQuestion
+      }
+      for (let i in params.base_week_option) {
+        let item = params.base_week_option[i]
+        if (this.checkedDays.includes(i)) {
+          if (item.price_with_time.length !== start_time.length) {
+            window.alert("요일별 시작시각, 추가가격 설정부분에 빈칸이 있습니다.")
+            return
+          }
+        } else {
+          item = {"price_with_time":[],"start_time":[],"min_user":"0","max_user":"0"}
+        }
       }
       api.addActivity(params)
         .then(result => {

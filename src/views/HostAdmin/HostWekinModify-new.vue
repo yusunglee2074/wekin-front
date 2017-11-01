@@ -503,13 +503,13 @@ export default {
         meetAddress: '',
         address: '',
         base_week_option: { 
-          Su: { price_with_time: ['0'], start_time: [], min_user: '0', max_user: '0' },
-          Tu: { price_with_time: ['0'], start_time: [], min_user: '0', max_user: '0' },
-          We: { price_with_time: ['0'], start_time: [], min_user: '0', max_user: '0' },
-          Th: { price_with_time: ['0'], start_time: [], min_user: '0', max_user: '0' },
-          Fr: { price_with_time: ['0'], start_time: [], min_user: '0', max_user: '0' },
-          Sa: { price_with_time: ['0'], start_time: [], min_user: '0', max_user: '0' },
-          Mo: { price_with_time: ['0'], start_time: [], min_user: '0', max_user: '0' } 
+          Su: { price_with_time: [], start_time: [], min_user: '0', max_user: '0' },
+          Tu: { price_with_time: [], start_time: [], min_user: '0', max_user: '0' },
+          We: { price_with_time: [], start_time: [], min_user: '0', max_user: '0' },
+          Th: { price_with_time: [], start_time: [], min_user: '0', max_user: '0' },
+          Fr: { price_with_time: [], start_time: [], min_user: '0', max_user: '0' },
+          Sa: { price_with_time: [], start_time: [], min_user: '0', max_user: '0' },
+          Mo: { price_with_time: [], start_time: [], min_user: '0', max_user: '0' } 
         },
         base_price_option: [{ name: '기본', price: '0' }],
         base_extraPrice_option: [{ name: '대인', price: '0' }],
@@ -574,8 +574,8 @@ export default {
         }
       } else {
         for (let i in week) {
-          week[i].price_with_time.push("0")
-          week[i].start_time.push(null)
+          week[i].price_with_time.push(0)
+          week[i].start_time.push('13:00')
         }
       }
     },
@@ -636,7 +636,7 @@ export default {
         category1: this.activity.category,
         category2: this.activity.activity_key,
         start_date: this.activity.start_date,
-        end_date: this.activity.end_date,
+        end_date: moment(this.activity.end_date).add(1, 'days').format(),
         due_date: this.activity.due_date,
         base_start_time: this.activity.baseStartTime,
         base_price: this.activity.base_price,
@@ -656,6 +656,18 @@ export default {
       for (let i = 0; i < params.close_dates; i++) {
         params.close_dates[i] = Number(params.close_dates[i])
       }
+      for (let i in params.base_week_option) {
+        let item = params.base_week_option[i]
+        if (this.checkedDays.includes(i)) {
+          if (item.price_with_time.length !== item.start_time.length) {
+            window.alert("요일별 시작시각, 추가가격 설정부분에 빈칸이 있습니다.")
+            return
+          }
+        } else {
+          params.base_week_option[i] = {"price_with_time":[],"start_time":[],"min_user":"0","max_user":"10"}
+        }
+      }
+      console.log(params['Th'])
       if (this.activity.status === 1) {
         params.status = 1
         api.updateActivity(this.activity.activity_key, params)
@@ -668,7 +680,6 @@ export default {
             return
           })
       } else {
-        console.log(params.detail_question)
         api.addActivity(params)
           .then(result => {
             alert('위킨 수정 신청이 접수되었습니다.')
@@ -716,7 +727,7 @@ export default {
         this.activity.meetAddress = String(activities[i].address_detail.meet_area)
         this.uploadedMainImages = Object.assign({}, activities[i].main_image)
         for (let week in activities[i].base_week_option) {
-          if (activities[i].base_week_option[String(week)].min_user > 0) {
+          if (activities[i].base_week_option[String(week)].start_time.length > 0) {
             // 위킨 수정시 요일 옵션 자동으로 채워지게 해야함kkkkkkkkkkkkkkkkkkkk
             this.checkedDays.push(String(week))
           }
