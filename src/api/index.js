@@ -40,6 +40,10 @@ export default {
     return axios.get(`${BASE_API_URL}/activity/front/period/${key}`)
       .then(res => res.data)
   },
+  getActivityForSearch () {
+    return axios.get(`${BASE_API_URL}/activity/search`)
+      .then(res => res.data)
+  },
   getActivity (activityKey) {
     return axios.get(`${BASE_API_URL}/activity/front/${activityKey}`)
       .then(res => res.data)

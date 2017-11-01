@@ -76,7 +76,7 @@ export default {
       this.keyword = this.$route.query.keyword
       api.searchActivity(this.keyword)
         .then(json => {
-          this.activities = json.results
+          this.activities = json
           if (this.keyword == '') {
             this.keyword = '전체'
           }

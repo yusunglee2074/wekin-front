@@ -71,13 +71,23 @@
     <div class="feed-editor__linear-container search">
       <!--<button class="ui basic button">위킨 찾기</button>-->
       <div class="ui wekin search">
-        <div class="ui left icon input">
+        <div class="ui left icon input" style="positon:relative">
           <input class="prompt" type="text" placeholder="위킨 찾기" v-model="findWekin">
           <i class="search icon"></i>
         </div>
+        <div class="flex-space"></div>
+        <span class="ui star top right rating"></span>
+        <div style="positon:absolute; max-width:190px;">
+          <div class="ui segments" style="margin-top:4px; margin-left:10px;" v-if="findWekin && findWekin !== '선택안함'">
+  <div class="ui segment" style="padding: 4px 0px 4px 10px;cursor: pointer;" @click="getOneActivity(allActivitiesKeyNumber[index])" v-for="(item, index) in allActivitiesTitle " v-if="item.includes(findWekin)">
+    <p style="font-size:14px;">{{ item.slice(0, 13) }}...</p>
+  </div>
+  <div class="ui segment secondary" style="padding: 4px 0px 4px 10px;cursor: pointer;" @click="getOneActivity(0)">
+    <p style="font-size:14px;"><i class="hand pointer icon"></i>관련위킨 선택안함</p>
+  </div>
+</div>
+        </div>
       </div>
-      <div class="flex-space"></div>
-      <span class="ui star top right rating"></span>
     </div>
 
     <div class="ui divider"></div>
@@ -95,10 +105,10 @@
 
       <button class="ui action negative button floated right" @click="onPostClick()">작성</button>
       <button class="ui basic action button floated right" @click="hideFeedEditor()">취소</button>
-    <div class="not-mobile">
+    <!--<div class="not-mobile">
       <input type="checkbox" id="checkbox" style="margin-top: 12px" v-model="withFacebook">
       <label for="checkbox" class="default text" style="color: rgb(59, 89, 152)"> FaceBook 동시 게재 </label>
-    </div>
+    </div>-->
     </div>
   </div>
 </template>
@@ -129,13 +139,33 @@ export default {
       isModifying: false, // 수정모드인지 판별 필수
       docKey: null,
       withFacebook: false,
-      sendingTime: null
+      sendingTime: null,
+      allActivitiesTitle : [],
+      allActivitiesKeyNumber: [],
     }
   },
   components: {
     FireUpload
   },
   methods: {
+    getOneActivity(activity_key) {
+      if (activity_key === 0) {
+        console.log("들어왔다", activity_key)
+        this.findWekin = '선택안함'
+        this.activity = {
+          key: null,
+          title: null,
+          rating: 0,
+          Host: {}
+        }
+        return
+      }
+      api.getActivity(activity_key)
+        .then( result => {
+          this.activity =  result 
+          this.findWekin = result.title
+        })
+    },
     fireStorage (e) {
       let self = this
       this.isFileUploading  = true
@@ -203,6 +233,11 @@ export default {
       })
     },
     onPostClick() {
+      if (this.findWekin !== '선택안함' && !this.activity.title) {
+        if (!window.confirm("관련위킨 없이 업로드 하시겠습니까?")) {
+          return
+        } 
+      }
       if (this.content.length < 5) {
         window.alert("내용은 5글자 이상이여야 합니다.")
         return
@@ -214,7 +249,7 @@ export default {
       }
       this.sendingTime = moment()
       let postParams = {
-        activity_key: this.activity.key,
+        activity_key: this.activity.activity_key,
         activity_title: this.activity.title,
         activity_rating: $(this.$el.querySelector('.rating')).rating('get rating'),
         host_key: this.activity.Host.host_key,
@@ -352,6 +387,20 @@ export default {
     },
   },
   mounted() {
+    api.getActivityForSearch()
+      .then( result => {
+        let tmpTitleList = []
+        let tmpKeyNumberList = []
+        let leng = result.allActivities.length
+        for (let i = 0; i < leng; i++) {
+          let item = result.allActivities[i] 
+          tmpTitleList.push(item.title)
+          tmpKeyNumberList.push(item.activity_key)
+        }
+        this.allActivitiesTitle = tmpTitleList 
+        this.allActivitiesKeyNumber= tmpKeyNumberList
+      })
+    /*
     $('.ui.wekin.search').search({
       apiSettings: {
         url: 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1/activity/front?keyword={query}'
@@ -370,6 +419,7 @@ export default {
         this.activity.Host = result.Host
       }
     })
+    */
   }
 }
 </script>
