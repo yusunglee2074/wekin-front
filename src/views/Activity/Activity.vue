@@ -35,8 +35,8 @@
           <div class="active content">
             <div class="button-container">
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '투어/여행'}" @click="toggleCheckList(categoryCheck, 0, '투어/여행')">투어/여행</button>
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '익스트림 (레져)'}" @click="toggleCheckList(categoryCheck, 0, '익스트림 (레져)')">익스트림 (레져)</button>
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '스포츠 (구기종목)'}" @click="toggleCheckList(categoryCheck, 0, '스포츠 (구기종목)')">스포츠 (구기종목)</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '익스트림 (레져)'}" @click="toggleCheckList(categoryCheck, 0, '익스트림 (레져)')">익스트림</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '스포츠 (구기종목)'}" @click="toggleCheckList(categoryCheck, 0, '스포츠 (구기종목)')">스포츠</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '음악'}" @click="toggleCheckList(categoryCheck, 0, '음악')">음악</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '댄스'}" @click="toggleCheckList(categoryCheck, 0, '댄스')">댄스</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '뷰티'}" @click="toggleCheckList(categoryCheck, 0, '뷰티')">뷰티</button>
@@ -44,7 +44,7 @@
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '아트'}" @click="toggleCheckList(categoryCheck, 0, '아트')">아트</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '힐링'}" @click="toggleCheckList(categoryCheck, 0, '힐링')">힐링</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '아웃도어'}" @click="toggleCheckList(categoryCheck, 0, '아웃도어')">아웃도어</button>
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '요가/피트니스'}" @click="toggleCheckList(categoryCheck, 0, '요가/피트니스')">요가/피트니스</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '요가/피트니스'}" @click="toggleCheckList(categoryCheck, 0, '요가/피트니스')">피트니스</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '소품제작'}" @click="toggleCheckList(categoryCheck, 0, '소품제작')">소품제작</button>
             </div>
           </div>
