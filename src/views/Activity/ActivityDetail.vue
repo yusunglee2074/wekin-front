@@ -417,7 +417,7 @@ export default {
     },
     calendar() {
       let result = {
-        to: moment() > moment(this.activity.start_date) ? moment().toDate() : moment(this.activity.start_date).toDate(),
+        to: moment() > moment(this.activity.start_date) ? moment().toDate() : moment(this.activity.start_date).add(-1, 'days').toDate(),
         from: moment(this.activity.end_date).toDate(),
         dates: this.activity.datesList,
         days: this.activity.days 
