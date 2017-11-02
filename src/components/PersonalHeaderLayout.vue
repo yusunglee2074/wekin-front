@@ -32,11 +32,7 @@ import pointChange from 'components/PointChangeHistory.vue'
 import api from 'api'
 
 export default {
-  computed: {
-    user() {
-      return this.$store.state.user
-    }
-  },
+  props: ['user'],
   data() {
     return {
       followingCount: 0,
@@ -84,7 +80,7 @@ export default {
     pointChange,
     followerModal,
     followingModal,
-  }
+  },
 }
 </script>
 <style lang="scss" scoped>
