@@ -383,7 +383,7 @@ export default {
       return false
     },
     getDocType() {
-      return this.activity.key ? 1 : 0 // 액티비티 키가 있으면 후기 (1) 아니면 피드 (0)
+      return this.activity.activity_key ? 1 : 0 // 액티비티 키가 있으면 후기 (1) 아니면 피드 (0)
     },
   },
   mounted() {
