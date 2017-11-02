@@ -95,9 +95,9 @@
         </div>
       </div>
     </div>
+    <!--
     <div class="ui styled accordion location">
       <div class="active title">
-        <!--<i class="dropdown icon"></i>-->
         내주변
       </div>
       <div class="active content">
@@ -122,6 +122,7 @@
         </div>
       </div>
     </div>
+    -->
     <div class="flex action-btn-container">
       <button class="ui button basic reset-btn f1" @click="resetFilter()">초기화</button>
       <button class="ui button negative apply-btn f1" @click="applyFilter()">적용</button>
