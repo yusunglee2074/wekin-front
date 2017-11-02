@@ -35,7 +35,7 @@ export default {
     },
     sendVerifyEmail() {
       auth.sendVerifyEmail()
-        .then((result) => alert('전송되었습니다. 이메일을 확인해주세요.'))
+        .then((result) => alert('전송되었습니다. 이메일을 확인해주세요. \n A confirm email has been sent. It may take up to 3 minutes to receive an email.'))
         .catch((error) => alert('잠시 후 다시 시도해주세요.'))
     }
   },
