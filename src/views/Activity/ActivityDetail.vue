@@ -39,7 +39,6 @@
               <i class="icon marker"></i>{{activity.address}}
             </p>
             <div class="ui calendar">
-              <p style="font-size: 14px; margin: 6px 0 2px 0;">날짜 선택</p>
               <div class="ui input styled primary left icon" style="width: 260px;">
                 <i v-show="!requestData.selectedDate" class="icon calendar wekin-calendar-icon"></i>
                 <datepicker 
@@ -55,7 +54,6 @@
               </div>
             </div>
             <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
-              <p style="font-size: 14px; margin: 6px 0 2px 0;">시작 시각</p>
               <select v-model="requestData.startTime" class="">
                 <option value="sample" disabled>시작시각</option>
                 <option v-for="(item, index) in startTimeList" :value="[index, item]">
@@ -77,11 +75,11 @@
               <div style="border: 0.5px solid Gainsboro; padding: 10px 10px;">
                 <div v-for="(item, index) in activity.base_extra_price_option">
                   <div style="height:22px;">
-                    <span style="float: left">{{ item.price > 0 ? item.name + '(' + '+' + item.price + '원)' : item.name + '(' + item.price + '원)' }}</span>
+                    <span style="float: left">{{ item.price >= 0 ? item.name + '(' + '+' + ' ' + item.price + '원)' : item.name + '(' + item.price + '원)' }}</span>
                     <div style="float: right">
                       <span>₩ {{ +requestData.startTime[1] + +activity.base_price + +item.price + +requestData.selectedOption[1] | joinComma }}</span>
                       <button @click="requestData.selectedExtraOption[index] > 0 ? requestData.selectedExtraOption[index]-- : null">-</button>
-                      <input type="number" v-model=requestData.selectedExtraOption[index] style="width: 28px;">
+                      <span>{{requestData.selectedExtraOption[index]}} </span>
                       <button @click="totalRequestAmount < activity.base_week_option[requestData.selectedYoil].max_user ? requestData.selectedExtraOption[index]++ : null">+</button>
                     </div>
                   </div>
