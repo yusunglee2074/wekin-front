@@ -44,13 +44,14 @@
               <label>전화번호</label>
               <div class="ui left labeled icon input f1" @click="onPhoneClick()">
                 <i class="check circle icon violet" v-if="requestUser.phoneValid"></i>
-                <input type="tel" v-model="requestUser.phone">
+                <input type="tel" v-model="requestUser.phone" placeholder="Phoneumber">
               </div>
-              <button class="ui button basic negative applier-info__phone-valid" v-if="!requestUser.phoneValid" @click="sendPhoneVerification()">인증요청</button>
+              <!--
+              <button class="ui button basic negative applier-info__phone-valid" v-if="!requestUser.phoneValid" @click="sendPhoneVerification()">인증요청</button>-->
             </div>
             <div class="inline field phone-mobile">
               <label></label>
-              <button class="ui button basic negative applier-info__phone-valid" v-if="!requestUser.phoneValid" @click="sendPhoneVerification()">인증요청</button>
+              <!--<button class="ui button basic negative applier-info__phone-valid" v-if="!requestUser.phoneValid" @click="sendPhoneVerification()">인증요청</button>-->
             </div>
             <div class="inline field" v-if="isPhoneVerifying">
               <label>인증코드</label>
@@ -83,15 +84,15 @@
           <div class="checkbox-container">
             <div class="ui radio checkbox">
               <input type="radio" name="payments" value="card" v-model="payMethod">
-              <label>신용카드</label>
+              <label>신용카드(Credit card)</label>
             </div>
             <div class="ui radio checkbox">
               <input type="radio" name="payments" v-model="payMethod" value="vbank">
-              <label>무통장입금(가상계좌)</label>
+              <label>무통장입금(가상계좌)(Virtual account deposit)</label>
             </div>
             <div class="ui radio checkbox">
               <input type="radio" name="payments" v-model="payMethod" value="trans">
-              <label>실시간 계좌이체</label>
+              <label>실시간 계좌이체(Real-time account transfer)</label>
             </div>
             <!--
             <div class="ui radio checkbox">
@@ -111,17 +112,18 @@
         </div>
         <div class="ui segment" v-if="payMethod == 'vbank'">
           <p>가상계좌 이용시 환불받으실 계좌를 입력해주세요</p>
+          <p>Please fill in the account to receive the refund when using virtual account</p>
           <div class="ui form">
             <div class="inline field">
-              <label>계좌번호</label>
+              <label>계좌번호(Account Number)</label>
               <input type="text" v-model="requestUser.refundAccount">
             </div>
             <div class="inline field">
-              <label>은행명</label>
+              <label>은행명(Bank Name)</label>
               <input type="text" v-model="requestUser.refundBank">
             </div>
             <div class="inline field">
-              <label>예금주</label>
+              <label>예금주(Account Holder Name)</label>
               <input type="text" v-model="requestUser.refundHolder">
             </div>
           </div>
@@ -129,10 +131,10 @@
         <div class="ui checkbox agreement-checkbox">
           <input type="checkbox" name="agreement-checkbox" tabindex="0" class="hidden">
           <label>본인은
-            <a href="/policy/privacy" target="_blank">개인정보 제 3자 제공</a>동의에 관한 내용을 모두 이해하였으며 이에 동의합니다.</label>
+            <a href="/policy/privacy" target="_blank">개인정보 제 3자 제공</a>동의에 관한 내용을 모두 이해하였으며 이에 동의합니다.(agreed the terms of the<a href="/policy/privacy" target="_blank"> Private Policy</a>)</label>
         </div>
-        <button class="ui primary button full-width" v-on:click="onPayment()">참가신청하기</button>
-        <a :href="`/activity/${$route.params.key}`" class="ui negative button full-width" style="margin-top:12px">취소</a>
+        <button class="ui primary button full-width" v-on:click="onPayment()">참가신청하기(Submit)</button>
+        <a :href="`/activity/${$route.params.key}`" class="ui negative button full-width" style="margin-top:12px">취소(Cancel)</a>
       </div>
     </div>
   </div>
@@ -237,13 +239,10 @@ export default {
     },
     checkForm() {
       if (!(this.requestUser.name &&
-        this.requestUser.email &&
-        this.requestUser.phone)) {
+        this.requestUser.email)) {
         alert("모든 폼을 입력해주세요.")
       } else if (!Validation.checkEmailValidation(this.requestUser.email)) {
         alert('이메일 형식을 확인해주세요.')
-      } else if (!this.requestUser.phoneValid) {
-        alert("전화번호 인증을 완료해주세요.")
       } else if (this.payMethod == 'vbank' && !(this.requestUser.refundHolder && this.requestUser.refundBank && this.requestUser.refundAccount)) {
         alert("환불 정보를 확인해주세요.")
       } else {
