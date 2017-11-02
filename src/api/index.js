@@ -247,8 +247,8 @@ export default {
     return axios.post(`${BASE_API_URL}/user/front/signUp`, { accessToken: accessToken, name: name, profileImage: profileImage })
       .then(res => res.data)
   },
-  signUp (email, password, name) {
-    return axios.post(`${BASE_API_URL}/user/front/join`, { email: email, name: name, password: password })
+  signUp (email, password, name, country) {
+    return axios.post(`${BASE_API_URL}/user/front/join`, { email: email, name: name, password: password, country: country })
       .then(res => res.data)
   },
   createCustomToken (accessToken) {
