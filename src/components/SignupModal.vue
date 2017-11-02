@@ -10,27 +10,38 @@
         </div>
         <div class="modal-body">
           <div class="ui input">
-            <input type="email" placeholder="이메일" v-model="user.email">
+            <input type="email" placeholder="이메일 Email" v-model="user.email">
           </div>
           <div class="ui input">
-            <input type="text" placeholder="이름" v-model="user.name">
+            <input type="text" placeholder="이름 Name" v-model="user.name">
           </div>
           <div class="ui input">
-            <input type="password" ref="password" placeholder="비밀번호 영숫자 6자이상" v-model="user.password">
+            <input type="password" ref="password" placeholder="비밀번호 Password" v-model="user.password">
           </div>
           <div class="ui input">
-            <input type="password" placeholder="비밀번호 확인" v-model="user.password2">
+            <input type="password" placeholder="비밀번호 확인 Re-enter Password" v-model="user.password2">
           </div>
           <div class="color secondary">{{errorMessage}}</div>
           <div class="ui small feed">
-            <button class="negative ui button" @click="onSignUpClick()">가입하기</button>
             <div class="ui checkbox agreement-checkbox">
               <input type="checkbox" style="width:30px; height:30px;" v-model="isAgreed">
               <label class="label-for-signup">
                 <a href="/policy/term" tag="a" target="_blank">이용약관</a>과
                 <a href="policy/privacy" tag="a" target="_blank">개인정보취급방침</a>에 동의합니다.</label>
             </div>
+            <br>
+            <br>
+            <button class="negative ui button" @click="onSignUpClick()">가입하기</button>
           </div>
+          <p style="font-size: 14px;">If you are a foreigner use the button below.</p>
+          <div class="ui checkbox agreement-checkbox">
+            <input id="foriner" type="checkbox" style="width:30px; height:30px;" v-model="isForiner">
+            <label for="foriner" style="text-align:left;">
+              I have agreed the terms of the 
+              <a href="/policy/term" tag="a" target="_blank">User Agreement</a> and
+              <a href="policy/privacy" tag="a" target="_blank"> Private Policy.</a></label>
+          </div>
+          <button class="ui button" style="margin-top:5px;" @click="onSignUpClick()">Submit</button>
         </div>
         <!--<div class="social-login-container">
           <span class="ui horizontal divider">
@@ -54,6 +65,7 @@ export default {
   props: ['show'],
   data () {
     return {
+      isForiner: false,
       user: {
         email: null,
         name: null, 
@@ -86,17 +98,17 @@ export default {
         this.errorMessage = "모든 폼을 입력해주세요."
       } else if (!Validation.checkEmailValidation(this.user.email)) {
         this.errorMessage = "이메일 형식을 확인해주세요."
-      } else if (!this.isAgreed) {
+      } else if (!this.isAgreed && !this.isForiner) {
         alert("약관에 동의해주세요.")
       } else if (this.user.password != this.user.password2) {
-        alert("비밀번호 2개가 일치하지 않습니다.")
+        alert("비밀번호 2개가 일치하지 않습니다. \n The two passwords do not match.")
       } else if (this.user.password.length < 6) {
         alert("비밀번호는 6자리 이상이여야 합니다.")
         this.user.password = ''
         this.user.password2 = ''
         this.$refs.password.focus();
       } else if (this.user.password.search(/[0-9]/g) < 0 || this.user.password.search(/[a-z]/ig) < 0) {
-        alert("비밀번호는 영문, 숫자 조합이여야 합니다.")
+        alert("비밀번호는 영문, 숫자 조합이여야 합니다. \n Use more than 6 digits alphabets and numbers")
         this.user.password = ''
         this.user.password2 = ''
         this.$refs.password.focus();
@@ -127,6 +139,10 @@ export default {
       alert('가입이 완료되었습니다.')
       this.$parent.showSignupModal = false
       this.$parent.isMobileMenuShowing = false
+      if (this.isForiner) {
+        this.$router.push({ name: "VerifyEmail", force: true })
+        return
+      }
       this.$router.push({ name: "VerifyPhoneNumber", force: true })
       // this.$router.go({ path: "/verify/phonenumber", force: true })
       // window.location.href = '/verify/phonenumber'
@@ -139,9 +155,15 @@ export default {
     onSignUpClick() {
       if (this.checkForm()) {
         this.isLoading = true
-        auth.signUp(this.user.email, this.user.password, this.user.name)
-          .then(result => this.onSignUpSuccess(result))
-          .catch(error => this.onSignUpFail(error))
+        if (this.isForiner) {
+          auth.signUp(this.user.email, this.user.password, this.user.name, 'notKorean')
+            .then(result => this.onSignUpSuccess(result))
+            .catch(error => this.onSignUpFail(error))
+        } else {
+          auth.signUp(this.user.email, this.user.password, this.user.name)
+            .then(result => this.onSignUpSuccess(result))
+            .catch(error => this.onSignUpFail(error))
+        }
       }
     },
     goToRedirectUrl() {
@@ -193,8 +215,8 @@ export default {
 }
 
 .modal-container {
-    width: 300px;
-    height: 460px;
+    width: 350px;
+    height: 500px;
     margin: 40px auto 0;
     padding: 20px 30px;
     background-color: #fff;
@@ -246,6 +268,7 @@ export default {
 }
 .ui.input {
   margin-bottom: 10px;
+  width: 250px;
 }
 .ui.small.feed {
   margin-top: 2px;
