@@ -106,9 +106,9 @@
             </div>
           </div>
         </div>
+        <!--
         <div class="ui styled accordion location">
           <div class="active title">
-            <!--<i class="dropdown icon"></i>-->
             내주변
           </div>
           <div class="active content">
@@ -133,6 +133,7 @@
             </div>
           </div>
         </div>
+        -->
         <button class="ui button negative full-width reset-btn" @click="resetFilter()">필터 초기화</button>
       </div>
       <div class="categoryformobile">
