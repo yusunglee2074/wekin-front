@@ -54,7 +54,6 @@
       <router-link :to="{ name: 'Activity' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨</router-link>
       <router-link :to="{ name: 'Feed' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">피드</router-link>
       <router-link :to="{ name: 'Customer' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">고객센터</router-link>
-      <router-link :to="{ name: 'Manual' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">등록방법</router-link>
       <router-link :to="{ name: 'Notification' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()" v-if="user">알림</router-link>
       <div class="item link" v-if="user" @click="onLogoutClick()">로그아웃</div>
     </div>
@@ -76,7 +75,6 @@
       <router-link :to="{ name: 'Activity' }" class="link" exact>위킨</router-link>
       <router-link :to="{ name: 'Feed' }" class="link" exact>피드</router-link>
       <router-link :to="{ name: 'Customer' }" class="link" exact>고객센터</router-link>
-      <router-link :to="{ name: 'Manual' }" class="link" exact>등록방법</router-link>
     </div>
   
     <!-- 모바일 끝 -->
@@ -98,7 +96,6 @@
         <router-link :to="{ name: 'Activity' }" class="item linked" tag="div" exact>위킨</router-link>
         <router-link :to="{ name: 'Feed' }" class="item linked" tag="div" exact>피드</router-link>
         <router-link :to="{ name: 'Customer' }" class="item linked" tag="div" exact>고객센터</router-link>
-        <router-link :to="{ name: 'Manual' }" class="item linked" tag="div" exact>등록방법</router-link>
       </div>
       <div class="right menu" v-if="!user">
         <a class="item linked" @click="showLoginModal = true">로그인</a>
