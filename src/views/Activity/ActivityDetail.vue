@@ -44,7 +44,7 @@
                 <datepicker 
                   v-model="requestData.selectedDate" 
                   id="datepickerId" 
-                  wapper-class="" 
+                  input-class="width260" 
                   language="ko" 
                   format="MMM dd(D), yyyy"
                   placeholder="        날짜선택"
@@ -54,7 +54,8 @@
               </div>
             </div>
             <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
-              <select v-model="requestData.startTime" class="">
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">시각 선택</p>
+              <select v-model="requestData.startTime" class="width260 height25">
                 <option value="sample" disabled>시작시각</option>
                 <option v-for="(item, index) in startTimeList" :value="[index, item]">
                   {{ index }} ( {{ item >= 0 ? '+ ' + item : item }} 원)
@@ -62,8 +63,8 @@
               </select>
             </div>
             <div v-show="requestData.startTime !== 'sample'">
-              <p style="font-size: 14px; margin: 6px 0 2px 0;">코스 선택</p>
-              <select v-model="requestData.selectedOption">
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">코스 선택</p>
+              <select v-model="requestData.selectedOption" class="width260 height25">
                 <option value="sample" disabled>옵션을 선택해주세요</option>
                 <option v-for="(item, index) in activity.base_price_option" :value="[item.name, item.price]">
                   {{ item.name + '(+ ' + item.price + '원)' }}
@@ -71,7 +72,7 @@
               </select>
             </div>
             <div v-show="requestData.selectedOption !== 'sample'">
-              <p style="font-size: 14px; margin: 6px 0 2px 0;">수량 선택</p>
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">수량 선택</p>
               <div style="border: 0.5px solid Gainsboro; padding: 10px 10px;">
                 <div v-for="(item, index) in activity.base_extra_price_option">
                   <div style="height:22px;">
@@ -96,6 +97,7 @@
             </div>
 
             <button class="negative ui button full-width apply-btn"
+              style="margin-top:15px;"
               id="membershipvirtualview"
               v-on:click="onApplyBtn()"
               v-if="user">
@@ -1517,6 +1519,12 @@ h2 {
   }*/
 </style>
 <style>
+.width260 {
+  width: 260px;
+}
+.height25 {
+  height: 25px;
+}
 .explain-detail img {
   width: 100%!important;
 }
