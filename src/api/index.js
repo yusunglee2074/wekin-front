@@ -2,6 +2,7 @@ import axios from 'axios'
 
 // const BASE_API_URL = 'http://localhost:8888/v1'
 const BASE_API_URL = 'http://192.168.0.100:8888/v1'
+// const BASE_API_URL = 'http://127.0.0.1:8888/v1'
 // const BASE_API_URL = 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1'
 // const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
 const GEO_API_KEY = 'AIzaSyARPCWOhPLlFgDvqXbKb5RLA4rnVAcGbZ0'
@@ -16,6 +17,7 @@ axios.interceptors.request.use((config) => {
 })
 
 export default {
+  forSNSLoginUrl: BASE_API_URL.slice(0, BASE_API_URL.length - 7) + '8080',
   dbCreateWithIdToken (idToken) {
     return axios.post(`${BASE_API_URL}/user/front/signUp/dbCreateWithIdtoken`, { idToken })
       .then( res => res.data )
@@ -28,8 +30,8 @@ export default {
     return axios.get(`${BASE_API_URL}/wekin/front`)
       .then(res => res.data)
   },
-  getCurrentNumberOfBookingUsers (key, date) {
-    return axios.get(`${BASE_API_URL}/wekin/${key}/${date}`)
+  getCurrentNumberOfBookingUsers (key, date, time) {
+    return axios.get(`${BASE_API_URL}/wekin/current/${key}/${date}/${time}`)
       .then(res => res.data)
   },
   postWekin (params) {
