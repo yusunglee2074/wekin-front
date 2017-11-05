@@ -1,23 +1,49 @@
 <template>
   <div id="personal-page-feed">
     <div class="ui pointing secondary menu menu--wide">
-      <a class="item active" data-tab="first">결제 완료</a>
+      <a class="item active" data-tab="first">결제 내역</a>
       <a class="item" data-tab="second">대기 신청</a>
       <a class="item" data-tab="third">활동 완료</a>
     </div>
     <div class="ui tab active" id="first" data-tab="first">
-      <div class="ui three doubling cards">
-        <wekin-card-layout 
-          :title="wekin.ActivityNew.title" 
-          :address="wekin.ActivityNew.address" 
-          :name="wekin.ActivityNew.Host.name" 
-          :imageUrl="wekin.ActivityNew.main_image.image[0]" 
-          :activityKey="wekin.ActivityNew.activity_key"
-          v-for="wekin in wekinNews" v-bind:key="wekin.wekin_key"
-          v-if="isNotStartAndPaid(wekin)">
-        </wekin-card-layout>
+      <div class="ui three doubling cards" v-if="orders.length >= 0">
+        <div class="card card--reservation" v-for="wekin in wekinNews" v-bind:key="wekin.wekin_key">
+          <router-link :to="{name: 'ActivityDetail', params: { key: wekin.ActivityNew.activity_key } }">
+            <div class="header">
+              {{wekin.ActivityNew.title}}
+            </div>
+          </router-link>
+          <div class="content">
+            <div class="card--reservation__label">
+              <label>신청 날짜</label>
+              <span>{{wekin.Order.created_at | formatDate}}</span>
+            </div>
+            <div class="card--reservation__label flex">
+              <label>집결지</label>
+              <span>{{wekin.ActivityNew.address_detail.text}}</span>
+            </div>
+            <div class="card--reservation__label">
+              <label>활동 날짜</label>
+              <span>{{wekin.start_date | formatDate}}</span>
+            </div>
+            <div class="ui divider"></div>
+            <div class="card--reservation__label">
+              <label>결제 금액</label>
+              <span>{{wekin.final_price | joinComma}}원</span>
+            </div>
+            <div class="card--reservation__label">
+              <label>신청결과</label>
+              <span>{{wekin.state | orderStatusToText}}</span>
+            </div>
+            <div class="ui divider"></div>
+            <div class="card--reservation__buttons">
+              <button class="ui basic button" v-if="wekin.state == 'ready'" @click="goToPaymentCompletedPage(wekin.Order)">계좌안내</button>
+              <button class="ui basic button" v-if="isCancelable(wekin)" @click="cancelOrder(wekin)">참가취소</button>
+              <!--<a :to="`/activity/${order.WekinNew.ActivityNew.activity_key}`" tag="button" class="ui basic button">참가취소</a>-->
+            </div>
+          </div>
+        </div>
       </div>
-      <p v-show="emptyFirstTabToggle === 1" style="padding-top:32px;font-size: 15px;color: #979797;text-align:center">결제한 위킨이 없습니다.</p>
     </div>
     <div class="ui tab" id="second" data-tab="second">
       <div class="ui three doubling cards" v-if="orders.length >= 0">
@@ -50,7 +76,7 @@
             <div class="ui divider"></div>
             <div class="card--reservation__buttons">
               <button class="ui basic button" v-if="order.order_pay_method == 'vbank'" @click="goToPaymentCompletedPage(order)">계좌안내</button>
-              <button class="ui basic button" v-if="isCancelable(order)" @click="cancelOrder(order)">참가취소</button>
+              <button class="ui basic button" v-if="isCancelable(order)" @click="cancelOrder(wekin)">참가취소</button>
               <!--<a :to="`/activity/${order.WekinNew.ActivityNew.activity_key}`" tag="button" class="ui basic button">참가취소</a>-->
             </div>
           </div>
@@ -173,8 +199,8 @@ export default {
         .then(alert("활동이 추가되었습니다."))
         .catch((error) => alert("활동 번호를 확인해주세요."))
     },
-    isCancelable(order) {
-      if ((order.status == 'paid' || order.status == 'ready') && new Date(order.WekinNew.start_date) > new Date()) {
+    isCancelable(wekin) {
+      if ((wekin.state == 'paid' || wekin.state  == 'ready') && new Date(wekin.start_date) > new Date()) {
         return true
       }
       return false
@@ -205,9 +231,9 @@ export default {
         .then(orders => this.orders = orders)
         .catch(err => console.error(err))
     },
-    cancelOrder(order) {
+    cancelOrder(wekin) {
       if (confirm('정말 취소하시겠습니까? 환불 정책은 신청 당시 위킨 환불 규정을 따릅니다.')) {
-        api.cancelOrder(order.order_key)
+        api.cancelOrder(wekin.Order.order_key)
           .then(orders => {
             alert("취소되었습니다.")
             window.location.href = this.$route.fullPath
