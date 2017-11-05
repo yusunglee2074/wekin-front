@@ -191,23 +191,23 @@ export default new Router({
         { path: '', name: 'HostAdmin', component: HostHome },
         { path: 'stats', name: 'HostStats', component: HostStats },
         { path: 'wekins', name: 'HostWekins', component: HostWekinsManagement },
-        { path: 'wekins/add', name: 'HostWekinsAdd', component: HostWekinAdd },
-        { path: 'wekins/:key', name: 'HostWekinsDetail', component: HostWekinModify },
+        // { path: 'wekins/add', name: 'HostWekinsAdd', component: HostWekinAdd },
+        // { path: 'wekins/:key', name: 'HostWekinsDetail', component: HostWekinModify },
         { path: 'bookings', name: 'HostBooking', component: HostBookingsManagement },
         { path: 'bookings/:key', name: 'HostBookingDetail', component: HostBookingMemberList },
         { path: 'boards', name: 'HostBoards', component: HostBoardsManagement },
-        { path: 'settings', name: 'HostSettings', component: HostSettings }
+        { path: 'settings', name: 'HostSettings', component: HostSettings },
       ]
     },
     { 
-      path: 'wekins/add/V2', 
-      name: 'HostWekinsAddNew', 
-      component: HostWekinAddNew 
-    },
-    { 
-      path: 'wekins/add/V2/:key', 
+      path: '/wekin/modify/:key', 
       name: 'HostWekinsModifyNew', 
       component: HostWekinModifyNew 
+    },
+    { 
+      path: '/wekin/add', 
+      name: 'HostWekinsAddNew', 
+      component: HostWekinAddNew 
     },
     {
       path: '/host/:key',
