@@ -84,7 +84,7 @@
           <div class="color secondary">{{errorMessage}}</div>
           <button class="positive ui button" style="background-color: rgb(0,154,140); width: 140px; margin-bottom: 9px;" @click="onSignUpClick()">가입하기</button>
           <span>&nbsp또는&nbsp</span>
-          <span style="padding-top: 20px"><img src="./../../static/images/logo-facebook-68x68.png" class="snsLoginButton" @click="signInWithFacebook()"></span>
+          <span style="padding-top: 20px"><img src="./../../static/images/logo-facebook-68x68.png" class="snsLoginButton" @click="onFacebookJoinClick()"></span>
           <span style="padding-top: 20px"><img src="./../../static/images/logo-kakao-68x68.png" class="snsLoginButton" @click="signInWithKakao()"></span>
           <span style="padding-top: 20px"><img src="./../../static/images/logo-naver-68x68.png" class="snsLoginButton" @click="signInWithNaver()"></span>
           <div class="ui fitted checkbox">
@@ -161,15 +161,11 @@ export default {
       this.areUCompany = !this.areUCompany
     },
     signInWithNaver() {
-      window.location.href = "https://nid.naver.com/oauth2.0/authorize?client_id=rTHYGlmyZuVKSzR4_45d&redirect_uri=http://175.195.139.99:8080/auth/naver&response_type=code&state=wekin"
+      console.log(api.forSNSLoginUrl)
+      window.location.href = `https://nid.naver.com/oauth2.0/authorize?client_id=rTHYGlmyZuVKSzR4_45d&redirect_uri=${api.forSNSLoginUrl}/auth/naver&response_type=code&state=wekin`
     },
     signInWithKakao() {
-      window.location.href = "https://kauth.kakao.com/oauth/authorize?client_id=75c0694ad636bcca94fa48cbc7c9d8cf&redirect_uri=http://175.195.139.99:8080/auth/kakao&response_type=code"
-    },
-    signInWithFacebook() {
-      var provider = new firebase.auth.FacebookAuthProvider()
-      provider.addScope('publish_actions');
-      firebase.auth().signInWithRedirect(provider)
+      window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=75c0694ad636bcca94fa48cbc7c9d8cf&redirect_uri=${api.forSNSLoginUrl}/auth/kakao&response_type=code`
     },
     isRightEmail(event) {
       if (!Validation.checkEmailValidation(this.user.email)) {
@@ -237,6 +233,10 @@ export default {
     onFacebookJoinClick() {
       this.isLoading = true
       auth.loginWithFacebook()
+        .then(currentUser => {
+          window.location.reload()
+        })
+        .catch(() => credential.user)
     },
     getErrorMessage(error) {
       switch (error) {
