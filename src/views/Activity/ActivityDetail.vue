@@ -55,7 +55,7 @@
             </div>
             <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
               <p style="font-size: 14px; margin: 20px 0 2px 0;">시각 선택</p>
-              <select v-model="requestData.startTime" class="width260 height25">
+              <select v-model="requestData.startTime" class="width260 height25" @change="getCurrentNumberOfBookingUsers()">
                 <option value="sample" disabled>시작시각</option>
                 <option v-for="(item, index) in startTimeList" :value="[index, item]">
                   {{ index }} ( {{ item >= 0 ? '+ ' + item : item }} 원)
@@ -517,7 +517,7 @@ export default {
       this.tabPage = page
     },
     getCurrentNumberOfBookingUsers() {
-      api.getCurrentNumberOfBookingUsers(this.$route.params.key, moment(this.requestData.selectedDate).format())
+      api.getCurrentNumberOfBookingUsers(this.$route.params.key, moment(this.requestData.selectedDate).format(), this.requestData.startTime[0])
         .then( result => {
           if (result.data == this.activity.base_week_option[this.requestData.selectedYoil].max_user) {
             this.selectedDateIsAllowToBooking = false
@@ -531,7 +531,6 @@ export default {
     resetSelection(evnt) {
       if (evnt) {
         this.requestData.selectedYoil = moment(this.requestData.selectedDate).format('dd')
-        this.getCurrentNumberOfBookingUsers()
         this.requestData.startTime = 'sample'
         this.requestData.selectedOption = 'sample'
         this.requestData.selectedExtraOption = {
