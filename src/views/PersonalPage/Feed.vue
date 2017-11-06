@@ -31,6 +31,7 @@ export default {
     }
   },
   mounted() {
+    this.feeds = []
     this.$store.watch(() => {
       if (this.$store.state.user !== undefined && !this.isMyPage) {
         if (this.checkUserOwnPage()) {
@@ -41,7 +42,7 @@ export default {
     }) 
   },
   created() {
-    // this.loadUserFeed()
+    this.loadUserFeed()
   },
   watch: {
     '$route': 'loadUserFeed'
@@ -57,8 +58,8 @@ export default {
         .then(feeds => {
           feeds.forEach((feed) => {
             feed.refs = this.$refs.feedEditor
-            this.feeds.push(feed)
           })
+          this.feeds = feeds
         })
         .catch(err => console.error(err))
     },

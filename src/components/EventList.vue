@@ -26,8 +26,7 @@
           <p>더욱 자세한 사항은 카카오톡 <span style="color: rgb(40, 180, 80)">@위킨</span> 혹은 아래 고객센터 유선 번호로 문의 바랍니다.</p>
         </h3>
         <h3>
-          <button class="ui green basic button large" @click="joinRequest()">회원가입</button>
-          <button class="ui red basic button large" @click="makerRequest()">메이커 신청</button>
+          <button class="ui red basic button large maker start" @click="makerRequest()">메이커 신청</button>
         </h3>
       </div>
     </section>
