@@ -9,10 +9,9 @@
       <div class="ui divider"></div>
       <div class="settings__list">
         <label class="required">프로필사진</label>
-        <div class="fields">
-          <FireUpload class="profile" :imageUrl="uploadedProfile" @update:imageUrl="val => uploadedProfile = val" @progress="progress"></FireUpload>
-          <img class="ui middle circular aligned tiny image profile" :src="uploadedProfile">
-          <a href="#" class="margin-min">이미지 변경</a>
+        <img class="ui middle circular aligned tiny image profile" :src="uploadedProfile">
+        <div class="fields" style="margin-left: 70px;">
+          <FireUpload title="업로드" class="profile" :imageUrl="uploadedProfile" @update:imageUrl="val => uploadedProfile = val" @progress="progress"></FireUpload>
         </div>
       </div>
       <div class="settings__list">
@@ -75,10 +74,12 @@
       <div class="settings__list">
         <label>사업자 등록증</label>
         <div class="ui action floated right input">
-          <FireUpload :imageUrl="uploadedBusinessRegistration" @update:imageUrl="val => uploadedBusinessRegistration = val" @progress="progress"></FireUpload>
+          <FireUpload title="업로드" :imageUrl="uploadedBusinessRegistration" @update:imageUrl="val => uploadedBusinessRegistration = val" @progress="progress"></FireUpload>
+          <!--
           <button class="ui teal left labeled icon button">
             <i class="plus icon"></i> 추가
           </button>
+          -->
         </div>
       </div>
       <div class="settings__list">
@@ -90,10 +91,12 @@
       <div class="settings__list">
         <label>자격증</label>
         <div class="ui action floated right input">
-          <FireUpload :imageUrl="uploadedLicense" @update:imageUrl="val => uploadedLicense.push(val)" @progress="progress"></FireUpload>
+          <FireUpload title="업로드" :imageUrl="uploadedLicense" @update:imageUrl="val => uploadedLicense.push(val)" @progress="progress"></FireUpload>
+          <!--
           <button class="ui teal left labeled icon button">
             <i class="plus icon"></i> 추가
           </button>
+          -->
         </div>
       </div>
       <div class="ui divider"></div>
