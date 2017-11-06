@@ -45,6 +45,7 @@ import Filter from 'views/Filter.vue'
 import Search from 'views/Search.vue'
 import About from 'views/About.vue'
 import Manual from 'views/Manual.vue'
+import ExplainMaker from './../views/explainMakerStaticPage.vue'
 import EventList from 'components/EventList.vue'
 // import Meta from 'vue-meta'
 
@@ -71,6 +72,11 @@ export default new Router({
       path: '/manual',
       name: 'Manual',
       component: Manual
+    },
+    {
+      path: '/manual/maker',
+      name: 'ExplainMaker',
+      component: ExplainMaker
     },
     {
       path: '/notification',
