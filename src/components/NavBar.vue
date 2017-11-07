@@ -92,7 +92,7 @@
           <div class="results"></div>
         </div>
       </div>
-      <div class="menu">
+      <div class="menu" @click="show = false">
         <router-link :to="{ name: 'Activity' }" class="item linked" tag="div" exact>위킨</router-link>
         <router-link :to="{ name: 'Feed' }" class="item linked" tag="div" exact>피드</router-link>
         <router-link :to="{ name: 'Customer' }" class="item linked" tag="div" exact>고객센터</router-link>
@@ -103,6 +103,7 @@
 
         <!--<div class="loading"></div>-->
       </div>
+      <!--
       <div class="right menu" v-else="user">
         <div class="ui item dropdown button user-menu">
           <div class="ui circular background profile image" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></div>
@@ -117,7 +118,7 @@
             <router-link :to="{ name: 'UserBoard', params: { key: user.user_key }}" class="item link" exact>게시글</router-link>
             <router-link :to="{ name: 'Settings' }" class="item link" exact>프로필 설정</router-link>
             <router-link :to="{ name: 'RequestForm' }" class="item link" v-if="!user.Host" exact>메이커 신청하기</router-link>
-          <router-link :to="{ path: '/customer' }" class="item link" v-if="user.Host && user.Host.status === 1" exact>메이커 신청 처리 중</router-link>
+            <router-link :to="{ path: '/customer' }" class="item link" v-if="user.Host && user.Host.status === 1" exact>메이커 신청 처리 중</router-link>
             <a :href="`/host/admin`" class="item link" v-if="user.Host && user.Host.host_key && user.Host.status === 3" exact>메이커 전환</a>
             <div class="divider"></div>
             <div class="item link" @click="onLogoutClick()">로그아웃</div>
@@ -138,6 +139,40 @@
         </div>
         <notification-layout class="ui item dropdown user-alarm"></notification-layout>
       </div>
+      -->
+      <div class="" v-else="user">
+        <div class="" style="position: absolute; top: 15px; right: 70px;" @click="show = !show">
+          <div class="ui circular background profile image" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></div>
+          <div class="ui circular background profile image" v-if="isHostMode" v-bind:style="{'background-image': `url(${user.Host.profile_image})`}"></div>
+          <div class="" v-if="!isHostMode" style="display: inline-block;">{{ user.name }}</div>
+          <div class="" v-if="isHostMode" style="display: inline-block;">{{ user.Host.name }}</div>
+        </div>
+          <transition name="slide-fade">
+            <div v-if="show" style="position: absolute; top: 60px; right: 30px; width: 190px; max-height:300px; font-size: 17px;line-height: 32px; background-color:rgb(255,255,255);box-shadow: 3px 3px 10px #888888; padding:1px;">
+              <div class="menu" v-if="!isHostMode" style="cursor:pointer" @click="show = false">
+                <div class="title" style="text-align:center; margin-bottom:15px; font-size:20px; padding:6px; background-color:rgb(16,160,150); color:white;">위키너</div>
+                <router-link :to="{ name: 'UserFeed', params: { key: user.user_key }}" class="item link" style="font-size:16px; height: 30px; margin:0;" exact>MY PAGE</router-link>
+                <router-link :to="{ name: 'UserInterest', params: { key: user.user_key }}" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>관심위킨</router-link>
+                <router-link :to="{ name: 'UserBoard', params: { key: user.user_key }}" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>게시글</router-link>
+                <router-link :to="{ name: 'Settings' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>프로필 설정</router-link>
+                <router-link :to="{ name: 'RequestForm' }" class="item link" v-if="!user.Host" style="font-size:16px;height: 30px; margin:0;" exact>메이커 신청하기</router-link>
+                <router-link :to="{ path: '/customer' }" class="item link" v-if="user.Host && user.Host.status === 1" style="font-size:16px;height: 30px; margin:0;" exact>메이커 신청 처리 중</router-link>
+                <a :href="`/host/admin`" class="item link" v-if="user.Host && user.Host.host_key && user.Host.status === 3" style="font-size:16px;height: 30px; margin:0;" exact>메이커 전환</a>
+                <div class="item link" @click="onLogoutClick()" style="font-size:16px;height: 30px; margin:0">로그아웃</div>
+              </div>
+              <div class="menu" v-else @click="show = false">
+                <div class="title" style="text-align:center; margin-bottom:15px; font-size:20px; padding:6px; background-color:rgb(16,160,150); color:white;">메이커</div>
+                <router-link :to="{ name: 'HostAdmin' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>메이커 홈</router-link>
+                <router-link :to="{ name: 'HostWekins' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>위킨관리</router-link>
+                <router-link :to="{ name: 'HostBooking' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>예약관리</router-link>
+                <router-link :to="{ name: 'HostBoards' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>후기 / Q&amp;A관리</router-link>
+                <router-link :to="{ name: 'HostSettings' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>설정</router-link>
+                <router-link :to="{ name: 'Home' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>위키너 모드 전환</router-link>
+                <div class="item link" @click="onLogoutClick()" style="font-size:16px;height: 30px; margin:0;">로그아웃</div>
+              </div>
+            </div>
+          </transition>
+      </div>
     </div>
   <modal v-bind:show.sync="showLoginModal"></modal>
   <modal-signup2 v-bind:show.sync="showSignupModal2"></modal-signup2>
@@ -157,6 +192,7 @@ import api from 'api'
 export default {
   data() {
     return {
+      show: false,
       isAlarmOpened: false,
       isLoggedIn: false,
       isHostMode: false,
@@ -182,14 +218,6 @@ export default {
       return this.$route.fullPath.includes("/activity")
     },
     user() {
-      this.$nextTick(() => {
-        setTimeout(() => {
-          $('.ui.dropdown').dropdown({
-            action: 'hide'
-          })
-        }, 100)
-      })
-
       return this.$store.getters.user
     }
   },
@@ -225,9 +253,6 @@ export default {
         // ...
       });
     this.fetchData()
-    $('.ui.dropdown').dropdown({
-      action: 'hide'
-    }) 
     auth.onAuthStateChanged()
       .then((user) => {
         if(user === null) {
@@ -239,6 +264,9 @@ export default {
     // }, 1000)
   },
   methods: {
+    showRightMenu () {
+      console.log("DDD")
+    },
     loadingTogle() {
       this.isLoading = !this.isLoading
     },
@@ -289,7 +317,8 @@ export default {
       })
     },
     fetchData() {
-      if (this.$route.fullPath.indexOf("host/admin") > -1) {
+      this.show = false
+      if (this.$route.fullPath.indexOf("host/admin") > -1 || this.$route.fullPath.indexOf("wekin/") > -1) {
         this.isHostMode = true
       } else {
         this.isHostMode = false
@@ -298,7 +327,7 @@ export default {
   },
   watch: {
     '$route': 'fetchData'
-  }
+  },
 }
 
 </script>
@@ -405,6 +434,7 @@ a.a-active {
   }
 
   .right.menu {
+    margin-top: 10px;
     padding-right: 50px;
     >.item {
       padding: 0 35px;
@@ -556,5 +586,16 @@ a.a-active {
       }
     }
   }
+}
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(30px);
+  opacity: 0;
 }
 </style>
