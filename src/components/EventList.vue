@@ -69,10 +69,13 @@ export default {
         alert("회원가입 후 신청 가능합니다.")
         this.$parent.$refs.navbar.showSignupModalMethod()
       } else if (this.$store.getters.user !== undefined) {
-        alert("메이커님 반갑습니다. 지금 바로 위킨을 등록해보세요.")
-        this.$router.push('/host/admin')
-      } else {
-        this.$router.push('/host/request')
+        if (this.$store.getters.user.Host === null) {
+          alert("위키너님 반갑습니다. 메이커 신청 후 활동을 등록해보세요.")
+          this.$router.push('/host/request')
+        } else {
+          alert("메이커님 반갑습니다. 지금 바로 위킨을 등록해보세요.")
+          this.$router.push('/host/admin')
+        }
       }
     }
   },
