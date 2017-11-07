@@ -79,7 +79,6 @@
     "vue-class-component": "^5.0.1",
     "vue-infinite-scroll": "^2.0.1",
     "vue-loader": "^12.1.0",
-    "vue-meta": "^1.2.0",
     "vue-router": "^2.3.1",
     "vue-server-renderer": "^2.4.4",
     "vue-simple-lightbox": "0.0.5",
