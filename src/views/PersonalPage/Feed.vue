@@ -41,7 +41,7 @@ export default {
     }) 
   },
   created() {
-    // this.loadUserFeed()
+    this.loadUserFeed()
   },
   watch: {
     '$route': 'loadUserFeed'
