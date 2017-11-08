@@ -9,10 +9,9 @@
         <div class="ui divider"></div>
         <div class="settings__list">
           <label class="required">프로필사진</label>
-          <div class="fields">
-            <FireUpload class="profile" :imageUrl="uploadedProfile" @update:imageUrl="val => uploadedProfile = val" @progress="progress"></FireUpload>
             <img class="ui middle circular aligned tiny image profile" :src="uploadedProfile">
-            <a href="#" class="margin-min">이미지 변경</a>
+          <div class="fields" style="margin: auto auto;padding-left: 20px;">
+            <FireUpload title="업로드" class="profile" :imageUrl="uploadedProfile" @update:imageUrl="val => uploadedProfile = val" @progress="progress"></FireUpload>
           </div>
         </div>
         <div class="settings__list">
@@ -68,6 +67,12 @@
             <input type="text" v-model="request.company.sns">
           </div>
         </div>
+        <div class="settings__list">
+          <label>진행 가능 언어</label>
+          <div class="ui input fields">
+            <input type="text" v-model="request.language" placeholder="한국어 외 수업진행 가능한 언어가 있으신가요?">
+          </div>
+        </div>
         <div class="ui divider"></div>
         <div class="settings__list" v-if="uploadedBusinessRegistration">
           <img :src="uploadedBusinessRegistration" style="width:100%;height:100%">
@@ -75,10 +80,7 @@
         <div class="settings__list">
           <label>사업자 등록증</label>
           <div class="ui action floated right input">
-            <FireUpload :imageUrl="uploadedBusinessRegistration" @update:imageUrl="val => uploadedBusinessRegistration = val" @progress="progress"></FireUpload>
-            <button class="ui teal left labeled icon button">
-              <i class="plus icon"></i> 추가
-            </button>
+            <FireUpload title="업로드" :imageUrl="uploadedBusinessRegistration" @update:imageUrl="val => uploadedBusinessRegistration = val" @progress="progress"></FireUpload>
           </div>
         </div>
         <div class="settings__list" v-if="uploadedLicense && uploadedLicense.length">
@@ -90,10 +92,7 @@
         <div class="settings__list">
           <label>자격증</label>
           <div class="ui action floated right input">
-            <FireUpload :imageUrl="uploadedLicense" @update:imageUrl="val => uploadedLicense.push(val)" @progress="progress"></FireUpload>
-            <button class="ui teal left labeled icon button">
-              <i class="plus icon"></i> 추가
-            </button>
+            <FireUpload title="업로드" :imageUrl="uploadedLicense" @update:imageUrl="val => uploadedLicense.push(val)" @progress="progress"></FireUpload>
           </div>
         </div>
         <div class="ui divider"></div>
@@ -218,6 +217,7 @@ export default {
           license_list: this.uploadedLicense,
           type: this.hostType,
           join_method: this.knownRoute,
+          language: this.request.language,
         }
         api.updateHost(this.user.Host.host_key, params)
           .then(result => {
@@ -256,7 +256,8 @@ export default {
           address: null,
           home_page: null,
           sns: null,
-        }
+        },
+        language: null
       },
       isImageUploading: false,
       knownRoute: null,
@@ -290,6 +291,7 @@ export default {
         this.request.company.sns = host.sns
         this.request.company.address = host.address
         this.request.company.home_page = host.home_page
+        this.request.language = host.language
         this.knownRoute = host.join_method
         this.hostType = host.type
       }

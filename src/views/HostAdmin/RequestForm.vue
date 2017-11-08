@@ -67,6 +67,12 @@
           <input type="text" v-model="request.company.sns" placeholder="메이커 or 업체 SNS를 입력해주세요.">
         </div>
       </div>
+      <div class="settings__list">
+        <label>진행 가능 언어</label>
+        <div class="ui input fields">
+          <input type="text" v-model="request.language" placeholder="한국어 외 활동 진행 가능한 언어가 있으신가요?">
+        </div>
+      </div>
       <div class="ui divider"></div>
       <div class="settings__list" v-if="uploadedBusinessRegistration">
         <img :src="uploadedBusinessRegistration" style="width:100%;height:100%">
@@ -220,6 +226,7 @@ export default {
           license_list: this.uploadedLicense,
           type: this.hostType,
           join_method: this.knownRoute,
+          language: this.request.language
         }
 
         api.requestHost(params)
@@ -258,7 +265,8 @@ export default {
           phone: null,
           address: null,
           email: null,
-        }
+        },
+        language: null
       },
       knownRoute: "지인소개",
       hostType: 0,
