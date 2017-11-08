@@ -33,7 +33,18 @@
       <option value="요가/피트니스">요가/피트니스</option>
       <option value="소품제작">소품제작</option>
     </select>
-    <h2>활동장소를 입력해주세요. 혹시 활동전 집결지가 있다면 같이 작성해주세요.</h2>
+    <h2>장소를 입력해주세요.</h2>
+    <h3>집결지 <tool-tip text="집결지란, 위킨활동을 위해 활동 시작 시간에 맞추어 모이는 장소를 의미합니다. 활동지와 집결지가 동일할 경우는 활동장소와 같음을 체크해 주세요.
+        혹시, 특정 주소에는 없는 일반 건물명이나 지하철역 출구번호 등을 사용하실 수는 있으나, 기본적인 시/군/구/동 등의 주소를 사용해 주시기를 권장합니다.
+        예) 서울시 마포구 대흥동 맥도날드 앞, 서울시 마포구 대흥역 3번출구 등"></tool-tip></h3>
+    <div class="ui input focus" style="width:300px;">
+      <input type="text" v-model="activity.meetAddress" id="meetAddress">
+    </div>
+    <div style="margin-top:8px;">
+      <button class="ui button basic" @click="sameAddress()">
+        활동장소도 같음 
+      </button>
+    </div>
     <h3>활동장소 <tool-tip text="활동지란, 실제 위킨 활동이 이루어 지는 장소를 의미합니다. 메이커의 사업장 주소나 활동을 위해 모이는 장소와는 다른 의미라는 것을 기억하시기 바랍니다.
         혹시, 특정 주소에는 없는 산이나 바다, 강 등을 활동지로 선택하시고자 하신다면 입구나 주차장등 근처의 주소가 있는 곳을 기입해 주세요. 도로명 주소나 지번 주소 모두 입력 가능합니다.
         활동지의 중요 포인트는 위키너들의 검색에서 지역 구분에 해당 주소가 사용된다는 점입니다. 사업장 주소는 서울이지만, 실제 활동은 강원도에서 이루어 진다면 지역 구분에서 강원도에 해당 위킨이 표시됩니다.
@@ -41,15 +52,6 @@
     <div class="ui input focus" style="width:300px;">
       <input type="text" v-model="activity.address">
     </div>
-    <h3>집결지 <tool-tip text="집결지란, 위킨활동을 위해 활동 시작 시간에 맞추어 모이는 장소를 의미합니다. 활동지와 집결지가 동일할 경우는 활동장소와 같음을 체크해 주세요.
-        혹시, 특정 주소에는 없는 일반 건물명이나 지하철역 출구번호 등을 사용하실 수는 있으나, 기본적인 시/군/구/동 등의 주소를 사용해 주시기를 권장합니다.
-        예) 서울시 마포구 대흥동 맥도날드 앞, 서울시 마포구 대흥역 3번출구 등"></tool-tip></h3>
-    <div class="ui input focus" style="width:300px;">
-      <input type="text" v-model="activity.meetAddress" id="meetAddress">
-    </div>
-    <button class="ui button secondary basic" @click="sameAddress()">
-      활동장소와 같습니다 
-    </button>
   </div>
 
   <div v-show="page === 2">
@@ -60,7 +62,7 @@
     <p style="margin-bottom: 5px; font-size: 18px;">메이커님의 활동을 간단히 소개해주세요. <tool-tip text="해당 위킨의 간단한 소개를 작성해 주세요.예) 수상스키를 한강에서 남녀노소 누구나 손쉽게 강습과 함께 간단하게 즐길 수 있는 활동입니다."></tool-tip></p>
     <div style="float:left;">
       <textarea v-model="detailQuestion.question1.text" type="text" style="width:300px; height:70px;"></textarea> 
-      <FireUpload :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question1.images.push(val)"></FireUpload>
+      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question1.images.push(val)"></FireUpload>
     </div>
 
     <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, index) in detailQuestion.question1.images" v-bind:key="index">
@@ -73,7 +75,7 @@
     <div style="clear: both;">
       <p style="margin-bottom: 4px; font-size: 18px;">메이커님의 활동을 하면 어떤 점이 좋나요? <tool-tip text="해당 위킨의 좋은점, 자랑할 점, 어떤면에 도움이 되는지 등을 작성해 주세요.예) 직접 조종하는 수상스키를 타며 스트레스 한방에 날려버릴 수 있습니다. 한강에서 진행하므로 접근성이 용의 합니다."></tool-tip></p>
       <textarea v-model="detailQuestion.question2.text" type="text" style="width:300px; height:70px;"></textarea>
-      <FireUpload :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question2.images.push(val)"></FireUpload>
+      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question2.images.push(val)"></FireUpload>
 
       <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, index) in detailQuestion.question2.images" v-bind:key="index">
         <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
@@ -86,7 +88,7 @@
     <div style="clear: both;">
       <p style="margin-bottom: 4px; font-size: 18px;">활동은 어떻게 진행되나요? <tool-tip text="메이커님이 진행할 순서, 어떤 방법으로 진행하는지, 해당 위킨을 진행하면서 사용할 도구/제품 등에 대한 설명 등을 작성해 주세요.예) 활동 시작전 10분전 도착 후 30분 강사님의 손쉬운 강습 후 1시간동안 자유롭게 한강위에서 스트레스를 날리시면 됩니다."></tool-tip></p>
       <textarea v-model="detailQuestion.question3.text" type="text" style="width:300px; height:70px;"></textarea>
-      <FireUpload :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question3.images.push(val)"></FireUpload>
+      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question3.images.push(val)"></FireUpload>
       <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, index) in detailQuestion.question3.images" v-bind:key="index">
         <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
           <img style="width:100%;height:100%" :src="imageUrl">
@@ -98,7 +100,7 @@
     <div style="clear: both;">
       <p style="margin-bottom: 4px; font-size: 18px;">해당 활동에 대해서 메이커님의 꿀팁이 있나요? <tool-tip text="메이커님이 해당 위킨의 전문가로서 해당 활동에 대한 꿀팁, 새로운 점, 위키너들에게 알려주고 싶은 점 들을 작성해 주세요.예) 안전이 가장 중요합니다. 상대 스키 반경 20m내로는 접근 하지 않는 점만 명심하시면 절대로 다치실 위험이 없습니다. 스포츠 안경이 있으면 더욱 좋습니다."></tool-tip></p>
       <textarea v-model="detailQuestion.question4.text" type="text" style="width:300px; height:70px;"></textarea>
-      <FireUpload :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question4.images.push(val)"></FireUpload>
+      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question4.images.push(val)"></FireUpload>
       <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, index) in detailQuestion.question4.images" v-bind:key="index">
         <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
           <img style="width:100%;height:100%" :src="imageUrl">
@@ -110,7 +112,7 @@
     <div style="clear: both;">
       <p style="margin-bottom: 4px; font-size: 18px;">어떤분들에게 좋은 활동일까요? <tool-tip text="해당 위킨이 어떤 위키너들에게 좋은지, 추천해 주고 싶은 위키너들은 어떤 사람들인지를 작성해 주세요.예) 남녀노소 즐길 수 있지만 권장 연령대는 20 ~ 60세 분들입니다. 나이가 어린 친구들은 해당 B코스의 수상스키 체험을 이용하시기 바랍니다."></tool-tip></p>
       <textarea v-model="detailQuestion.question5.text" type="text" style="width:300px; height:70px;"></textarea>
-      <FireUpload :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question5.images.push(val)"></FireUpload>
+      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question5.images.push(val)"></FireUpload>
       <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, index) in detailQuestion.question5.images" v-bind:key="index">
         <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
           <img style="width:100%;height:100%" :src="imageUrl">
@@ -193,7 +195,7 @@
     </div>
     <div class="ui card" style="width: 300px; height:200px; float:left; margin-right:8px;">
       <div style="width:90px; height:30px; position:absolute; bottom: 46%; left: 36%;">
-        <FireUpload :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => uploadedMainImages.push(val)"></FireUpload>
+        <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => uploadedMainImages.push(val)"></FireUpload>
       </div>
     </div>
   </div>
@@ -202,7 +204,7 @@
   </div>
 
   <div v-show="page === 6">
-    <h2>판매 형식을 정해주세요.</h2>
+    <h2>등록 기간을 정해주세요.</h2>
     <div v-show="isTicket === true">
       <!-- 티켓형식 추 후 업데이트로
       <h3>티켓 유효기간</h3>
@@ -361,7 +363,7 @@
           <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Su'].max_user">
         </div>
       </div>
-      <div id="timeAndAdditionalPrice" v-for="(data, index) in activity.base_week_option['Mo'].price_with_time">
+      <div id="timeAndAdditionalPrice" v-for="(data, index) in maxStartTimeOfDateCountingList">
         <div class="seven fields">
           <div class="field" :class="{ disabled: !checkedDaysInclude('Mo') }">
             <label>시작시각({{index+1}} 번째)</label>
@@ -423,8 +425,8 @@
           </div>
         </div>
       </div>
-      <button class="ui positive basic button" v-show="activity.base_week_option['Mo'].price_with_time.length < 3" @click="subtractBaseWeekPrice('add')">시작시각 추가</button>
-      <button class="ui negative basic button" v-show="activity.base_week_option['Mo'].price_with_time.length == 2 || activity.base_week_option['Mo'].price_with_time.length == 3" @click="subtractBaseWeekPrice('subtract')">시작시각 빼기</button>
+      <button class="ui positive basic button" v-show="maxStartTimeOfDateCountingList.length < 3" @click="subtractBaseWeekPrice('add')">시작시각 추가</button>
+      <button class="ui negative basic button" v-show="maxStartTimeOfDateCountingList.length == 2 || maxStartTimeOfDateCountingList.length == 3" @click="subtractBaseWeekPrice('subtract')">시작시각 빼기</button>
     </div>
 
   </div>
@@ -472,11 +474,11 @@
   </div>
 
   <div id='footer'>
-    <button class="ui labeled icon button" @click="1 < page ? page-- : page" style="background: rgba(42,195,145,0.2);">
+    <button class="ui labeled icon button" @click="pageButton('prev')" style="background: rgba(42,195,145,0.2);">
       <i class="left arrow icon"></i>
       이전페이지
     </button>
-    <button class="ui right labeled icon button" @click="10 > page ? page++ : page" style="background: rgba(42,195,145,0.2);">
+    <button class="ui right labeled icon button" @click="pageButton('next')" style="background: rgba(42,195,145,0.2);">
       <i class="right arrow icon"></i>
       다음페이지
     </button>
@@ -498,7 +500,7 @@ export default {
     return {
       isFileUploading: false,
       page: 1,
-      isTicket: null,
+      isTicket: false,
       activity: {
         meetAddress: '',
         address: '',
@@ -540,6 +542,7 @@ export default {
           Sa: "토요일",
           Mo: "월요일"
       },
+      maxStartTimeOfDateCountingList: []
     }
   },
   computed: {
@@ -565,14 +568,32 @@ export default {
     Datepicker
   },
   methods: {
+    pageButton(text) {
+      switch (text) {
+        case 'prev':
+          if (this.page > 1) {
+            this.page--
+          } else {
+          }
+          break
+        case 'next':
+          if (this.page < 10) {
+            this.page++
+          } else {
+          }
+          break
+      }
+    },
     subtractBaseWeekPrice(text) {
       let week = this.activity.base_week_option
       if (text === "subtract") {
+        this.maxStartTimeOfDateCountingList.splice(-1, 1)
         for (let i in week) {
           week[i].price_with_time.splice(-1,1)
           week[i].start_time.splice(-1,1)
         }
       } else {
+        this.maxStartTimeOfDateCountingList.push(0)
         for (let i in week) {
           week[i].price_with_time.push(0)
           week[i].start_time.push('13:00')
@@ -600,6 +621,7 @@ export default {
         case 'time': 
           for (let index in weekOption) {
             weekOption[index].start_time[0] = value
+            weekOption[index].price_with_time[0] = 0
           }
           break;
       }
@@ -700,7 +722,7 @@ export default {
       this.activity.base_price_option.splice(index, 1)
     },
     sameAddress() {
-      this.activity.meetAddress = this.activity.address
+      this.activity.address = this.activity.meetAddress
     },
     getPolicy() {
       api.getPolicy()
@@ -745,6 +767,17 @@ export default {
     this.detailQuestion = this.activity.detail_question
   },
   mounted() {
+    let base_week_option = this.activity.base_week_option
+    let maxNumber = 0
+    for (let i in base_week_option) {
+      if (base_week_option[i].start_time.length >= maxNumber) {
+        maxNumber = base_week_option[i].start_time.length
+      }
+    }
+    this.maxStartTimeOfDateCountingList = [...Array(maxNumber).keys()]
+    if (maxNumber === 0) {
+      this.maxStartTimeOfDateCountingList = [0]
+    }
     $.trumbowyg.svgPath = '/static/trumbowyg/dist/ui/icons.svg';
     $('#editor').trumbowyg({
       lang: 'ko',
