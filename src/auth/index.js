@@ -32,9 +32,11 @@ export default {
   signIn (email, password) {
     return firebase.auth().signInWithEmailAndPassword(email, password)
       .then(currentUser => {
-        currentUser.getIdToken().then(token => {
-          localStorage.setItem('accessToken', token)
-        })
+        currentUser.getIdToken()
+          .then(token => {
+            localStorage.setItem('accessToken', token)
+          })
+          .catch(error => console.log(error))
         return currentUser
       })
   },
