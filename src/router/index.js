@@ -47,10 +47,9 @@ import About from 'views/About.vue'
 import Manual from 'views/Manual.vue'
 import ExplainMaker from './../views/explainMakerStaticPage.vue'
 import EventList from 'components/EventList.vue'
-// import Meta from 'vue-meta'
 
 Vue.use(Router)
-// Vue.use(Meta)
+
 
 export default new Router({
   mode: 'history',
