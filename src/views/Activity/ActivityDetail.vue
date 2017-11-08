@@ -58,16 +58,16 @@
               <select v-model="requestData.startTime" class="width260 height25" @change="getCurrentNumberOfBookingUsers()">
                 <option value="sample" disabled>시작시각</option>
                 <option v-for="(item, index) in startTimeList" :value="[index, item]">
-                  {{ index }} ( {{ item >= 0 ? '+ ' + item : item }} 원)
+                  {{ index }} {{ item | Won }}
                 </option>
               </select>
             </div>
-            <div v-show="requestData.startTime !== 'sample'">
+            <div v-show="requestData.startTime !== 'sample' && selectCourseOptionShow">
               <p style="font-size: 14px; margin: 20px 0 2px 0;">코스 선택</p>
               <select v-model="requestData.selectedOption" class="width260 height25">
                 <option value="sample" disabled>옵션을 선택해주세요</option>
                 <option v-for="(item, index) in activity.base_price_option" :value="[item.name, item.price]">
-                  {{ item.name + '(+ ' + item.price + '원)' }}
+                  {{ item.name }} {{ item.price | Won }}
                 </option>
               </select>
             </div>
@@ -75,8 +75,8 @@
               <p style="font-size: 14px; margin: 20px 0 2px 0;">수량 선택</p>
               <div style="border: 0.5px solid Gainsboro; padding: 10px 10px;">
                 <div v-for="(item, index) in activity.base_extra_price_option">
-                  <div style="height:22px;">
-                    <span style="float: left">{{ item.price >= 0 ? item.name + '(' + '+' + ' ' + item.price + '원)' : item.name + '(' + item.price + '원)' }}</span>
+                  <div style="height:22px; margin-top:10px;">
+                    <span style="float: left">{{ item.name }} {{ item.price | Won }}</span>
                     <div style="float: right">
                       <span>₩ {{ +requestData.startTime[1] + +activity.base_price + +item.price + +requestData.selectedOption[1] | joinComma }}</span>
                       <button @click="requestData.selectedExtraOption[index] > 0 ? requestData.selectedExtraOption[index]-- : null">-</button>
@@ -112,6 +112,17 @@
               <i class="icon bookmark" v-bind:class="{remove: !isFavoritedActivity, red: isFavoritedActivity}"></i>관심목록 추가</button>
             <a class="ui basic button full-width" id="virtualview" @click="onMailClick()">
               <i class="icon outline mail"></i>이메일 문의</a>
+            <a class="ui basic button full-width" v-on:click="snsShow = !snsShow">
+              <transition name="fade" mode="out-in">
+                <span v-if="!snsShow" key="share"><i class="share alternate icon"></i>공유하기</span>
+                <span v-else key="button">
+                  <img class="facebookLogoBtn" @click="onFacebookShareClick()" src="/static/images/ic-facebook.png" style="width:28px;height=28px; margin-right:10px;">
+                  <img class="facebookLogoBtn" @click="snsShare('google')" src="/static/images/ic-google.png" style="width:28px;height=28px; margin-right:10px;">
+                  <img class="facebookLogoBtn" @click="snsShare('kakaostory')" src="/static/images/ic-kakaostory.png" style="width:28px;height=28px; margin-right:10px;">
+                  <img class="facebookLogoBtn" @click="snsShare('naver')" src="/static/images/ic-naver.png" style="width:28px;height=28px; margin-right:10px;">
+                </span>
+              </transition>
+            </a>
           </div>
         </div>
       </div>
@@ -374,6 +385,15 @@ export default {
     Datepicker
   },
   filters: {
+    Won(num) {
+      if (num > 0) {
+        return ' (+' + num + ' 원)'
+      } else if (num == 0) {
+        return ''
+      } else if (num < 0) {
+        return ' (' +  num + ' 원)'
+      }
+    },
     qnaStatus(answer) {
       if (answer) {
         return "답변완료"
@@ -462,6 +482,7 @@ export default {
   },
   data() {
     return {
+      snsShow: false,
       openQnAIndex: [],
       tabPage: 1,
       isMyQuestionOnlyChecked: false,
@@ -510,6 +531,7 @@ export default {
         },
       },
       selectedDateIsAllowToBooking: true,
+      selectCourseOptionShow: true,
     }
   },
   methods: {
@@ -532,7 +554,10 @@ export default {
       if (evnt) {
         this.requestData.selectedYoil = moment(this.requestData.selectedDate).format('dd')
         this.requestData.startTime = 'sample'
-        this.requestData.selectedOption = 'sample'
+        if (this.activity.base_price_option.length === 1) {
+          this.requestData.selectedOption = [this.activity.base_price_option[0].name, this.activity.base_price_option[0].price]
+          this.selectCourseOptionShow = false
+        }
         this.requestData.selectedExtraOption = {
           0: 0,
           1: 0,
@@ -541,8 +566,10 @@ export default {
       }
     },
     snsShare(sns_type) {
+      //TODO
       var title = $("#ogTitle").attr('content');
-      var href = window.location.href;
+      //var href = window.location.href;
+      var href = 'http://175.195.139.99:3000/share/20' 
       var loc = "";
       var img = 'http://we-kin.com/static/images/default-profile.png'
       var oFlag = true;
@@ -562,7 +589,7 @@ export default {
         loc = '//www.pinterest.com/pin/create/button/?url=' + href + '&media=' + img + '&description=' + encodeURIComponent(title);
       }
       else if (sns_type == 'kakaostory') {
-        loc = 'https://story.kakao.com/share?url=' + encodeURIComponent(href);
+        loc = 'https://story.kakao.com/share?url=' + href;
       }
       else if (sns_type == 'band') {
         loc = 'http://www.band.us/plugin/share?body=' + encodeURIComponent(title) + '%0A' + encodeURIComponent(href);
@@ -579,7 +606,7 @@ export default {
       let image = this.activity.main_image.image[0]
       let name = `${this.activity.title} | 위킨`
 
-      window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&caption=Wekin&description=${encodeURIComponent(this.activity.address)}&display=popup&locale=ko_KR&name=${encodeURIComponent(name)}&link=${encodeURIComponent(`http://www.we-kin.com/activity/${this.activity.activity_key}`)}&picture=${encodeURIComponent(image)}&version=v2.1`,
+      window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&display=popup&locale=ko_KR&link=${encodeURIComponent(`http://175.195.139.99:3000/share/${this.activity.activity_key}`)}&version=v2.1`,
         'facebookShare',
         'toolbar=0,status=0,width=625,height=435'
       );
@@ -701,7 +728,7 @@ export default {
       }
       if (this.user) {
         auth.getCurrentUser()
-          .then( result => {
+          .then(result => {
             if (this.checkForm()) {
               if (this.isApplyAvailable) {
                 if (this.checkLoginState()) {
@@ -742,6 +769,7 @@ export default {
               }
             }
           })
+          .catch(error => console.log("에러", error))
       } else {
         alert("로그인이 필요한 서비스 입니다.")
         this.$parent.$refs.navbar.showModalLogin()
@@ -988,7 +1016,7 @@ export default {
       })
       .modal('attach events', '.waiting-modal #confirm', 'show')
 
-  }
+  },
 }
 </script>
 <style lang=scss scoped>
@@ -1329,6 +1357,7 @@ h2 {
 
 
 
+
 /* 모바일 전용 */
 
 .mobile-container {
@@ -1516,10 +1545,19 @@ h2 {
       display: none;
     }
   }*/
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
+}
 </style>
 <style>
 .width260 {
   width: 260px;
+}
+.vdp-datepicker div input {
+  background-color: red;
 }
 .height25 {
   height: 25px;
