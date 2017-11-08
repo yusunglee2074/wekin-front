@@ -33,6 +33,7 @@
     "eventsource-polyfill": "^0.9.6",
     "expose-loader": "^0.7.3",
     "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
     "express-param": "^1.0.2",
     "express-validator": "^3.2.0",
     "extract-text-webpack-plugin": "^2.1.2",
