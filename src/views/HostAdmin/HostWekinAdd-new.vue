@@ -1,8 +1,7 @@
 <template>
-  <div style="margin-top:100px; margin-left:200px; max-width:1000px; position:relative;">
-
+  <div style="margin-top:100px; margin-left:200px; max-width:1200px; position:relative;">
     <progress max="100" :value="progressValue"></progress>   
-    <div v-show="page === 1">
+    <div v-show="page === 1" class="page">
       <h2>기본 정보를 입력해주세요.</h2>
       <h3>위킨 제목 <tool-tip text='
           메이커님이 진행하실 위킨의 이름을 지어주세요.
@@ -21,8 +20,8 @@
     <select v-model="activity.category1" class="ui dropdown" style="width: 300px;">
       <option value="" disabled>카테고리</option>
       <option value="투어/여행">투어/여행</option>
-      <option value="익스트림 (레저)">익스트림 (레저)</option>
-      <option value="스포츠 (구기종목)">스포츠 (구기종목)</option>
+      <option value="익스트림">익스트림 (레저)</option>
+      <option value="스포츠">스포츠 (구기종목)</option>
       <option value="음악">음악</option>
       <option value="댄스">댄스</option>
       <option value="뷰티">뷰티</option>
@@ -33,6 +32,18 @@
       <option value="요가/피트니스">요가/피트니스</option>
       <option value="소품제작">소품제작</option>
     </select>
+    <h2>장소를 입력해주세요.</h2>
+    <h3>집결지 <tool-tip text="집결지란, 위킨활동을 위해 활동 시작 시간에 맞추어 모이는 장소를 의미합니다. 활동지와 집결지가 동일할 경우는 활동장소와 같음을 체크해 주세요.
+        혹시, 특정 주소에는 없는 일반 건물명이나 지하철역 출구번호 등을 사용하실 수는 있으나, 기본적인 시/군/구/동 등의 주소를 사용해 주시기를 권장합니다.
+        예) 서울시 마포구 대흥동 맥도날드 앞, 서울시 마포구 대흥역 3번출구 등"></tool-tip></h3>
+    <div class="ui input focus" style="width:300px;">
+      <input type="text" v-model="activity.meetAddress" id="meetAddress">
+    </div>
+    <div style="margin-top:8px;">
+      <button class="ui button basic" @click="sameAddress()">
+        활동장소도 같음 
+      </button>
+    </div>
     <h3>활동장소 <tool-tip text="활동지란, 실제 위킨 활동이 이루어 지는 장소를 의미합니다. 메이커의 사업장 주소나 활동을 위해 모이는 장소와는 다른 의미라는 것을 기억하시기 바랍니다.
         혹시, 특정 주소에는 없는 산이나 바다, 강 등을 활동지로 선택하시고자 하신다면 입구나 주차장등 근처의 주소가 있는 곳을 기입해 주세요. 도로명 주소나 지번 주소 모두 입력 가능합니다.
         활동지의 중요 포인트는 위키너들의 검색에서 지역 구분에 해당 주소가 사용된다는 점입니다. 사업장 주소는 서울이지만, 실제 활동은 강원도에서 이루어 진다면 지역 구분에서 강원도에 해당 위킨이 표시됩니다.
@@ -40,18 +51,11 @@
     <div class="ui input focus" style="width:300px;">
       <input type="text" v-model="activity.address">
     </div>
-    <h3>집결지 <tool-tip text="집결지란, 위킨활동을 위해 활동 시작 시간에 맞추어 모이는 장소를 의미합니다. 활동지와 집결지가 동일할 경우는 활동장소와 같음을 체크해 주세요.
-        혹시, 특정 주소에는 없는 일반 건물명이나 지하철역 출구번호 등을 사용하실 수는 있으나, 기본적인 시/군/구/동 등의 주소를 사용해 주시기를 권장합니다.
-        예) 서울시 마포구 대흥동 맥도날드 앞, 서울시 마포구 대흥역 3번출구 등"></tool-tip></h3>
-    <div class="ui input focus" style="width:300px;">
-      <input type="text" v-model="activity.meetAddress" id="meetAddress">
-    </div>
-    <button class="ui button secondary basic" @click="sameAddress()">
-      활동장소와 같습니다 
-    </button>
+  <img src="/static/images/makeActivity/1-min.png" class="helpImage">
   </div>
 
-  <div v-show="page === 2">
+
+  <div v-show="page === 2" class="page">
     <h2>상세정보를 사진과 함께 작성해주세요.</h2>
     <div v-show="isFileUploading">
       <h3 style="color:rgba(40,190,140, 1)">파일 업로드 중입니다.</h3>
@@ -121,7 +125,7 @@
 
   </div>
 
-  <div v-show="page === 3">
+  <div v-show="page === 3" class="page">
     <h2>준비물 외 아래 정보를 작성해주세요.</h2>
     <h3>준비물 <tool-tip text="메이커님이 직접 준비해주시거나 대여가 가능한 물품이외에 위키너들이 직접 준비해 와야 하는 부분을 작성해 주세요. 만약 대여가 가능한 준비물인 경우에는 가능여부를 표시해 주시면 됩니다.
         예) 마른 수건, 갈아입을 옷, 간단한 세면도구 등.
@@ -149,7 +153,7 @@
     </div>
   </div>
 
-  <div v-show="page === 4">
+  <div v-show="page === 4" class="page">
     <div style="position:relative;flex:1" v-for="(imageUrl, index) in uploadedMainImages" v-bind:key="index">
     </div>
     <h2>상세페이지 상단 슬라이드에에 노출시킬 이미지들을 업로드해주세요.</h2>
@@ -174,7 +178,7 @@
     <h3>파일 업로드 중입니다.</h3>
   </div>
 
-  <div v-show="page === 5">
+  <div v-show="page === 5" class="page">
     <h3>기본가격 <tool-tip text="메이커님이 활동에 대하여 생각하신 가격을 작성해 주시면 됩니다. 만일 가격이 다른 추가적인 옵션이 있다면, 옵션에 의해서 변경되는 금액은 이후에 추가 및 할인을 하실 수 있습니다. 따라서 위키너들에게 처음 노출될 활동 가격을 기입해 주시면 됩니다. 100원에 추가 옵션 50000원을 하게 되면 위키너들에 대한 신뢰가 떨어지겠죠?. 
         아, 그리고 숫자만 기입해 주세요. 콤마(,) 금액단위 (원, 달러 등) 작성하시면 오류가 발생할 수 있습니다.
         예) 10,000원 (X).
@@ -202,7 +206,7 @@
     </div>
   </div>
 
-  <div v-show="page === 6">
+  <div v-show="page === 6" class="page">
     <h2>판매 형식을 정해주세요.</h2>
     <div v-show="isTicket === true">
       <!-- 티켓형식 추 후 업데이트로
@@ -298,7 +302,7 @@
     </div>
   </div>
 
-  <div v-show="page === 7">
+  <div v-show="page === 7" class="page">
     <h2>전 페이지에서 지정한 시작일 ~ 종료일 사이의 활동요일을 선택해주세요. </h2>
     <h3>설명<tool-tip text="같은 날짜라도 하루에 2번 활동이 있는 경우가 있을 수 있습니다. 아래의 시작시각 추가, 빼기 버튼으로 시작시각을 요일별로도 여러개 추가 할 수 있습니다."></tool-tip></h3>
     <div class="ui form">
@@ -430,7 +434,7 @@
 
   </div>
 
-  <div v-show="page === 8">
+  <div v-show="page === 8" class="page">
     <h2>위킨 옵션이 있나요?</h2>
     <h4>*없다면 넘어가도 좋습니다.</h4>
     <div v-for="(value, index) in activity.basePriceOption" style="width:400px;">
@@ -448,7 +452,7 @@
     <button class="ui button secondary basic" @click="activity.basePriceOption.push({})">추가</button>
   </div>
 
-  <div v-show="page === 9">
+  <div v-show="page === 9" class="page">
     <h2>결제 추가 옵션 사항이 있나요?</h2>
     <h4>*없다면 넘어가도 좋습니다.</h4>
     <div v-for="(value, index) in activity.baseExtraPriceOption" style="width:400px;">
@@ -466,7 +470,7 @@
     <button class="ui button secondary basic" @click="activity.baseExtraPriceOption.push({})">추가</button>
   </div>
 
-  <div v-show="page === 10">
+  <div v-show="page === 10" class="page">
 
     <p>승인까지 최대 3일이 걸릴 수 있습니다.</p>
     <p>승인 후 문자로 연락 드리겠습니다.</p>
@@ -695,7 +699,7 @@ export default {
       this.activity.basePriceOption.splice(index, 1)
     },
     sameAddress() {
-      this.activity.meetAddress = this.activity.address
+      this.activity.address = this.activity.meetAddress
     },
     getPolicy() {
       api.getPolicy()
@@ -790,4 +794,15 @@ progress::-webkit-progress-value {
   background: rgb(31,196,143);
 } 
 /* environnement styles */
+
+.page {
+  position: relative;
+}
+.helpImage {
+  width: 50%;
+  height: auto;
+  position:absolute;
+  top:30px;
+  right:50px;
+}
 </style>
