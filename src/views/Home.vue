@@ -207,7 +207,7 @@
                   </div>
                 </div>
                 <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px; position:relative;">
-                  <span>{{ news.title }}</span><span style="float:right;color: #999999; font-size:12px;">관심 {{ news.like_count }} 공유 {{ news.share_count }}</span>
+                  <span>{{ news.title }}</span><span style="float:right;color: #999999; font-size:12px; margin-top:8px;">관심 {{ news.like_count }} 공유 {{ news.share_count }}</span>
                   <br>
                   <span style="font-size:10px; color:#acacac">{{ news.link_url }}
                   </span>
