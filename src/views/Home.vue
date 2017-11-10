@@ -203,10 +203,14 @@
             <div @click="goLink(news.link_url)" class="ui card pointer swiper-slide" v-for="(news, index) in news.data" v-bind:key="index">
                 <div class="image">
                   <div class="backImage mainImage" v-bind:style="{'background-image':`url(${news.thumbnail_url})`}"></div>
-                  <div class="backImage overlayer"></div>
+                  <div class="backImage overlayer">
+                  </div>
                 </div>
-                <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px;">
-                  <span>{{ news.title }}</span>
+                <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px; position:relative;">
+                  <span>{{ news.title }}</span><span style="float:right;color: #999999; font-size:12px;">관심 {{ news.like_count }} 공유 {{ news.share_count }}</span>
+                  <br>
+                  <span style="font-size:10px; color:#acacac">{{ news.link_url }}
+                  </span>
                 </div>
             </div>
           </div>
