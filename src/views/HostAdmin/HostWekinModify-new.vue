@@ -441,7 +441,8 @@
       </div>
       <h3 style="margin: 6px 0px;">추가가격 <tool-tip text="*** 추가가격 부분은 3000원을 더 받으려면 3000. 3000원을 덜 받으려면 -3000이라 입력하시면 됩니다."></tool-tip></h3>
       <div class="ui input focus" style="width:300px;">
-        <input type="number" v-model="activity.base_price_option[index]['price']" placeholder="예) 3000 혹은 -3000">
+        <input type="number" v-model="activity.base_price_option[index]['price']" placeholder="예) 3000 혹은 -3000" v-if="index !== 0">
+        <input type="number" v-model="activity.base_price_option[index]['price']" placeholder="예) 3000 혹은 -3000" v-if="index === 0" disabled>
       </div>
       <button v-show="index > 0" @click="deletePriceOption(index)">제거</button>
     </div>
@@ -458,7 +459,8 @@
       </div>
       <h3 style="margin: 6px 0;">추가가격 <tool-tip text="예) (대인, 0) (소인, -3000).*** 추가가격 부분은 3000원을 더 받으려면 3000. 3000원을 덜 받으려면 -3000이라 입력하시면 됩니다."></tool-tip></h3>
       <div class="ui input focus" style="width:300px;">
-        <input type="number" v-model="activity.base_extra_price_option[index]['price']" placeholder="예) 3000 혹은 -3000">
+        <input type="number" v-model="activity.base_extra_price_option[index]['price']" placeholder="예) 3000 혹은 -3000" v-if="index !== 0">
+        <input type="number" v-model="activity.base_extra_price_option[index]['price']" placeholder="예) 3000 혹은 -3000" v-if="index === 0" disabled>
       </div>
       <button v-show="index > 0" @click="deleteExtraPriceOption(index)">제거</button>
     </div>
