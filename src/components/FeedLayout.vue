@@ -305,8 +305,9 @@ export default {
       if (this.feed.doc_key) {
         api.getCommentsFromKey(this.feed.doc_key, this.page, 3)
           .then(comments => {
+            console.log(comments)
             if (comments.rows.length != 0) {
-              this.commentCount = comments.count
+              this.commentCount = comments.count.length
               comments.rows.forEach(comment => this.comments.push(comment))
             } else {
               this.isLastComment = true
