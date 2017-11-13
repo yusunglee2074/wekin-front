@@ -72,17 +72,24 @@
         </div>
       </div>
       <div class="ui selection dropdown home person">
-        <label>인원</label>
+        <label>카테고리</label>
         <input name="person" type="hidden" value="0">
         <i class="dropdown icon"></i>
-        <div class="text">혼자</div>
+        <div class="text">전체</div>
         <div class="menu">
-          <div class="item" data-value="1">혼자</div>
-          <div class="item" data-value="2">2명</div>
-          <div class="item" data-value="3">3명</div>
-          <div class="item" data-value="4">4명</div>
-          <div class="item" data-value="5">5명</div>
-          <div class="item" data-value="0">전체</div>
+          <div class="item" data-value="">전체</div>
+          <div class="item" data-value="투어/여행">투어/여행</div>
+          <div class="item" data-value="익스트림">익스트림</div>
+          <div class="item" data-value="스포츠명">스포츠명</div>
+          <div class="item" data-value="음악">음악</div>
+          <div class="item" data-value="댄스">댄스</div>
+          <div class="item" data-value="뷰티">뷰티</div>
+          <div class="item" data-value="요리">요리</div>
+          <div class="item" data-value="아트">아트</div>
+          <div class="item" data-value="힐링">힐링</div>
+          <div class="item" data-value=">아웃도어">아웃도어</div>
+          <div class="item" data-value=">요가/피트니스">요가/피트니스</div>
+          <div class="item" data-value=">소품제작">소품제작</div>
         </div>
       </div>
       <button class="negative ui button" @click="searchActivity()">위킨 찾기</button>
@@ -498,7 +505,7 @@ export default {
       let location = $(".ui.dropdown.location").dropdown('get value')
       let startDate = $("#rangestart").calendar('get date')
       let endDate = $("#rangeend").calendar('get date')
-      let people = $(".ui.dropdown.person").dropdown('get value')
+      let category = $(".ui.dropdown.person").dropdown('get value')
       let price = $(".ui.dropdown.price").dropdown('get value')
       let startPrice = 0
       let endPrice = 100000
@@ -533,7 +540,7 @@ export default {
           location: location,
           startDate: startDate,
           endDate: endDate,
-          people: people,
+          category: category,
           startPrice: startPrice,
           endPrice: endPrice,
         }
