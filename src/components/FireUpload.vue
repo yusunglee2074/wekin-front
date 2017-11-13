@@ -1,7 +1,7 @@
 <template>
     <div class="ui positive basic button fileUpload">
-      <span><img :src="`./../../static/icon/${icon}`">{{ title }}</span>
-      <input class="upload" type="file" v-on:change="fireStorage" accept="image/*"></input>
+      <img :src="`./../../static/icon/${icon}`">{{ title }}
+      <input class="upload" type="file" v-on:change="fireStorage" accept="image/*" multiple></input>
     </div>
 </template>
 
@@ -10,6 +10,7 @@
  *  <FireUpload :imageUrl="myValue" @update:imageUrl="val => myValue = val" @progress="myEvent"></FireUpload>
  */
 import { Storage } from 'src/util'
+import firebase from 'firebase'
 
 export default {
   props: ['imageUrl', 'title', 'icon'],
@@ -21,18 +22,23 @@ export default {
   mounted () {
   },
   methods: {
-    fireStorage (event) {
-      let file = event.target.files[0]
-      Storage.imageUpload(file,
-        (task) => {
-          let url = task.snapshot.downloadURL
-          let tmp = url.substring(0, url.indexOf('token') - 1)
-          this.$emit('update:imageUrl', tmp)
-        },
-        (progress) => {
-          this.$emit('prog', progress / 5)
-        }
-      )
+    fireStorage (e) {
+      let self = this
+      let files = e.target.files
+      for (let i = 0; i < files.length; i++) {
+        let file = files[i]
+        let tempRef = firebase.storage().ref()
+        let imagePath = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getSeconds() + new Date().getMilliseconds()
+        let imageRef = tempRef.child('img/image/' + imagePath)
+        let uploadTask = imageRef.put(file)
+        uploadTask.on('state_changed', function(snapshot){
+        }, function(error) {
+        }, function() {
+          var downloadURL = uploadTask.snapshot.downloadURL
+          self.$emit('update:imageUrl', downloadURL + '?alt=media')
+          }
+        )
+      }
     }
   }
 }
