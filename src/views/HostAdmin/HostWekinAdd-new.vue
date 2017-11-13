@@ -61,7 +61,7 @@
         <h3 style="color:rgba(40,190,140, 1)">파일 업로드 중입니다.</h3>
       </div>
       <p style="margin-bottom: 5px; font-size: 18px;">메이커님의 활동을 간단히 소개해주세요. </p>
-      <div class="ui input focus" style="width:300px;">
+      <div class="ui input focus" style="width:300px; display:inline-table;">
         <textarea rows="4" cols="50" v-model="detailQuestion.question1.text" type="text" @focus="toggleHelpBox('on', 4)" @blur="toggleHelpBox('off', 4)"></textarea> 
         <transition name="fade">
           <help-box v-show="helpBox[4]" numbering="4"></help-box>
@@ -77,7 +77,7 @@
       <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question1.images.push(val)"></FireUpload>
 
       <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">메이커님의 활동을 하면 어떤 점이 좋나요? </p>
-      <div class="ui input focus" style="width:300px;">
+      <div class="ui input focus" style="width:300px; display:inline-table;">
         <textarea rows="4" cols="50" v-model="detailQuestion.question2.text" type="text" @focus="toggleHelpBox('on', 5)" @blur="toggleHelpBox('off', 5)"></textarea>
         <transition name="fade">
           <help-box v-show="helpBox[5]" numbering="5"></help-box>
@@ -93,7 +93,7 @@
       <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question2.images.push(val)"></FireUpload>
 
       <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">활동은 어떻게 진행되나요? </p>
-      <div class="ui input focus" style="width:300px;">
+      <div class="ui input focus" style="width:300px; display:inline-table;">
         <textarea rows="4" cols="50" v-model="detailQuestion.question3.text" type="text" @focus="toggleHelpBox('on', 6)" @blur="toggleHelpBox('off', 6)"></textarea>
         <transition name="fade">
           <help-box v-show="helpBox[6]" numbering="6"></help-box>
@@ -108,7 +108,7 @@
       <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question3.images.push(val)"></FireUpload>
 
       <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">해당 활동에 대해서 메이커님의 꿀팁이 있나요? </p>
-      <div class="ui input focus" style="width:300px;">
+      <div class="ui input focus" style="width:300px; display:inline-table;">
         <textarea rows="4" cols="50" v-model="detailQuestion.question4.text" type="text" @focus="toggleHelpBox('on', 7)" @blur="toggleHelpBox('off', 7)"></textarea>
         <transition name="fade">
           <help-box v-show="helpBox[7]" numbering="7"></help-box>
@@ -122,7 +122,7 @@
       </div>
       <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question4.images.push(val)"></FireUpload>
       <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">어떤분들에게 좋은 활동일까요? </p>
-      <div class="ui input focus" style="width:300px;">
+      <div class="ui input focus" style="width:300px; display:inline-table;">
         <textarea rows="4" cols="50" v-model="detailQuestion.question5.text" type="text" @focus="toggleHelpBox('on', 8)" @blur="toggleHelpBox('off', 8)"></textarea>
         <transition name="fade">
           <help-box v-show="helpBox[8]" numbering="8"></help-box>
@@ -136,7 +136,7 @@
       </div>
       <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question5.images.push(val)"></FireUpload>
       <br>
-      <p style="margin-top:30px;">*글자제한이 없으며, <span style="color: rgba(40,190,140, 1);">사진을 최대한 많이</span> 올리시면 고객분들의 접근성이 훨씬 용이해집니다.</p>
+      <p>*글자제한이 없으며, <span style="color: rgba(40,190,140, 1);">사진을 최대한 많이</span> 올리시면 고객분들의 접근성이 훨씬 용이해집니다.</p>
 
     </div>
 
