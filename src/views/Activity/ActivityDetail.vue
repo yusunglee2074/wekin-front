@@ -570,7 +570,7 @@ export default {
       //TODO
       var title = $("#ogTitle").attr('content');
       //var href = window.location.href;
-      var href = 'http://175.195.139.99:3000/share/20' 
+      var href = 'http://175.195.139.99:3000/share/' + this.activity.activity_key
       var loc = "";
       var img = 'http://we-kin.com/static/images/default-profile.png'
       var oFlag = true;
@@ -584,10 +584,6 @@ export default {
       }
       else if (sns_type == 'google') {
         loc = '//plus.google.com/share?url=' + href;
-      }
-      else if (sns_type == 'pinterest') {
-
-        loc = '//www.pinterest.com/pin/create/button/?url=' + href + '&media=' + img + '&description=' + encodeURIComponent(title);
       }
       else if (sns_type == 'kakaostory') {
         loc = 'https://story.kakao.com/share?url=' + href;
@@ -604,9 +600,6 @@ export default {
       window.open(loc);
     },
     onFacebookShareClick() {
-      let image = this.activity.main_image.image[0]
-      let name = `${this.activity.title} | 위킨`
-
       window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&display=popup&locale=ko_KR&link=${encodeURIComponent(`http://175.195.139.99:3000/share/${this.activity.activity_key}`)}&version=v2.1`,
         'facebookShare',
         'toolbar=0,status=0,width=625,height=435'
