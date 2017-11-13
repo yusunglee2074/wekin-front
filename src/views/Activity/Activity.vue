@@ -35,8 +35,8 @@
           <div class="active content">
             <div class="button-container">
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '투어/여행'}" @click="toggleCheckList(categoryCheck, 0, '투어/여행')">투어/여행</button>
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '익스트림 (레져)'}" @click="toggleCheckList(categoryCheck, 0, '익스트림 (레져)')">익스트림</button>
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '스포츠 (구기종목)'}" @click="toggleCheckList(categoryCheck, 0, '스포츠 (구기종목)')">스포츠</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '익스트림'}" @click="toggleCheckList(categoryCheck, 0, '익스트림')">익스트림</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '스포츠'}" @click="toggleCheckList(categoryCheck, 0, '스포츠')">스포츠</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '음악'}" @click="toggleCheckList(categoryCheck, 0, '음악')">음악</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '댄스'}" @click="toggleCheckList(categoryCheck, 0, '댄스')">댄스</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '뷰티'}" @click="toggleCheckList(categoryCheck, 0, '뷰티')">뷰티</button>
@@ -90,9 +90,9 @@
 	    <h3><small>선택가격: </small>{{ slider.value[0] }} ~ {{ slider.value[1] }}만원</h3>
           </div>
         </div>
+        <!--
         <div class="ui styled accordion">
           <div class="active title">
-            <!--<i class="dropdown icon"></i>-->
             인원
           </div>
           <div class="active content">
@@ -106,6 +106,7 @@
             </div>
           </div>
         </div>
+        -->
         <!--
         <div class="ui styled accordion location">
           <div class="active title">
@@ -141,10 +142,10 @@
           <a v-bind:class="{isClicked: this.categoryCheck === '투어/여행'}" class="item" @click="toggleCheckList(categoryCheck, 0, '투어/여행')">
             투어/여행
           </a>
-          <a v-bind:class="{isClicked: this.categoryCheck === '익스트림 (레져)'}" class="item" @click="toggleCheckList(categoryCheck, 0, '익스트림 (레져)')">
-            익스트림 (레져)
+          <a v-bind:class="{isClicked: this.categoryCheck === '익스트림'}" class="item" @click="toggleCheckList(categoryCheck, 0, '익스트림')">
+            익스트림
           </a>
-          <a v-bind:class="{isClicked: this.categoryCheck === '스포츠 (구기종목)'}" class="item" @click="toggleCheckList(categoryCheck, 0, '스포츠 (구기종목)')">
+          <a v-bind:class="{isClicked: this.categoryCheck === '스포츠'}" class="item" @click="toggleCheckList(categoryCheck, 0, '스포츠')">
             스포츠 (구기종목)
           </a>
           <a v-bind:class="{isClicked: this.categoryCheck === '음악'}" class="item" @click="toggleCheckList(categoryCheck, 0, '음악')">
@@ -348,8 +349,8 @@ export default {
       let endDate = moment(this.endDate).toDate().getTime()
 
       if (this.startDate && this.endDate) { //시작일 종료일 모두 선택한 경우
-        let wekin = _.find(activity.Wekins, (wekin) => {
-          if ((moment(wekin.start_date).diff(startDate) > 0) && (moment(wekin.start_date).diff(endDate) < 0)) {
+        let wekin = _.find(activity.start_date_list, (date) => {
+          if ((moment(date).diff(startDate) > 0) && (moment(date).diff(endDate) < 0)) {
             return true
           }
         })
@@ -531,10 +532,10 @@ export default {
           case "투어/여행":
             this.togglecategory(text)
             break;
-          case "익스트림 (레져)":
+          case "익스트림":
             this.togglecategory(text)
             break;
-          case "스포츠 (구기종목)":
+          case "스포츠":
             this.togglecategory(text)
             break;
           case "음악":
@@ -693,8 +694,8 @@ export default {
         this.toggleCheckList(this.locationCheck, 0, this.$route.params.location)
       }
     }
-    if (params.categoryCheck) {
-      this.categoryCheck = this.$route.params.categoryCheck
+    if (params.category) {
+      this.categoryCheck = this.$route.params.category
     }
     if (params.people) {
       this.peopleCheck.one = false
