@@ -17,7 +17,6 @@ axios.interceptors.request.use((config) => {
 })
 
 export default {
-  forSNSLoginUrl: BASE_API_URL.slice(0, BASE_API_URL.length - 7) + '8080',
   dbCreateWithIdToken (idToken) {
     return axios.post(`${BASE_API_URL}/user/front/signUp/dbCreateWithIdtoken`, { idToken })
       .then( res => res.data )

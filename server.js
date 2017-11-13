@@ -21,6 +21,19 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 app.use(serveStatic(path.join(__dirname, 'dist')));
 
+app.get('/share/doc/:doc_key', function(req, res){
+  axios.get(`${BASE_API_URL}/util/share/doc/${req.params.doc_key}`)
+  .then(result => {
+    res.render('./../share', {
+      title: result.data.content, 
+      description: result.data.tags, 
+      image: result.data.image_url[0],
+      redirectUrl: `/feed/${req.params.doc_key}`
+    })
+  })
+  .catch(error => console.log(error))
+});
+
 app.get('/share/:activity_key', function(req, res){
   axios.get(`${BASE_API_URL}/util/share/${req.params.activity_key}`)
   .then(result => {
