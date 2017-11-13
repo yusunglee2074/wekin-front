@@ -545,6 +545,17 @@
         <i class="right arrow icon"></i>
         다음페이지
       </button>
+      <button class="ui button" @click="tmpSave()" style="background: rgba(42,195,145,0.2);margin-left:50px;" v-if="page < 10">
+        <i class="save icon"></i>
+        임시저장
+      </button>
+      
+    </div>
+    <div style="  bottom: 150px;position: absolute;">
+      <br>
+      <transition name="fade">
+        <h4 v-if="tmpNoti !== ''">{{ tmpNoti }}</h4>
+      </transition>
     </div>
   </div>
 
@@ -641,6 +652,7 @@ export default {
         Sa: "토요일",
         Mo: "월요일"
       },
+      tmpNoti: ''
     }
   },
   computed: {
@@ -730,6 +742,26 @@ export default {
     checkedDaysInclude(text) {
       return this.checkedDays.includes(text)
     },
+    setNotiArea(text) {
+      this.tmpNoti = text
+    },
+    tmpSave() {
+      this.setNotiArea("저장 성공.")
+      localStorage.setItem('tmpActivityData', JSON.stringify(this._data));
+    },
+    tmpLoad() {
+      if(localStorage.tmpActivityData) {
+        if(confirm("임시저장 된 데이터를 불러오시겠습니가?")) {
+          let tmp = JSON.parse(localStorage.tmpActivityData)
+          this.activity = tmp.activity
+          this.checkedDays = tmp.checkedDays
+          this.detailQuestion = tmp.detailQuestion
+          this.uploadedMainImages = tmp.uploadedMainImages
+          this.setNotiArea('불러오기 성공.\n 기존의 파일은 삭제되었으니 저장을 원하시면 다시한번 임시저장 부탁드립니다.')
+          localStorage.removeItem('tmpActivityData')
+        }
+      }
+    },
     submit() {
       for (let index in this.activity.baseWeekOption) {
         if (!this.checkedDays.includes(index)) {
@@ -776,7 +808,7 @@ export default {
       for (let i in params.base_week_option) {
         let item = params.base_week_option[i]
         if (this.checkedDays.includes(i)) {
-          if (item.price_with_time.length !== start_time.length) {
+          if (item.price_with_time.length !== item.start_time.length) {
             window.alert("요일별 시작시각, 추가가격 설정부분에 빈칸이 있습니다.")
             return
           }
@@ -855,6 +887,7 @@ export default {
         ['preformatted'],
       ]
     }) 
+    this.tmpLoad()
   }
 }
 </script>
@@ -930,5 +963,11 @@ progress::-webkit-progress-value {
 }
 #final-page span {
   font-weight: 300;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2.9s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
 }
 </style>
