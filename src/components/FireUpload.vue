@@ -26,18 +26,22 @@ export default {
       let self = this
       let files = e.target.files
       for (let i = 0; i < files.length; i++) {
-        let file = files[i]
-        let tempRef = firebase.storage().ref()
-        let imagePath = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getSeconds() + new Date().getMilliseconds()
-        let imageRef = tempRef.child('img/image/' + imagePath)
-        let uploadTask = imageRef.put(file)
-        uploadTask.on('state_changed', function(snapshot){
-        }, function(error) {
-        }, function() {
-          var downloadURL = uploadTask.snapshot.downloadURL
-          self.$emit('update:imageUrl', downloadURL + '?alt=media')
-          }
-        )
+        (function(i) {
+          setTimeout(function() { 
+            let file = files[i]
+            let tempRef = firebase.storage().ref()
+            let imagePath = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getSeconds() + new Date().getMilliseconds()
+            let imageRef = tempRef.child('img/image/' + imagePath)
+            let uploadTask = imageRef.put(file)
+            uploadTask.on('state_changed', function(snapshot){
+            }, function(error) {
+            }, function() {
+              var downloadURL = uploadTask.snapshot.downloadURL
+              self.$emit('update:imageUrl', downloadURL + '?alt=media')
+            }
+            )
+          }, 100 * i);
+        })(i)
       }
     }
   }
