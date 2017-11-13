@@ -355,7 +355,7 @@ export default {
             if (activity.rating_avg == null) {
               activity.rating_avg = 0
             }
-            this.deleteBeforeTodayDate(activity.start_date_list)
+            this.deleteBeforeTodayDate(activity.start_date_list, activity)
             return activity
           })
 
@@ -378,7 +378,7 @@ export default {
             if (activity.rating_avg == null) {
               activity.rating_avg = 0
             }
-            this.deleteBeforeTodayDate(activity.start_date_list)
+            this.deleteBeforeTodayDate(activity.start_date_list, activity)
             return activity
           })
 
@@ -539,12 +539,13 @@ export default {
         }
       })
     },
-    deleteBeforeTodayDate(dateList) {
-      let today = moment()
+    deleteBeforeTodayDate(dateList, wekin) {
+      let activity = wekin 
+      let todayPlusDueDate = moment().add(activity.due_date, 'days')
       let length = dateList.length
       for (let i = 0; i < length; i++) {
         let startDate = dateList[i]
-        if (moment(startDate).isBefore(today)) {
+        if (moment(startDate).isBefore(todayPlusDueDate)) {
           dateList.splice(0, 1)
           i--
         } else {

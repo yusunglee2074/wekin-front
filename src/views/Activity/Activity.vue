@@ -619,7 +619,7 @@ export default {
           this.wekinsTemp = json
           this.wekins = _.orderBy(json, ['created_at'], ['desc']);
           this.wekins = this.wekins.map( wekin => {
-            this.deleteBeforeTodayDate(wekin.start_date_list)
+            this.deleteBeforeTodayDate(wekin.start_date_list, wekin)
             return wekin
           })
           this.initSortDropdown()
@@ -655,12 +655,13 @@ export default {
         })
       }, 1000)
     },
-    deleteBeforeTodayDate(dateList) {
-      let today = moment()
+    deleteBeforeTodayDate(dateList, wekin) {
+      let activity = wekin 
+      let todayPlusDueDate = moment().add(activity.due_date, 'days')
       let length = dateList.length
       for (let i = 0; i < length; i++) {
         let startDate = dateList[i]
-        if (moment(startDate).isBefore(today)) {
+        if (moment(startDate).isBefore(todayPlusDueDate)) {
           dateList.splice(0, 1)
           i--
         } else {
