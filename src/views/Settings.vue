@@ -13,9 +13,8 @@
       <div class="settings__list">
         <label>프로필사진</label>
         <div class="fields">
-          <FireUpload class="profile-uploader profile" :imageUrl="uploadedProfile" @update:imageUrl="val => uploadedProfile = val" @progress="progress"></FireUpload>
-          <img class="ui middle circular aligned tiny image profile" :src="uploadedProfile">
-          <a href="#" class="margin-min">이미지 변경</a>
+          <img class="ui middle circular aligned tiny image profile" :src="uploadedProfile" style="margin-right:60px;">
+          <FireUpload title="업로드" class="profile-uploader profile" :imageUrl="uploadedProfile" @update:imageUrl="val => uploadedProfile = val" @progress="progress"></FireUpload>
         </div>
       </div>
       <div class="settings__list">
