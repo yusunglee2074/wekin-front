@@ -20,6 +20,9 @@
             <p v-if="activity.address">
               <i class="icon marker"></i>{{activity.address}}
             </p>
+            <p v-if="activity.address">
+              <i class="icon won"></i>{{activity.base_price}}
+            </p>
             <div class="ui calendar">
               <div class="ui input styled primary left icon" style="width: 260px;">
                 <i v-show="!requestData.selectedDate" class="icon calendar wekin-calendar-icon"></i>
@@ -35,7 +38,7 @@
                 </datepicker>
               </div>
             </div>
-            <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
+            <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking && selectTimeOptionShow">
               <p style="font-size: 14px; margin: 20px 0 2px 0;">시각 선택</p>
               <select v-model="requestData.startTime" class="width260 height25" @change="getCurrentNumberOfBookingUsers()">
                 <option value="sample" disabled>시작시각</option>
@@ -315,7 +318,7 @@
                 </datepicker>
               </div>
             </div>
-            <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
+            <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking && selectTimeOptionShow">
               <p style="font-size: 14px; margin: 20px 0 2px 0;">시각 선택</p>
               <select v-model="requestData.startTime" class="width260 height25" @change="getCurrentNumberOfBookingUsers()">
                 <option value="sample" disabled>시작시각</option>
@@ -538,6 +541,7 @@ export default {
       },
       selectedDateIsAllowToBooking: true,
       selectCourseOptionShow: true,
+      selectTimeOptionShow: true,
     }
   },
   methods: {
@@ -558,8 +562,14 @@ export default {
     },
     resetSelection(evnt) {
       if (evnt) {
+        // 날짜 선택 후 시각이 하나면 시각창보여줄필요가 없다. 그리고 requestData에 시각을 집어넣는다.
+        // 그 후 같은 로직상에서 코스옵션 또한 하나면 보여줄필요가 없다.
         this.requestData.selectedYoil = moment(this.requestData.selectedDate).format('dd')
         this.requestData.startTime = 'sample'
+        if (Object.keys(this.startTimeList).length === 1) {
+          this.requestData.startTime = this.startTimeList
+          this.selectTimeOptionShow = false
+        }
         if (this.activity.base_price_option.length === 1) {
           this.requestData.selectedOption = [this.activity.base_price_option[0].name, this.activity.base_price_option[0].price]
           this.selectCourseOptionShow = false
@@ -743,8 +753,13 @@ export default {
                 if (this.checkLoginState()) {
                   let params = this.requestData
                   params.activity_key = this.activity.activity_key
+                  params.max_user = this.activity.base_week_option[this.requestData.selectedYoil].max_user
                   api.postWekin(params)
-                    .then( result => {
+                    .then(result => {
+                      if (result.message == 'error') {
+                        alert("죄송합니다. 해당 날짜에 예약인원이 마감되었습니다.")
+                        return
+                      }
                       // requestData에 위킨키 추가
                       this.requestData.wekin_key = result.data.wekin_key || result.data[1][0].wekin_key
                       this.requestData.amount = result.data.pay_amount || result.data[1][0].pay_amount
