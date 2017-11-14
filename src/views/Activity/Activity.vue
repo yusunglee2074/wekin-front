@@ -158,22 +158,22 @@
             뷰티 
           </a>
           <a v-bind:class="{isClicked: this.categoryCheck === '요리'}" class="item" @click="toggleCheckList(categoryCheck, 0, '요리')">
-           '요리 
+           요리 
           </a>
           <a v-bind:class="{isClicked: this.categoryCheck === '아트'}" class="item" @click="toggleCheckList(categoryCheck, 0, '아트')">
-           '아트 
+           아트 
           </a>
           <a v-bind:class="{isClicked: this.categoryCheck === '힐링'}" class="item" @click="toggleCheckList(categoryCheck, 0, '힐링')">
-           '힐링 
+           힐링 
           </a>
           <a v-bind:class="{isClicked: this.categoryCheck === '아웃도어'}" class="item" @click="toggleCheckList(categoryCheck, 0, '아웃도어')">
-           '아웃도어 
+           아웃도어 
           </a>
           <a v-bind:class="{isClicked: this.categoryCheck === '요가/피트니스'}" class="item" @click="toggleCheckList(categoryCheck, 0, '요가/피트니스')">
-           '요가/피트니스 
+           요가/피트니스 
           </a>
           <a v-bind:class="{isClicked: this.categoryCheck === '소품제작'}" class="item" @click="toggleCheckList(categoryCheck, 0, '소품제작')">
-           '소품제작 
+           소품제작 
           </a>
         </div>
       </div>
@@ -868,6 +868,8 @@ export default {
 
 .mobile-filter-btn, .categoryformobile {
   display: none;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1355px) {
@@ -900,9 +902,9 @@ export default {
     }
   }
   .categoryformobile {
+    left:0;
     position: fixed;
     top: 110px;
-    left: 14px;
     display: block;
     z-index: 1000;
     background-color: white;
@@ -943,13 +945,11 @@ export default {
 
 .ui.text.menu {
   margin: -3px 0px;
-  margin-left: -28px;
   height: 50px;
   min-height: 10px;
   font-size: 13px;
   .item {
     text-align: center;
-    width: 16.66%;
     display: block;
 
     &#fourlettercategory {
