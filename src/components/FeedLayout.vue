@@ -17,19 +17,19 @@
         <p>{{feed.created_at | formatDate}}</p>
       </div>
       <div style="display:inline-block;">
-          <transition name="fade" mode="out-in">
-            <div v-if="!snsShow" class="ui basic button" style="margin:auto 0 auto 70px;" v-on:click="snsShow = !snsShow">
+        <transition name="fade" mode="out-in">
+          <div v-if="!snsShow" class="ui basic button" style="position: absolute;right: 20px;top: 20px;" v-on:click="snsShow = !snsShow">
             <span><i class="share alternate icon"></i>공유하기</span>
-</div>
-            <div v-else key="button" class="ui basic button" style="margin:auto auto" v-on:click="snsShow = !snsShow">
+          </div>
+          <div v-else key="button" class="ui basic button" style="position: absolute;right: 15px;top: 15px;" v-on:click="snsShow = !snsShow">
             <span>
               <img class="facebookLogoBtn" @click="onFacebookShareClick(feed.doc_key)" src="/static/images/ic-facebook.png" style="width:28px;height=28px; margin-right:10px;">
               <img class="facebookLogoBtn" @click="snsShare('google', feed.doc_key)" src="/static/images/ic-google.png" style="width:28px;height=28px; margin-right:10px;">
               <img class="facebookLogoBtn" @click="snsShare('kakaostory', feed.doc_key)" src="/static/images/ic-kakaostory.png" style="width:28px;height=28px; margin-right:10px;">
               <img class="facebookLogoBtn" @click="snsShare('naver', feed.doc_key)" src="/static/images/ic-naver.png" style="width:28px;height=28px; margin-right:10px;">
             </span>
-</div>
-          </transition>
+          </div>
+        </transition>
       </div>
       <div class="content">
         <p v-bind:class="{ expanded: isExpanded}" v-html="cutContent" style="white-space:pre-wrap"></p>
