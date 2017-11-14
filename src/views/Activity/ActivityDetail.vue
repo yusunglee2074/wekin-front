@@ -16,24 +16,6 @@
       <div class="ui right rail apply-container">
         <div class="ui sticky">
           <div class="ui segment">
-            <div class="ui icon top floated right inline dropdown feed-menu">
-              <i class="ellipsis vertical icon"></i>
-              <div class="menu">
-                <div class="header">공유하기</div>
-                <div class="item" @click="onFacebookShareClick()">
-                  <img class="facebookLogoBtn" src="/static/images/ic-facebook.png"> 페이스북
-                </div>
-                <div class="item" @click="snsShare('google')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-google.png"> 구글
-                </div>
-                <div class="item" @click="snsShare('kakaostory')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-kakaostory.png"> 카카오스토리
-                </div>
-                <div class="item" @click="snsShare('naver')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-naver.png"> 네이버
-                </div>
-              </div>
-            </div>
             <h2 style="margin-top:0">{{activity.title}}</h2>
             <p v-if="activity.address">
               <i class="icon marker"></i>{{activity.address}}
@@ -133,33 +115,23 @@
       </div>
       <div class="ui tab overview active" id="first" v-if="tabPage === 1">
         <div class="title-mobile-container">
-          <h2>{{activity.title}}
-            <div class="ui icon top floated right pointing inline dropdown feed-menu">
-              <i class="ellipsis vertical icon"></i>
-              <div class="menu">
-                <div class="header">공유하기</div>
-                <div class="item" @click="onFacebookShareClick()">
-                  <img class="facebookLogoBtn" src="/static/images/ic-facebook.png"> 페이스북
-                </div>
-                <div class="item" @click="snsShare('google')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-google.png"> 구글
-                </div>
-                <div class="item" @click="snsShare('kakaostory')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-kakaostory.png"> 카카오스토리
-                </div>
-                <div class="item" @click="snsShare('naver')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-naver.png"> 네이버
-                </div>
-              </div>
-            </div>
-
-          </h2>
+          <h2>{{activity.title}}</h2>
           <p v-if="activity.address_detail">
             <i class="icon marker"></i>{{activity.address}}
           </p>
           <p>
             <i class="icon won"></i>{{activity.base_price | joinComma}}원
           </p>
+      <div style="display:inline-block;">
+          <div style="" v-on:click="snsShow = !snsShow">
+            <span>
+              <img class="facebookLogoBtn" @click="onFacebookShareClick()" src="/static/images/ic-facebook.png" style="cursor:pointer;width:32px;height=32px; margin-right:10px;">
+              <img class="facebookLogoBtn" @click="snsShare('google')" src="/static/images/ic-google.png" style="cursor:pointer;width:32px;height=32px; margin-right:10px;">
+              <img class="facebookLogoBtn" @click="snsShare('kakaostory')" src="/static/images/ic-kakaostory.png" style="cursor:pointer;width:32px;height=32px; margin-right:10px;">
+              <img class="facebookLogoBtn" @click="snsShare('naver')" src="/static/images/ic-naver.png" style="cursor:pointer;width:32px;height=32px; margin-right:10px;">
+            </span>
+          </div>
+      </div>
           <div class="ui divider"></div>
         </div>
         <h4>메이커</h4>
@@ -328,41 +300,74 @@
       <div class="mobile-form-container-back-layer" v-if="isMobileFormShowing" @click="toggleMobileForm()">
       </div>
       <div class="mobile-form-container" v-if="isMobileFormShowing">
-        <div class="ui selection dropdown styled full-width schedule">
-          <input type="hidden" name="schedule">
-          <i class="dropdown icon"></i>
-          <div class="default text">날짜선택</div>
-          <div class="menu">
-            <div class="item"
-              v-for="wekin in wekins"
-              v-bind:key="wekin.wekin_key"
-              :data-value="wekin.wekin_key"
-              v-if="new Date(wekin.start_date) >= new Date()"
-              :class="{ deadlineOver: new Date() > new Date(wekin.due_date) }">
-              {{wekin.start_date | formatDateTimeKo}} ({{wekin.max_user - wekin.current_user}}남음)
-              <span v-if="new Date() > new Date(wekin.due_date)"
-                style="color: #ccc;"> (마감)
-              </span>
+            <div class="ui calendar">
+              <div class="ui input styled primary left icon" style="width: 260px;">
+                <i v-show="!requestData.selectedDate" class="icon calendar wekin-calendar-icon"></i>
+                <datepicker 
+                  v-model="requestData.selectedDate" 
+                  id="datepickerId" 
+                  input-class="width260" 
+                  language="ko" 
+                  format="MMM dd(D), yyyy"
+                  placeholder="        날짜선택"
+                  :disabled="calendar"
+                  v-on:input="resetSelection">
+                </datepicker>
+              </div>
             </div>
-            <!--<div class="item" v-for="wekin in wekins" :data-value="wekin.wekin_key">{{wekin.start_date | formatDateKo}}</div>
-            // TODO: 위킨 data value 테스트 -->
-          </div>
-        </div>
-        <div class="ui selection dropdown styled full-width peopleCount" v-if="Object.keys(selectedWekin).length">
-          <input type="hidden" name="gender">
-          <i class="dropdown icon"></i>
-          <div class="default text">인원선택</div>
-          <div class="menu">
-            <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)" v-bind:key="index">{{index + 1}}<span v-if="activity.isteamorpeople === 'team'">팀</span><span v-if="activity.isteamorpeople !== 'team'">명</span></div>
-            <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) == 0" data-value="closed">마감</div>
-          </div>
-        </div>
-        <p v-show="Object.keys(selectedWekin).length">
-          {{selectedWekin.due_date | formatDateTimeKo}}까지 신청해주세요.
-        </p>
-        <button class="negative ui button full-width apply-btn" v-on:click="onApplyBtn()">
-          신청하기
-        </button>
+            <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">시각 선택</p>
+              <select v-model="requestData.startTime" class="width260 height25" @change="getCurrentNumberOfBookingUsers()">
+                <option value="sample" disabled>시작시각</option>
+                <option v-for="(item, index) in startTimeList" :value="[index, item]">
+                  {{ index }} {{ item | Won }}
+                </option>
+              </select>
+            </div>
+            <div v-show="requestData.startTime !== 'sample' && selectCourseOptionShow">
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">코스 선택</p>
+              <select v-model="requestData.selectedOption" class="width260 height25">
+                <option value="sample" disabled>옵션을 선택해주세요</option>
+                <option v-for="(item, index) in activity.base_price_option" :value="[item.name, item.price]">
+                  {{ item.name }} {{ item.price | Won }}
+                </option>
+              </select>
+            </div>
+            <div v-show="requestData.selectedOption !== 'sample'">
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">수량 선택</p>
+              <div style="border: 0.5px solid Gainsboro; padding: 10px 10px;">
+                <div v-for="(item, index) in activity.base_extra_price_option">
+                  <div style="height:22px; margin-top:10px;">
+                    <span style="float: left">{{ item.name }} {{ item.price | Won }}</span>
+                    <div style="float: right">
+                      <span>₩ {{ +requestData.startTime[1] + +activity.base_price + +item.price + +requestData.selectedOption[1] | joinComma }}</span>
+                      <button @click="requestData.selectedExtraOption[index] > 0 ? requestData.selectedExtraOption[index]-- : null">-</button>
+                      <span>{{requestData.selectedExtraOption[index]}} </span>
+                      <button @click="totalRequestAmount < activity.base_week_option[requestData.selectedYoil].max_user ? requestData.selectedExtraOption[index]++ : null">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-show="finalPrice >0" style="text-align:right; margin-top:20px;">
+              <h3>활동 가격 ₩ {{ finalPrice | joinComma }} </h3>
+
+
+            </div>
+            <div v-if="requestData.selectedDate">
+              <p style="font-size:13px; margin-top:12px;color:red;" v-if="!selectedDateIsAllowToBooking" >해당 날짜 인원 마감되었습니다.</p>
+            </div>
+
+            <button class="negative ui button full-width apply-btn"
+              style="margin-top:15px;"
+              id="membershipvirtualview"
+              v-on:click="onApplyBtn()"
+              v-if="user">
+              신청하기
+            </button>
+            <button class="negative ui button full-width apply-btn" id="virtualview" v-on:click="onApplyBtn()" v-if="!user">
+              신청하기
+            </button>
       </div>
     </div>
     <mail-component ref="mailRef"></mail-component>
@@ -678,6 +683,15 @@ export default {
     toggleMobileForm() {
       if (this.user) {
         this.isMobileFormShowing = !this.isMobileFormShowing
+      } else {
+        alert("로그인이 필요한 서비스 입니다.")
+        this.$parent.$refs.navbar.showModalLogin()
+      }
+    },
+    /*
+    toggleMobileForm() {
+      if (this.user) {
+        this.isMobileFormShowing = !this.isMobileFormShowing
         this.$nextTick(() => {
           $('.ui.dropdown.schedule')
             .dropdown({
@@ -703,6 +717,7 @@ export default {
         this.$parent.$refs.navbar.showModalLogin()
       }
     },
+    */
     activeDropdown() {
       $('.qna-buttons-container .ui.selection.dropdown').dropdown()
     },
@@ -1515,7 +1530,7 @@ h2 {
   }
 }
 
-@media only screen and (max-width: 479px) {
+@media only screen and (max-width: 779px) {
   .swiper-container.wekin img {
     height: 250px!important
   }
@@ -1558,5 +1573,10 @@ h2 {
 }
 .explain-detail img {
   width: 100%!important;
+}
+@media only screen and (max-width: 479px) {
+  .vdp-datepicker__calendar {
+    top: -280px;
+  }
 }
 </style>
