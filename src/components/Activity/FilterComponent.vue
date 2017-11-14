@@ -31,12 +31,18 @@
       </div>
       <div class="active content">
         <div class="button-container">
-          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '놀이'}" @click="toggleCheckList(categoryCheck, 0, '놀이')">놀이</button>
-          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '도전'}" @click="toggleCheckList(categoryCheck, 0, '도전')">도전</button>
-          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '체험'}" @click="toggleCheckList(categoryCheck, 0, '체험')">체험</button>
-          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '문화'}" @click="toggleCheckList(categoryCheck, 0, '문화')">문화</button>
-          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '휴식'}" @click="toggleCheckList(categoryCheck, 0, '휴식')">휴식</button>
-          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '축제'}" @click="toggleCheckList(categoryCheck, 0, '축제')"><span>축제</span></button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '투어/여행'}" @click="toggleCheckList(categoryCheck, 0, '투어/여행')">투어/여행</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '익스트림'}" @click="toggleCheckList(categoryCheck, 0, '익스트림')">익스트림</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '스포츠'}" @click="toggleCheckList(categoryCheck, 0, '스포츠')">스포츠</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '음악'}" @click="toggleCheckList(categoryCheck, 0, '음악')">음악</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '댄스'}" @click="toggleCheckList(categoryCheck, 0, '댄스')">댄스</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '뷰티'}" @click="toggleCheckList(categoryCheck, 0, '뷰티')">뷰티</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '요리'}" @click="toggleCheckList(categoryCheck, 0, '요리')">요리</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '아트'}" @click="toggleCheckList(categoryCheck, 0, '아트')">아트</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '힐링'}" @click="toggleCheckList(categoryCheck, 0, '힐링')">힐링</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '아웃도어'}" @click="toggleCheckList(categoryCheck, 0, '아웃도어')">아웃도어</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '요가/피트니스'}" @click="toggleCheckList(categoryCheck, 0, '요가/피트니스')">피트니스</button>
+          <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '소품제작'}" @click="toggleCheckList(categoryCheck, 0, '소품제작')">소품제작</button>
         </div>
       </div>
     </div>
@@ -79,9 +85,12 @@
         <p id="display-d"></p>
       </div>
     </div>
+    
+    <!--
+    FIXME: 인원 내 주변 버튼 비활성화
     <div class="ui styled accordion">
       <div class="active title">
-        <!--<i class="dropdown icon"></i>-->
+        <i class="dropdown icon"></i>
         인원
       </div>
       <div class="active content">
@@ -95,7 +104,6 @@
         </div>
       </div>
     </div>
-    <!--
     <div class="ui styled accordion location">
       <div class="active title">
         내주변
@@ -197,7 +205,7 @@ export default {
           endPrice: endPrice,
           people: people,
           locationCheck: locationCheck,
-          categoryCheck: category
+          category: category
         }
       })
     },
@@ -310,22 +318,40 @@ export default {
       // 카테고리 시작
       else if (checkListType === this.categoryCheck) {
         switch (text) {
-          case "놀이":
+          case "투어/여행":
             this.togglecategory(text)
             break;
-          case "도전":
+          case "익스트림":
             this.togglecategory(text)
             break;
-          case "체험":
+          case "스포츠":
             this.togglecategory(text)
             break;
-          case "문화":
+          case "음악":
             this.togglecategory(text)
             break;
-          case "축제":
+          case "댄스":
             this.togglecategory(text)
             break;
-          case "휴식":
+          case "뷰티":
+            this.togglecategory(text)
+            break;
+          case "요리":
+            this.togglecategory(text)
+            break;
+          case "아트":
+            this.togglecategory(text)
+            break;
+          case "힐링":
+            this.togglecategory(text)
+            break;
+          case "아웃도어":
+            this.togglecategory(text)
+            break;
+          case "요가/피트니스":
+            this.togglecategory(text)
+            break;
+          case "소품제작":
             this.togglecategory(text)
             break;
         }
