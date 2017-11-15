@@ -207,14 +207,14 @@
         </h3>
         <div class="news swiper-container">
           <div class="swiper-wrapper">
-            <div @click="goLink(news.link_url)" class="ui card pointer swiper-slide" v-for="(news, index) in news.data" v-bind:key="index">
+            <div @click="goLink(news.link_url, news.news_key)" class="ui card pointer swiper-slide" v-for="(news, index) in news.data" v-bind:key="index">
                 <div class="image">
                   <div class="backImage mainImage" v-bind:style="{'background-image':`url(${news.thumbnail_url})`}"></div>
                   <div class="backImage overlayer">
                   </div>
                 </div>
                 <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px; position:relative;">
-                  <span>{{ news.title }}</span><span style="float:right;color: #999999; font-size:12px; margin-top:8px;">관심 {{ news.like_count }} 공유 {{ news.share_count }}</span>
+                  <span>{{ news.title }}</span><span style="position:absolute;bottom:4px;right:4px;color: #999999; font-size:12px; margin-top:8px;">조회수 {{ news.click_count }} 관심 {{ news.like_count }} 공유 {{ news.share_count }}</span>
                   <br>
                   <span style="font-size:10px; color:#acacac">{{ news.link_url }}
                   </span>
@@ -306,7 +306,8 @@ export default {
     }
   },
   methods: {
-    goLink(url) {
+    goLink(url, news_key) {
+      api.newsViewCountPlus(news_key)
       window.open(url)
     },
     isEndSchedule(schedule) {
