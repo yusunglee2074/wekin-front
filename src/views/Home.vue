@@ -182,8 +182,8 @@
                 <span>
                   <strong class="title">{{wekin.title}}</strong>
                 </span>
-                <div class="description">
-                  <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 3" v-bind:key="index" style="padding-right:8px;">{{schedule.start_date | formatDateKo}}</span>
+                <div class="description" style="overflow:hidden;font-size:13px;">
+                  <span v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-for="(schedule, index) in wekin.Wekins" v-if="new Date(schedule.start_date) > Date.now()" v-bind:key="index" style="padding-right:8px;">{{schedule.start_date | formatDateKo}}</span>
                 </div>
               </div>
               </router-link>
