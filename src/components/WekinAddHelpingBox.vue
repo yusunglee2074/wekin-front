@@ -147,11 +147,10 @@
   <div v-show="page == 12">
       <section>
         <h3>대표이미지</h3>
-        <div class="describe">
-          활동의 일정이나 소요시간을 작성하세요.</strong><br>
-위킨 활동을 대표하는 이미지는 앱/웹 모든 페이지에서 노출됩니다.<strong class="green"> 권장 사항에 맞게 이미지를 업로드 해주세요.</strong><br> 최소 1개 ~ 최대 10개까지 이미지를 올릴 수 있어요. <strong class="green">위킨활동 대표 사진은 첫번째 사진입니다.</strong>
+        <div class="describe" style="padding:0;">
+          위킨 활동을 대표하는 이미지는 앱/웹 모든 페이지에서 노출됩니다.<br><strong class="green"> 권장 사항에 맞게 이미지를 업로드 해주세요.</strong><br> 최소 1개 ~ 최대 10개까지 이미지를 올릴 수 있어요. <strong class="green">위킨활동 대표 사진은 첫번째 사진입니다.</strong>
         </div>
-        <div class="example line" style="height:300px;">
+        <div class="example line" style="height:540px;">
           <span class="t">이렇게 해보세요!</span>
           이미지 크기 : 1600 x 800 (해당 비율의 고화질 사진이면 좋아요.)<br>
           이미지 방향 : 저희 사이트를 보셔서 아시겠지만, 가로 사진을 업로드 하셔야 합니다.<br>
@@ -159,11 +158,23 @@
                     2) 활동중 사진
                     3) 사용하시는 기구/ 용품/ 제품 사진 
                     4) 제작 완료/ 작품 사진
-                    <span class="good">
-                      <img src="/static/images/good.png" alt="" style="float:left;display:inline-block;width:200px;height:auto;"><br></span>
-
-                      <span class="bad" style="margin-left:210px;">
-                        <img src="/static/images/bad.png" alt="" style="float:left;display:inline-block;width:100px;height:auto;"></span>
+                    <span class="good" style="vertical-align: top;margin-top: 10px;"></span>
+                    <div>
+                      <img src="/static/images/makeActivity/image_web_1@1x-min.png" alt="" style="margin-left:20px;margin-top:10px;width:424px;height:auto;">
+</div>
+                      <div>
+                      <span class="bad" style="vertical-align: top;margin-top: 10px;"></span><span style="vertical-align:-8px;font-size: 14px;text-decoration: underline;">이런 사진들은 좋지 않아요!</span>
+                      </div>
+                      <div style="width:330px; margin-left:20px; margin-top: 10px;">
+                        <div style="float:left;">
+                          <img src="/static/images/makeActivity/image_web_3@1x-min.png" alt="" style="width:120px; margin-right:18px;">
+                      <p style="margin-bottom:1px;">이미지가 세로로 길면 </p>
+</div>
+                        <div style="float:left;">
+                        <img src="/static/images/makeActivity/image_web_4@1x-min.png" alt="" style="width:150px;"><br>
+                      <span>위아래가 잘린 사진이 노출됩니다.</span>
+                      </div>
+                      </div>
         </div>
       </section>
   </div>
@@ -392,7 +403,7 @@ section:after {
 }
 
 section h3 {
-  background : url('/static/icon/ico-head-h3.png') center left no-repeat;
+  background : url('/static/images/makeActivity/ico-tip@.svg') center left no-repeat;
   display : inline-block;
   padding-left : 26px;
   padding-top : 2px;

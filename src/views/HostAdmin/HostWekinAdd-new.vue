@@ -169,20 +169,19 @@
       <div style="position:relative;flex:1" v-for="(imageUrl, index) in uploadedMainImages" v-bind:key="index">
       </div>
       <h2>상세페이지에 노출시킬 이미지을 업로드해주세요.</h2>
-      <h3>* 첫번째 올려주신 이미지는 대표이미지가 됩니다. </h3>
       <div class="ui card" :style="{ borderStyle: index === 0 ? 'solid' : '', borderColor: 'rgb(40,190,140)' }" style="width: 300px; height:200px; float:left; margin-right:8px;" v-for="(imageUrl, index) in uploadedMainImages" v-bind:key="index">
         <div style="left:12px;top:8px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
           <img style="width:100%;height:100%" :src="imageUrl">
           <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteImage(index)"></i>
         </div>
       </div>
-      <div class="ui card" style="width: 300px; height:200px; margin-right:8px; float:left;" @mouseover="toggleHelpBox('on', 12)" @mouseleave="toggleHelpBox('off', 12)">
+      <div class="ui card" style="width: 300px; height:200px; margin-right:8px; float:left;" @click.self="toggleHelpBox('on', 12)">
         <div style="width:90px; height:30px; position:absolute; bottom: 46%; left: 36%;">
           <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => uploadedMainImages.push(val)"></FireUpload>
         </div>
       </div>
     </div>
-    <div style="position: fixed;left: 524px;">
+    <div style="position: absolute;left: 324px; z-index:30;" @click="toggleHelpBox('off', 12)">
       <transition name="fade">
         <help-box v-show="helpBox[12]" numbering="12"></help-box>
       </transition>
