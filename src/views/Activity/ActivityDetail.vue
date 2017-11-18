@@ -38,16 +38,16 @@
                 </datepicker>
               </div>
             </div>
-            <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking && selectTimeOptionShow">
+            <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
               <p style="font-size: 14px; margin: 20px 0 2px 0;">시각 선택</p>
               <select v-model="requestData.startTime" class="width260 height25" @change="getCurrentNumberOfBookingUsers()">
                 <option value="sample" disabled>시작시각</option>
-                <option v-for="(item, index) in startTimeList" :value="[index, item]">
-                  {{ index }} {{ item | Won }}
+                <option v-for="(item, index) in startTimeList" :value="[item[0], item[1]]">
+                  {{ item[0] }} {{ item[1] | Won }}
                 </option>
               </select>
             </div>
-            <div v-show="requestData.startTime !== 'sample' && selectCourseOptionShow">
+            <div v-show="requestData.startTime !== 'sample'">
               <p style="font-size: 14px; margin: 20px 0 2px 0;">코스 선택</p>
               <select v-model="requestData.selectedOption" class="width260 height25">
                 <option value="sample" disabled>옵션을 선택해주세요</option>
@@ -318,16 +318,16 @@
                 </datepicker>
               </div>
             </div>
-            <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking && selectTimeOptionShow">
+            <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
               <p style="font-size: 14px; margin: 20px 0 2px 0;">시각 선택</p>
               <select v-model="requestData.startTime" class="width260 height25" @change="getCurrentNumberOfBookingUsers()">
                 <option value="sample" disabled>시작시각</option>
-                <option v-for="(item, index) in startTimeList" :value="[index, item]">
-                  {{ index }} {{ item | Won }}
+                <option v-for="(item, index) in startTimeList" :value="[item[0], item[1]]">
+                  {{ item[0] }} {{ item[1] | Won }}
                 </option>
               </select>
             </div>
-            <div v-show="requestData.startTime !== 'sample' && selectCourseOptionShow">
+            <div v-show="requestData.startTime !== 'sample'">
               <p style="font-size: 14px; margin: 20px 0 2px 0;">코스 선택</p>
               <select v-model="requestData.selectedOption" class="width260 height25">
                 <option value="sample" disabled>옵션을 선택해주세요</option>
@@ -456,10 +456,10 @@ export default {
     startTimeList() {
       if(this.requestData.selectedDate) {
         let dayOfWeek = moment(this.requestData.selectedDate).format('dd')
-        let result = {}
+        let result = []
         let selectedDay = this.activity.base_week_option[dayOfWeek]
         for (let i = 0; i < selectedDay.start_time.length; i++) {
-          result[selectedDay.start_time[i]] = selectedDay.price_with_time[i]
+          result[i] = [selectedDay.start_time[i], selectedDay.price_with_time[i]]
         }
         return result 
       }
@@ -562,17 +562,13 @@ export default {
     },
     resetSelection(evnt) {
       if (evnt) {
-        // 날짜 선택 후 시각이 하나면 시각창보여줄필요가 없다. 그리고 requestData에 시각을 집어넣는다.
-        // 그 후 같은 로직상에서 코스옵션 또한 하나면 보여줄필요가 없다.
         this.requestData.selectedYoil = moment(this.requestData.selectedDate).format('dd')
         this.requestData.startTime = 'sample'
-        if (Object.keys(this.startTimeList).length === 1) {
-          this.requestData.startTime = this.startTimeList
-          this.selectTimeOptionShow = false
+        if (this.startTimeList.length === 1) {
+          this.requestData.startTime = this.startTimeList[0]
         }
         if (this.activity.base_price_option.length === 1) {
           this.requestData.selectedOption = [this.activity.base_price_option[0].name, this.activity.base_price_option[0].price]
-          this.selectCourseOptionShow = false
         }
         this.requestData.selectedExtraOption = {
           0: 0,
@@ -1577,6 +1573,9 @@ h2 {
 }
 </style>
 <style>
+.vdp-datepicker__calendar {
+  top: -282px;
+}
 .width260 {
   width: 260px;
 }
