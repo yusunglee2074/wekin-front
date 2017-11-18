@@ -22,21 +22,25 @@ export default {
   },
   mounted() {
     api.kakaoLogin(this.$route.query.code, 'kakao')
-      .then( res => {
+      .then(res => {
         let customToken = res.data.customToken
-        let userInfo = res.data.userInfo
         return firebase.auth().signInWithCustomToken(customToken)
       })
-      .then( result => {
+      .then(result => {
         return firebase.auth().currentUser.getIdToken()
       })
       .then(idToken => {
         return api.dbCreateWithIdToken(idToken)
       })
       .then(result => {
-        this.$router.push('/')
+        window.location.replace('/')
       })
-      .catch( error => console.log(error))
+      .catch( error => {
+        if (error.response.data.message == "Already signin with this email") {
+          window.alert('해당 이메일 가입 이력이 있습니다. \n 이메일: ' + error.response.data.email + '\n 추가 문의사항은 카카오톡 @위킨 혹은 고객센터에 문의바랍니다.')
+          window.location.href = '/'
+        }
+      })
   }
 }
 </script>
