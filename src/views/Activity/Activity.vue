@@ -657,15 +657,13 @@ export default {
       }, 1000)
     },
     deleteBeforeTodayDate(dateList, wekin) {
-      let activity = wekin 
-      let todayPlusDueDate = moment().add(activity.due_date, 'days')
+      let todayPlusDueDate = moment().add(wekin.due_date, 'days')
       let length = dateList.length
       for (let i = 0; i < length; i++) {
         let startDate = dateList[i]
-        if (moment(startDate).isBefore(todayPlusDueDate)) {
-          dateList.splice(0, 1)
-          i--
-        } else {
+        console.log(startDate, todayPlusDueDate)
+        if (!moment(startDate).isBefore(todayPlusDueDate)) {
+          dateList.splice(0, i)
           break
         }
       }
@@ -680,10 +678,8 @@ export default {
   },
   mounted() {
     this.getActivities()
-
     let vue = this
     let params = this.$route.params
-
     if (params.location) {
       if ((typeof this.$route.params.location) == 'object') {
         this.locationFilter = this.$route.params.location
@@ -735,6 +731,7 @@ export default {
         this.endDate = date
       }
     })
+    console.log("여기까진 오거든ㅇ요")
   }
 }
 </script>
