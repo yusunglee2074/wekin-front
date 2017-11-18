@@ -19,16 +19,14 @@
           <div class="name">Maker {{activity.Host.name}}</div>
         </div>
       </a>
-      <div class="floated right result-detail-btn link" @click="activityMoreClick()" v-if="activities.length!=0 && !isActivityMoreClicked">위킨 더보기 &gt</div>
     </div>
     <div class="ui divider clear" v-if="!isActivityMoreClicked"></div>
     <div class="result-container" v-if="!isActivityMoreClicked">
       <div class="header">#해시태그</div>
       <div class="floated right">{{feeds.length}}개의 검색결과가 있습니다.</div>
-      <div class="result-container__list flex" v-for="(feed, index) in feeds" v-bind:key="index">
-        <div>
-        </div>
+      <div class="result-container__list flex" v-for="(feed, index) in feeds" v-bind:key="index" style="border:solid 1px #D3D3D3; padding:10px;cursor:pointer;" @click="goFeedDetail(feed.doc_key)">
         <img v-if="feed.image_url && feed.image_url.length > 0" class="ui image aligned top" :src="feed.image_url[0]">
+        <div style="background-image:url('/static/images/default-profile.png'); width:110px;height:80px;background-position:center;background-size:cover;" v-else></div>
         <div class="content">
           <div class="body" v-html="$options.filters.hashLinking(feed.content,feed.tags)">
           </div>
@@ -38,7 +36,6 @@
           </div>
         </div>
       </div>
-      <div class="floated right result-detail-btn link" @click="hashMoreClick()" v-if="feeds.length!=0 && !isHashMoreClicked">게시물 더보기 &gt</div>
     </div>
   </div>
 </template>
@@ -64,6 +61,9 @@ export default {
     '$route': ['loadActivityResult', 'loadHashResult']
   },
   methods: {
+    goFeedDetail(key) {
+      this.$router.push({ name: 'FeedDetail', params: { key: key } })
+    },
     loadHashResult() {
       this.isLoading = true
       api.searchHash(this.keyword)
