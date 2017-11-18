@@ -5,7 +5,7 @@
       <h2>기본 정보를 입력해주세요.</h2>
       <h3>위킨 제목 </h3>
       <div class="ui input focus" style="width:300px;">
-        <input type="text" v-model="activity.title" @focus="toggleHelpBox('on', 0)" @blur="toggleHelpBox('off', 0)">
+        <input type="text" v-model="activity.title" @focus="toggleHelpBox('on', 0)" @blur="toggleHelpBox('off', 0)" placeholder="제목을 입력해주세요.">
         <transition name="fade">
           <help-box v-show="helpBox[0]" numbering="0"></help-box>
         </transition>
@@ -35,7 +35,7 @@
       <h2>장소를 입력해주세요.</h2>
       <h3>집결장소</h3>
       <div class="ui input focus" style="width:300px;">
-        <input type="text" v-model="activity.meetAddress" id="meetAddress" @focus="toggleHelpBox('on', 2)" @blur="toggleHelpBox('off', 2)">
+        <input type="text" v-model="activity.meetAddress" id="meetAddress" @focus="toggleHelpBox('on', 2)" @blur="toggleHelpBox('off', 2)" placeholder="집결장소를 입력해주세요. ">
         <transition name="fade">
           <help-box v-show="helpBox[2]" numbering="2"></help-box>
         </transition>
@@ -47,7 +47,7 @@
       </div>
       <h3>활동장소 </h3>
       <div class="ui input focus" style="width:300px;">
-        <input type="text" v-model="activity.address" @focus="toggleHelpBox('on', 3)" @blur="toggleHelpBox('off', 3)">
+        <input type="text" v-model="activity.address" @focus="toggleHelpBox('on', 3)" @blur="toggleHelpBox('off', 3)" placeholder="활동장소를 입력해주세요.">
         <transition name="fade">
           <help-box v-show="helpBox[3]" numbering="3"></help-box>
         </transition>
@@ -74,7 +74,7 @@
           <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(1, index)"></i>
         </div>
       </div>
-      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question1.images.push(val)"></FireUpload>
+      <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question1.images.push(val)"></FireUpload>
 
       <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">메이커님의 활동을 하면 어떤 점이 좋나요? </p>
       <div class="ui input focus" style="width:300px; display:inline-table;">
@@ -90,7 +90,7 @@
           <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(2, index)"></i>
         </div>
       </div>
-      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question2.images.push(val)"></FireUpload>
+      <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question2.images.push(val)"></FireUpload>
 
       <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">활동은 어떻게 진행되나요? </p>
       <div class="ui input focus" style="width:300px; display:inline-table;">
@@ -105,7 +105,7 @@
           <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(3, index)"></i>
         </div>
       </div>
-      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question3.images.push(val)"></FireUpload>
+      <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question3.images.push(val)"></FireUpload>
 
       <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">해당 활동에 대해서 메이커님의 꿀팁이 있나요? </p>
       <div class="ui input focus" style="width:300px; display:inline-table;">
@@ -120,7 +120,7 @@
           <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(4, index)"></i>
         </div>
       </div>
-      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question4.images.push(val)"></FireUpload>
+      <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question4.images.push(val)"></FireUpload>
       <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">어떤분들에게 좋은 활동일까요? </p>
       <div class="ui input focus" style="width:300px; display:inline-table;">
         <textarea rows="4" cols="50" v-model="detailQuestion.question5.text" type="text" @focus="toggleHelpBox('on', 8)" @blur="toggleHelpBox('off', 8)"></textarea>
@@ -134,7 +134,7 @@
           <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(5, index)"></i>
         </div>
       </div>
-      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question5.images.push(val)"></FireUpload>
+      <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question5.images.push(val)"></FireUpload>
       <br>
       <p>*글자제한이 없으며, <span style="color: rgba(40,190,140, 1);">사진을 최대한 많이</span> 올리시면 고객분들의 접근성이 훨씬 용이해집니다.</p>
 
@@ -144,14 +144,14 @@
       <h2>준비물 외 아래 정보를 작성해주세요.</h2>
       <h3>준비물 </h3>
       <div class="ui input focus" style="width:300px;">
-        <input type="text" v-model="activity.preparation" @focus="toggleHelpBox('on', 9)" @blur="toggleHelpBox('off', 9)">
+        <input type="text" v-model="activity.preparation" @focus="toggleHelpBox('on', 9)" @blur="toggleHelpBox('off', 9)" placeholder="준비물을 입력해주세요.">
         <transition name="fade">
           <help-box v-show="helpBox[9]" numbering="9"></help-box>
         </transition>
       </div>
       <h3>포함/불포함 사항 </h3>
       <div class="ui input focus" style="width:300px;">
-        <input type="text" v-model="activity.inclusion" @focus="toggleHelpBox('on', 10)" @blur="toggleHelpBox('off', 10)">
+        <input type="text" v-model="activity.inclusion" @focus="toggleHelpBox('on', 10)" @blur="toggleHelpBox('off', 10)" placeholder="포함/불포함 사항을 입력해주세요.">
         <transition name="fade">
           <help-box v-show="helpBox[10]" numbering="10"></help-box>
         </transition>
@@ -176,8 +176,8 @@
         </div>
       </div>
       <div class="ui card" style="width: 300px; height:200px; margin-right:8px; float:left;" @click.self="toggleHelpBox('on', 12)">
-        <div style="width:90px; height:30px; position:absolute; bottom: 46%; left: 36%;">
-          <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => uploadedMainImages.push(val)"></FireUpload>
+        <div style="width:110px; height:30px; position:absolute; bottom: 46%; left: 36%;">
+          <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => uploadedMainImages.push(val)"></FireUpload>
         </div>
       </div>
     </div>
@@ -210,14 +210,14 @@
       <button class="ui button secondary basic" @click="wekinRefund = !wekinRefund" style="vertical-align: bottom;">위킨환불규정 사용</button> 
       <h3>최소인원 </h3>
       <div class="ui input focus" style="width:300px;">
-        <input @focus="toggleHelpBox('on', 15)" @blur="toggleHelpBox('off', 15)" type="number" placeholder="숫자만 입력해주세요." id="minuser" @change="setDefaultValueOfWeekOption">
+        <input @focus="toggleHelpBox('on', 15)" @blur="toggleHelpBox('off', 15)" type="number" id="minuser" @change="setDefaultValueOfWeekOption" placeholder="진행할 수 있는 최소 인원을 입력해주세요.">
         <transition name="fade">
           <help-box v-show="helpBox[15]" numbering="15"></help-box>
         </transition>
       </div>
       <h3>최대인원 </h3>
       <div class="ui input focus" style="width:300px;">
-        <input @focus="toggleHelpBox('on', 16)" @blur="toggleHelpBox('off', 16)" type="number" placeholder="숫자만 입력해주세요." id="maxuser" @change="setDefaultValueOfWeekOption">
+        <input @focus="toggleHelpBox('on', 16)" @blur="toggleHelpBox('off', 16)" type="number" id="maxuser" @change="setDefaultValueOfWeekOption" placeholder="진행 가능한 최대 인원을 입력해주세요.">
         <transition name="fade">
           <help-box v-show="helpBox[16]" numbering="16"></help-box>
         </transition>
@@ -275,7 +275,7 @@
             </transition>
           </div>
         </div>
-        <h3>등록 만료 날짜 </h3>
+        <h3>등록 종료 날짜 </h3>
         <div class="ui calendar">
           <div class="ui input styled primary left icon" @mouseover="toggleHelpBox('on', 19)" @mouseleave="toggleHelpBox('off', 19)">
             <datepicker 
@@ -296,10 +296,10 @@
         <div class="ui input focus" style="font-size: 18px;" @mouseover="toggleHelpBox('on', 20)" @mouseleave="toggleHelpBox('off', 20)">
           <input type="radio" id="one" value="1" v-model="activity.dueDate">
           <label for="one">1일 전</label>
-          <input type="radio" id="two" value="3" v-model="activity.dueDate">
-          <label for="two">3일 전</label>
-          <input type="radio" id="three" value="7" v-model="activity.dueDate">
-          <label for="three">7일 전</label>
+          <input type="radio" id="two" value="3" v-model="activity.dueDate"> 
+          <label for="two">3일 전</label> 
+          <input type="radio" id="three" value="7" v-model="activity.dueDate"> 
+          <label for="three">7일 전</label> 
           <br>
           <transition name="fade">
             <help-box v-show="helpBox[20]" numbering="20"></help-box>
@@ -476,7 +476,7 @@
           </div>
         </div>
         <button class="ui positive basic button" v-show="activity.baseWeekOption['Mo'].price_with_time.length < 3" @click="subtractBaseWeekPrice('add')">시작시각 추가</button>
-        <button class="ui negative basic button" v-show="activity.baseWeekOption['Mo'].price_with_time.length == 2 || activity.baseWeekOption['Mo'].price_with_time.length == 3" @click="subtractBaseWeekPrice('subtract')">시작시각 빼기</button>
+        <button class="ui negative basic button" v-show="activity.baseWeekOption['Mo'].price_with_time.length == 2 || activity.baseWeekOption['Mo'].price_with_time.length == 3" @click="subtractBaseWeekPrice('subtract')">시작시각 삭제</button>
       </div>
 
     </div>
@@ -536,11 +536,11 @@
     </div>
 
     <div id='footer'>
-      <button class="ui labeled icon button" @click="1 < page ? page-- : page" style="background: rgba(42,195,145,0.2);">
+      <button class="ui labeled icon button" @click="movePage('yusung')" style="background: rgba(42,195,145,0.2);">
         <i class="left arrow icon"></i>
         이전페이지
       </button>
-      <button class="ui right labeled icon button" @click="10 > page ? page++ : page" style="background: rgba(42,195,145,0.2);" v-if="page < 10">
+      <button class="ui right labeled icon button" @click="movePage('next')" style="background: rgba(42,195,145,0.2);" v-if="page < 10">
         <i class="right arrow icon"></i>
         다음페이지
       </button>
@@ -678,6 +678,14 @@ export default {
     Datepicker
   },
   methods: {
+    movePage (type) {
+      this.toggleHelpBox('off', 12)
+      if (type === 'next') {
+        10 > this.page ? this.page++ : this.page
+      } else {
+        1 < this.page ? this.page-- : this.page
+      }
+    },
     toggleHelpBox (swit, index) {
       console.log(swit, index)
       if (swit === 'on') {
