@@ -3,20 +3,20 @@
     <section id="firstSection">
       <div class="title">
         <h1 style="position:absolute;">
-          <p>당신의 재능을</p>
-          <p>더욱 많은 사람들과 나누세요.</p>
+          <p>당신의 재능을 더욱 많은 사람들과 나누세요.</p>
+          <p>내 생각대로, 내 능력대로, 내 마음대로.</p>
         </h1>
       </div>
     </section>
     <section id="secondSection">
       <div class="title">
         <h1>
-          <p><span style="color: rgb(40, 180, 80)">위킨</span>과 함께 로켓 성장할</p>
-          <p><span style="color: rgb(140, 0, 50)">메이커</span>분을 찾고 있습니다.</p>
+          <p><span style="color: rgb(40, 180, 80)">위킨</span>의 <span style="color: rgb(140, 0, 50)">메이커</span>는</p>
+          <p>누구나 될 수 있습니다!</p>
         </h1>
         <h3>
-          <p>메이커님의 그 어떤 활동이라도 손쉽게 등록, 모집, 정산이 가능합니다.</p>
-          <p>회원가입 부터 활동 등록까지 무료로 제공됩니다.</p>
+          <p>빠르고 직관적인 활동 개설을 통해 취미가 직업으로</p>
+          <p>손쉬운 정산과 편리한 활동 내역관리 페이지를 제공합니다.</p>
         </h3>
     <div class="ui divider marginTop"></div>
         <h1>
@@ -25,7 +25,7 @@
         </h1>
         <h3>
           <p>매달 메이커님을 선정해 광고를 무료로 진행해드립니다.</p>
-          <p>페이스북, 영상제작, 블로그체험단 광고등 유입경로의 다각화를 무료로 제공합니다. </p>
+          <p>페이스북, 영상제작, 블로그체험단 광고 등 유입경로의 다각화를 무료로 제공합니다. </p>
         </h3>
       </div>
     </section>
@@ -46,9 +46,10 @@
     <section id="fourthSection" style="background-color:rgb(248, 248, 248); min-height: 350px; padding: 60px;">
       <div class="title">
         <h1>
-          <p>회원가입, 메이커 신청 후 모든 기능을 이용해보세요.</p>
+          <p>회원가입 →  메이커 등록 →  활동 개설 →  승인 후 사이트 노출</p>
         </h1>
         <h3>
+          <p>이 모든 과정은 상단 우측 메뉴를 통해서 진행 가능합니다.</p>
           <p>더욱 자세한 사항은 카카오톡 <span style="color: rgb(40, 180, 80)">@위킨</span> 혹은 아래 고객센터 유선 번호로 문의 바랍니다.</p>
         </h3>
         <h3>
