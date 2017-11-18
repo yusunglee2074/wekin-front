@@ -75,6 +75,7 @@
       <router-link :to="{ name: 'Activity' }" class="link" exact>위킨</router-link>
       <router-link :to="{ name: 'Feed' }" class="link" exact>피드</router-link>
       <router-link :to="{ name: 'Customer' }" class="link" exact>고객센터</router-link>
+      <router-link :to="{ name: 'ExplainMaker' }" class="link" exact>메이커신청</router-link>
     </div>
   
     <!-- 모바일 끝 -->
@@ -96,6 +97,7 @@
         <router-link :to="{ name: 'Activity' }" class="item linked" tag="div" exact>위킨</router-link>
         <router-link :to="{ name: 'Feed' }" class="item linked" tag="div" exact>피드</router-link>
         <router-link :to="{ name: 'Customer' }" class="item linked" tag="div" exact>고객센터</router-link>
+        <router-link :to="{ name: 'ExplainMaker' }" class="item linked" tag="div" exact>메이커신청</router-link>
       </div>
       <div class="right menu" v-if="!user">
         <a class="item linked" @click="showLoginModal = true">로그인</a>
@@ -278,7 +280,7 @@ export default {
     },
     showSignupModalandCloseLoginModal() {
       this.showLoginModal = false 
-      this.showSignupModal = true
+      this.showSignupModal2 = true
     },
     showModalLogin() {
       this.showLoginModal = true
