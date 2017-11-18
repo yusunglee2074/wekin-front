@@ -36,7 +36,7 @@
         <a class="expand-btn link" v-if="!isExpanded && !isTooShort" @click="onExpandClick()">더보기</a>
         <div class="ui images" v-if="feed.image_url">
           <a class="link" v-for="(image, index) in feed.image_url" v-bind:key="index" v-if="index < MAX_IMAGE_COUNT" @click="showImageLightBox()">
-            <img :src="image" v-if="!(feed.image_url.length > MAX_IMAGE_COUNT && index == 3) && index === 0" style="width: 81%; height: 81%; display: block;">
+            <img :src="image" v-if="!(feed.image_url.length > MAX_IMAGE_COUNT && index == 3) && index === 0" style="width: 100%; height: auto; display: block; margin-bottom:10px;">
             <img :src="image" v-if="!(feed.image_url.length > MAX_IMAGE_COUNT && index == 3) && index > 0">
           </a>
           <a class="link image-cover" v-if="feed.image_url.length > MAX_IMAGE_COUNT" @click="showImageLightBox()">
@@ -65,10 +65,8 @@
     <div class="comment-input-container">
       <div class="content divider flex">
         <div class="ui input f1">
-          <input type="text" placeholder="댓글을 입력하세요." v-model="commentContent">
+          <input type="text" placeholder="댓글을 입력하세요." v-model="commentContent" @keyup.enter.once="onPostCommentClick()">
         </div>
-        <button class="ui button primary" @click="onPostCommentClick()">전송</button>
-        <!--<div id="comment" ref="comment" contenteditable="true" placeholder="댓글을 입력하세요."></div>-->
       </div>
     </div>
     <div class="comment-container" v-if="commentCount!=0">
@@ -194,7 +192,6 @@ export default {
       var oFlag = true;
 
       if (sns_type == 'facebook') {
-        console.log("fb")
         loc = '//www.facebook.com/sharer/sharer.php?u=' + href + '&t=' + title;
       }
       else if (sns_type == 'twitter') {
@@ -239,7 +236,7 @@ export default {
       if (this.user) {
         api.toggleLike(this.user.user_key, this.feed.doc_key)
           .then(result => {
-            if (result == 1) {
+            if (result.data == 1) {
               this.isLiked = false
               this.likeCount--
             } else {
@@ -294,7 +291,6 @@ export default {
       if (this.feed.doc_key) {
         api.getCommentsFromKey(this.feed.doc_key, this.page, 3)
           .then(comments => {
-            console.log(comments)
             if (comments.rows.length != 0) {
               this.commentCount = comments.count.length
               comments.rows.forEach(comment => this.comments.push(comment))
