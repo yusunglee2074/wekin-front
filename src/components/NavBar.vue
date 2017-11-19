@@ -267,7 +267,6 @@ export default {
   },
   methods: {
     showRightMenu () {
-      console.log("DDD")
     },
     loadingTogle() {
       this.isLoading = !this.isLoading

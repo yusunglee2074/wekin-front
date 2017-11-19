@@ -376,7 +376,6 @@ export default {
                   Location.distanceInKmBetweenEarthCoordinates(this.position.coords.latitude, this.position.coords.longitude, wekin.coordinates.x, wekin.coordinates.y)
                 return wekin
               })
-              console.log(this.wekins)
             })
             .catch(err => console.error(err))
         })

@@ -150,7 +150,6 @@ export default {
   methods: {
     getOneActivity(activity_key) {
       if (activity_key === 0) {
-        console.log("들어왔다", activity_key)
         this.findWekin = '선택안함'
         this.activity = {
           key: null,
@@ -244,7 +243,6 @@ export default {
       }
       if (this.sendingTime && this.sendingTime - moment() > -30000) {
         alert("10초에 한번만 작성 가능합니다. 잠시만 기다려주세요.")
-        console.log(this.sendingTime, this.sendingTime - moment())
         return
       }
       this.sendingTime = moment()

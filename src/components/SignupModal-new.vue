@@ -260,7 +260,6 @@ export default {
     onSignUpClick() {
       if (this.checkForm()) {
         this.isLoading = true
-        console.log(this.user)
         auth.signUp(
           this.user.email,
           this.user.password,
@@ -304,7 +303,6 @@ export default {
         })
     },
     genderSelect(num) {
-      console.log(num)
       if (num === 0) {
         this.user.gender = 0
       } else {
