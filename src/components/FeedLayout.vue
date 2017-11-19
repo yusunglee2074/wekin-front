@@ -219,7 +219,7 @@ export default {
       window.open(loc);
     },
     onFacebookShareClick(key) {
-      window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&display=popup&locale=ko_KR&link=${encodeURIComponent(`http://we-kin/share/doc/${key}`)}&version=v2.1`,
+      window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&display=popup&locale=ko_KR&link=${encodeURIComponent(`http://we-kin.com/share/doc/${key}`)}&version=v2.1`,
         'facebookShare',
         'toolbar=0,status=0,width=625,height=435'
       );
