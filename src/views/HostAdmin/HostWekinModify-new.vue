@@ -56,72 +56,7 @@
 
   <div v-show="page === 2">
     <h2>상세정보를 사진과 함께 작성해주세요.</h2>
-    <div v-show="isFileUploading">
-      <h3 style="color:rgba(40,190,140, 1)">파일 업로드 중입니다.</h3>
-    </div>
-    <p style="margin-bottom: 5px; font-size: 18px;">메이커님의 활동을 간단히 소개해주세요. <tool-tip text="해당 위킨의 간단한 소개를 작성해 주세요.예) 수상스키를 한강에서 남녀노소 누구나 손쉽게 강습과 함께 간단하게 즐길 수 있는 활동입니다."></tool-tip></p>
-    <div style="float:left;">
-      <textarea v-model="detailQuestion.question1.text" type="text" style="width:300px; height:70px;"></textarea> 
-      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question1.images.push(val)"></FireUpload>
-    </div>
-
-    <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, index) in detailQuestion.question1.images" v-bind:key="index">
-      <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
-        <img style="width:100%;height:100%" :src="imageUrl">
-        <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(1, index)"></i>
-      </div>
-    </div>
-
-    <div style="clear: both;">
-      <p style="margin-bottom: 4px; font-size: 18px;">메이커님의 활동을 하면 어떤 점이 좋나요? <tool-tip text="해당 위킨의 좋은점, 자랑할 점, 어떤면에 도움이 되는지 등을 작성해 주세요.예) 직접 조종하는 수상스키를 타며 스트레스 한방에 날려버릴 수 있습니다. 한강에서 진행하므로 접근성이 용의 합니다."></tool-tip></p>
-      <textarea v-model="detailQuestion.question2.text" type="text" style="width:300px; height:70px;"></textarea>
-      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question2.images.push(val)"></FireUpload>
-
-      <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, index) in detailQuestion.question2.images" v-bind:key="index">
-        <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
-          <img style="width:100%;height:100%" :src="imageUrl">
-          <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(2, index)"></i>
-        </div>
-      </div>
-    </div>
-
-    <div style="clear: both;">
-      <p style="margin-bottom: 4px; font-size: 18px;">활동은 어떻게 진행되나요? <tool-tip text="메이커님이 진행할 순서, 어떤 방법으로 진행하는지, 해당 위킨을 진행하면서 사용할 도구/제품 등에 대한 설명 등을 작성해 주세요.예) 활동 시작전 10분전 도착 후 30분 강사님의 손쉬운 강습 후 1시간동안 자유롭게 한강위에서 스트레스를 날리시면 됩니다."></tool-tip></p>
-      <textarea v-model="detailQuestion.question3.text" type="text" style="width:300px; height:70px;"></textarea>
-      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question3.images.push(val)"></FireUpload>
-      <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, index) in detailQuestion.question3.images" v-bind:key="index">
-        <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
-          <img style="width:100%;height:100%" :src="imageUrl">
-          <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(3, index)"></i>
-        </div>
-      </div>
-    </div>
-
-    <div style="clear: both;">
-      <p style="margin-bottom: 4px; font-size: 18px;">해당 활동에 대해서 메이커님의 꿀팁이 있나요? <tool-tip text="메이커님이 해당 위킨의 전문가로서 해당 활동에 대한 꿀팁, 새로운 점, 위키너들에게 알려주고 싶은 점 들을 작성해 주세요.예) 안전이 가장 중요합니다. 상대 스키 반경 20m내로는 접근 하지 않는 점만 명심하시면 절대로 다치실 위험이 없습니다. 스포츠 안경이 있으면 더욱 좋습니다."></tool-tip></p>
-      <textarea v-model="detailQuestion.question4.text" type="text" style="width:300px; height:70px;"></textarea>
-      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question4.images.push(val)"></FireUpload>
-      <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, index) in detailQuestion.question4.images" v-bind:key="index">
-        <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
-          <img style="width:100%;height:100%" :src="imageUrl">
-          <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(4, index)"></i>
-        </div>
-      </div>
-
-    </div>
-    <div style="clear: both;">
-      <p style="margin-bottom: 4px; font-size: 18px;">어떤분들에게 좋은 활동일까요? <tool-tip text="해당 위킨이 어떤 위키너들에게 좋은지, 추천해 주고 싶은 위키너들은 어떤 사람들인지를 작성해 주세요.예) 남녀노소 즐길 수 있지만 권장 연령대는 20 ~ 60세 분들입니다. 나이가 어린 친구들은 해당 B코스의 수상스키 체험을 이용하시기 바랍니다."></tool-tip></p>
-      <textarea v-model="detailQuestion.question5.text" type="text" style="width:300px; height:70px;"></textarea>
-      <FireUpload title="업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question5.images.push(val)"></FireUpload>
-      <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, index) in detailQuestion.question5.images" v-bind:key="index">
-        <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
-          <img style="width:100%;height:100%" :src="imageUrl">
-          <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(5, index)"></i>
-        </div>
-      </div>
-    </div>
-    <span>*글자제한이 없으며, <span style="color: rgba(40,190,140, 1);">사진을 최대한 많이</span> 올리시면 고객분들의 접근성이 훨씬 용이해집니다.</span>
-
+                    <Trumbowyg :content="activity.intro_detail" @tbwchange="update"></Trumbowyg>
   </div>
 
   <div v-show="page === 3">
@@ -491,6 +426,7 @@
 </template>
 <script>
 // TODO: 수정하기 페이지는 상세를 예전 버전처럼 trumbow로 바꾼다.
+import Trumbowyg from '../../components/Trumbowyg'
 import FireUpload from 'components/FireUpload.vue'
 import api from 'api'
 import moment from 'moment'
@@ -566,11 +502,15 @@ export default {
     },
   },
   components: {
+    Trumbowyg,
     toolTip,
     FireUpload,
     Datepicker
   },
   methods: {
+    update (content) {
+      this.activity.intro_detail = content
+    },
     pageButton(text) {
       switch (text) {
         case 'prev':
@@ -651,7 +591,7 @@ export default {
         host_key: this.user.Host.host_key,
         main_image: this.uploadedMainImages,
         title: this.activity.title,
-        intro_detail: $('#editor').trumbowyg('html'),
+        intro_detail: this.activity.intro_detail,
         schedule: this.activity.schedule,
         inclusion: this.activity.inclusion,
         preparation: this.activity.preparation,
@@ -763,9 +703,8 @@ export default {
           let tmp = activities[i].close_dates[y]
           this.activity.close_dates.push(moment("20" + tmp.slice(1, 3) + "-" + tmp.slice(3, 5) + "-" + tmp.slice(5, 7)).format())
         }
-        setTimeout(function(){ $('#editor').trumbowyg('html', activities[i].intro_detail) }, 1000);
         break;
-      }
+      } 
     }
     this.detailQuestion = this.activity.detail_question
   },
