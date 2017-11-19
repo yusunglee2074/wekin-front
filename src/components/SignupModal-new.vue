@@ -258,7 +258,6 @@ export default {
       this.errorMessage = this.getErrorMessage(error.code)
     },
     onSignUpClick() {
-      console.log(123)
       if (this.checkForm()) {
         this.isLoading = true
         console.log(this.user)
