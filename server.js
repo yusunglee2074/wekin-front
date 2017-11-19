@@ -5,8 +5,8 @@ var port = process.env.PORT || 3000;
 var exphbs  = require('express-handlebars');
 var axios = require('axios')
 
-// const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
-const BASE_API_URL = 'http://192.168.0.100:8888/v1'
+const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
+// const BASE_API_URL = 'http://192.168.0.100:8888/v1'
 
 app = express();
 
