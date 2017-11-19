@@ -186,7 +186,7 @@ export default {
     },
     snsShare(sns_type, key) {
       var title = $("#ogTitle").attr('content');
-      var href = 'http://175.195.139.99:3000/share/doc/' + key
+      var href = 'http://we-kin/share/doc/' + key
       var loc = "";
       var img = 'http://we-kin.com/static/images/default-profile.png'
       var oFlag = true;
@@ -219,7 +219,7 @@ export default {
       window.open(loc);
     },
     onFacebookShareClick(key) {
-      window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&display=popup&locale=ko_KR&link=${encodeURIComponent(`http://175.195.139.99:3000/share/doc/${key}`)}&version=v2.1`,
+      window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&display=popup&locale=ko_KR&link=${encodeURIComponent(`http://we-kin/share/doc/${key}`)}&version=v2.1`,
         'facebookShare',
         'toolbar=0,status=0,width=625,height=435'
       );
