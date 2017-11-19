@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/1201_ico-calendar@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icons/1201_ico-calendar" stroke="#555555">
+            <g id="icons/ico-calendar">
+                <path d="M4.61538462,2.92975 L4.61538462,0.62475" id="Stroke-1" stroke-width="1.5" stroke-linecap="round"></path>
+                <path d="M10.3846154,2.92975 L10.3846154,0.62475" id="Stroke-3" stroke-width="1.5" stroke-linecap="round"></path>
+                <path d="M14.375,12.384 C14.375,13.484 13.45125,14.37525 12.30875,14.37525 L2.69,14.37525 C1.54875,14.37525 0.625,13.484 0.625,12.384 L0.625,3.769 C0.625,2.67025 1.54875,1.779 2.69,1.779 L12.30875,1.779 C13.45125,1.779 14.375,2.67025 14.375,3.769 L14.375,12.384 Z" id="Stroke-5" stroke-width="1.5"></path>
+                <path d="M0.625,5.476125 L14.375,5.476125" id="Stroke-7"></path>
+                <path d="M8.641375,8.912375 C8.641375,9.519875 8.131375,10.013625 7.500125,10.013625 C6.868875,10.013625 6.358875,9.519875 6.358875,8.912375 C6.358875,8.304875 6.868875,7.812375 7.500125,7.812375 C8.131375,7.812375 8.641375,8.304875 8.641375,8.912375 Z" id="Stroke-9"></path>
+                <path d="M8.641375,11.11325 C8.641375,11.722 8.131375,12.2145 7.500125,12.2145 C6.868875,12.2145 6.358875,11.722 6.358875,11.11325 C6.358875,10.507 6.868875,10.01325 7.500125,10.01325 C8.131375,10.01325 8.641375,10.507 8.641375,11.11325 Z" id="Stroke-11"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="20px" viewBox="0 0 18 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/share@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="icon/share" stroke="#444444" stroke-width="1.3">
+            <g transform="translate(1.000000, 1.000000)">
+                <g id="Group" transform="translate(4.190476, 7.352941)">
+                    <path d="M3.71420724,0.0276330624 L0.349430528,3.4913738" id="Stroke-1"></path>
+                    <path d="M7.07873753,3.4913738 L3.71423462,0.0276330624" id="Stroke-2"></path>
+                    <path d="M3.50470588,10.9579832 L3.50470588,0.368206514" id="Stroke-3"></path>
+                </g>
+                <g id="Group-7">
+                    <path d="M5.4999173,16 L2.61914498,16 C1.17221813,16 0,14.8438053 0,13.4188377 L0,2.57990491 C0,1.15462297 1.17221813,0 2.61914498,0 L13.2115429,0 C14.6578316,0 15.8306878,1.15462297 15.8306878,2.57990491 L15.8306878,13.4188377 C15.8306878,14.8438053 14.6578316,16 13.2115429,16 L10.339066,16" id="Stroke-5"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

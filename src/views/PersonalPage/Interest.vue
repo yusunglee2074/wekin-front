@@ -2,15 +2,15 @@
   <div id="personal-page-feed">
     <div class="ui three doubling cards">
       <wekin-card-layout
-        :title="favorite.Activity.title"
-        :address="favorite.Activity.address"
-        :name="`maker ${favorite.Activity.Host.name}`"
-        :imageUrl="favorite.Activity.main_image.image[0]"
-        :activityKey="favorite.Activity.activity_key"
-        :rating="favorite.Activity.rating_avg"
-        :reviewCount="favorite.Activity.review_count"
+        :title="favorite.ActivityNew.title"
+        :address="favorite.ActivityNew.address"
+        :name="`maker ${favorite.ActivityNew.Host.name}`"
+        :imageUrl="favorite.ActivityNew.main_image.image[0]"
+        :activityKey="favorite.ActivityNew.activity_key"
+        :rating="favorite.ActivityNew.rating_avg"
+        :reviewCount="favorite.ActivityNew.review_count"
         :favorite="favorites"
-        :total="favorite.Activity.total"
+        :total="favorite.ActivityNew.total"
         v-for="(favorite, index) in favorites" v-bind:key="index">
       </wekin-card-layout>
     </div>

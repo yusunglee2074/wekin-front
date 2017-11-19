@@ -4,12 +4,12 @@
       <div slot="content" class="content">
         <div class="wekin-list-layout" v-if="!hasItBooker" v-bind:class="{ end: new Date(wekin.start_date) <= new Date() }" v-for="wekin in wekins" v-bind:key="wekin.wekin_key">
           <div class="left">
-            <span class="title">{{wekin.Activity.title}}</span>
+            <span class="title">{{wekin.title}}</span>
             <span class="date">{{wekin.start_date | formatDateTimeKo}}</span>
-            <p><span> 결제대기 인원 : </span>{{ getReadyPeople(wekin.Orders) }} 명</p>
-            <p><span> 결제완료 인원 : </span><span :style="getPaidPeople(wekin.Orders) > 0 ? paidStyle : ''">{{ getPaidPeople(wekin.Orders) }} 명</span></p>
+            <p><span> 결제대기 인원 : </span>{{ getReadyPeople(wekin.WekinNews) }} 명</p>
+            <p><span> 결제완료 인원 : </span><span :style="getPaidPeople(wekin.WekinNews) > 0 ? paidStyle : ''">{{ getPaidPeople(wekin.WekinNews) }} 명</span></p>
           </div>
-          <router-link :to="{ name: 'HostBookingDetail', params: { key: wekin.wekin_key }}" v-if="!hasItBooker" class="ui primary button right">예약자 확인</router-link>
+          <router-link :to="{ name: 'HostBookingDetail', params: { activity_key: wekin.activity_key }}" v-if="!hasItBooker" class="ui primary button right">예약자 확인</router-link>
         </div>
         <div class="wekin-list-layout" style="text-align:center;" v-if="wekins && wekins.length == 0">
           <p style="width:100%">예약이 진행된 위킨이 없습니다.</p>
@@ -72,19 +72,19 @@ export default {
     hostCardLayout
   },
   methods: {
-    getReadyPeople: function (OrderList) {
+    getReadyPeople: function (WekinNews) {
       let count = 0
-      for (let i = 0; i < OrderList.length; i++) {
-        if (OrderList[i].status === 'ready') {
+      for (let i = 0; i < WekinNews.length; i++) {
+        if (WekinNews[i].Order.status === 'ready') {
           count++
         }
       }
       return count
     },
-    getPaidPeople: function (OrderList) {
+    getPaidPeople: function (WekinNews) {
       let count = 0
-      for (let i = 0; i < OrderList.length; i++) {
-        if (OrderList[i].status === 'paid') {
+      for (let i = 0; i < WekinNews.length; i++) {
+        if (WekinNews[i].Order.status === 'paid') {
           count++
         }
       }
@@ -93,12 +93,12 @@ export default {
     getAdminBookings() {
       api.getAdminBookings(this.user.Host.host_key)
         .then(json => {
-          let wekins = json.results.filter(wekin => {
-            if ((wekin.Activity.status === 3 || wekin.Activity.status === 5) && wekin.Orders.length !== 0) {
-              return wekin
+          let activities = json.data.filter(activity => {
+            if ((activity.status === 3 || activity.status === 5) && activity.WekinNews.length > 0) {
+              return activity
             }
           })
-          wekins.sort(function compare(a, b) {
+          activities.sort(function compare(a, b) {
             if (moment(a.start_date) > moment(b.start_date)) {
               return 1;
             }
@@ -107,7 +107,7 @@ export default {
             }
             return 0;
           })
-          this.wekins = wekins
+          this.wekins = activities
         })
         .catch(error => console.error(error))
     },

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="34px" viewBox="0 0 48 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Overrides/Tab Bar/Icons/Active/5@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Overrides/Tab-Bar/Icons/Active/5" stroke="#333333">
+            <g id="icon/Tab-Bar/myinfo/active" transform="translate(12.000000, 5.000000)">
+                <path d="M24.9412037,12.4701389 C24.9412037,19.3581019 19.3583333,24.9414352 12.4708333,24.9414352 C5.58333333,24.9414352 0,19.3581019 0,12.4701389 C0,5.58310185 5.58333333,-0.000231481481 12.4708333,-0.000231481481 C19.3583333,-0.000231481481 24.9412037,5.58310185 24.9412037,12.4701389 Z" id="Stroke-1" stroke-width="1.5" fill="#00C58E"></path>
+                <path d="M4.79782407,22.1521296 C4.79782407,17.9141667 8.23393519,14.4803704 12.4691204,14.4803704 C16.7084722,14.4803704 20.1431944,17.9141667 20.1431944,22.1521296" id="Stroke-3"></path>
+                <path d="M16.3474537,8.61 C16.3474537,10.7512037 14.6113426,12.4863889 12.4701389,12.4863889 C10.3298611,12.4863889 8.59375,10.7512037 8.59375,8.61 C8.59375,6.4687963 10.3298611,4.73407407 12.4701389,4.73407407 C14.6113426,4.73407407 16.3474537,6.4687963 16.3474537,8.61 Z" id="Stroke-5"></path>
+            </g>
+        </g>
+    </g>
+</svg>

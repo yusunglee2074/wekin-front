@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="35px" height="34px" viewBox="0 0 35 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/ico-star-notfill@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/ico-star-notfill" fill="#C9C9C9">
+            <path d="M17.5,0 L12.094,10.958 L0,12.715 L8.749,21.243 L6.684,33.287 L17.5,27.602 L28.314,33.287 L26.249,21.243 L35,12.715 L22.905,10.958 L17.5,0 Z M17.5,4.521 L21.112,11.843 C21.403,12.433 21.967,12.842 22.618,12.937 L30.701,14.112 L24.854,19.811 C24.382,20.271 24.167,20.933 24.278,21.582 L25.658,29.631 L18.431,25.832 C18.139,25.679 17.819,25.602 17.5,25.602 C17.181,25.602 16.86,25.679 16.569,25.832 L9.34,29.631 L10.721,21.582 C10.832,20.933 10.616,20.271 10.146,19.811 L4.298,14.112 L12.382,12.937 C13.033,12.842 13.597,12.433 13.888,11.843 L17.5,4.521 L17.5,4.521 Z" id="Fill-2"></path>
+        </g>
+    </g>
+</svg>

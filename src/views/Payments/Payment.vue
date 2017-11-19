@@ -7,7 +7,7 @@
         <div class="ui segment activity-info">
           <span class="label">신청 활동</span>
           <div class="ui divider"></div>
-          <span class="label">{{activity.title}}</span>
+          <span class="label">{{ activity.title }}</span>
           <div class="ui form">
             <div class="inline field">
               <label>신청날짜</label>
@@ -15,11 +15,11 @@
             </div>
             <div class="inline field">
               <label>집결지</label>
-              <span v-if="activity.address_detail">{{activity.address_detail.text}}</span>
+              <span v-if="activity.address_detail">{{ activity.address_detail.text }}</span>
             </div>
             <div class="inline field">
               <label>활동 날짜</label>
-              <span v-if="selectedWekin">{{selectedWekin.start_date | formatDate}}</span>
+              <span>{{ requestData.selectedDate | formatDateWithMoment }}</span>
             </div>
           </div>
         </div>
@@ -64,19 +64,36 @@
             </div>
           </div>
         </div>
-        <div class="ui segment">
-          <span class="label">신청인원</span>
-          <span v-if="this.activity.isteamorpeople === 'people'" class="label floated right">{{this.$route.params.peopleCount}}인</span>
-          <span v-if="this.activity.isteamorpeople === 'team'" class="label floated right">{{this.$route.params.peopleCount}}팀</span>
+        <div class="">
+          <!-- TODO: 신청 활동정보 표시-->
         </div>
       </div>
       <div class="column">
         <div class="ui segment">
-          <span>활동 가격</span>
-          <span class="floated right" v-if="activity.price">{{activity.price | joinComma}}원</span>
+          <div>
+            <span>활동 가격</span>
+            <span class="floated right" v-if="activity.base_price">{{ requestData.finalPrice | joinComma}}원</span>
+          </div>
+          <div style="margin-top:10px;">
+            <span>포인트 사용</span>
+            <span class="floated right" v-if="activity.base_price">
+              <input type="radio" id="normal" v-model="point.type" value="normal" @click="checkMinusPoint()"><label for="normal">일반포인트</label>
+              <input type="radio" id="company" v-model="point.type" value="company" @click="checkMinusPoint()"><label for="company">기업포인트</label>
+              <div class="ui mini icon input">
+                <input type="text" placeholder="사용포인트" style="width:100px" v-model="point.value" @blur="checkPointInput()">
+              </div>
+            </span>
+          </div>
+          <div style="margin-top: 20px;">
+            <span>사용가능 포인트</span>
+            <span class="floated right">일반: {{ point.type === 'normal' ? user.point.point - point.value : user.point.point| joinComma }} P, 기업: {{ point.type === 'company' ? user.point.point_special - point.value : user.point.point_special | joinComma }} P</span>
+            <br>
+            
+          </div>
           <div class="ui divider"></div>
           <span>최종 가격</span>
-          <span class="floated right" v-if="activity.price">{{(activity.price * this.$route.params.peopleCount) | joinComma }}원</span>
+          <span class="floated right" v-if="activity.base_price">{{ requestData.finalPrice - point.value | joinComma }}원</span>
+          <div id="error-message" v-if="point.errorMessage" style="color: red;">{{ point.errorMessage }}</div>
         </div>
         <div class="ui segment how-payments flex">
           <span>결제 수단</span>
@@ -129,7 +146,7 @@
           </div>
         </div>
         <div class="ui checkbox agreement-checkbox">
-          <input type="checkbox" name="agreement-checkbox" tabindex="0" class="hidden">
+          <input type="checkbox" v-model="isAgreed">
           <label>본인은
             <a href="/policy/privacy" target="_blank">개인정보 제 3자 제공</a>동의에 관한 내용을 모두 이해하였으며 이에 동의합니다.(agreed the terms of the<a href="/policy/privacy" target="_blank"> Private Policy</a>)</label>
         </div>
@@ -153,7 +170,6 @@ export default {
       isAgreed: false,
       activity: {},
       payMethod: "card",
-      user: {},
       requestUser: {
         name: '',
         email: '',
@@ -166,18 +182,79 @@ export default {
       },
       isPhoneVerifying: false,
       expiredTime: EXPIRED_TIME,
+      point: {
+        value: 0,
+        type: null,
+        validation: true,
+        errorMessage: false,
+        finalPrice: 0,
+      }
     }
   },
   computed: {
     selectedWekin() {
       return this.$route.params.selectedWekin
-    }
+    },
+    requestData() {
+      return this.$route.params.requestData
+    },
+    user() {
+      return this.$store.state.user
+    },
+  },
+  created() {
+    this.getActivity()
+    this.getUser()
+    // this.requestUser.name = this.user.name
+    // this.requestUser.email = this.user.email
   },
   methods: {
+    checkMinusPoint() {
+      let user = this.user
+      let point = this.point
+      if ((user.point.point - point.value) < 0 || (user.point.point_special - point.value) < 0) {
+        point.value = ''
+        point.errorMessage = "포인트가 부족합니다."
+      }
+    },
+    checkPointInput() {
+      let point = this.point
+      let userPoint = this.user.point
+      if (point.type === 'company' && point.value > -1) {
+        if (point.value > userPoint.point_special) {
+          point.value = ''
+          point.errorMessage = "사용하시려는 기업포인트가 보유포인트보다 많습니다."
+        } else if (userPoint.percentage * 0.01 * this.activity.price * this.$route.params.peopleCount < point.value)  {
+          point.value = ''
+          point.errorMessage = `"포인트 사용한도율을 초과했습니다. 위키너님의 포인트사용가능 한도포인트는 가격의 ${ userPoint.percentage }% 인 ${ this.activity.price *this.$route.params.peopleCount}포인트 입니다."`
+        } else {
+          point.finalPrice = point.value
+          point.errorMessage = false
+        }
+      } else if (point.type === 'normal' && point.value > -1) {
+        if (point.value > userPoint.point) {
+          point.value = ''
+          point.errorMessage = "사용하시려는 일반포인트가 보유포인트보다 많습니다."
+        } else if (userPoint.percentage * 0.01 * this.activity.price * this.$route.params.peopleCount < point.value)  {
+          point.value = ''
+          point.errorMessage = `"포인트 사용한도율을 초과했습니다. 위키너님의 포인트사용가능 한도포인트는 가격의 ${ userPoint.percentage }% 인 ${ this.activity.price *this.$route.params.peopleCount}포인트 입니다."`
+        } else {
+          point.finalPrice = point.value
+          point.errorMessage = false
+        }
+      } else if (point.value < -1 || typeof point.value !== Number) {
+        point.errorMessage = "정확한 포인트값을 입력해주세요."
+        point.value = '' 
+      } else {
+        point.errorMessage = "포인트 종류를 선택해주세요."
+        point.value = ''
+      }
+    },
     getUser() {
       auth.getCurrentUser().then(user => {
-        this.user = user
-      }).catch(error => console.error(error))
+      }).catch(error => {
+        window.reload()
+      })
     },
     onPhoneClick() {
       if (this.requestUser.phoneValid && confirm("전화번호를 재인증 하시겠습니까?")) {
@@ -245,6 +322,8 @@ export default {
         alert('이메일 형식을 확인해주세요.')
       } else if (this.payMethod == 'vbank' && !(this.requestUser.refundHolder && this.requestUser.refundBank && this.requestUser.refundAccount)) {
         alert("환불 정보를 확인해주세요.")
+      } else if (this.point.value > this.activity.price * this.$route.params.peopleCount) {
+        alert("포인트 사용 에러입니다. 포인트 양을 확인해주세요.")
       } else {
         return true
       }
@@ -259,7 +338,7 @@ export default {
             refund_bank: this.requestUser.refundBank,
             refund_holder: this.requestUser.refundHolder,
           }
-          api.requestOrder(this.user.user_key, this.selectedWekin.wekin_key, this.$route.params.peopleCount, refundInfo)
+          api.requestOrder(this.user.user_key, this.requestData.wekin_key, this.requestData.amount, refundInfo)
             .then((result) => {
               IMP.request_pay({
                 pg: 'html5_inicis',
@@ -267,7 +346,7 @@ export default {
                 // escrow: true,
                 merchant_uid: result.order_id,
                 name: this.activity.title,
-                amount: result.order_receipt_price,
+                amount: result.order_receipt_price - this.point.finalPrice,
                 buyer_email: this.requestUser.email,
                 buyer_name: this.requestUser.name,
                 buyer_tel: this.requestUser.phone,
@@ -281,7 +360,10 @@ export default {
                       this.$router.push({
                         name: 'PaymentComplete',
                         params: {
-                          rsp: rsp
+                          rsp: rsp,
+                          point_value: this.point.value, 
+                          point_type: this.point.type,
+                          wekin_key: this.requestData.wekin_key
                         }
                       })
                     })
@@ -293,7 +375,6 @@ export default {
                 } else {
                   api.deleteOrder(result.order_key)
                     .then((result) => {
-                      console.log(result)
                       var msg = '결제에 실패하였습니다.';
                       msg += '에러내용 : ' + rsp.error_msg;
                       alert(msg);
@@ -306,12 +387,6 @@ export default {
       }
     }
   },
-  created() {
-    this.getActivity()
-    this.getUser()
-    // this.requestUser.name = this.user.name
-    // this.requestUser.email = this.user.email
-  },
   mounted() {
     IMP.init('imp77669929')
     this.$store.watch(() => {
@@ -323,12 +398,7 @@ export default {
         this.requestUser.phoneValid = this.user.phone_valid
       }
     })
-    $('.agreement-checkbox').checkbox({
-      onChange: () => {
-        this.isAgreed = !this.isAgreed
-      }
-    })
-    if (this.$route.params.peopleCount == undefined) {
+    if (this.$route.params.requestData == undefined) {
       alert('잘못 된 접근입니다.')
       window.location.href = `/activity/${this.$route.params.key}`
     }

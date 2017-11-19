@@ -16,78 +16,76 @@
       <div class="ui right rail apply-container">
         <div class="ui sticky">
           <div class="ui segment">
-            <div class="ui icon top floated right inline dropdown feed-menu">
-              <i class="ellipsis vertical icon"></i>
-              <div class="menu">
-                <div class="header">공유하기</div>
-                <div class="item" @click="onFacebookShareClick()">
-                  <img class="facebookLogoBtn" src="/static/images/ic-facebook.png"> 페이스북
-                </div>
-                <div class="item" @click="snsShare('google')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-google.png"> 구글
-                </div>
-                <div class="item" @click="snsShare('kakaostory')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-kakaostory.png"> 카카오스토리
-                </div>
-                <div class="item" @click="snsShare('naver')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-naver.png"> 네이버
-                </div>
-              </div>
-            </div>
             <h2 style="margin-top:0">{{activity.title}}</h2>
             <p v-if="activity.address">
               <i class="icon marker"></i>{{activity.address}}
             </p>
-            <p v-if="wekins.length && activity.isteamorpeople === 'people'">
-              <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}명 (최소 {{wekins[0].min_user || selectedWekin.min_user}}명)
-              <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
+            <p v-if="activity.address">
+              <i class="icon won"></i>{{activity.base_price}}
             </p>
-            <p v-if="wekins.length && activity.isteamorpeople === 'team'">
-              <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}팀 (최소 {{wekins[0].min_user || selectedWekin.min_user}}팀)
-              <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
-            </p>
-            <!--<p v-show="Object.keys(selectedWekin).length == 0 && wekins.length">
-                                    <i class="icon users"></i>{{wekins[0].max_user}}명 (최소 {{wekins[0].min_user}}명)
-                                  </p>-->
-            <p>
-              <i class="icon won"></i>{{activity.price | joinComma}}원
-            </p>
-            <p v-show="Object.keys(selectedWekin).length">
-              {{selectedWekin.due_date | formatDateTimeKo}}까지 신청해주세요.
-            </p>
-            <div class="ui selection dropdown styled full-width schedule" v-show="wekins.length">
-              <input type="hidden" name="schedule">
-              <i class="dropdown icon"></i>
-              <div class="default text">날짜선택</div>
-              <div class="menu">
-                <div class="item"
-                     v-for="(wekin, index) in wekins"
-                     v-bind:key="wekin.wekin_key"
-                     :data-value="wekin.wekin_key"
-                     v-if="new Date(wekin.start_date) >= new Date()"
-                     :class="{ deadlineOver: new Date() > new Date(wekin.due_date) }">
-                  {{wekin.start_date | formatDateTimeKo}}
-                  <span v-if="new Date() > new Date(wekin.due_date)"
-                        style="color: #ccc;"> (마감)
-                  </span>
+            <div class="ui calendar">
+              <div class="ui input styled primary left icon" style="width: 260px;">
+                <i v-show="!requestData.selectedDate" class="icon calendar wekin-calendar-icon"></i>
+                <datepicker 
+                  v-model="requestData.selectedDate" 
+                  id="datepickerId" 
+                  input-class="width260" 
+                  language="ko" 
+                  format="MMM dd(D), yyyy"
+                  placeholder="        날짜선택"
+                  :disabled="calendar"
+                  v-on:input="resetSelection">
+                </datepicker>
+              </div>
+            </div>
+            <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">시각 선택</p>
+              <select v-model="requestData.startTime" class="width260 height25" @change="getCurrentNumberOfBookingUsers()">
+                <option value="sample" disabled>시작시각</option>
+                <option v-for="(item, index) in startTimeList" :value="[item[0], item[1]]">
+                  {{ item[0] }} {{ item[1] | Won }}
+                </option>
+              </select>
+            </div>
+            <div v-show="requestData.startTime !== 'sample'">
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">코스 선택</p>
+              <select v-model="requestData.selectedOption" class="width260 height25">
+                <option value="sample" disabled>옵션을 선택해주세요</option>
+                <option v-for="(item, index) in activity.base_price_option" :value="[item.name, item.price]">
+                  {{ item.name }} {{ item.price | Won }}
+                </option>
+              </select>
+            </div>
+            <div v-show="requestData.selectedOption !== 'sample'">
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">수량 선택</p>
+              <div style="border: 0.5px solid Gainsboro; padding: 10px 10px;">
+                <div v-for="(item, index) in activity.base_extra_price_option">
+                  <div style="height:22px; margin-top:10px;">
+                    <span style="float: left">{{ item.name }} {{ item.price | Won }}</span>
+                    <div style="float: right">
+                      <span>₩ {{ +requestData.startTime[1] + +activity.base_price + +item.price + +requestData.selectedOption[1] | joinComma }}</span>
+                      <button @click="requestData.selectedExtraOption[index] > 0 ? requestData.selectedExtraOption[index]-- : null">-</button>
+                      <span>{{requestData.selectedExtraOption[index]}} </span>
+                      <button @click="totalRequestAmount < activity.base_week_option[requestData.selectedYoil].max_user ? requestData.selectedExtraOption[index]++ : null">+</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="ui selection dropdown styled full-width peopleCount" v-if="Object.keys(selectedWekin).length">
-              <input type="hidden" name="gender">
-              <i class="dropdown icon"></i>
-              <div class="default text">인원선택</div>
-              <div class="menu">
-                <!-- FIXME: 현재 유저 JOIN 완료시 수정  -->
-                <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)" v-bind:key="index">{{index + 1}} <span v-if="activity.isteamorpeople === 'team'">팀</span><span v-if="activity.isteamorpeople !== 'team'">명</span></div>
-                <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) == 0" data-value="closed">마감</div>
-                <!--<div class="item" :data-value="index + 1" v-for="(wekin, index) in selectedWekin.max_user">{{index + 1}}명</div>-->
-              </div>
+            <div v-show="finalPrice >0" style="text-align:right; margin-top:20px;">
+              <h3>활동 가격 ₩ {{ finalPrice | joinComma }} </h3>
+
+
             </div>
+            <div v-if="requestData.selectedDate">
+              <p style="font-size:13px; margin-top:12px;color:red;" v-if="!selectedDateIsAllowToBooking" >해당 날짜 인원 마감되었습니다.</p>
+            </div>
+
             <button class="negative ui button full-width apply-btn"
-                    id="membershipvirtualview"
-                    v-on:click="onApplyBtn()"
-                    v-if="user">
+              style="margin-top:15px;"
+              id="membershipvirtualview"
+              v-on:click="onApplyBtn()"
+              v-if="user">
               신청하기
             </button>
             <button class="negative ui button full-width apply-btn" id="virtualview" v-on:click="onApplyBtn()" v-if="!user">
@@ -99,51 +97,44 @@
               <i class="icon bookmark" v-bind:class="{remove: !isFavoritedActivity, red: isFavoritedActivity}"></i>관심목록 추가</button>
             <a class="ui basic button full-width" id="virtualview" @click="onMailClick()">
               <i class="icon outline mail"></i>이메일 문의</a>
+            <a class="ui basic button full-width" v-on:click="snsShow = !snsShow">
+              <transition name="fade" mode="out-in">
+                <span v-if="!snsShow" key="share"><i class="share alternate icon"></i>공유하기</span>
+                <span v-else key="button">
+                  <img class="facebookLogoBtn" @click="onFacebookShareClick()" src="/static/images/ic-facebook.png" style="width:28px;height=28px; margin-right:10px;">
+                  <img class="facebookLogoBtn" @click="snsShare('google')" src="/static/images/ic-google.png" style="width:28px;height=28px; margin-right:10px;">
+                  <img class="facebookLogoBtn" @click="snsShare('kakaostory')" src="/static/images/ic-kakaostory.png" style="width:28px;height=28px; margin-right:10px;">
+                  <img class="facebookLogoBtn" @click="snsShare('naver')" src="/static/images/ic-naver.png" style="width:28px;height=28px; margin-right:10px;">
+                </span>
+              </transition>
+            </a>
           </div>
         </div>
       </div>
       <div class="ui pointing secondary menu">
-        <a class="item active" data-tab="first">개요</a>
-        <a class="item" data-tab="second">후기({{activity.review_count}})</a>
-        <a class="item" data-tab="third" @click="activeDropdown()">Q&amp;A</a>
+        <a :class="{ item: true, active: tabPage === 1}" @click="goTab(1)">개요</a>
+        <a :class="{ item: true, active: tabPage === 2}" @click="goTab(2)">후기({{activity.review_count}})</a>
+        <a :class="{ item: true, active: tabPage === 3}" @click="goTab(3)">Q&amp;A</a>
       </div>
-      <div class="ui tab overview active" data-tab="first">
+      <div class="ui tab overview active" id="first" v-if="tabPage === 1">
         <div class="title-mobile-container">
-          <h2>{{activity.title}}
-            <div class="ui icon top floated right pointing inline dropdown feed-menu">
-              <i class="ellipsis vertical icon"></i>
-              <div class="menu">
-                <div class="header">공유하기</div>
-                <div class="item" @click="onFacebookShareClick()">
-                  <img class="facebookLogoBtn" src="/static/images/ic-facebook.png"> 페이스북
-                </div>
-                <div class="item" @click="snsShare('google')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-google.png"> 구글
-                </div>
-                <div class="item" @click="snsShare('kakaostory')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-kakaostory.png"> 카카오스토리
-                </div>
-                <div class="item" @click="snsShare('naver')">
-                  <img class="facebookLogoBtn" src="/static/images/ic-naver.png"> 네이버
-                </div>
-              </div>
-            </div>
-          
-          </h2>
+          <h2>{{activity.title}}</h2>
           <p v-if="activity.address_detail">
             <i class="icon marker"></i>{{activity.address}}
           </p>
-            <p v-if="wekins.length && activity.isteamorpeople === 'people'">
-              <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}명 (최소 {{wekins[0].min_user || selectedWekin.min_user}}명)
-              <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
-            </p>
-            <p v-if="wekins.length && activity.isteamorpeople === 'team'">
-              <i class="icon users"></i>{{wekins[0].max_user || selectedWekin.max_user}}팀 (최소 {{wekins[0].min_user || selectedWekin.min_user}}팀)
-              <span v-show="Object.keys(selectedWekin).length"> / {{ selectedWekin.max_user - selectedWekin.current_user }} 남음</span>
-            </p>
           <p>
-            <i class="icon won"></i>{{activity.price | joinComma}}원
+            <i class="icon won"></i>{{activity.base_price | joinComma}}원
           </p>
+      <div style="display:inline-block;">
+          <div style="" v-on:click="snsShow = !snsShow">
+            <span>
+              <img class="facebookLogoBtn" @click="onFacebookShareClick()" src="/static/images/ic-facebook.png" style="cursor:pointer;width:32px;height=32px; margin-right:10px;">
+              <img class="facebookLogoBtn" @click="snsShare('google')" src="/static/images/ic-google.png" style="cursor:pointer;width:32px;height=32px; margin-right:10px;">
+              <img class="facebookLogoBtn" @click="snsShare('kakaostory')" src="/static/images/ic-kakaostory.png" style="cursor:pointer;width:32px;height=32px; margin-right:10px;">
+              <img class="facebookLogoBtn" @click="snsShare('naver')" src="/static/images/ic-naver.png" style="cursor:pointer;width:32px;height=32px; margin-right:10px;">
+            </span>
+          </div>
+      </div>
           <div class="ui divider"></div>
         </div>
         <h4>메이커</h4>
@@ -207,12 +198,12 @@
           <br style="clear: left;" />
         </div>
       </div>
-      <div class="ui tab review" data-tab="second">
+      <div class="ui review" id="second" v-if="tabPage === 2">
         <review-layout :review="review" v-for="(review, index) in reviews" v-bind:key="index" v-if="reviews.length >= 0"></review-layout>
         <div v-if="reviews.length == 0" style="text-align: center;color: #979797;">아직 작성 된 후기가 없습니다.</div>
         <button class="ui basic button more-btn" @click="getReviews(reviewPage++)" v-if="!isLastReview">더보기</button>
       </div>
-      <div class="ui tab qna" data-tab="third">
+      <div class="ui qna" id="third" v-if="tabPage === 3">
         <strong>궁금한 점이 있으신가요? 문의해 주시면 메이커가 답변을 해드립니다.</strong>
         <div class="qna-form-container">
           <div class="ui form">
@@ -221,64 +212,57 @@
             </div>
           </div>
           <div class="qna-buttons-container">
-            <div class="ui selection dropdown">
-              <input type="hidden" name="gender" value="false">
-              <i class="dropdown icon"></i>
-              <div class="text">공개</div>
-              <div class="menu">
-                <div class="item" data-value="false">공개</div>
-                <div class="item" data-value="true">비공개</div>
-              </div>
-            </div>
+              <select name="" v-model="privateMode">
+                <option value="false">공개</option>
+                <option value="true">비공개</option>
+              </select>
             <button class="ui primary button" @click="postQnA()">문의하기</button>
           </div>
         </div>
-        <div class="qna-board-container">
-          <div class="ui checkbox qna-filter" v-if="user">
-            <input type="checkbox" name="example">
-            <label>내 Q&amp;A만 보기</label>
-          </div>
-          <div class="ui accordion" v-if="filteredQuestions && filteredQuestions.length">
-            <div class="list" v-for="(question, index) in filteredQuestions" v-bind:key="index">
-              <div class="title">
-                <div class="flex">
-                  <div class="summary f1" v-if="question.private_mode">
-                    <i class="icon lock"></i>
-                    비밀글 입니다.
-                    <span class="mobile user name">{{question.User.name}}</span>
-                    <span class="mobile date">{{question.created_at | formatDate}}</span>
-                  </div>
-                  <div class="summary f1" v-if="!question.private_mode">
-                    <i class="icon q">Q</i>
-                    {{question.content}}
-                    <span class="mobile user name">{{question.User.name}}</span>
-                    <span class="mobile date">{{question.created_at | formatDate}}</span>
-                  </div>
-                  <div class="pc user name">{{question.User.name}}</div>
-                  <div class="pc date">{{question.created_at | formatDate}}</div>
-                  <div class="status">{{question.answer | qnaStatus}}</div>
-                </div>
-              </div>
-              <div class="content" v-if="!question.private_mode || isMyQuestion(question)">
-                <p>
-                  <span class="label">질문</span>
-                  <span>{{question.content}}</span>
-                </p>
-                <p v-if="question.answer">
-                  <span class="label">답변</span>
-                  <span>{{question.answer}}</span>
-                </p>
-                <!--<button class="ui basic button" v-if="isMyQuestion(question)">수정</button>-->
-                <button class="ui negative button" v-if="isMyQuestion(question)" @click="deleteReview(index, question.doc_key)">삭제</button>
-              </div>
-            </div>
-            <button class="ui basic button more-btn" @click="getQnas(qnaPage++)" v-if="!isLastQna">더보기</button>
-          </div>
-        </div>
-        <div v-if="filteredQuestions && !filteredQuestions.length" class="qna-not-exist">등록 된 Q&amp;A가 없습니다.</div>
+        <div style="margin-top:80px;">
+
+<div class="ui comments">
+  <h3 class="ui dividing header">문의글</h3>
+
+  <div class="comment" v-for="question in questions.rows">
+    <a class="avatar">
+      <img class="photo2" :src="question.User.profile_image">
+    </a>
+    <div class="content">
+      <a class="author">{{ question.User.name }}</a>
+      <div class="metadata">
+        <span class="date">{{ question.created_at | formatDateTimeKo }}</span>
+      </div>
+      <div class="text">
+        <p>{{ question.content }}</p>
       </div>
     </div>
-  
+    
+    <div class="comments" v-if="question.answer">
+      <div class="comment">
+        <a class="avatar">
+          <img class="photo2" :src="activity.Host.profile_image">
+        </a>
+        <div class="content">
+          <a class="author">{{ activity.Host.name }}</a>
+          <div class="metadata">
+            <span class="date">{{ question.updated_at | formatDateTimeKo }}</span>
+          </div>
+          <div class="text">
+            <p>{{ question.answer }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+<div class="ui divider"></div>
+
+  </div>
+</div>
+        
+        </div>
+      </div>
+    </div>
+
     <!-- waiting modal -->
     <div class="ui modal waiting-modal">
       <i class="close icon"></i>
@@ -298,7 +282,7 @@
         <div class="ui negative button approve" id="confirm">확인</div>
       </div>
     </div>
-  
+
     <!-- 모바일 버전 ! -->
     <div class="mobile-container">
       <div class="mobile-button-container">
@@ -307,8 +291,8 @@
             <i class="icon bookmark" v-bind:class="{remove: !isFavoritedActivity, red: isFavoritedActivity}"></i>
           </button>
           <!--<a :href="'mailto:' + activity.Host.User.email" class="ui white button">
-                                                  <i class="icon outline mail"></i>
-                                                </a>-->
+            <i class="icon outline mail"></i>
+          </a>-->
           <button class="ui white button" @click="onMailClick()">
             <i class="icon outline mail"></i>
           </button>
@@ -320,45 +304,78 @@
           </button>
         </div>
       </div>
-  
+
       <div class="mobile-form-container-back-layer" v-if="isMobileFormShowing" @click="toggleMobileForm()">
       </div>
       <div class="mobile-form-container" v-if="isMobileFormShowing">
-        <div class="ui selection dropdown styled full-width schedule">
-          <input type="hidden" name="schedule">
-          <i class="dropdown icon"></i>
-          <div class="default text">날짜선택</div>
-          <div class="menu">
-            <div class="item"
-                 v-for="wekin in wekins"
-                 v-bind:key="wekin.wekin_key"
-                 :data-value="wekin.wekin_key"
-                 v-if="new Date(wekin.start_date) >= new Date()"
-                 :class="{ deadlineOver: new Date() > new Date(wekin.due_date) }">
-              {{wekin.start_date | formatDateTimeKo}} ({{wekin.max_user - wekin.current_user}}남음)
-              <span v-if="new Date() > new Date(wekin.due_date)"
-                    style="color: #ccc;"> (마감)
-              </span>
+            <div class="ui calendar">
+              <div class="ui input styled primary left icon" style="width: 260px;">
+                <i v-show="!requestData.selectedDate" class="icon calendar wekin-calendar-icon"></i>
+                <datepicker 
+                  v-model="requestData.selectedDate" 
+                  id="datepickerId" 
+                  input-class="width260" 
+                  language="ko" 
+                  format="MMM dd(D), yyyy"
+                  placeholder="        날짜선택"
+                  :disabled="calendar"
+                  v-on:input="resetSelection">
+                </datepicker>
+              </div>
             </div>
-            <!--<div class="item" v-for="wekin in wekins" :data-value="wekin.wekin_key">{{wekin.start_date | formatDateKo}}</div>
-                                                              // TODO: 위킨 data value 테스트 -->
-          </div>
-        </div>
-        <div class="ui selection dropdown styled full-width peopleCount" v-if="Object.keys(selectedWekin).length">
-          <input type="hidden" name="gender">
-          <i class="dropdown icon"></i>
-          <div class="default text">인원선택</div>
-          <div class="menu">
-            <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) > 0" :data-value="index + 1" v-for="(wekin, index) in (selectedWekin.max_user - selectedWekin.current_user)" v-bind:key="index">{{index + 1}}<span v-if="activity.isteamorpeople === 'team'">팀</span><span v-if="activity.isteamorpeople !== 'team'">명</span></div>
-            <div class="item" v-if="(selectedWekin.max_user - selectedWekin.current_user) == 0" data-value="closed">마감</div>
-          </div>
-        </div>
-        <p v-show="Object.keys(selectedWekin).length">
-          {{selectedWekin.due_date | formatDateTimeKo}}까지 신청해주세요.
-        </p>
-        <button class="negative ui button full-width apply-btn" v-on:click="onApplyBtn()">
-          신청하기
-        </button>
+            <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">시각 선택</p>
+              <select v-model="requestData.startTime" class="width260 height25" @change="getCurrentNumberOfBookingUsers()">
+                <option value="sample" disabled>시작시각</option>
+                <option v-for="(item, index) in startTimeList" :value="[item[0], item[1]]">
+                  {{ item[0] }} {{ item[1] | Won }}
+                </option>
+              </select>
+            </div>
+            <div v-show="requestData.startTime !== 'sample'">
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">코스 선택</p>
+              <select v-model="requestData.selectedOption" class="width260 height25">
+                <option value="sample" disabled>옵션을 선택해주세요</option>
+                <option v-for="(item, index) in activity.base_price_option" :value="[item.name, item.price]">
+                  {{ item.name }} {{ item.price | Won }}
+                </option>
+              </select>
+            </div>
+            <div v-show="requestData.selectedOption !== 'sample'">
+              <p style="font-size: 14px; margin: 20px 0 2px 0;">수량 선택</p>
+              <div style="border: 0.5px solid Gainsboro; padding: 10px 10px;">
+                <div v-for="(item, index) in activity.base_extra_price_option">
+                  <div style="height:22px; margin-top:10px;">
+                    <span style="float: left">{{ item.name }} {{ item.price | Won }}</span>
+                    <div style="float: right">
+                      <span>₩ {{ +requestData.startTime[1] + +activity.base_price + +item.price + +requestData.selectedOption[1] | joinComma }}</span>
+                      <button @click="requestData.selectedExtraOption[index] > 0 ? requestData.selectedExtraOption[index]-- : null">-</button>
+                      <span>{{requestData.selectedExtraOption[index]}} </span>
+                      <button @click="totalRequestAmount < activity.base_week_option[requestData.selectedYoil].max_user ? requestData.selectedExtraOption[index]++ : null">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-show="finalPrice >0" style="text-align:right; margin-top:20px;">
+              <h3>활동 가격 ₩ {{ finalPrice | joinComma }} </h3>
+
+
+            </div>
+            <div v-if="requestData.selectedDate">
+              <p style="font-size:13px; margin-top:12px;color:red;" v-if="!selectedDateIsAllowToBooking" >해당 날짜 인원 마감되었습니다.</p>
+            </div>
+
+            <button class="negative ui button full-width apply-btn"
+              style="margin-top:15px;"
+              id="membershipvirtualview"
+              v-on:click="onApplyBtn()"
+              v-if="user">
+              신청하기
+            </button>
+            <button class="negative ui button full-width apply-btn" id="virtualview" v-on:click="onApplyBtn()" v-if="!user">
+              신청하기
+            </button>
       </div>
     </div>
     <mail-component ref="mailRef"></mail-component>
@@ -369,16 +386,29 @@
 import reviewLayout from 'components/ReviewLayout.vue'
 import mailComponent from 'components/MailComponent.vue'
 import smallWekin from 'components/Activity/SmallWekin.vue'
+import auth from './../../auth';
 import api from 'api'
 import _ from 'lodash'
+import Datepicker from 'vuejs-datepicker';
+import moment from 'moment';
 
 export default {
   components: {
+    smallWekin,
     reviewLayout,
     mailComponent,
-    smallWekin
+    Datepicker
   },
   filters: {
+    Won(num) {
+      if (num > 0) {
+        return ' (+' + num + ' 원)'
+      } else if (num == 0) {
+        return ''
+      } else if (num < 0) {
+        return ' (' +  num + ' 원)'
+      }
+    },
     qnaStatus(answer) {
       if (answer) {
         return "답변완료"
@@ -401,6 +431,46 @@ export default {
     }
   },
   computed: {
+    totalRequestAmount() {
+      let total = 0
+      for (let i in this.requestData.selectedExtraOption) {
+        total += this.requestData.selectedExtraOption[i]
+      }
+      return total + this.requestData.currentUserOfSelectedDate
+    },
+    finalPrice() {
+      let extraOption = this.requestData.selectedExtraOption
+      let finalPrice = 0
+      for (let item in extraOption) {
+        if (extraOption[item] !== 0) {
+          finalPrice += extraOption[item] * (+this.activity.base_price + +this.requestData.selectedOption[1] + +this.requestData.startTime[1] + +this.activity.base_extra_price_option[item].price)
+
+        }
+      }
+      this.requestData.finalPrice = finalPrice
+      return finalPrice 
+    },
+    calendar() {
+      let toDate = moment().add(this.activity.due_date, 'days').toDate()
+      let result = {
+        to: toDate,
+        from: moment(this.activity.end_date).toDate(),
+        dates: this.activity.datesList,
+        days: this.activity.days 
+      }
+      return result
+    },
+    startTimeList() {
+      if(this.requestData.selectedDate) {
+        let dayOfWeek = moment(this.requestData.selectedDate).format('dd')
+        let result = []
+        let selectedDay = this.activity.base_week_option[dayOfWeek]
+        for (let i = 0; i < selectedDay.start_time.length; i++) {
+          result[i] = [selectedDay.start_time[i], selectedDay.price_with_time[i]]
+        }
+        return result 
+      }
+    },
     user() {
       return this.$store.state.user
     },
@@ -428,6 +498,10 @@ export default {
   },
   data() {
     return {
+      snsShow: false,
+      openQnAIndex: [],
+      activities: [],
+      tabPage: 1,
       isMyQuestionOnlyChecked: false,
       mySwiper: null,
       isApplyAvailable: true,
@@ -444,10 +518,7 @@ export default {
           }
         }
       },
-      activities: [],
-      selectedWekin: {},
       wekiners: [],
-      wekins: [],
       reviews: [],
       questions: {
         rows: []
@@ -457,21 +528,71 @@ export default {
       reviewPage: 0,
       qnaPage: 0,
       content: null,
+      privateMode: false,
       isScheduleSelected: false,
       isMobileFormShowing: false,
       isFavoritedActivity: false,
       isRequested: false, // 예약 요청되었는지 여부
       peopleCount: 0,
-      isDropdownClicked: false
+      isDropdownClicked: false,
+      requestData: {
+        selectedYoil: null,
+        currentUserOfSelectedDate: 0,
+        startTime: 'sample',
+        selectedOption: 'sample',
+        selectedDate: null,
+        selectedExtraOption: {
+          0: 0,
+          1: 0,
+          2: 0
+        },
+      },
+      selectedDateIsAllowToBooking: true,
+      selectCourseOptionShow: true,
+      selectTimeOptionShow: true,
     }
   },
   watch: {
     '$route': 'getActivity'
   },
   methods: {
-     snsShare(sns_type) {
+    goTab(page) {
+      this.tabPage = page
+    },
+    getCurrentNumberOfBookingUsers() {
+      api.getCurrentNumberOfBookingUsers(this.$route.params.key, moment(this.requestData.selectedDate).format(), this.requestData.startTime[0])
+        .then( result => {
+          if (result.data == this.activity.base_week_option[this.requestData.selectedYoil].max_user) {
+            this.selectedDateIsAllowToBooking = false
+          } else {
+            this.selectedDateIsAllowToBooking = true
+          }
+          this.requestData.currentUserOfSelectedDate = result.data
+        })
+        .catch( error => console.log(error.response.data) )
+    },
+    resetSelection(evnt) {
+      if (evnt) {
+        this.requestData.selectedYoil = moment(this.requestData.selectedDate).format('dd')
+        this.requestData.startTime = 'sample'
+        if (this.startTimeList.length === 1) {
+          this.requestData.startTime = this.startTimeList[0]
+        }
+        if (this.activity.base_price_option.length === 1) {
+          this.requestData.selectedOption = [this.activity.base_price_option[0].name, this.activity.base_price_option[0].price]
+        }
+        this.requestData.selectedExtraOption = {
+          0: 0,
+          1: 0,
+          2: 0
+        }
+      }
+    },
+    snsShare(sns_type) {
+      //TODO
       var title = $("#ogTitle").attr('content');
-      var href = window.location.href;
+      //var href = window.location.href;
+      var href = api.forSNSLoginUrl + '/share/' + this.activity.activity_key
       var loc = "";
       var img = 'http://we-kin.com/static/images/default-profile.png'
       var oFlag = true;
@@ -486,12 +607,8 @@ export default {
       else if (sns_type == 'google') {
         loc = '//plus.google.com/share?url=' + href;
       }
-      else if (sns_type == 'pinterest') {
-
-        loc = '//www.pinterest.com/pin/create/button/?url=' + href + '&media=' + img + '&description=' + encodeURIComponent(title);
-      }
       else if (sns_type == 'kakaostory') {
-        loc = 'https://story.kakao.com/share?url=' + encodeURIComponent(href);
+        loc = 'https://story.kakao.com/share?url=' + href;
       }
       else if (sns_type == 'band') {
         loc = 'http://www.band.us/plugin/share?body=' + encodeURIComponent(title) + '%0A' + encodeURIComponent(href);
@@ -505,10 +622,7 @@ export default {
       window.open(loc);
     },
     onFacebookShareClick() {
-      let image = this.activity.main_image.image[0]
-      let name = `${this.activity.title} | 위킨`
-
-      window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&caption=Wekin&description=${encodeURIComponent(this.activity.address)}&display=popup&locale=ko_KR&name=${encodeURIComponent(name)}&link=${encodeURIComponent(`http://www.we-kin.com/activity/${this.activity.activity_key}`)}&picture=${encodeURIComponent(image)}&version=v2.1`,
+      window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&display=popup&locale=ko_KR&link=${encodeURIComponent(`${api.forSNSLoginUrl}/share/${this.activity.activity_key}`)}&version=v2.1`,
         'facebookShare',
         'toolbar=0,status=0,width=625,height=435'
       );
@@ -583,12 +697,15 @@ export default {
     jsonToString(json) {
       return JSON.stringify(json)
     },
-    isMyQuestion(question) {
+    toggleMobileForm() {
       if (this.user) {
-        return question.User.user_key === this.user.user_key
+        this.isMobileFormShowing = !this.isMobileFormShowing
+      } else {
+        alert("로그인이 필요한 서비스 입니다.")
+        this.$parent.$refs.navbar.showModalLogin()
       }
-      return false
     },
+    /*
     toggleMobileForm() {
       if (this.user) {
         this.isMobileFormShowing = !this.isMobileFormShowing
@@ -613,48 +730,82 @@ export default {
         this.$parent.$refs.navbar.showModalLogin()
       }
     },
+    */
     activeDropdown() {
       $('.qna-buttons-container .ui.selection.dropdown').dropdown()
     },
     onApplyBtn() {
+      if (!this.requestData.selectedDate) {
+        window.alert("날짜를 선택해주세요.")
+        return
+      } else if (this.requestData.startTime === 'sample') {
+        window.alert("시각을 선택해주세요.")
+        return
+      } else if (this.requestData.selectedOption === 'sample') {
+        window.alert("코스옵션을 선택해주세요.")
+        return
+      } else if (this.requestData.selectedExtraOption[0] == 0 && this.requestData.selectedExtraOption[1] == 0 && this.requestData.selectedExtraOption[2] == 0 ) {
+        window.alert("인원옵션을 선택해주세요.")
+        return
+      }
       if (this.user) {
-        if (this.checkForm()) {
-          if (this.isApplyAvailable) {
-            if (this.checkLoginState()) {
-              this.$router.push({
-                name: 'Payment',
-                path: `/activity/${this.$route.params.key}/payment`,
-                params: {
-                  peopleCount: this.peopleCount,
-                  selectedWekin: this.selectedWekin
+        auth.getCurrentUser()
+          .then(result => {
+            if (this.checkForm()) {
+              if (this.isApplyAvailable) {
+                if (this.checkLoginState()) {
+                  let params = this.requestData
+                  params.activity_key = this.activity.activity_key
+                  params.max_user = this.activity.base_week_option[this.requestData.selectedYoil].max_user
+                  api.postWekin(params)
+                    .then(result => {
+                      if (result.message == 'error') {
+                        alert("죄송합니다. 해당 날짜에 예약인원이 마감되었습니다.")
+                        return
+                      }
+                      // requestData에 위킨키 추가
+                      this.requestData.wekin_key = result.data.wekin_key || result.data[1][0].wekin_key
+                      this.requestData.amount = result.data.pay_amount || result.data[1][0].pay_amount
+                      this.$router.push({
+                        name: 'Payment',
+                        path: `/activity/${this.$route.params.key}/payment`,
+                        params: {
+                          requestData: this.requestData
+                        }
+                      })
+                    })
+                    .catch( error => {
+                      alert(moment().format() + error + "\n내부적인 오류가 발생했습니다.\n위키너님 죄송합니다.\n해당 화면을 휴대폰으로 찍어\n카카오톡 @위킨에 보내주시면 빠르게 도와드리겠습니다.\n다시한번 죄송합니다.") 
+                    })
+                } else {
+                  this.$router.push(`/login`)
                 }
-              })
-            } else {
-              this.$router.push(`/login`)
+              } else {
+                if (this.isRequested && confirm("정말 취소하시겠습니까?")) { // 대기신청 취소
+                  api.cancelWaiting(this.selectedWekin.wekin_key)
+                    .then((result) => console.log(result))
+                    .catch((error) => console.error(error))
+                  this.isRequested = false
+                  $('.apply-btn')
+                    .removeClass('negative')
+                    .addClass('primary')
+                    .text('대기 신청하기')
+                } else {  // 대기 신청 화면
+                  $('.ui.modal.waiting-modal').modal('show')
+                }
+              }
             }
-          } else {
-            if (this.isRequested && confirm("정말 취소하시겠습니까?")) { // 대기신청 취소
-              api.cancelWaiting(this.selectedWekin.wekin_key)
-                .then((result) => console.log(result))
-                .catch((error) => console.error(error))
-              this.isRequested = false
-              $('.apply-btn')
-                .removeClass('negative')
-                .addClass('primary')
-                .text('대기 신청하기')
-            } else {  // 대기 신청 화면
-              $('.ui.modal.waiting-modal').modal('show')
-            }
-          }
-        }
+          })
+          .catch(error => console.log("에러", error))
       } else {
         alert("로그인이 필요한 서비스 입니다.")
         this.$parent.$refs.navbar.showModalLogin()
       }
     },
     checkForm() {
-      if (this.peopleCount === 0 && !this.isRequested && this.isApplyAvailable) {
-        alert('인원을 선택해주세요.')
+      let currentUser = this.requestData.currentUserOfSelectedDate
+      let maxUser = this.activity.base_week_option[this.requestData.selectedYoil].max_user
+      if (this.finalPrice === 0 || maxUser - currentUser < 1) {
         return false
       }
       return true
@@ -690,12 +841,47 @@ export default {
     },
     getActivity() {
       api.getActivity(this.$route.params.key)
-        .then(activity => this.activity = activity)
+        .then(activity => {
+          this.activity = activity
+          this.activity.datesList = []
+          this.activity.days = []
+          let dates = this.activity.close_dates
+          for (let i=0; i < dates.length; i++) {
+            activity.datesList.push(moment(dates[i], 'YYMMDD').add(9, 'h').toDate())
+          }
+          for (let item in this.activity.base_week_option) {
+            if (!this.activity.base_week_option[item].start_time.length) {
+              switch (item) {
+                case 'Su':
+                  this.activity.days.push(0)
+                  break
+                case 'Mo':
+                  this.activity.days.push(1)
+                  break
+                case 'Tu':
+                  this.activity.days.push(2)
+                  break
+                case 'We':
+                  this.activity.days.push(3)
+                  break
+                case 'Th':
+                  this.activity.days.push(4)
+                  break
+                case 'Fr':
+                  this.activity.days.push(5)
+                  break
+                case 'Sa':
+                  this.activity.days.push(6)
+                  break
+              }
+            }
+          }
+        })
         .then(this.initBanner)
         .then(() => {
           api.getActivities(2)
           .then(json => {
-            let tempList  = _.filter(json.results, ['category', this.activity.category]);
+            let tempList  = _.filter(json, ['category', this.activity.category]);
             this.activities = _.sampleSize(tempList, 3)
           })
         })
@@ -726,56 +912,30 @@ export default {
           if (questions.length < 10) {
             this.isLastQna = true
           }
-          this.$nextTick(() => {
-            setTimeout(() => {
-              $('.ui.checkbox.qna-filter').checkbox({
-                onChecked: () => this.isMyQuestionOnlyChecked = true,
-                onUnchecked: () => this.isMyQuestionOnlyChecked = false
-              })
-              $('.accordion').accordion({
-                selector: {
-                  trigger: '.title'
-                }
-              })
-            }, 500)
-          })
         })
         .catch(err => console.error(err))
     },
     getAttendWekiners() {
-      api.getAttendWekiners(this.selectedWekin.wekin_key)
-        .then(wekiners => this.wekiners = wekiners)
-        .catch(err => console.error(err))
-    },
-    getWekins() {
-      api.getWekins(this.$route.params.key)
-        .then(wekins => {
-          this.wekins = wekins
-          setTimeout(() => {
-            this.$nextTick(() => {
-              this.dropdownSchedule()
-            })
-          }, 1000)
-        })
+      api.getAttendWekiners(this.$route.params.key)
+        .then(wekiners => this.wekiners = wekiners.data)
         .catch(err => console.error(err))
     },
     postQnA() {
       if (this.user) {
         // TODO: defualt value를 처음부터 가져올 수 있도록
-        let privateMode = $('.qna-buttons-container .ui.selection.dropdown').dropdown('get value')
         let qnaParams = {
           activity_key: this.activity.activity_key,
           activity_title: this.activity.title,
           host_key: this.activity.host_key,
           content: this.content,
-          private_mode: privateMode
+          private_mode: this.privateMode
         }
         api.postQnA(this.activity.activity_key, qnaParams)
           .then((result) => {
             let qna = {
               activity_key: this.$route.params.key,
               content: this.content,
-              private_mode: privateMode == 'true',
+              private_mode: this.privateMode == 'true',
               created_at: new Date(),
               User: {
                 name: this.user.name,
@@ -787,8 +947,6 @@ export default {
               api.sendSms(response.tel,'메이커님! ' + qnaParams.activity_title + ' 위킨에 QnA가 작성되었습니다. 내용:' + String(qnaParams.content).slice(0, 18) + '...')
             })
             api.sendSms('010-9366-6639', qnaParams.activity_title + ' 위킨에 QnA가 작성되었습니다. 내용:' + String(qnaParams.content).slice(0, 18) + '...' )
-            api.sendSms('010-5108-2668', qnaParams.activity_title + ' 위킨에 QnA가 작성되었습니다. 내용:' + String(qnaParams.content).slice(0, 18) + '...' )
-            api.sendSms('010-2720-7064', qnaParams.activity_title + ' 위킨에 QnA가 작성되었습니다. 내용:' + String(qnaParams.content).slice(0, 18) + '...' )
             this.questions.rows.unshift(qna)
             this.content = null
           })
@@ -818,39 +976,38 @@ export default {
       $('.ui.dropdown.schedule')
         .dropdown({
           onChange: (value) => {
-              var wekin = _.find(this.wekins, (wekin) => {
-                return wekin.wekin_key == value
-              })
-              this.selectedWekin = wekin
-              this.$nextTick(() => {
-                this.dropdownPeopleCount()
-                this.getAttendWekiners()
+            var wekin = _.find(this.wekins, (wekin) => {
+              return wekin.wekin_key == value
+            })
+            this.selectedWekin = wekin
+            this.$nextTick(() => {
+              this.dropdownPeopleCount()
 
-                if ((this.selectedWekin.max_user - this.selectedWekin.current_user) == 0) {
-                  this.isApplyAvailable = false
-                  $('.apply-btn')
-                    .removeClass('negative')
-                    .addClass('primary')
-                    .text('대기 신청하기')
+              if ((this.selectedWekin.max_user - this.selectedWekin.current_user) == 0) {
+                this.isApplyAvailable = false
+                $('.apply-btn')
+                  .removeClass('negative')
+                  .addClass('primary')
+                  .text('대기 신청하기')
 
-                  api.isRequestedWaiting(this.selectedWekin.wekin_key)
-                    .then((isRequested) => {
-                      if (isRequested.result) {
-                        this.isRequested = true
-                        $('.apply-btn')
-                          .removeClass('negative')
-                          .addClass('primary')
-                          .text('대기 신청 취소하기')
-                      }
-                    }).catch((error) => console.error(error))
-                } else {
-                  this.isApplyAvailable = true
-                  $('.apply-btn')
-                    .removeClass('primary')
-                    .addClass('negative')
-                    .text('신청하기')
-                }
-              })
+                api.isRequestedWaiting(this.selectedWekin.wekin_key)
+                  .then((isRequested) => {
+                    if (isRequested.result) {
+                      this.isRequested = true
+                      $('.apply-btn')
+                        .removeClass('negative')
+                        .addClass('primary')
+                        .text('대기 신청 취소하기')
+                    }
+                  }).catch((error) => console.error(error))
+              } else {
+                this.isApplyAvailable = true
+                $('.apply-btn')
+                  .removeClass('primary')
+                  .addClass('negative')
+                  .text('신청하기')
+              }
+            })
           }
         })
       $('.ui.dropdown.schedule .deadlineOver')
@@ -859,8 +1016,10 @@ export default {
         })
     }
   },
-  mounted() {
-    this.getWekins()
+  mounted () {
+    this.getAttendWekiners()
+  },
+  created() {
     this.getActivity()
     this.getReviews()
     this.getQnas()
@@ -874,27 +1033,12 @@ export default {
         $('.ui.sticky').sticky()
       })
     }, 1000)
-    // this.mySwiper = new Swiper('.swiper-container', {
-    //   slidesPerView: 1,
-    // })
-    $('.menu .item').tab();
-    if (window.location.hash == "#review") {
-      $('.menu .item').tab('change tab', 'second');
-    } else if (window.location.hash == "#qna") {
-      $('.menu .item').tab('change tab', 'third')
-    }
     $('.ui.rating')
       .rating({
         initialRating: 3,
         maxRating: 5
       })
       .rating('disable')
-    $('.accordion')
-      .accordion({
-        selector: {
-          trigger: '.title'
-        }
-      })
     $('.ui.modal.confirm-modal')
       .modal({
         onApprove: () => {
@@ -906,13 +1050,23 @@ export default {
       })
       .modal('attach events', '.waiting-modal #confirm', 'show')
 
-  }
+  },
 }
 </script>
 <style lang=scss scoped>
 @import '../../style/variables';
 @import '../../style/cross-browsing';
-
+.photo2 {
+  width: 34px !important;
+  height: 34px !important;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 50% !important;
+}
+.wekin-calendar-icon {
+  position: relative;
+  z-index: 10000;
+}
 .deadlineOver {
   color: #ccc !important;
   cursor: default !important;
@@ -1237,6 +1391,7 @@ h2 {
 
 
 
+
 /* 모바일 전용 */
 
 .mobile-container {
@@ -1404,7 +1559,7 @@ h2 {
   }
 }
 
-@media only screen and (max-width: 479px) {
+@media only screen and (max-width: 779px) {
   .swiper-container.wekin img {
     height: 250px!important
   }
@@ -1428,9 +1583,32 @@ h2 {
       display: none;
     }
   }*/
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
+}
 </style>
 <style>
+.vdp-datepicker__calendar {
+  top: -282px;
+}
+.width260 {
+  width: 260px;
+}
+.vdp-datepicker div input {
+  background-color: red;
+}
+.height25 {
+  height: 25px;
+}
 .explain-detail img {
   width: 100%!important;
+}
+@media only screen and (max-width: 479px) {
+  .vdp-datepicker__calendar {
+    top: -280px;
+  }
 }
 </style>

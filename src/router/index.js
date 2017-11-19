@@ -6,6 +6,8 @@ import FeedDetail from 'views/FeedDetail.vue'
 import Customer from 'views/Customer.vue'
 import Policy from 'views/Policy.vue'
 import Login from 'views/Auth/Login.vue'
+import KakaoLogin from 'views/Auth/KakaoLogin.vue'
+import NaverLogin from 'views/Auth/NaverLogin.vue'
 import Join from 'views/Auth/Join.vue'
 import ForgotPassword from 'views/Auth/ForgotPassword.vue'
 import VerifyEmail from 'views/Auth/VerifyEmail.vue'
@@ -30,6 +32,8 @@ import HostStats from 'views/HostAdmin/HostStats.vue'
 import HostWekinsManagement from 'views/HostAdmin/HostWekinsManagement.vue'
 import HostWekinModify from 'views/HostAdmin/HostWekinModify.vue'
 import HostWekinAdd from 'views/HostAdmin/HostWekinAdd.vue'
+import HostWekinAddNew from 'views/HostAdmin/HostWekinAdd-new.vue'
+import HostWekinModifyNew from 'views/HostAdmin/HostWekinModify-new.vue'
 import HostBookingsManagement from 'views/HostAdmin/HostBookingsManagement.vue'
 import HostBookingMemberList from 'views/HostAdmin/HostBookingMemberList.vue'
 import HostBoardsManagement from 'views/HostAdmin/HostBoardsManagement.vue'
@@ -41,11 +45,11 @@ import Filter from 'views/Filter.vue'
 import Search from 'views/Search.vue'
 import About from 'views/About.vue'
 import Manual from 'views/Manual.vue'
+import ExplainMaker from './../views/explainMakerStaticPage.vue'
 import EventList from 'components/EventList.vue'
-// import Meta from 'vue-meta'
 
 Vue.use(Router)
-// Vue.use(Meta)
+
 
 export default new Router({
   mode: 'history',
@@ -67,6 +71,11 @@ export default new Router({
       path: '/manual/:key',
       name: 'Manual',
       component: Manual
+    },
+    {
+      path: '/manual/maker',
+      name: 'ExplainMaker',
+      component: ExplainMaker
     },
     {
       path: '/notification',
@@ -107,6 +116,16 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/auth/kakao',
+      name: 'KakaoLogin',
+      component: KakaoLogin
+    },
+    {
+      path: '/auth/naver',
+      name: 'NaverLogin',
+      component: NaverLogin
     },
     {
       path: '/join',
@@ -176,13 +195,23 @@ export default new Router({
         { path: '', name: 'HostAdmin', component: HostHome },
         { path: 'stats', name: 'HostStats', component: HostStats },
         { path: 'wekins', name: 'HostWekins', component: HostWekinsManagement },
-        { path: 'wekins/add', name: 'HostWekinsAdd', component: HostWekinAdd },
-        { path: 'wekins/:key', name: 'HostWekinsDetail', component: HostWekinModify },
+        // { path: 'wekins/add', name: 'HostWekinsAdd', component: HostWekinAdd },
+        // { path: 'wekins/:key', name: 'HostWekinsDetail', component: HostWekinModify },
         { path: 'bookings', name: 'HostBooking', component: HostBookingsManagement },
         { path: 'bookings/:key', name: 'HostBookingDetail', component: HostBookingMemberList },
         { path: 'boards', name: 'HostBoards', component: HostBoardsManagement },
-        { path: 'settings', name: 'HostSettings', component: HostSettings }
+        { path: 'settings', name: 'HostSettings', component: HostSettings },
       ]
+    },
+    { 
+      path: '/wekin/modify/:key', 
+      name: 'HostWekinsModifyNew', 
+      component: HostWekinModifyNew 
+    },
+    { 
+      path: '/wekin/add', 
+      name: 'HostWekinsAddNew', 
+      component: HostWekinAddNew 
     },
     {
       path: '/host/:key',

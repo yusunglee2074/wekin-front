@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="24px" viewBox="0 0 19 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/bookmark-1-a@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M21,3 L-0.800413905,3 C-1.46215903,3 -2,3.52859035 -2,4.18047304 L-2,19.8188458 C-2,20.4707285 -1.46215903,21 -0.800413905,21 L21,21 L14.6622459,11.6613412 L21,3 Z" id="path-1"></path>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/bookmark-1-a">
+            <g id="icon/bookmark-1">
+                <g id="Page-1" transform="translate(9.500000, 12.000000) rotate(90.000000) translate(-9.500000, -12.000000) ">
+                    <use fill="#00C58E" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <path stroke="#00C58E" stroke-width="2" d="M19.0291475,4 L-0.800413905,4 C-0.913764105,4 -1,4.08482809 -1,4.18047304 L-1,19.8188458 C-1,19.914802 -0.91345699,20 -0.800413905,20 L19.112799,20 L13.4389879,11.6396589 L19.0291475,4 Z"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

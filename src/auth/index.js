@@ -9,8 +9,8 @@ export default {
    * 이메일 인증 메일도 함께 전송한다.
    * @param {user} user
    */
-  signUp (email, password, userName, country) {
-    return api.signUp(email, password, userName, country)
+  signUp (email, password, userName, USER) {
+    return api.signUp(email, password, userName, USER)
             .then(customToken => firebase.auth().signInWithCustomToken(customToken))
             .then(currentUser => { 
               currentUser.sendEmailVerification() 
@@ -32,9 +32,11 @@ export default {
   signIn (email, password) {
     return firebase.auth().signInWithEmailAndPassword(email, password)
       .then(currentUser => {
-        currentUser.getIdToken().then(token => {
-          localStorage.setItem('accessToken', token)
-        })
+        currentUser.getIdToken()
+          .then(token => {
+            localStorage.setItem('accessToken', token)
+          })
+          .catch(error => console.log(error))
         return currentUser
       })
   },
@@ -95,7 +97,7 @@ export default {
           })
           .catch( error => reject(error))
         } else {
-          firebase.auth().currentUser.getToken(true)
+          firebase.auth().currentUser.getIdToken(true)
           .then( token => {
             localStorage.setItem('accessToken', token)
             api.getUser()
@@ -118,17 +120,20 @@ export default {
     provider.addScope('email')
     provider.addScope('user_birthday')
     provider.addScope('publish_actions')
-    firebase.auth().signInWithRedirect(provider);
-    /*
+    // firebase.auth().signInWithRedirect(provider);
     return firebase.auth().signInWithPopup(provider)
       .then(credential => {
         return credential.user.getIdToken().then(token => {
           return api.frontsignUp(token, credential.user.displayName, credential.user.photoURL)
-            .then(currentUser => currentUser)
-            .catch(() => credential.user)
         })
       })
-      */
+      .catch(error => {
+        console.log(error)
+        if (error.code == "auth/account-exists-with-different-credential") {
+          window.alert('해당 이메일 가입 이력이 있습니다. \n 이메일: ' + error.email + '\n 추가 문의사항은 카카오톡 @위킨 혹은 고객센터에 문의바랍니다.')
+          window.location.reload()
+        }
+      })
     //window.location.href = '?success'
   },
   loginWithGoogle () {

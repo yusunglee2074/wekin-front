@@ -8,7 +8,7 @@
         <div class="content" style="min-height:100px">
           <a class="header" style="font-size: 15px;">{{ activity.title }}</a>
           <div class="meta">
-            <span class="date">￦ {{ activity.price | joinComma }}</span>
+            <span class="date">￦ {{ activity.base_price | joinComma }}</span>
           </div>
         </div>
       </div>

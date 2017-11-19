@@ -25,14 +25,9 @@
             <p><a @click="callSignupModal()" class="item linked">회원가입</a></p>
           </div>
           <div class="padded">
-            <!--<span class="ui horizontal divider">
-              또는
-            </span>
-            <div class="social-login-container">
-              <img class="link" src="../../static/images/logo-facebook-68x68.png" @click="onFacebookLoginClick()">
-              <img class="link" src="../../static/images/logo-kakao-68x68.png" @click="onKakaoClick()">
-              <img class="link" src="../../static/images/logo-googleplus-68x68.png" @click="onGoogleClick()">
-            </div>-->
+          <img src="./../../static/images/logo-facebook-68x68.png" class="snsLoginButton" @click="onFacebookJoinClick()">&nbsp&nbsp
+          <img src="./../../static/images/logo-kakao-68x68.png" class="snsLoginButton" @click="signInWithKakao()">&nbsp&nbsp
+          <img src="./../../static/images/logo-naver-68x68.png" class="snsLoginButton" @click="signInWithNaver()">&nbsp&nbsp
           </div>
         </div>
       </div>
@@ -46,6 +41,7 @@ import auth from 'src/auth'
 import firebase from 'firebase'
 import { Validation } from 'src/util'
 import SignupModal from './SignupModal.vue'
+import api from './../api'
 
 export default {
   name: 'modallogin',
@@ -112,13 +108,13 @@ export default {
     goToRedirectUrl() {
       window.location.reload()
     },
-    onFacebookLoginClick() {
+    onFacebookJoinClick() {
       this.isLoading = true
       auth.loginWithFacebook()
-        .then((currentUser) => {
-          this.goToRedirectUrl()
+        .then(currentUser => {
+          window.location.reload()
         })
-        .catch((error) => this.onLoginFail(error))
+        .catch(() => credential.user)
     },
     onGoogleClick() {
       this.isLoading = true
@@ -126,15 +122,11 @@ export default {
         .then((currentUser) => this.goToRedirectUrl())
         .catch((error) => this.onLoginFail(error))
     },
-    onNaverClick() {
-      auth.loginWithNaver()
-        .then((currentUser) => console.log(currentUser))
-        .catch((error) => this.onLoginFail(error))
+    signInWithNaver() {
+      window.location.href = `https://nid.naver.com/oauth2.0/authorize?client_id=rTHYGlmyZuVKSzR4_45d&redirect_uri=${api.forSNSLoginUrl}/auth/naver&response_type=code&state=wekin`
     },
-    onKakaoClick() {
-      auth.loginWithKakao()
-        .then((currentUser) => this.goToRedirectUrl())
-        .catch((error) => this.onLoginFail(error))
+    signInWithKakao() {
+      window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=75c0694ad636bcca94fa48cbc7c9d8cf&redirect_uri=${api.forSNSLoginUrl}/auth/kakao&response_type=code`
     },
     onLoginClick() {
       this.isLoading = true
@@ -229,5 +221,9 @@ export default {
 }
 .ui.input {
   margin-bottom: 10px;
+}
+.snsLoginButton {
+  width: 32px;
+  height: auto;
 }
 </style>

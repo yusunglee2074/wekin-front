@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="23px" viewBox="0 0 22 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>Write/icons/ico-image @1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M22,18.4517663 C22,20.4110967 20.3709616,22 18.3601588,22 L3.63984118,22 C1.62992523,22 0,20.4110967 0,18.4517663 L0,3.54823372 C0,1.58847106 1.62992523,0 3.63984118,0 L18.3601588,0 C20.3709616,0 22,1.58847106 22,3.54823372 L22,18.4517663 Z" id="path-1"></path>
+    </defs>
+    <g id="위킨" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="612_소통_작성하기_위킨찾기" transform="translate(-10.000000, -533.000000)">
+            <g id="답글-달기-액션" transform="translate(0.000000, 520.000000)">
+                <g id="Component/write">
+                    <g id="photo">
+                        <g id="Group" transform="translate(10.000000, 13.000000)">
+                            <g id="Write/icons/ico-image-" transform="translate(0.000000, 0.705882)">
+                                <g id="Group-12">
+                                    <g>
+                                        <g id="Stroke-8">
+                                            <use fill="#D55D6C" fill-rule="evenodd" xlink:href="#path-1"></use>
+                                            <path stroke="#333333" stroke-width="1.7" d="M21.15,18.4517663 L21.15,3.54823372 C21.15,2.0626648 19.9061316,0.85 18.3601588,0.85 L3.63984118,0.85 C2.09441783,0.85 0.85,2.06299628 0.85,3.54823372 L0.85,18.4517663 C0.85,19.9367372 2.09458652,21.15 3.63984118,21.15 L18.3601588,21.15 C19.9059629,21.15 21.15,19.9370687 21.15,18.4517663 Z"></path>
+                                        </g>
+                                        <g id="Group" transform="translate(0.542029, 3.108696)" stroke="#333333" stroke-width="1.5" stroke-linecap="round">
+                                            <path d="M7.61857097,2.51876453 C7.61857097,3.54400601 6.78773279,4.3748442 5.76249131,4.3748442 C4.73724982,4.3748442 3.90641164,3.54400601 3.90641164,2.51876453 C3.90641164,1.49352305 4.73724982,0.662684865 5.76249131,0.662684865 C6.78773279,0.662684865 7.61857097,1.49352305 7.61857097,2.51876453 Z" id="Stroke-10"></path>
+                                            <polyline id="Path-5" points="10.1687613 12.9492851 4.63602926 7.41655302 0.365690104 11.5698523"></polyline>
+                                            <polyline id="Path-4" points="20.0157014 8.70827337 14.4794011 3.17197309 13.3446381 2.03721004 6.65507246 8.70827337"></polyline>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

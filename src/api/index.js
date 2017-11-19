@@ -2,9 +2,12 @@ import axios from 'axios'
 
 // const BASE_API_URL = 'http://localhost:8888/v1'
 // const BASE_API_URL = 'http://192.168.0.100:8888/v1'
+// const BASE_API_URL = 'http://13.125.79.168:8888/v1' //유성이AWSㅇ임시 서버 
+// const BASE_API_URL = 'http://127.0.0.1:8888/v1'
 // const BASE_API_URL = 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1'
 const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
 const GEO_API_KEY = 'AIzaSyARPCWOhPLlFgDvqXbKb5RLA4rnVAcGbZ0'
+const forSNSLoginUrl = 'http://we-kin.com'
 
 const BOARD_TYPE_NOTICE = 0
 
@@ -16,6 +19,11 @@ axios.interceptors.request.use((config) => {
 })
 
 export default {
+  forSNSLoginUrl,
+  dbCreateWithIdToken (idToken) {
+    return axios.post(`${BASE_API_URL}/user/front/signUp/dbCreateWithIdtoken`, { idToken })
+      .then( res => res.data )
+  },
   getUser () {
     return axios.get(`${BASE_API_URL}/user/front/verify`)
       .then(res => res.data)
@@ -24,12 +32,32 @@ export default {
     return axios.get(`${BASE_API_URL}/wekin/front`)
       .then(res => res.data)
   },
+  getCurrentNumberOfBookingUsers (key, date, time) {
+    return axios.get(`${BASE_API_URL}/wekin/current/${key}/${date}/${time}`)
+      .then(res => res.data)
+  },
+  postWekin (params) {
+    return axios.post(`${BASE_API_URL}/wekin`, { params })
+      .then(res => res.data)
+  },
   getActivities (key) {
     return axios.get(`${BASE_API_URL}/activity/front/period/${key}`)
       .then(res => res.data)
   },
+  getActivityForSearch () {
+    return axios.get(`${BASE_API_URL}/activity/search`)
+      .then(res => res.data)
+  },
   getActivity (activityKey) {
     return axios.get(`${BASE_API_URL}/activity/front/${activityKey}`)
+      .then(res => res.data)
+  },
+  getNews () {
+    return axios.get(`${BASE_API_URL}/news`)
+      .then(res => res.data)
+  },
+  newsViewCountPlus (key) {
+    return axios.get(`${BASE_API_URL}/news/${key}`)
       .then(res => res.data)
   },
   getAdminActivity (activityKey) {
@@ -46,6 +74,10 @@ export default {
   },
   getWekins (activityKey) {
     return axios.get(`${BASE_API_URL}/activity/front/${activityKey}/wekin`)
+      .then(res => res.data)
+  },
+  getUserWekinNews (userKey) {
+    return axios.get(`${BASE_API_URL}/wekin/${userKey}`)
       .then(res => res.data)
   },
   searchActivity (keyword) {
@@ -247,8 +279,11 @@ export default {
     return axios.post(`${BASE_API_URL}/user/front/signUp`, { accessToken: accessToken, name: name, profileImage: profileImage })
       .then(res => res.data)
   },
-  signUp (email, password, name, country) {
-    return axios.post(`${BASE_API_URL}/user/front/join`, { email: email, name: name, password: password, country: country })
+  kakaoLogin (code, type) {
+    return axios.get(`${BASE_API_URL}/user/front/signUp/kakao/${code}/${type}`)
+  },
+  signUp (email, password, name, USER) {
+    return axios.post(`${BASE_API_URL}/user/front/join`, { email: email, name: name, password: password, userObject: USER })
       .then(res => res.data)
   },
   createCustomToken (accessToken) {
@@ -383,6 +418,16 @@ export default {
       extra: extra
     })
       .then(res => res.data)
+  },
+  requestPointUse(value, type, wekin_key) {
+    return axios.post(`${BASE_API_URL}/point/front/use`, {
+      value: value,
+      type: type,
+      wekin_key: wekin_key || null
+    })
+  },
+  getPointHistory(user_key, month) {
+    return axios.get(`${BASE_API_URL}/point/detail/${ user_key }/${ month }`)
   },
   requestRefund (userKey, params) {
     return axios.post(`${BASE_API_URL}/order/refund`)

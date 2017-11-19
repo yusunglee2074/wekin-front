@@ -34,12 +34,18 @@
           </div>
           <div class="active content">
             <div class="button-container">
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '놀이'}" @click="toggleCheckList(categoryCheck, 0, '놀이')">놀이</button>
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '도전'}" @click="toggleCheckList(categoryCheck, 0, '도전')">도전</button>
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '체험'}" @click="toggleCheckList(categoryCheck, 0, '체험')">체험</button>
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '문화'}" @click="toggleCheckList(categoryCheck, 0, '문화')">문화</button>
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '휴식'}" @click="toggleCheckList(categoryCheck, 0, '휴식')">휴식</button>
-              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '축제'}" @click="toggleCheckList(categoryCheck, 0, '축제')">축제</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '투어/여행'}" @click="toggleCheckList(categoryCheck, 0, '투어/여행')">투어/여행</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '익스트림'}" @click="toggleCheckList(categoryCheck, 0, '익스트림')">익스트림</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '스포츠'}" @click="toggleCheckList(categoryCheck, 0, '스포츠')">스포츠</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '음악'}" @click="toggleCheckList(categoryCheck, 0, '음악')">음악</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '댄스'}" @click="toggleCheckList(categoryCheck, 0, '댄스')">댄스</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '뷰티'}" @click="toggleCheckList(categoryCheck, 0, '뷰티')">뷰티</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '요리'}" @click="toggleCheckList(categoryCheck, 0, '요리')">요리</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '아트'}" @click="toggleCheckList(categoryCheck, 0, '아트')">아트</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '힐링'}" @click="toggleCheckList(categoryCheck, 0, '힐링')">힐링</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '아웃도어'}" @click="toggleCheckList(categoryCheck, 0, '아웃도어')">아웃도어</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '요가/피트니스'}" @click="toggleCheckList(categoryCheck, 0, '요가/피트니스')">피트니스</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '소품제작'}" @click="toggleCheckList(categoryCheck, 0, '소품제작')">소품제작</button>
             </div>
           </div>
         </div>
@@ -84,9 +90,9 @@
 	    <h3><small>선택가격: </small>{{ slider.value[0] }} ~ {{ slider.value[1] === 20 ? '제한없음' : slider.value[1] + '만원' }}</h3>
           </div>
         </div>
+        <!--
         <div class="ui styled accordion">
           <div class="active title">
-            <!--<i class="dropdown icon"></i>-->
             인원
           </div>
           <div class="active content">
@@ -100,9 +106,10 @@
             </div>
           </div>
         </div>
+        -->
+        <!--
         <div class="ui styled accordion location">
           <div class="active title">
-            <!--<i class="dropdown icon"></i>-->
             내주변
           </div>
           <div class="active content">
@@ -127,27 +134,46 @@
             </div>
           </div>
         </div>
+        -->
         <button class="ui button negative full-width reset-btn" @click="resetFilter()">필터 초기화</button>
       </div>
       <div class="categoryformobile">
         <div class="ui text menu">
-          <a v-bind:class="{isClicked: this.categoryCheck === '놀이'}" class="item" @click="toggleCheckList(categoryCheck, 0, '놀이')">
-            놀이
+          <a v-bind:class="{isClicked: this.categoryCheck === '투어/여행'}" class="item" @click="toggleCheckList(categoryCheck, 0, '투어/여행')">
+            투어/여행
           </a>
-          <a v-bind:class="{isClicked: this.categoryCheck === '도전'}" class="item" @click="toggleCheckList(categoryCheck, 0, '도전')">
-            도전
+          <a v-bind:class="{isClicked: this.categoryCheck === '익스트림'}" class="item" @click="toggleCheckList(categoryCheck, 0, '익스트림')">
+            익스트림
           </a>
-          <a v-bind:class="{isClicked: this.categoryCheck === '체험'}" class="item" @click="toggleCheckList(categoryCheck, 0, '체험')">
-            체험
+          <a v-bind:class="{isClicked: this.categoryCheck === '스포츠'}" class="item" @click="toggleCheckList(categoryCheck, 0, '스포츠')">
+            스포츠 (구기종목)
           </a>
-          <a v-bind:class="{isClicked: this.categoryCheck === '문화'}" class="item" @click="toggleCheckList(categoryCheck, 0, '문화')">
-            문화 
+          <a v-bind:class="{isClicked: this.categoryCheck === '음악'}" class="item" @click="toggleCheckList(categoryCheck, 0, '음악')">
+            음악 
           </a>
-          <a v-bind:class="{isClicked: this.categoryCheck === '휴식'}" class="item" @click="toggleCheckList(categoryCheck, 0, '휴식')">
-            휴식 
+          <a v-bind:class="{isClicked: this.categoryCheck === '댄스'}" class="item" @click="toggleCheckList(categoryCheck, 0, '댄스')">
+            댄스 
           </a>
-          <a v-bind:class="{isClicked: this.categoryCheck === '축제'}" class="item" @click="toggleCheckList(categoryCheck, 0, '축제')">
-            축제 
+          <a v-bind:class="{isClicked: this.categoryCheck === '뷰티'}" class="item" @click="toggleCheckList(categoryCheck, 0, '뷰티')">
+            뷰티 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '요리'}" class="item" @click="toggleCheckList(categoryCheck, 0, '요리')">
+           요리 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '아트'}" class="item" @click="toggleCheckList(categoryCheck, 0, '아트')">
+           아트 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '힐링'}" class="item" @click="toggleCheckList(categoryCheck, 0, '힐링')">
+           힐링 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '아웃도어'}" class="item" @click="toggleCheckList(categoryCheck, 0, '아웃도어')">
+           아웃도어 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '요가/피트니스'}" class="item" @click="toggleCheckList(categoryCheck, 0, '요가/피트니스')">
+           요가/피트니스 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '소품제작'}" class="item" @click="toggleCheckList(categoryCheck, 0, '소품제작')">
+           소품제작 
           </a>
         </div>
       </div>
@@ -175,11 +201,11 @@
           :imageUrl="wekin.main_image.image[0]"
           :favorite="wekin.Favorites"
           :rating="Math.round(wekin.rating_avg) || 0"
-          :reviewCount="wekin.review_count"
+          :reviewCount="wekin.review_count || 0"
           v-for="(wekin, index) in filteredWekin" v-bind:key="wekin.wekin_key">
-          <span class="right floated price" slot="extra-header">￦ {{wekin.price | joinComma}}</span>
+          <span class="right floated price" slot="extra-header">￦ {{wekin.base_price | joinComma}}</span>
           <div class="content extra-body" slot="extra-body">
-            <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 4" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="schedule.wekin_key">{{schedule.start_date | formatDateKo}}</span>
+            <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 4" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="index">{{schedule | formatDateKo}}</span>
           </div>
         </wekin-card-layout>
         <div class="ui active inverted dimmer" v-if="isLoading">
@@ -272,12 +298,12 @@ export default {
   asyncComputed: {
     filteredWekin() {
       return this.wekins.filter((wekin) => {
-	if (this.isInPrice(wekin) &&
-	  this.isInCurrentLocation(wekin) &&
-	  this.isInArea(wekin) &&
-	  this.isInPeople(wekin) &&
-	  this.isInDate(wekin) &&
-          this.isInCategory(wekin)) {
+        if (this.isInPrice(wekin) &&
+          this.isInCurrentLocation(wekin) &&
+          this.isInArea(wekin) &&
+          this.isInPeople(wekin) &&
+          this.isInDate(wekin) &&
+          this.isInCategory(wekin) ) {
           return wekin
         }
       })
@@ -286,11 +312,8 @@ export default {
   methods: {
     isEndSchedule(schedule) {
       let now = +moment()
-      let startDate = moment(schedule.start_date).toDate().getTime()
+      let startDate = moment(schedule).toDate().getTime()
       if ((startDate - now) < 0) {
-        return true
-      }
-      if (schedule.max_user == schedule.current_user) {
         return true
       }
       return false
@@ -298,7 +321,7 @@ export default {
     isCommingSchedule(schedule) {
       if (!this.isEndSchedule(schedule)) {
         let now = +moment()
-        let startDate = moment(schedule.start_date).toDate().getTime()
+        let startDate = moment(schedule).toDate().getTime()
         if ((startDate - now) < ONE_DAY_TIME) {
           return true
         }
@@ -326,8 +349,8 @@ export default {
       let endDate = moment(this.endDate).toDate().getTime()
 
       if (this.startDate && this.endDate) { //시작일 종료일 모두 선택한 경우
-        let wekin = _.find(activity.Wekins, (wekin) => {
-          if ((moment(wekin.start_date).diff(startDate) > 0) && (moment(wekin.start_date).diff(endDate) < 0)) {
+        let wekin = _.find(activity.start_date_list, (date) => {
+          if ((moment(date).diff(startDate) > 0) && (moment(date).diff(endDate) < 0)) {
             return true
           }
         })
@@ -386,9 +409,9 @@ export default {
     },
     isInPrice(activity) {
       if(activity) {
-        if (activity.price >= this.slider.value[0] * 10000 && this.slider.value[1] === 20) {
+        if (activity.base_price >= this.slider.value[0] * 10000 && this.slider.value[1] === 20) {
           return true
-        } else if (activity.price >= this.slider.value[0] * 10000 && activity.price <= this.slider.value[1] * 10000) {
+        } else if (activity.base_price >= this.slider.value[0] * 10000 && activity.base_price <= this.slider.value[1] * 10000) {
           return true
         } else if (this.slider.value[0] >= 10000000) {
           return true
@@ -499,7 +522,6 @@ export default {
             this.locationCheck.abroad = !this.locationCheck.abroad
             break;
         }
-        // console.log(this.locationFilter)
         if (this.locationFilter.length == 0) {
           this.locationCheck.all = true
           this.locationFilter.push("전체")
@@ -508,22 +530,40 @@ export default {
       // 카테고리 시작
       else if (checkListType === this.categoryCheck) {
         switch (text) {
-          case "놀이":
+          case "투어/여행":
             this.togglecategory(text)
             break;
-          case "도전":
+          case "익스트림":
             this.togglecategory(text)
             break;
-          case "체험":
+          case "스포츠":
             this.togglecategory(text)
             break;
-          case "문화":
+          case "음악":
             this.togglecategory(text)
             break;
-          case "휴식":
+          case "댄스":
             this.togglecategory(text)
             break;
-          case "축제":
+          case "뷰티":
+            this.togglecategory(text)
+            break;
+          case "요리":
+            this.togglecategory(text)
+            break;
+          case "아트":
+            this.togglecategory(text)
+            break;
+          case "힐링":
+            this.togglecategory(text)
+            break;
+          case "아웃도어":
+            this.togglecategory(text)
+            break;
+          case "요가/피트니스":
+            this.togglecategory(text)
+            break;
+          case "소품제작":
             this.togglecategory(text)
             break;
         }
@@ -543,7 +583,6 @@ export default {
             this.address = address.results[0].formatted_address.replace('대한민국', '')
             let lat = address.results[0].geometry.location.lat
             let lng = address.results[0].geometry.location.lng
-            // console.log(this.wekins)
             this.wekins = this.wekinsTemp.map(wekin => {
               if(wekin.address_detail && wekin.address_detail.location) {
                 wekin.distance = Location.distanceInKmBetweenEarthCoordinates(lat, lng, wekin.address_detail.location.lat, wekin.address_detail.location.lng)
@@ -567,7 +606,6 @@ export default {
                   return wekin
                 }
               })
-              // console.log(this.wekins)
             })
             .catch(err => console.error(err))
         })
@@ -576,11 +614,14 @@ export default {
     getActivities() {
       api.getActivities(2)
         .then(json => {
-	  this.isLoading = false
-	  this.wekins = json.results
-	  this.wekinsTemp = json.results
-	  this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
-	  this.initSortDropdown()
+          this.isLoading = false
+          this.wekinsTemp = json
+          this.wekins = _.orderBy(json, ['created_at'], ['desc']);
+          this.wekins = this.wekins.map( wekin => {
+            this.deleteBeforeTodayDate(wekin.start_date_list, wekin)
+            return wekin
+          })
+          this.initSortDropdown()
 	})
 	.catch(err => console.error(err))
     },
@@ -592,7 +633,6 @@ export default {
 	      switch (Number(value)) {
 		case 0: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
 		  this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
-		  // console.log('00000임')
 		  break;
 		case 1: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
 		  this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
@@ -601,18 +641,28 @@ export default {
 		  this.wekins = this.wekinsTemp 
 		  break;
 		case 4: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-		  // console.log(this.wekins)
-		  this.wekins = _.orderBy(this.wekins, ['price'], ['desc']);
+		  this.wekins = _.orderBy(this.wekins, ['base_price'], ['desc']);
 		  break;
 		case 5: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-		  this.wekins = _.orderBy(this.wekins, ['price'], ['asc']);
+		  this.wekins = _.orderBy(this.wekins, ['base_price'], ['asc']);
 		  break;
 	      }
             }
           })
         })
       }, 1000)
-    }
+    },
+    deleteBeforeTodayDate(dateList, wekin) {
+      let todayPlusDueDate = moment().add(wekin.due_date, 'days')
+      let length = dateList.length
+      for (let i = 0; i < length; i++) {
+        let startDate = dateList[i]
+        if (!moment(startDate).isBefore(todayPlusDueDate)) {
+          dateList.splice(0, i)
+          break
+        }
+      }
+    },
   },
   components: {
     wekinCardLayout,
@@ -623,10 +673,8 @@ export default {
   },
   mounted() {
     this.getActivities()
-
     let vue = this
     let params = this.$route.params
-
     if (params.location) {
       if ((typeof this.$route.params.location) == 'object') {
         this.locationFilter = this.$route.params.location
@@ -637,8 +685,8 @@ export default {
         this.toggleCheckList(this.locationCheck, 0, this.$route.params.location)
       }
     }
-    if (params.categoryCheck) {
-      this.categoryCheck = this.$route.params.categoryCheck
+    if (params.category) {
+      this.categoryCheck = this.$route.params.category
     }
     if (params.people) {
       this.peopleCheck.one = false
@@ -811,6 +859,8 @@ export default {
 
 .mobile-filter-btn, .categoryformobile {
   display: none;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1355px) {
@@ -843,9 +893,9 @@ export default {
     }
   }
   .categoryformobile {
+    left:0;
     position: fixed;
     top: 110px;
-    left: 14px;
     display: block;
     z-index: 1000;
     background-color: white;
@@ -886,13 +936,11 @@ export default {
 
 .ui.text.menu {
   margin: -3px 0px;
-  margin-left: -28px;
   height: 50px;
   min-height: 10px;
   font-size: 13px;
   .item {
     text-align: center;
-    width: 16.66%;
     display: block;
 
     &#fourlettercategory {

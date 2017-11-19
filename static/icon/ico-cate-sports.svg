@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/ico-cate-sports</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M0.773848908,11.6801634 C1.43322892,5.39667562 6.74771897,0.5 13.205,0.5 C19.6632165,0.5 24.9768919,5.39667562 25.6361628,11.6801634 L0.773848908,11.6801634 Z" id="path-1"></path>
+        <path d="M24.6505259,0.174682009 C24.0584347,6.52694127 18.7128109,11.5 12.205,11.5 C6.3174724,11.5 1.3799661,7.42858406 0.0547,1.94797109 L0.0547,0.174682009 L24.6505259,0.174682009 L24.6505259,0.174682009 Z" id="path-3"></path>
+        <path d="M2.35726704,0.2148 L12.1405237,0.2148 C12.4313523,0.3028047 12.7179543,0.398435055 13,0.50140959 L13,23.4984474 C11.2344701,24.1431194 9.29040545,24.5 7.24866401,24.5 C4.65561644,24.5 2.21992087,23.9242046 0.1074,22.9142022 L0.1074,1.08558818 C1.08551366,0.662965975 1.83546934,0.372703248 2.35726704,0.2148 Z" id="path-5"></path>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/ico-cate-sports">
+            <g transform="translate(1.000000, 1.000000)">
+                <g id="Group-5" stroke="#FFFFFF">
+                    <path d="M21,42 C32.599,42 42,32.598 42,21 C42,9.402 32.599,0 21,0 C9.402,0 0,9.402 0,21 C0,32.598 9.402,42 21,42 Z" id="Stroke-1" stroke-width="2"></path>
+                    <path d="M21.2051,8 C14.0251,8 8.2051,13.82 8.2051,21 C8.2051,28.18 14.0251,34 21.2051,34 C28.3851,34 34.2051,28.18 34.2051,21 C34.2051,13.82 28.3851,8 21.2051,8" id="Fill-3" stroke-width="1.5"></path>
+                </g>
+                <g id="Group-15" transform="translate(8.000000, 8.000000)">
+                    <g id="Group-8">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Clip-7"></g>
+                        <path d="M-5.4541,7.23178142 C6.1579,12.2636327 20.6469,8.23167396 26.9369,-1.7822" id="Stroke-6" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)"></path>
+                    </g>
+                    <g id="Group-11" transform="translate(1.000000, 14.000000)">
+                        <mask id="mask-4" fill="white">
+                            <use xlink:href="#path-3"></use>
+                        </mask>
+                        <g id="Clip-10"></g>
+                        <path d="M0.0547,13.9487 C4.7197818,4.1255987 17.2202543,-0.113784435 28,4.47175469" id="Stroke-9" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-4)"></path>
+                    </g>
+                    <g id="Group-14" transform="translate(7.000000, 1.000000)">
+                        <mask id="mask-6" fill="white">
+                            <use xlink:href="#path-5"></use>
+                        </mask>
+                        <g id="Clip-13"></g>
+                        <path d="M0.1074,0.2148 C0.1074,0.2148 13.8256836,4.62792969 9.1796875,24.2133789" id="Stroke-12" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-6)"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

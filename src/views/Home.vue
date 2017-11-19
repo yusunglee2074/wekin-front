@@ -77,17 +77,24 @@
         </div>
       </div>
       <div class="ui selection dropdown home person">
-        <label>인원</label>
+        <label>카테고리</label>
         <input name="person" type="hidden" value="0">
         <i class="dropdown icon"></i>
-        <div class="text">혼자</div>
+        <div class="text">전체</div>
         <div class="menu">
-          <div class="item" data-value="1">혼자</div>
-          <div class="item" data-value="2">2명</div>
-          <div class="item" data-value="3">3명</div>
-          <div class="item" data-value="4">4명</div>
-          <div class="item" data-value="5">5명</div>
-          <div class="item" data-value="0">전체</div>
+          <div class="item" data-value="">전체</div>
+          <div class="item" data-value="투어/여행">투어/여행</div>
+          <div class="item" data-value="익스트림">익스트림</div>
+          <div class="item" data-value="스포츠명">스포츠명</div>
+          <div class="item" data-value="음악">음악</div>
+          <div class="item" data-value="댄스">댄스</div>
+          <div class="item" data-value="뷰티">뷰티</div>
+          <div class="item" data-value="요리">요리</div>
+          <div class="item" data-value="아트">아트</div>
+          <div class="item" data-value="힐링">힐링</div>
+          <div class="item" data-value=">아웃도어">아웃도어</div>
+          <div class="item" data-value=">요가/피트니스">요가/피트니스</div>
+          <div class="item" data-value=">소품제작">소품제작</div>
         </div>
       </div>
       <button class="negative ui button" @click="searchActivity()">위킨 찾기</button>
@@ -133,15 +140,15 @@
                   <span class="reviewCount">{{wekin.review_count}}</span>
                 </div>
               </div>
-              <div class="content">
+              <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px;">
                 <span class="right floated">
-                  ￦ {{ wekin.price | joinComma }}
+                  ￦ {{ wekin.base_price | joinComma }}
                 </span>
                 <span>
                   <strong class="title">{{wekin.title}}</strong>
                 </span>
                 <div class="description">
-                  <span v-for="(schedule, index) in wekin.Wekins" v-if="index < 3" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="schedule.wekin_key">{{schedule.start_date | formatDateKo}}</span>
+                  <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 3" style="padding-right:8px;" :class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" :key="index">{{schedule | formatDateKo}}</span>
                 </div>
               </div>
             </router-link>
@@ -175,15 +182,15 @@
                 <span class="reviewCount">{{wekin.review_count}}</span>
               </div>-->
               </div>
-              <div class="content">
+              <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px;">
                 <span class="right floated">
-                  ￦ {{ wekin.price | joinComma }}
+                  ￦ {{ wekin.base_price | joinComma }}
                 </span>
                 <span>
                   <strong class="title">{{wekin.title}}</strong>
                 </span>
-                <div class="description" style="overflow:hidden;font-size:13px;">
-                  <span v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-for="(schedule, index) in wekin.Wekins" v-if="new Date(schedule.start_date) > Date.now()" v-bind:key="index" style="padding-right:8px;">{{schedule.start_date | formatDateKo}}</span>
+                <div class="description">
+                  <span v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-for="(schedule, index) in wekin.start_date_list" v-if="index < 3" v-bind:key="index" style="padding-right:8px;">{{schedule | formatDateKo}}</span>
                 </div>
               </div>
               </router-link>
@@ -198,6 +205,36 @@
         </div>
       </div>
 
+      <div class="ui container news-container">
+        <h3 class="ui header">
+          <div class="header-label-bar"></div>
+          <span class="header-label">위킨 뉴스</span>
+        </h3>
+        <div class="news swiper-container">
+          <div class="swiper-wrapper">
+            <div @click="goLink(news.link_url, news.news_key)" class="ui card pointer swiper-slide" v-for="(news, index) in news.data" v-bind:key="index">
+                <div class="image">
+                  <div class="backImage mainImage" v-bind:style="{'background-image':`url(${news.thumbnail_url})`}"></div>
+                  <div class="backImage overlayer">
+                  </div>
+                </div>
+                <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px; position:relative;">
+                  <span>{{ news.title }}</span><span style="position:absolute;bottom:4px;right:4px;color: #999999; font-size:12px; margin-top:8px;">조회수 {{ news.click_count }} 관심 {{ news.like_count }} 공유 {{ news.share_count }}</span>
+                  <br>
+                  <span style="font-size:10px; color:#acacac">{{ news.link_url }}
+                  </span>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="prev-btn" v-on:click="newNews.slidePrev()">
+          <i class="icon angle left"></i>
+        </div>
+        <div class="next-btn" v-on:click="newNews.slideNext()">
+          <i class="icon angle right"></i>
+        </div>
+      </div>
+
       <div class="ui container popular-maker-container">
         <h3 class="ui header">
           <div class="header-label-bar"></div>
@@ -205,12 +242,12 @@
         </h3>
         <div class="makers swiper-container">
           <div class="swiper-wrapper">
-            <router-link :to="{ name: 'hostPage', params: { key: maker.host_key}}" tag="div" class="ui card pointer swiper-slide" v-for="(maker, index) in makers" v-bind:key="maker.host_key" v-if="maker && maker.Activities[0]">
+            <router-link :to="{ name: 'hostPage', params: { key: maker.host_key}}" tag="div" class="ui card pointer swiper-slide" v-for="(maker, index) in makers" v-bind:key="maker.host_key" v-if="maker && maker.ActivityNews[0]" style="margin-right:30px;width:168px;">
               <div class="image">
-                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${maker.Activities[0].main_image.image[0]})`}"></div>
+                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${maker.ActivityNews[0].main_image.image[0]})`}"></div>
                 <div class="backImage ui circular image makerProfile" v-bind:style="{'background-image':`url(${maker.profile_image})`}"></div>
               </div>
-              <div class="content">
+              <div class="content" style="border: solid 1px #d5d5d5; max-height: 36px;">
               <!--<span class="right floated maker-follow">
                                                                                           팔로우 100
                                                                                         </span>-->
@@ -254,6 +291,7 @@ export default {
       popularWekins: null,
       mySwiper: null,
       newWekins: null,
+      newNews: null,
       popularFeed: [],
       newestActivities: [],
       activities: [],
@@ -269,16 +307,18 @@ export default {
         am: '오전',
         pm: '오후'
       },
+      news: [],
     }
   },
   methods: {
+    goLink(url, news_key) {
+      api.newsViewCountPlus(news_key)
+      window.open(url)
+    },
     isEndSchedule(schedule) {
       let now = +moment()
-      let startDate = moment(schedule.start_date).toDate().getTime()
+      let startDate = moment(schedule).toDate().getTime()
       if ((startDate - now) < 0) {
-        return true
-      }
-      if (schedule.max_user == schedule.current_user) {
         return true
       }
       return false
@@ -286,7 +326,7 @@ export default {
     isCommingSchedule(schedule) {
       if (!this.isEndSchedule(schedule)) {
         let now = +moment()
-        let startDate = moment(schedule.start_date).toDate().getTime()
+        let startDate = moment(schedule).toDate().getTime()
         if ((startDate - now) < ONE_DAY_TIME) {
           return true
         }
@@ -328,6 +368,7 @@ export default {
             if (activity.rating_avg == null) {
               activity.rating_avg = 0
             }
+            this.deleteBeforeTodayDate(activity.start_date_list, activity)
             return activity
           })
 
@@ -350,6 +391,7 @@ export default {
             if (activity.rating_avg == null) {
               activity.rating_avg = 0
             }
+            this.deleteBeforeTodayDate(activity.start_date_list, activity)
             return activity
           })
 
@@ -361,6 +403,13 @@ export default {
               this.initRating()
             }, 1000)
           })
+        })
+        .catch(err => console.error(err))
+    },
+    getNews() {
+      api.getNews()
+        .then(news => {
+          this.news = news
         })
         .catch(err => console.error(err))
     },
@@ -419,6 +468,18 @@ export default {
           }
         }
       })
+      this.newNews = new Swiper('.news.swiper-container', {
+        freeMode: true,
+        freeModeMomentumRatio: 0.2,
+        resistance: false,       
+        slidesPerView: 3,
+        spaceBetween: 20,
+        breakpoints: {
+          767: {
+            slidesPerView: 'auto'
+          }
+        }
+      })
     },
     initRating() {
       $('.new-wekins .ui.rating')
@@ -450,7 +511,7 @@ export default {
       let location = $(".ui.dropdown.location").dropdown('get value')
       let startDate = $("#rangestart").calendar('get date')
       let endDate = $("#rangeend").calendar('get date')
-      let people = $(".ui.dropdown.person").dropdown('get value')
+      let category = $(".ui.dropdown.person").dropdown('get value')
       let price = $(".ui.dropdown.price").dropdown('get value')
       let startPrice = 0
       let endPrice = 100000
@@ -485,15 +546,30 @@ export default {
           location: location,
           startDate: startDate,
           endDate: endDate,
-          people: people,
+          category: category,
           startPrice: startPrice,
           endPrice: endPrice,
         }
       })
-    }
+    },
+    deleteBeforeTodayDate(dateList, wekin) {
+      let activity = wekin 
+      let todayPlusDueDate = moment().add(activity.due_date, 'days')
+      let length = dateList.length
+      for (let i = 0; i < length; i++) {
+        let startDate = dateList[i]
+        if (moment(startDate).isBefore(todayPlusDueDate)) {
+          dateList.splice(0, 1)
+          i--
+        } else {
+          break
+        }
+      }
+    },
   },
   mounted() {
     this.getNewestActivity()
+    this.getNews()
     this.getPopularActivity()
     this.getPopularMaker()
     this.loadPopularFeed()
@@ -861,7 +937,7 @@ export default {
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.2)
+    background: rgba(0, 0, 0, 0.1)
   }
 }
 

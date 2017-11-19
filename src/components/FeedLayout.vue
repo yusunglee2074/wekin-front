@@ -16,34 +16,27 @@
         <span v-if="feed.User">{{feed.User.name}}</span>
         <p>{{feed.created_at | formatDate}}</p>
       </div>
-      <div class="ui icon top right inline dropdown feed-menu">
-        <i class="ellipsis vertical icon" @click="onShareMenuClick()"></i>
-        <div class="menu">
-          <div class="header">공유하기</div>
-          <div class="item" @click="onFacebookShareClick()">
-            <img class="facebookLogoBtn" src="/static/images/ic-facebook.png"> 페이스북
+      <div style="display:inline-block;">
+        <transition name="fade" mode="out-in">
+          <div v-if="!snsShow" class="ui basic button" style="position: absolute;right: 20px;top: 20px;" v-on:click="snsShow = !snsShow">
+            <span><i class="share alternate icon"></i>공유하기</span>
           </div>
-          <div class="item" @click="snsShare('google')">
-            <img class="facebookLogoBtn" src="/static/images/ic-google.png"> 구글
+          <div v-else key="button" class="ui basic button" style="position: absolute;right: 15px;top: 15px;" v-on:click="snsShow = !snsShow">
+            <span>
+              <img class="facebookLogoBtn" @click="onFacebookShareClick(feed.doc_key)" src="/static/images/ic-facebook.png" style="width:28px;height=28px; margin-right:10px;">
+              <img class="facebookLogoBtn" @click="snsShare('google', feed.doc_key)" src="/static/images/ic-google.png" style="width:28px;height=28px; margin-right:10px;">
+              <img class="facebookLogoBtn" @click="snsShare('kakaostory', feed.doc_key)" src="/static/images/ic-kakaostory.png" style="width:28px;height=28px; margin-right:10px;">
+              <img class="facebookLogoBtn" @click="snsShare('naver', feed.doc_key)" src="/static/images/ic-naver.png" style="width:28px;height=28px; margin-right:10px;">
+            </span>
           </div>
-          <div class="item" @click="snsShare('kakaostory')">
-            <img class="facebookLogoBtn" src="/static/images/ic-kakaostory.png"> 카카오스토리
-          </div>
-          <div class="item" @click="snsShare('naver')">
-            <img class="facebookLogoBtn" src="/static/images/ic-naver.png"> 네이버
-          </div>
-          <div class="item"  @click="onReportClick()">신고하기</div>
-          <div class="ui divider" v-if="user && feed.User.user_key == user.user_key"></div>
-          <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onModifyClick()">수정하기</div>
-          <div class="item" v-if="user && feed.User.user_key == user.user_key" @click="onDeleteClick()">삭제하기</div>
-        </div>
+        </transition>
       </div>
       <div class="content">
         <p v-bind:class="{ expanded: isExpanded}" v-html="cutContent" style="white-space:pre-wrap"></p>
         <a class="expand-btn link" v-if="!isExpanded && !isTooShort" @click="onExpandClick()">더보기</a>
         <div class="ui images" v-if="feed.image_url">
           <a class="link" v-for="(image, index) in feed.image_url" v-bind:key="index" v-if="index < MAX_IMAGE_COUNT" @click="showImageLightBox()">
-            <img :src="image" v-if="!(feed.image_url.length > MAX_IMAGE_COUNT && index == 3) && index === 0" style="width: 81%; height: 81%; display: block;">
+            <img :src="image" v-if="!(feed.image_url.length > MAX_IMAGE_COUNT && index == 3) && index === 0" style="width: 100%; height: auto; display: block; margin-bottom:10px;">
             <img :src="image" v-if="!(feed.image_url.length > MAX_IMAGE_COUNT && index == 3) && index > 0">
           </a>
           <a class="link image-cover" v-if="feed.image_url.length > MAX_IMAGE_COUNT" @click="showImageLightBox()">
@@ -72,10 +65,8 @@
     <div class="comment-input-container">
       <div class="content divider flex">
         <div class="ui input f1">
-          <input type="text" placeholder="댓글을 입력하세요." v-model="commentContent">
+          <input type="text" placeholder="댓글을 입력하세요." v-model="commentContent" @keyup.enter.once="onPostCommentClick()">
         </div>
-        <button class="ui button primary" @click="onPostCommentClick()">전송</button>
-        <!--<div id="comment" ref="comment" contenteditable="true" placeholder="댓글을 입력하세요."></div>-->
       </div>
     </div>
     <div class="comment-container" v-if="commentCount!=0">
@@ -110,6 +101,7 @@ export default {
   },
   data() {
     return {
+      snsShow: false,
       MAX_IMAGE_COUNT: 4,
       isLiked: false,
       images: [],
@@ -192,15 +184,14 @@ export default {
         $('.dropdown.feed-menu').dropdown()
       })
     },
-    snsShare(sns_type) {
+    snsShare(sns_type, key) {
       var title = $("#ogTitle").attr('content');
-      var href = window.location.href;
+      var href = 'http://we-kin/share/doc/' + key
       var loc = "";
       var img = 'http://we-kin.com/static/images/default-profile.png'
       var oFlag = true;
 
       if (sns_type == 'facebook') {
-        console.log("fb")
         loc = '//www.facebook.com/sharer/sharer.php?u=' + href + '&t=' + title;
       }
       else if (sns_type == 'twitter') {
@@ -227,13 +218,8 @@ export default {
       }
       window.open(loc);
     },
-    onFacebookShareClick() {
-      let image = 'http://we-kin.com/static/images/default-profile.png'
-      let name = `${this.feed.User.name}님의 글 | 위킨`
-      try {
-        image = this.$el.querySelector(".images img").src
-      } catch (e) { }
-      window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=489794721361592&caption=Wekin&description=${encodeURIComponent(this.feed.content)}&display=popup&locale=ko_KR&name=${encodeURIComponent(name)}&link=${encodeURIComponent(`http://www.we-kin.com/feed/${this.feed.doc_key}`)}&picture=${image}&version=v2.1`,
+    onFacebookShareClick(key) {
+      window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&display=popup&locale=ko_KR&link=${encodeURIComponent(`http://we-kin/share/doc/${key}`)}&version=v2.1`,
         'facebookShare',
         'toolbar=0,status=0,width=625,height=435'
       );
@@ -250,7 +236,7 @@ export default {
       if (this.user) {
         api.toggleLike(this.user.user_key, this.feed.doc_key)
           .then(result => {
-            if (result == 1) {
+            if (result.data == 1) {
               this.isLiked = false
               this.likeCount--
             } else {
@@ -306,7 +292,7 @@ export default {
         api.getCommentsFromKey(this.feed.doc_key, this.page, 3)
           .then(comments => {
             if (comments.rows.length != 0) {
-              this.commentCount = comments.count
+              this.commentCount = comments.count.length
               comments.rows.forEach(comment => this.comments.push(comment))
             } else {
               this.isLastComment = true
@@ -526,7 +512,7 @@ div[contenteditable=true] {
   }
   .info {
     display: inline-block;
-    width: 300px;
+    width: 202px;
     padding: 6px 12px;
   }
   .comment {
@@ -655,5 +641,11 @@ div[contenteditable=true] {
       }
     }
   }
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
 }
 </style>

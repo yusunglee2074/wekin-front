@@ -13,6 +13,7 @@ import FootBar from './components/FootBar.vue'
 import router from './router'
 import filter from './filter'
 import api from 'api'
+import auth from './auth'
 
 import firebase from 'firebase'
 // require('static/fine-uploader/fine-uploader.js')
@@ -23,6 +24,7 @@ require('./style/media.scss')
 require('./style/variables.scss')
 require('../static/trumbowyg/dist/trumbowyg.min.js')
 require('../static/trumbowyg/dist/plugins/uploadimage/trumbowyg.uploadimage.js')
+require('../static/trumbowyg/dist/plugins/noembed/trumbowyg.noembed.min.js')
 require('../static/trumbowyg/dist/langs/ko.min.js')
 
 Vue.use(require('vue-infinite-scroll'))

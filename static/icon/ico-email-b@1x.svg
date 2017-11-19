@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="14px" viewBox="0 0 20 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/1193_email@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon/1193_email" stroke-width="1.5" stroke="#595959">
+            <g id="icon/email">
+                <path d="M19.25,12.4835547 L19.25,1.51533839 C19.25,1.092912 18.9059553,0.75 18.4788889,0.75 L1.52111111,0.75 C1.09404466,0.75 0.75,1.092912 0.75,1.51533839 L0.75,12.4835547 C0.75,12.9063625 1.09442505,13.25 1.52111111,13.25 L18.4788889,13.25 C18.9055749,13.25 19.25,12.9063625 19.25,12.4835547 Z" id="Stroke-4"></path>
+                <path d="M18.5,6.5 L13,12.2663847" id="Stroke-3" stroke-linecap="round" transform="translate(16.000000, 9.500000) scale(1, -1) translate(-16.000000, -9.500000) "></path>
+                <path d="M6.5,6.5 L1,12.2663847" id="Stroke-3" stroke-linecap="round" transform="translate(4.000000, 9.500000) scale(-1, -1) translate(-4.000000, -9.500000) "></path>
+                <path d="M2,1 L8.86879222,8.53859454 C9.18833709,8.80041991 9.49176247,9 9.89759393,9 C10.301529,9 10.6675359,8.82116833 10.9263956,8.53859454 L18,1.26182537" id="Stroke-6" stroke-linecap="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -51,7 +51,6 @@ export default {
     loadMainBanners() {
       api.getMainBanners()
         .then(banners => {
-          console.log(banners)
           banners.sort(function (a, b) {
             return a.value.order - b.value.order
           })

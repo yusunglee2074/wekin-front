@@ -1,12 +1,18 @@
 <template>
   <div class="ui modal feed-editor">
-    <div class="ui active inverted dimmer" v-if="isFileUploading">
-      <div class="ui text loader">잠시만 기다려주세요.</div>
+    <div class="ui active inverted dimmer" v-show="isFileUploading">
+      <div class="ui text loader">Uploading......
+        <br>
+        용량이 큰 파일은 시간이 소요될 수 있습니다.</div>
     </div>
     <div class="textarea">
       <textarea placeholder="이야기를 남겨주세요." v-model="content">
       </textarea>
     </div>
+
+
+
+    <!--
     <div class="feed-editor__linear-container">
       <FireUpload :imageUrl="uploadedImage" @update:imageUrl="val => uploadedImages.push(val)" @progress="progress" v-bind:class="{ attatchedImage: uploadedImages.length, attatchedVideo: Object.keys(uploadedMedia).length}"></FireUpload>
       <div class="ui basic media buttons" v-if="!uploadedImages.length">
@@ -28,17 +34,60 @@
         </div>
       </div>
     </div>
+    -->
+    <div class="feed-editor__linear-container">
+      <!--이미지 업로드 버튼-->
+      <div class="ui positive basic button imageUploadButton">
+        <span style="display:table-cell;vertical-align:middle;"><i class="file image outline icon"></i> 이미지</span>
+        <input class="imageUploadInput" type="file" v-on:change="fireStorage" accept="image/*" multiple></input>
+      </div>
+      <div class="ui positive basic button imageUploadButton">
+        <span style="display:table-cell;vertical-align:middle;"><i class="file video outline icon"></i> 동영상</span>
+        <input class="imageUploadInput" type="file" v-on:change="fireStorage" accept="video/*"></input>
+      </div>
+      <!--이미지 보여주는 부분-->
+      <div>
+        <div class="ui card" v-for="image in uploadedImages" style="width: 90px; height:90px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top">
+          <div style="left:4px;top:4px;background: white;width:92%;height:92%;z-index:222;position:absolute;">
+            <img :src="image" style="width:100%;height:100%">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="ui card" v-show="uploadedMedia.length !== 0" style="width: 90px; height:90px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top">
+          <div style="left:4px;top:4px;background: white;width:92%;height:92%;z-index:222;position:absolute;">
+            <img src="./../../static/icon/Play_Icon_FlatGreen.png" style="width:100%;height:100%">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
     <div class="ui divider"></div>
     <div class="feed-editor__linear-container search">
       <!--<button class="ui basic button">위킨 찾기</button>-->
       <div class="ui wekin search">
-        <div class="ui left icon input">
+        <div class="ui left icon input" style="positon:relative">
           <input class="prompt" type="text" placeholder="위킨 찾기" v-model="findWekin">
           <i class="search icon"></i>
         </div>
+        <div class="flex-space"></div>
+        <span class="ui star top right rating"></span>
+        <div style="positon:absolute; max-width:190px;">
+          <div class="ui segments" style="margin-top:4px; margin-left:10px;" v-if="findWekin && findWekin !== '선택안함'">
+  <div class="ui segment" style="padding: 4px 0px 4px 10px;cursor: pointer;" @click="getOneActivity(allActivitiesKeyNumber[index])" v-for="(item, index) in allActivitiesTitle " v-if="item.includes(findWekin)">
+    <p style="font-size:14px;">{{ item.slice(0, 13) }}...</p>
+  </div>
+  <div class="ui segment secondary" style="padding: 4px 0px 4px 10px;cursor: pointer;" @click="getOneActivity(0)">
+    <p style="font-size:14px;"><i class="hand pointer icon"></i>관련위킨 선택안함</p>
+  </div>
+</div>
+        </div>
       </div>
-      <div class="flex-space"></div>
-      <span class="ui star top right rating"></span>
     </div>
 
     <div class="ui divider"></div>
@@ -56,10 +105,10 @@
 
       <button class="ui action negative button floated right" @click="onPostClick()">작성</button>
       <button class="ui basic action button floated right" @click="hideFeedEditor()">취소</button>
-    <div class="not-mobile">
+    <!--<div class="not-mobile">
       <input type="checkbox" id="checkbox" style="margin-top: 12px" v-model="withFacebook">
       <label for="checkbox" class="default text" style="color: rgb(59, 89, 152)"> FaceBook 동시 게재 </label>
-    </div>
+    </div>-->
     </div>
   </div>
 </template>
@@ -75,7 +124,7 @@ export default {
     return {
       uploadedImage: '',
       uploadedImages: [],
-      uploadedMedia: {},
+      uploadedMedia: '',
       defaultPrivateMode: false,
       content: null,
       images: null,
@@ -90,13 +139,80 @@ export default {
       isModifying: false, // 수정모드인지 판별 필수
       docKey: null,
       withFacebook: false,
-      sendingTime: null
+      sendingTime: null,
+      allActivitiesTitle : [],
+      allActivitiesKeyNumber: [],
     }
   },
   components: {
     FireUpload
   },
   methods: {
+    getOneActivity(activity_key) {
+      if (activity_key === 0) {
+        this.findWekin = '선택안함'
+        this.activity = {
+          key: null,
+          title: null,
+          rating: 0,
+          Host: {}
+        }
+        return
+      }
+      api.getActivity(activity_key)
+        .then( result => {
+          this.activity =  result 
+          this.findWekin = result.title
+        })
+    },
+    fireStorage (e) {
+      let self = this
+      this.isFileUploading  = true
+      let files = e.target.files
+      let fileUploadCompleteNumber = 0
+      if (files.length > 6) {
+        window.alert("파일은 6장까지만 업로드 가능합니다.")
+        self.isFileUploading = false
+        return
+      }
+      // 이미지 어레이 받아서 하나씩 firebase에 업로드 후 url 저장한다.
+      // TODO: 썸네일 만들어서 저장하는 처리 같이해야한다.
+      if (files[0].type.slice(0, 5) === 'video') {
+        let file = files[0]
+        let tempRef = firebase.storage().ref()
+        let videoPath = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getSeconds() + new Date().getMilliseconds()
+        let videoRef = tempRef.child('video/' + videoPath)
+        let uploadTask = videoRef.put(file)
+        uploadTask.on('state_changed', function(snapshot){
+        }, function(error) {
+        }, function() {
+          fileUploadCompleteNumber += 1
+          var downloadURL = uploadTask.snapshot.downloadURL
+          self.uploadedMedia = downloadURL 
+          if (fileUploadCompleteNumber === files.length) {
+            self.isFileUploading = false
+          }
+        })
+        return
+      }
+      for (let i = 0; i < files.length; i++) {
+        let file = files[i]
+        let tempRef = firebase.storage().ref()
+        let imagePath = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getSeconds() + new Date().getMilliseconds()
+        let imageRef = tempRef.child('img/image/' + imagePath)
+        let uploadTask = imageRef.put(file)
+        uploadTask.on('state_changed', function(snapshot){
+        }, function(error) {
+        }, function() {
+          fileUploadCompleteNumber += 1
+          var downloadURL = uploadTask.snapshot.downloadURL
+          self.uploadedImages.push(downloadURL + '?alt=media') 
+          if (fileUploadCompleteNumber === files.length) {
+            self.isFileUploading = false
+          }
+        })
+      }
+    },
     progress(value) {
       this.isFileUploading = true
       if (value >= 100) {
@@ -116,14 +232,22 @@ export default {
       })
     },
     onPostClick() {
+      if (this.findWekin !== '선택안함' && !this.activity.title) {
+        if (!window.confirm("관련위킨 없이 업로드 하시겠습니까?")) {
+          return
+        } 
+      }
+      if (this.content.length < 5) {
+        window.alert("내용은 5글자 이상이여야 합니다.")
+        return
+      }
       if (this.sendingTime && this.sendingTime - moment() > -30000) {
         alert("10초에 한번만 작성 가능합니다. 잠시만 기다려주세요.")
-        console.log(this.sendingTime, this.sendingTime - moment())
         return
       }
       this.sendingTime = moment()
       let postParams = {
-        activity_key: this.activity.key,
+        activity_key: this.activity.activity_key,
         activity_title: this.activity.title,
         activity_rating: $(this.$el.querySelector('.rating')).rating('get rating'),
         host_key: this.activity.Host.host_key,
@@ -257,10 +381,24 @@ export default {
       return false
     },
     getDocType() {
-      return this.activity.key ? 1 : 0 // 액티비티 키가 있으면 후기 (1) 아니면 피드 (0)
+      return this.activity.activity_key ? 1 : 0 // 액티비티 키가 있으면 후기 (1) 아니면 피드 (0)
     },
   },
   mounted() {
+    api.getActivityForSearch()
+      .then( result => {
+        let tmpTitleList = []
+        let tmpKeyNumberList = []
+        let leng = result.allActivities.length
+        for (let i = 0; i < leng; i++) {
+          let item = result.allActivities[i] 
+          tmpTitleList.push(item.title)
+          tmpKeyNumberList.push(item.activity_key)
+        }
+        this.allActivitiesTitle = tmpTitleList 
+        this.allActivitiesKeyNumber= tmpKeyNumberList
+      })
+    /*
     $('.ui.wekin.search').search({
       apiSettings: {
         url: 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1/activity/front?keyword={query}'
@@ -279,10 +417,27 @@ export default {
         this.activity.Host = result.Host
       }
     })
+    */
   }
 }
 </script>
 <style lang="scss" scoped>
+.imageUploadButton{
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.imageUploadButton input.imageUploadInput{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
 @import '../style/variables.scss';
 @import '../style/cross-browsing.scss';
 
