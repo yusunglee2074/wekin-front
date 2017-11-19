@@ -2,10 +2,12 @@ import axios from 'axios'
 
 // const BASE_API_URL = 'http://localhost:8888/v1'
 const BASE_API_URL = 'http://192.168.0.100:8888/v1'
+// const BASE_API_URL = 'http://13.125.79.168:8888/v1' //유성이AWSㅇ임시 서버 
 // const BASE_API_URL = 'http://127.0.0.1:8888/v1'
 // const BASE_API_URL = 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1'
 // const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
 const GEO_API_KEY = 'AIzaSyARPCWOhPLlFgDvqXbKb5RLA4rnVAcGbZ0'
+const forSNSLoginUrl = 'http://we-kin.com'
 
 const BOARD_TYPE_NOTICE = 0
 
@@ -17,6 +19,7 @@ axios.interceptors.request.use((config) => {
 })
 
 export default {
+  forSNSLoginUrl,
   dbCreateWithIdToken (idToken) {
     return axios.post(`${BASE_API_URL}/user/front/signUp/dbCreateWithIdtoken`, { idToken })
       .then( res => res.data )
@@ -51,6 +54,10 @@ export default {
   },
   getNews () {
     return axios.get(`${BASE_API_URL}/news`)
+      .then(res => res.data)
+  },
+  newsViewCountPlus (key) {
+    return axios.get(`${BASE_API_URL}/news/${key}`)
       .then(res => res.data)
   },
   getAdminActivity (activityKey) {
