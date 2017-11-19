@@ -41,7 +41,6 @@ export default {
     getAttendWekiner() {
       api.getAttendWekiners(this.$route.params.activity_key)
         .then(wekiners => {
-          console.log("이유성", wekiners.data)
           this.wekiners = wekiners.data
         })
         .catch(error => console.error(error))

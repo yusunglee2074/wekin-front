@@ -40,7 +40,6 @@ export default {
     sendSms() {
       if (this.sendingTime && this.sendingTime - moment() > -30000) {
         alert("인증문자는 30초에 한번만 보낼 수 있습니다.")
-        console.log(this.sendingTime, this.sendingTime - moment())
         return
       }
       this.phoneNumber = this.phoneNumber.replace(/-/g, "")
@@ -63,7 +62,6 @@ export default {
                 window.location.href = '/'
               })
               .catch( error => {
-                console.log(error + moment().format())
                 alert(error + moment().format() + "죄송합니다. 사이트 아래 주소의 오픈카톡으로 연락주시면 바로 해결해드리겠습니다.")
               })
             // this.$router.push({ name: "Home", force: true })

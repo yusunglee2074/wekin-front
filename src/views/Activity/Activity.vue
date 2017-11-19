@@ -520,7 +520,6 @@ export default {
             this.locationCheck.abroad = !this.locationCheck.abroad
             break;
         }
-        // console.log(this.locationFilter)
         if (this.locationFilter.length == 0) {
           this.locationCheck.all = true
           this.locationFilter.push("전체")
@@ -582,7 +581,6 @@ export default {
             this.address = address.results[0].formatted_address.replace('대한민국', '')
             let lat = address.results[0].geometry.location.lat
             let lng = address.results[0].geometry.location.lng
-            // console.log(this.wekins)
             this.wekins = this.wekinsTemp.map(wekin => {
               if(wekin.address_detail && wekin.address_detail.location) {
                 wekin.distance = Location.distanceInKmBetweenEarthCoordinates(lat, lng, wekin.address_detail.location.lat, wekin.address_detail.location.lng)
@@ -606,7 +604,6 @@ export default {
                   return wekin
                 }
               })
-              // console.log(this.wekins)
             })
             .catch(err => console.error(err))
         })
@@ -615,7 +612,6 @@ export default {
     getActivities() {
       api.getActivities(2)
         .then(json => {
-          console.log(json)
           this.isLoading = false
           this.wekinsTemp = json
           this.wekins = _.orderBy(json, ['created_at'], ['desc']);
@@ -635,7 +631,6 @@ export default {
 	      switch (Number(value)) {
 		case 0: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
 		  this.wekins = _.orderBy(this.wekins, ['created_at'], ['desc']);
-		  // console.log('00000임')
 		  break;
 		case 1: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
 		  this.wekins = _.orderBy(this.wekins, ['title'], ['desc']);
@@ -644,7 +639,6 @@ export default {
 		  this.wekins = this.wekinsTemp 
 		  break;
 		case 4: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
-		  // console.log(this.wekins)
 		  this.wekins = _.orderBy(this.wekins, ['base_price'], ['desc']);
 		  break;
 		case 5: // 0 최신순, 1 인기순, 3 마감임박, 4 높은 가격순, 5 낮은가격순
@@ -661,7 +655,6 @@ export default {
       let length = dateList.length
       for (let i = 0; i < length; i++) {
         let startDate = dateList[i]
-        console.log(startDate, todayPlusDueDate)
         if (!moment(startDate).isBefore(todayPlusDueDate)) {
           dateList.splice(0, i)
           break
@@ -731,7 +724,6 @@ export default {
         this.endDate = date
       }
     })
-    console.log("여기까진 오거든ㅇ요")
   }
 }
 </script>

@@ -632,7 +632,6 @@ export default {
           params.base_week_option[i] = {"price_with_time":[],"start_time":[],"min_user":"0","max_user":"10"}
         }
       }
-      console.log(params['Th'])
       if (this.activity.status === 1) {
         params.status = 1
         api.updateActivity(this.activity.activity_key, params)

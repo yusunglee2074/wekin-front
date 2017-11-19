@@ -687,7 +687,6 @@ export default {
       }
     },
     toggleHelpBox (swit, index) {
-      console.log(swit, index)
       if (swit === 'on') {
         this.helpBox[index] = true 
       } else {

@@ -81,7 +81,6 @@ export default {
     },
     onLoginSuccess(user) {
       this.isLoading = false
-      console.log(user)
       if (user.emailVerified) {
         this.goToRedirectUrl()
       } else {
