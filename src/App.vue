@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!--
     <navbar id="navbar" ref="navbar"></navbar>
     <router-view id="views"></router-view>
     <keep-alive>
@@ -21,6 +22,8 @@
         </div>
       </div>
     </transition>
+    -->
+    <h2>위킨 서비스 업데이트 중입니다. (소요시간 11월 19일 20시 - 11월 19일 22시)</h2>
   </div>
 </template>
 
