@@ -88,18 +88,13 @@
           <img src="./../../static/images/logo-facebook-68x68.png" class="snsLoginButton" @click="onFacebookJoinClick()">
           <img src="./../../static/images/logo-kakao-68x68.png" class="snsLoginButton" @click="signInWithKakao()">
           <img src="./../../static/images/logo-naver-68x68.png" class="snsLoginButton" @click="signInWithNaver()">
+-->
           <div class="ui fitted checkbox">
             <input type="checkbox" v-model="isAgreed">
             <label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
               <a href="/policy/term" tag="a" target="_blank">이용약관</a>과
               <a href="policy/privacy" tag="a" target="_blank">개인정보취급방침</a>에 동의합니다.</label>
           </div>
-        <div class="social-login-container">
-          <span class="ui horizontal divider">
-            또는
-          </span>
-          <img class="link" style="width: 15%; height: auto;" src="static/images/logo-facebook-68x68.png" @click="onFacebookJoinClick()">
-        </div>-->
       </div>
     </div>
   </div>
