@@ -77,7 +77,7 @@
       <router-link :to="{ name: 'Feed' }" class="link" exact>피드</router-link>
       <router-link :to="{ name: 'Manual', params: { key: 2 } }" class="link" exact>단체활동</router-link>
       <router-link :to="{ name: 'Customer' }" class="link" exact>고객센터</router-link>
-      <router-link :to="{ name: 'ExplainMaker' }" class="link" exact>메이커신청</router-link>
+      <router-link :to="{ name: 'ExplainMaker' }" class="link" v-if="user ? !user.Host : true" exact>메이커신청</router-link>
     </div>
   
     <!-- 모바일 끝 -->
@@ -100,7 +100,7 @@
         <router-link :to="{ name: 'Feed' }" class="item linked" tag="div" exact>피드</router-link>
         <router-link :to="{ name: 'Manual', params: { key: 2 } }" class="item linked" tag="div" exact>단체활동</router-link>
         <router-link :to="{ name: 'Customer' }" class="item linked" tag="div" exact>고객센터</router-link>
-        <router-link :to="{ name: 'ExplainMaker' }" class="item linked" tag="div" exact>메이커신청</router-link>
+        <router-link :to="{ name: 'ExplainMaker' }" class="item linked" tag="div" v-if="user ? !user.Host : true" exact>메이커신청</router-link>
       </div>
       <div class="right menu" v-if="!user">
         <a class="item linked" @click="showLoginModal = true">로그인</a>
