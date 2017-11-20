@@ -145,7 +145,7 @@
         <notification-layout class="ui item dropdown user-alarm"></notification-layout>
       </div>
       -->
-      <div class="" v-else="user">
+      <div class="" v-else="user" style="cursor:pointer">
         <div class="" style="position: absolute; top: 15px; right: 70px;" @click="show = !show">
           <div class="ui circular background profile image" v-if="!isHostMode" v-bind:style="{'background-image': `url(${user.picture || user.profile_image})`}"></div>
           <div class="ui circular background profile image" v-if="isHostMode" v-bind:style="{'background-image': `url(${user.Host.profile_image})`}"></div>
@@ -169,6 +169,7 @@
                 <div class="title" style="text-align:center; margin-bottom:15px; font-size:20px; padding:6px; background-color:rgb(16,160,150); color:white;">메이커</div>
                 <router-link :to="{ name: 'HostAdmin' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>메이커 홈</router-link>
                 <router-link :to="{ name: 'HostWekins' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>위킨관리</router-link>
+                <router-link :to="{ name: 'HostWekinsAddNew' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>위킨만들기</router-link>
                 <router-link :to="{ name: 'HostBooking' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>예약관리</router-link>
                 <router-link :to="{ name: 'HostBoards' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>후기 / Q&amp;A관리</router-link>
                 <router-link :to="{ name: 'HostSettings' }" class="item link" style="font-size:16px;height: 30px; margin:0;" exact>설정</router-link>

@@ -746,7 +746,7 @@ export default {
       this.detailQuestion[question].images.splice(index, 1)
     },
     checkedDaysInclude(text) {
-      return this.checkedDays.includes(text)
+      return this.checkedDays.indexOf(text)
     },
     setNotiArea(text) {
       this.tmpNoti = text
@@ -770,7 +770,7 @@ export default {
     },
     submit() {
       for (let index in this.activity.baseWeekOption) {
-        if (!this.checkedDays.includes(index)) {
+        if (!this.checkedDays.indexOf(index)) {
           this.activity.baseWeekOption[index] = { price_with_time: [], start_time: [], min_user: '0', max_user: '0' }
         } else {
           for (let i = 0; i < this.activity.baseWeekOption[index].start_time.length; i++) {
@@ -813,7 +813,7 @@ export default {
       }
       for (let i in params.base_week_option) {
         let item = params.base_week_option[i]
-        if (this.checkedDays.includes(i)) {
+        if (this.checkedDays.indexOf(i)) {
           if (item.price_with_time.length !== item.start_time.length) {
             window.alert("요일별 시작시각, 추가가격 설정부분에 빈칸이 있습니다.")
             return

@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="flex-space"></div>
-          <router-link :to="{ name: 'HostWekinsAddNew' }" tag="button" class="ui primary button">새로운 위킨 만들기 V2</router-link>
+          <router-link :to="{ name: 'HostWekinsAddNew' }" tag="button" class="ui primary button">새로운 위킨 만들기</router-link>
         </div>
 
         <div class="wekin-list-container">

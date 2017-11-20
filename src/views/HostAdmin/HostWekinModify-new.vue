@@ -583,7 +583,7 @@ export default {
       this.detailQuestion[question].images.splice(index, 1)
     },
     checkedDaysInclude(text) {
-      return this.checkedDays.includes(text)
+      return this.checkedDays.indexOf(text)
     },
     submit() {
       // TODO: 제출전 형식 검사 해야함
@@ -623,7 +623,7 @@ export default {
       }
       for (let i in params.base_week_option) {
         let item = params.base_week_option[i]
-        if (this.checkedDays.includes(i)) {
+        if (this.checkedDays.indexOf(i)) {
           if (item.price_with_time.length !== item.start_time.length) {
             window.alert("요일별 시작시각, 추가가격 설정부분에 빈칸이 있습니다.")
             return
