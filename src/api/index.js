@@ -8,6 +8,7 @@ import axios from 'axios'
 const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
 const GEO_API_KEY = 'AIzaSyARPCWOhPLlFgDvqXbKb5RLA4rnVAcGbZ0'
 const forSNSLoginUrl = 'http://we-kin.com'
+// const forSNSLoginUrl = 'http://175.195.139.99:8080'
 
 const BOARD_TYPE_NOTICE = 0
 

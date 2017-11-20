@@ -5,6 +5,7 @@
     <keep-alive>
       <footbar id="footbar"></footbar>
     </keep-alive>
+    <!--
     <transition name="modal">
       <div class="modal-mask" v-show="isMobile" style="margin-top:50px;">
         <div class="modal-wrapper">
@@ -21,6 +22,7 @@
         </div>
       </div>
     </transition>
+    -->
   </div>
 </template>
 
