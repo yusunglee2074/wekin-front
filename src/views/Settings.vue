@@ -193,7 +193,13 @@ export default {
           if (data.success) {
             this.formUser.phoneValid = true
             this.stopTimer()
-            alert("인증이 완료되었습니다.")
+            api.saveProfile(this.$store.getters.user.user_key, { phone: this.formUser.phone, phone_valid: true })
+              .then(result => {
+                alert("인증이 완료되었습니다.")
+              })
+              .catch(error => {
+                alert(error + moment().format() + "죄송합니다. 사이트 아래 주소의 오픈카톡으로 연락주시면 바로 해결해드리겠습니다.")
+              })
           } else {
             alert("인증번호가 올바르지 않습니다.")
           }

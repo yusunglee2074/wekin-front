@@ -83,6 +83,7 @@
           </fieldset>
           <div class="color secondary">{{errorMessage}}</div>
           <button class="positive ui button" style="background-color: rgb(0,154,140); width: 140px; margin-bottom: 9px;" @click="onSignUpClick()">가입하기</button>
+          <!--
           <span>&nbsp또는&nbsp</span>
           <img src="./../../static/images/logo-facebook-68x68.png" class="snsLoginButton" @click="onFacebookJoinClick()">
           <img src="./../../static/images/logo-kakao-68x68.png" class="snsLoginButton" @click="signInWithKakao()">
@@ -93,7 +94,7 @@
               <a href="/policy/term" tag="a" target="_blank">이용약관</a>과
               <a href="policy/privacy" tag="a" target="_blank">개인정보취급방침</a>에 동의합니다.</label>
           </div>
-        <!--<div class="social-login-container">
+        <div class="social-login-container">
           <span class="ui horizontal divider">
             또는
           </span>
