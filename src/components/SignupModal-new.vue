@@ -35,11 +35,11 @@
               </div>
               <div class="inputDefault gender">
                 <button class="ui basic button genderButton" :class="{ 
-                  pink: user.gender === 0,
+                  active: user.gender === 0,
                   teal: user.gender !== 0
                   }" @click="genderSelect(0)">남자</button>
                 <button class="ui basic button genderButton" :class="{ 
-                  pink: user.gender === 1,
+                  active: user.gender === 1,
                   teal: user.gender !== 1 
                   }" @click="genderSelect(1)">여자</button>
               </div>
