@@ -61,6 +61,8 @@
         <i class="heart like red icon" v-bind:class="{ outline: !isLiked }"></i> 좋아요 {{likeCount}}
       </span>
       <i class="comment outline icon"></i> 댓글 {{commentCount}}
+      <span v-if="feed.user_key === user.user_key" style="float:right;cursor:pointer;" @click="onDeleteClick"><i class="erase icon"></i>삭제</span>
+      <span v-if="feed.user_key === user.user_key" style="float:right;cursor:pointer;" @click="onModifyClick"><i class="write icon"></i>수정 </span> 
     </div>
     <div class="comment-input-container">
       <div class="content divider flex">
