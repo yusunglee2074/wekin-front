@@ -235,7 +235,8 @@ export default {
           profile_image: this.uploadedProfile,
           gender: this.gender,
           email_noti: this.emailNoti,
-          push_noti: this.pushNoti
+          push_noti: this.pushNoti,
+          phone_valid: this.user.phone_valid
         }
         this.isLoading = true
         api.saveProfile(this.user.user_key, params)
