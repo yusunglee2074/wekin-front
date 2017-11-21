@@ -752,6 +752,7 @@ export default {
       this.tmpNoti = text
     },
     tmpSave() {
+      confirm("저장되었습니다.\n임시저장은 같은 컴퓨터에서만 불러올 수 있습니다. \n빠른시간내에 마저 작성 부탁드립니다.")
       this.setNotiArea("저장 성공.")
       localStorage.setItem('tmpActivityData', JSON.stringify(this._data));
     },
