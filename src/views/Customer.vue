@@ -133,7 +133,7 @@ export default {
           내용 : ${this.contact.body}
         `
         this.isLoading = true
-        api.sendEmail('leeknsa@gmail.com', `${this.contact.name}님의 문의 메일 입니다.`, body)
+        api.sendEmail('wekin@wekiner.com', `${this.contact.name}님의 문의 메일 입니다.`, body)
           .then(res => {
             alert('문의 메일이 전송되었습니다.')
             window.location.href = '/customer'
