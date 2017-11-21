@@ -247,14 +247,6 @@
           대표시각 하나만 입력하시고 다음에 나올 화면에서 추가해주세요.<br>
           <strong class='green'>오전/오후 시 분 3항목 모두 빠짐없이 입력바랍니다.</strong>
         </div>
-        <div class="example line">
-          <span class="t">이렇게 해보세요!</span>
-                    <span class="good"></span>
-                    1
-                    <br>
-                      <span class="bad" style=""></span>
-10명 (X)  
-        </div>
       </section>
   </div>
   <div v-show="page == 18">
