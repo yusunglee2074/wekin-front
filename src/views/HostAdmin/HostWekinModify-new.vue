@@ -34,7 +34,7 @@
       <option value="소품제작">소품제작</option>
     </select>
     <h2>장소를 입력해주세요.</h2>
-    <h3>집결지 <tool-tip text="집결지란, 위킨활동을 위해 활동 시작 시간에 맞추어 모이는 장소를 의미합니다. 활동지와 집결지가 동일할 경우는 활동장소와 같음을 체크해 주세요.
+    <h3>집결장소 <tool-tip text="집결지란, 위킨활동을 위해 활동 시작 시간에 맞추어 모이는 장소를 의미합니다. 활동지와 집결지가 동일할 경우는 활동장소와 같음을 체크해 주세요.
         혹시, 특정 주소에는 없는 일반 건물명이나 지하철역 출구번호 등을 사용하실 수는 있으나, 기본적인 시/군/구/동 등의 주소를 사용해 주시기를 권장합니다.
         예) 서울시 마포구 대흥동 맥도날드 앞, 서울시 마포구 대흥역 3번출구 등"></tool-tip></h3>
     <div class="ui input focus" style="width:300px;">
@@ -122,7 +122,7 @@
         - 이미지 크기 : 768 x 500 ( 가로로긴 사진, 해당 비율의 고화질 사진이면 OK).
         - 이미지 내용. 1) 활동지 사진.  2) 활동중 사진.
         3) 사용하시는 기구/용품/제품 사진. 4) 제작 완료/ 작품 사진"></tool-tip></h3>
-    <div class="ui card" :style="{ borderStyle: index === 0 ? 'solid' : '', borderColor: 'rgb(40,190,140)' }" style="width: 300px; height:200px; float:left; margin-right:8px;" v-for="(imageUrl, index) in uploadedMainImages.image" v-bind:key="index">
+    <div class="ui card" :style="{ borderStyle: index === 0 ? 'solid' : '', borderColor: 'rgb(40,190,140)' }" style="width: 300px; height:200px; float:left; margin-right:8px;" v-for="(imageUrl, index) in uploadedMainImages" v-bind:key="index">
       <div style="left:12px;top:8px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
         <img style="width:100%;height:100%" :src="imageUrl">
         <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteImage(index)"></i>
@@ -192,18 +192,23 @@
         </div>
       </div>
       <h3>몇 일전에 접수 마감 시킬까요? <tool-tip text="메이커님이 위킨활동을 하시면서 준비가 필요한 경우 신청 마감을 미리 하실 수 있습니다. 별다른 준비가 필요없는 경우는 위킨 시작전까지 신청을 받으실 수 있고,. 신청 후 사전 예약을 해야하거나 인원수에 따른 사전 준비가 필요한 경우는 필요하신 기간만큼 미리 신청 마감을 하시고 준비하시면 됩니다."></tool-tip></h3>
-      <div class="ui input focus" style="width:300px;">
-        <input type="number" v-model="activity.due_date" placeholder="숫자만 일단위로 입력해주세요."> 
+      <div class="ui input focus" style="width:180px;">
+          
+          <label for="one" style="cursor:pointer;"><input type="radio" id="one" value="1" v-model="activity.due_date">1일 전 &nbsp;</label>
+           
+          <label for="two" style="cursor:pointer;"><input type="radio" id="two" value="3" v-model="activity.due_date">3일 전  &nbsp;</label> 
+           
+          <label for="three" style="cursor:pointer;"><input type="radio" id="three" value="7" v-model="activity.due_date">7일 전  &nbsp;</label> 
       </div>
       <h3>시작일과 종료일 사이의 활동 요일 체크해주세요. <tool-tip text="위킨활동의 시작일 및 종료일을 먼저 선택 하셨습니다. 해당 기간동안 일주일 내내 활동을 진행하실 수도 있고, 월/수/금, 혹은 토/일 주말만 진행하실 수 있습니다."></tool-tip></h3>
       <!--<button @click="isTicket = true">티켓형식으로 변환</button>-->
-      <input type="checkbox" id="day1" v-model="checkedDays" value="Mo"><label for="day1">월요일</label>
-      <input type="checkbox" id="day2" v-model="checkedDays" value="Tu"><label for="day2">화요일</label>
-      <input type="checkbox" id="day3" v-model="checkedDays" value="We"><label for="day3">수요일</label>
-      <input type="checkbox" id="day4" v-model="checkedDays" value="Th"><label for="day4">목요일</label>
-      <input type="checkbox" id="day5" v-model="checkedDays" value="Fr"><label for="day5">금요일</label>
-      <input type="checkbox" id="day6" v-model="checkedDays" value="Sa"><label for="day6">토요일</label>
-      <input type="checkbox" id="day7" v-model="checkedDays" value="Su"><label for="day7">일요일</label>
+      <input type="checkbox" id="day1" v-model="checkedDays" value="Mo"><label for="day1" style="cursor:pointer;"> 월요일</label>
+      <input type="checkbox" id="day2" v-model="checkedDays" value="Tu"><label for="day2" style="cursor:pointer;"> 화요일</label>
+      <input type="checkbox" id="day3" v-model="checkedDays" value="We"><label for="day3" style="cursor:pointer;"> 수요일</label>
+      <input type="checkbox" id="day4" v-model="checkedDays" value="Th"><label for="day4" style="cursor:pointer;"> 목요일</label>
+      <input type="checkbox" id="day5" v-model="checkedDays" value="Fr"><label for="day5" style="cursor:pointer;"> 금요일</label>
+      <input type="checkbox" id="day6" v-model="checkedDays" value="Sa"><label for="day6" style="cursor:pointer;"> 토요일</label>
+      <input type="checkbox" id="day7" v-model="checkedDays" value="Su"><label for="day7" style="cursor:pointer;"> 일요일</label>
       <div style="clear: both;">
         <br>
         <p style="font-size: 18px;">영업 휴무일을 선택해주세요. <tool-tip text="기본적으로 위킨활동의 시작일과 종료일 사이에 선택하신 모든 요일에는 활동이 가능하게 됩니다. 만약 위킨이 진행되는 요일 중, 특정일을 선택하여 휴무를 선택하실 수 있습니다. 처음 위킨활동을 만들 때 선택하지 않더라도 위킨 신청이 없다면 휴무를 변경하실 수 있습니다"></tool-tip></p>
@@ -239,63 +244,63 @@
     <h3>설명<tool-tip text="같은 날짜라도 하루에 2번 활동이 있는 경우가 있을 수 있습니다. 아래의 시작시각 추가, 빼기 버튼으로 시작시각을 요일별로도 여러개 추가 할 수 있습니다."></tool-tip></h3>
     <div class="ui form">
       <div class="seven fields">
-        <div class="field" style="height:20px; padding:0 40px; font-size:18px;">
+        <label class="field" style="height:20px; padding:0 40px; font-size:18px; cursor:pointer;">
           월요일<input type="checkbox" v-model="checkedDays" value="Mo">
-        </div>
-        <div class="field" style="height:20px; padding:0 40px; font-size:18px;">
+        </label >
+        <label class="field" style="height:20px; padding:0 40px; font-size:18px; cursor:pointer;">
           화요일<input type="checkbox" v-model="checkedDays" value="Tu">
-        </div>
-        <div class="field" style="height:20px; padding:0 40px; font-size:18px;">
+        </label>
+        <label class="field" style="height:20px; padding:0 40px; font-size:18px; cursor:pointer;">
           수요일<input type="checkbox" v-model="checkedDays" value="We">
-        </div>
-        <div class="field" style="height:20px; padding:0 40px; font-size:18px;">
+        </label>
+        <label class="field" style="height:20px; padding:0 40px; font-size:18px; cursor:pointer;">
           목요일<input type="checkbox" v-model="checkedDays" value="Th">
-        </div>
-        <div class="field" style="height:20px; padding:0 40px; font-size:18px;">
+        </label>
+        <label class="field" style="height:20px; padding:0 40px; font-size:18px; cursor:pointer;">
           금요일<input type="checkbox" v-model="checkedDays" value="Fr">
-        </div>
-        <div class="field" style="height:20px; padding:0 40px; font-size:18px;">
+        </label>
+        <label class="field" style="height:20px; padding:0 40px; font-size:18px; cursor:pointer;">
           토요일<input type="checkbox" v-model="checkedDays" value="Sa">
-        </div>
-        <div class="field" style="height:20px; padding:0 40px; font-size:18px;">
+        </label>
+        <label class="field" style="height:20px; padding:0 40px; font-size:18px; cursor:pointer;">
           일요일<input type="checkbox" v-model="checkedDays" value="Su">
-        </div>
+        </label>
       </div>
       <div class="seven fields">
         <div class="field" :class="{ disabled: !checkedDaysInclude('Mo') }">
           <label>최소 ~ 최대인원</label>
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Mo'].min_user">
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Mo'].max_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Mo'].min_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Mo'].max_user">
         </div>
         <div class="field" :class="{ disabled: !checkedDaysInclude('Tu') }">
           <label>최소 ~ 최대인원</label>
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Tu'].min_user">
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Tu'].max_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Tu'].min_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Tu'].max_user">
         </div>
         <div class="field" :class="{ disabled: !checkedDaysInclude('We') }">
           <label>최소 ~ 최대인원</label>
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['We'].min_user">
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['We'].max_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['We'].min_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['We'].max_user">
         </div>
         <div class="field" :class="{ disabled: !checkedDaysInclude('Th') }">
           <label>최소 ~ 최대인원</label>
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Th'].min_user">
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Th'].max_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Th'].min_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Th'].max_user">
         </div>
         <div class="field" :class="{ disabled: !checkedDaysInclude('Fr') }">
           <label>최소 ~ 최대인원</label>
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Fr'].min_user">
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Fr'].max_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Fr'].min_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Fr'].max_user">
         </div>
         <div class="field" :class="{ disabled: !checkedDaysInclude('Sa') }">
           <label>최소 ~ 최대인원</label>
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Sa'].min_user">
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Sa'].max_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Sa'].min_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Sa'].max_user">
         </div>
         <div class="field" :class="{ disabled: !checkedDaysInclude('Su') }">
           <label>최소 ~ 최대인원</label>
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Su'].min_user">
-          <input style="width:63px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Su'].max_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Su'].min_user">
+          <input style="width:58px; height:24px;" type="number" placeholder="## 명" v-model="activity.base_week_option['Su'].max_user">
         </div>
       </div>
       <div id="timeAndAdditionalPrice" v-for="(data, index) in maxStartTimeOfDateCountingList">
@@ -443,7 +448,7 @@ export default {
       activity: {
         meetAddress: '',
         address: '',
-        base_week_option: { 
+        base_week_option: {
           Su: { price_with_time: [], start_time: [], min_user: '0', max_user: '0' },
           Tu: { price_with_time: [], start_time: [], min_user: '0', max_user: '0' },
           We: { price_with_time: [], start_time: [], min_user: '0', max_user: '0' },
@@ -512,17 +517,77 @@ export default {
       this.activity.intro_detail = content
     },
     pageButton(text) {
+      let page = this.page
       switch (text) {
         case 'prev':
-          if (this.page > 1) {
-            this.page--
+          if (page === 1 && confirm("위킨 수정을 종료 하시겠습니까? 변경 내용은 저장되지 않습니다.")) {
+            this.$router.push({ name: "HostWekins" })
           } else {
+            this.page--
           }
           break
         case 'next':
-          if (this.page < 10) {
+          if (page === 1) {
+            if (!this.activity.title) {
+              alert("제목을 적어주세요")
+            } else if (!this.activity.category) {
+              alert("카테고리를 골라주세요")
+            } else if (!this.activity.meetAddress || !this.activity.address) {
+              alert("주소를 입력해주세요")
+            } else {
+              this.page++
+            }
+          } else if (page === 2) {
+            this.page++
+          } else if (page === 3) {
+            if (!this.activity.preparation) {
+              alert("준비물을 적어주세요")
+            } else if (!this.activity.inclusion) {
+              alert("포함/불포함사항을 간단히 적어주세요")
+            } else if (!this.activity.schedule) {
+              alert("상세일정을 간단히 적어주세요")
+            } else {
+              this.page++
+            }
+          } else if (page === 4) {
+            if (!this.activity.base_price || Number(this.activity.base_price) === isFinite(String(this.base_price))) {
+              alert("가격에는 숫자만 적어주세요")
+            } else if (!(document.getElementById("minuser").value > 0)) {
+              alert("최소인원은 0보다 큰 숫자여야 합니다")
+            } else if (!document.getElementById("maxuser").value) {
+              alert("최대인원을 적어주세요")
+            } else if (!document.getElementById("time").value) {
+              alert("활동시각을 적어주세요")
+            } else {
+              this.page++
+            }
+            
+          } else if (page === 5) {
+            if (this.uploadedMainImages.length === 0) {
+              alert("메인이미지를 최소 1장 올려주세요")
+            } else {
+              this.page++
+            }
+          } else if (page === 6) {
+            if (!this.activity.due_date) {
+              alert("접수마감일을 선택해주세요")
+            } else if (!this.activity.start_date) {
+              alert("접수시작일을 선택해주세요")
+            } else if (!this.activity.end_date) {
+              alert("접수마감일을 선택해주세요")
+            } else if (this.checkedDays.length === 0) {
+              alert("활동요일을 선택해주세요")
+            } else {
+              this.page++
+            }
+          } else if (page === 7) {
+            this.page++
+          } else if (page === 8) {
+            this.page++
+          } else if (page === 9) {
             this.page++
           } else {
+
           }
           break
       }
@@ -583,13 +648,13 @@ export default {
       this.detailQuestion[question].images.splice(index, 1)
     },
     checkedDaysInclude(text) {
-      return this.checkedDays.indexOf(text)
+      return this.checkedDays.indexOf(text) > -1 ? true : false
     },
     submit() {
       // TODO: 제출전 형식 검사 해야함
       let params = {
         host_key: this.user.Host.host_key,
-        main_image: this.uploadedMainImages,
+        main_image: { image: this.uploadedMainImages },
         title: this.activity.title,
         intro_detail: this.activity.intro_detail,
         schedule: this.activity.schedule,
@@ -623,7 +688,7 @@ export default {
       }
       for (let i in params.base_week_option) {
         let item = params.base_week_option[i]
-        if (this.checkedDays.indexOf(i)) {
+        if (this.checkedDays.indexOf(i) > -1 ? true : false) {
           if (item.price_with_time.length !== item.start_time.length) {
             window.alert("요일별 시작시각, 추가가격 설정부분에 빈칸이 있습니다.")
             return
@@ -689,10 +754,9 @@ export default {
         this.activity = Object.assign({}, activities[i])
         this.activity.address = String(activities[i].address_detail.text)
         this.activity.meetAddress = String(activities[i].address_detail.meet_area)
-        this.uploadedMainImages = Object.assign({}, activities[i].main_image)
+        this.uploadedMainImages = Object.assign([], activities[i].main_image.image)
         for (let week in activities[i].base_week_option) {
           if (activities[i].base_week_option[String(week)].start_time.length > 0) {
-            // 위킨 수정시 요일 옵션 자동으로 채워지게 해야함kkkkkkkkkkkkkkkkkkkk
             this.checkedDays.push(String(week))
           }
         }

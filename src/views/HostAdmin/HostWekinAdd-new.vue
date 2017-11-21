@@ -136,7 +136,6 @@
       </div>
       <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question5.images.push(val)"></FireUpload>
       <br>
-      <p>*글자제한이 없으며, <span style="color: rgba(40,190,140, 1);">사진을 최대한 많이</span> 올리시면 고객분들의 접근성이 훨씬 용이해집니다.</p>
 
     </div>
 
@@ -168,7 +167,7 @@
     <div v-show="page === 4" class="page">
       <div style="position:relative;flex:1" v-for="(imageUrl, index) in uploadedMainImages" v-bind:key="index">
       </div>
-      <h2>상세페이지에 노출시킬 이미지을 업로드해주세요.</h2>
+      <h2>상세페이지에 노출시킬 이미지를 업로드해주세요.</h2>
       <div class="ui card" :style="{ borderStyle: index === 0 ? 'solid' : '', borderColor: 'rgb(40,190,140)' }" style="width: 300px; height:200px; float:left; margin-right:8px;" v-for="(imageUrl, index) in uploadedMainImages" v-bind:key="index">
         <div style="left:12px;top:8px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
           <img style="width:100%;height:100%" :src="imageUrl">
@@ -293,13 +292,13 @@
           </div>
         </div>
         <h3>몇 일전에 접수 마감 시킬까요? </h3>
-        <div class="ui input focus" style="font-size: 18px;" @mouseover="toggleHelpBox('on', 20)" @mouseleave="toggleHelpBox('off', 20)">
-          <input type="radio" id="one" value="1" v-model="activity.dueDate">
-          <label for="one">1일 전</label>
-          <input type="radio" id="two" value="3" v-model="activity.dueDate"> 
-          <label for="two">3일 전</label> 
-          <input type="radio" id="three" value="7" v-model="activity.dueDate"> 
-          <label for="three">7일 전</label> 
+        <div class="ui input focus" style="font-size: 18px;" @mouseover.prevent="toggleHelpBox('on', 20)" @mouseleave.prevent="toggleHelpBox('off', 20)">
+          
+          <label for="one" style="cursor:pointer;"><input type="radio" id="one" value="1" v-model="activity.dueDate"> 1일 전&nbsp;</label>
+           
+          <label for="two" style="cursor:pointer;"><input type="radio" id="two" value="3" v-model="activity.dueDate">&nbsp; 3일 전&nbsp;</label> 
+           
+          <label for="three" style="cursor:pointer;"><input type="radio" id="three" value="7" v-model="activity.dueDate">&nbsp; 7일 전</label> 
           <br>
           <transition name="fade">
             <help-box v-show="helpBox[20]" numbering="20"></help-box>
@@ -308,13 +307,13 @@
         <h3>시작일과 종료일 사이의 활동 요일 체크해주세요. </h3>
         <!--<button @click="isTicket = true">티켓형식으로 변환</button>-->
         <div class="ui input" style="width:380px;display:block;" @mouseover="toggleHelpBox('on', 21)" @mouseleave="toggleHelpBox('off', 21)">
-          <input type="checkbox" id="day1" v-model="checkedDays" value="Mo"><label for="day1">월요일</label>
-          <input type="checkbox" id="day2" v-model="checkedDays" value="Tu"><label for="day2">화요일</label>
-          <input type="checkbox" id="day3" v-model="checkedDays" value="We"><label for="day3">수요일</label>
-          <input type="checkbox" id="day4" v-model="checkedDays" value="Th"><label for="day4">목요일</label>
-          <input type="checkbox" id="day5" v-model="checkedDays" value="Fr"><label for="day5">금요일</label>
-          <input type="checkbox" id="day6" v-model="checkedDays" value="Sa"><label for="day6">토요일</label>
-          <input type="checkbox" id="day7" v-model="checkedDays" value="Su"><label for="day7">일요일</label>
+          <input type="checkbox" id="day1" v-model="checkedDays" value="Mo"><label for="day1" style="cursor:pointer;">월요일</label>
+          <input type="checkbox" id="day2" v-model="checkedDays" value="Tu"><label for="day2" style="cursor:pointer;">화요일</label>
+          <input type="checkbox" id="day3" v-model="checkedDays" value="We"><label for="day3" style="cursor:pointer;">수요일</label>
+          <input type="checkbox" id="day4" v-model="checkedDays" value="Th"><label for="day4" style="cursor:pointer;">목요일</label>
+          <input type="checkbox" id="day5" v-model="checkedDays" value="Fr"><label for="day5" style="cursor:pointer;">금요일</label>
+          <input type="checkbox" id="day6" v-model="checkedDays" value="Sa"><label for="day6" style="cursor:pointer;">토요일</label>
+          <input type="checkbox" id="day7" v-model="checkedDays" value="Su"><label for="day7" style="cursor:pointer;">일요일</label>
           <transition name="fade">
             <help-box v-show="helpBox[21]" numbering="21"></help-box>
           </transition>
@@ -354,63 +353,63 @@
       <h2>각 요일별 상세 옵션을 지정해주세요.</h2>
       <div class="ui form">
         <div class="seven fields">
-          <div class="field" style="height:20px; padding:0 30px; font-size:18px;">
+          <label class="field" style="height:20px; padding:0 30px; font-size:18px; cursor:pointer;">
             월요일 <input type="checkbox" v-model="checkedDays" value="Mo" style="margin-top:3px;">
-          </div>
-          <div class="field" style="height:20px; padding:0 30px; font-size:18px;">
+          </label>
+          <label class="field" style="height:20px; padding:0 30px; font-size:18px; cursor:pointer;">
             화요일 <input type="checkbox" v-model="checkedDays" value="Tu" style="margin-top:3px;">
-          </div>
-          <div class="field" style="height:20px; padding:0 30px; font-size:18px;">
+          </label>
+          <label class="field" style="height:20px; padding:0 30px; font-size:18px; cursor:pointer;">
             수요일 <input type="checkbox" v-model="checkedDays" value="We" style="margin-top:3px;">
-          </div>
-          <div class="field" style="height:20px; padding:0 30px; font-size:18px;">
+          </label>
+          <label class="field" style="height:20px; padding:0 30px; font-size:18px; cursor:pointer;">
             목요일 <input type="checkbox" v-model="checkedDays" value="Th" style="margin-top:3px;">
-          </div>
-          <div class="field" style="height:20px; padding:0 30px; font-size:18px;">
+          </label>
+          <label class="field" style="height:20px; padding:0 30px; font-size:18px; cursor:pointer;">
             금요일 <input type="checkbox" v-model="checkedDays" value="Fr" style="margin-top:3px;">
-          </div>
-          <div class="field" style="height:20px; padding:0 30px; font-size:18px;">
+          </label>
+          <label class="field" style="height:20px; padding:0 30px; font-size:18px; cursor:pointer;">
             토요일 <input type="checkbox" v-model="checkedDays" value="Sa" style="margin-top:3px;">
-          </div>
-          <div class="field" style="height:20px; padding:0 30px; font-size:18px;">
+          </label>
+          <label class="field" style="height:20px; padding:0 30px; font-size:18px; cursor:pointer;">
             일요일 <input type="checkbox" v-model="checkedDays" value="Su" style="margin-top:3px;">
-          </div>
+          </label>
         </div>
         <div class="seven fields">
           <div class="field" :class="{ disabled: !checkedDaysInclude('Mo') }">
             <label>최소 ~ 최대인원</label>
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Mo'].min_user">
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Mo'].max_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Mo'].min_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Mo'].max_user">
           </div>
           <div class="field" :class="{ disabled: !checkedDaysInclude('Tu') }">
             <label>최소 ~ 최대인원</label>
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Tu'].min_user">
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Tu'].max_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Tu'].min_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Tu'].max_user">
           </div>
           <div class="field" :class="{ disabled: !checkedDaysInclude('We') }">
             <label>최소 ~ 최대인원</label>
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['We'].min_user">
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['We'].max_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['We'].min_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['We'].max_user">
           </div>
           <div class="field" :class="{ disabled: !checkedDaysInclude('Th') }">
             <label>최소 ~ 최대인원</label>
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Th'].min_user">
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Th'].max_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Th'].min_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Th'].max_user">
           </div>
           <div class="field" :class="{ disabled: !checkedDaysInclude('Fr') }">
             <label>최소 ~ 최대인원</label>
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Fr'].min_user">
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Fr'].max_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Fr'].min_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Fr'].max_user">
           </div>
           <div class="field" :class="{ disabled: !checkedDaysInclude('Sa') }">
             <label>최소 ~ 최대인원</label>
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Sa'].min_user">
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Sa'].max_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Sa'].min_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Sa'].max_user">
           </div>
           <div class="field" :class="{ disabled: !checkedDaysInclude('Su') }">
             <label>최소 ~ 최대인원</label>
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Su'].min_user">
-            <input style="width:50px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Su'].max_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Su'].min_user">
+            <input style="width:60px; height:24px;" type="number" placeholder="## 명" v-model="activity.baseWeekOption['Su'].max_user">
           </div>
         </div>
         <div id="timeAndAdditionalPrice" v-for="(data, index) in activity.baseWeekOption[checkedDays[0] || 'Mo'].price_with_time">
@@ -680,10 +679,84 @@ export default {
   methods: {
     movePage (type) {
       this.toggleHelpBox('off', 12)
+      var page = this.page
       if (type === 'next') {
-        10 > this.page ? this.page++ : this.page
+          if (page === 1) {
+            if (!this.activity.title) {
+              alert("제목을 적어주세요")
+            } else if (!this.activity.category1) {
+              alert("카테고리를 골라주세요")
+            } else if (!this.activity.meetAddress || !this.activity.address) {
+              alert("주소를 입력해주세요")
+            } else {
+              this.page++
+            }
+          } else if (page === 2) {
+            for (let index in this.detailQuestion) {
+              let images = this.detailQuestion[index].images
+              if (images.length === 0) {
+                alert("각 항목에 이미지는 최소 한 장씩 업로드 부탁드립니다")
+                break
+              } else {
+                this.page++
+                break
+              }
+            }
+          } else if (page === 3) {
+            if (!this.activity.preparation) {
+              alert("준비물을 적어주세요")
+            } else if (!this.activity.inclusion) {
+              alert("포함/불포함사항을 간단히 적어주세요")
+            } else if (!this.activity.schedule) {
+              alert("상세일정을 간단히 적어주세요")
+            } else {
+              this.page++
+            }
+          } else if (page === 4) {
+            if (this.uploadedMainImages.length === 0) {
+              alert("메인이미지를 최소 1장 올려주세요")
+            } else {
+              this.page++
+            }
+          } else if (page === 5) {
+            if (!this.activity.basePrice || Number(this.activity.basePrice) === isFinite(String(this.basePrice))) {
+              alert("가격에는 숫자만 적어주세요")
+            } else if (!(document.getElementById("minuser").value > 0)) {
+              alert("최소인원은 0보다 큰 숫자여야 합니다")
+            } else if (!document.getElementById("maxuser").value) {
+              alert("최대인원을 적어주세요")
+            } else if (!document.getElementById("time").value) {
+              alert("활동시각을 적어주세요")
+            } else {
+              this.page++
+            }
+          } else if (page === 6) {
+            if (!this.activity.startDate) {
+              alert("등록 시작일을 선택해주세요")
+            } else if (!this.activity.endDate) {
+              alert("등록 종료일을 선택해주세요")
+            } else if (!this.activity.dueDate) {
+              alert("접수 마감일을 선택해주세요")
+            } else if (this.checkedDays.length === 0) {
+              alert("활동 요일을 선택해주세요")
+            } else {
+              this.page++
+            }
+          } else if (page === 7) {
+            this.page++
+          } else if (page === 8) {
+            this.page++
+          } else if (page === 9) {
+            this.page++
+          } else {
+
+          }
       } else {
-        1 < this.page ? this.page-- : this.page
+        if (page === 1 && confirm("위킨 수정을 종료 하시겠습니까? 변경 내용은 저장되지 않습니다.")) {
+          this.$router.push({ name: "HostWekins" })
+        } else {
+          this.page--
+        }
       }
     },
     toggleHelpBox (swit, index) {
@@ -746,7 +819,7 @@ export default {
       this.detailQuestion[question].images.splice(index, 1)
     },
     checkedDaysInclude(text) {
-      return this.checkedDays.indexOf(text)
+      return this.checkedDays.indexOf(text) > -1 ? true : false
     },
     setNotiArea(text) {
       this.tmpNoti = text
@@ -771,7 +844,7 @@ export default {
     },
     submit() {
       for (let index in this.activity.baseWeekOption) {
-        if (!this.checkedDays.indexOf(index)) {
+        if (!(this.checkedDays.indexOf(index) > -1 ? true : false)) {
           this.activity.baseWeekOption[index] = { price_with_time: [], start_time: [], min_user: '0', max_user: '0' }
         } else {
           for (let i = 0; i < this.activity.baseWeekOption[index].start_time.length; i++) {
@@ -814,7 +887,7 @@ export default {
       }
       for (let i in params.base_week_option) {
         let item = params.base_week_option[i]
-        if (this.checkedDays.indexOf(i)) {
+        if (this.checkedDays.indexOf(i) > -1 ? true : false) {
           if (item.price_with_time.length !== item.start_time.length) {
             window.alert("요일별 시작시각, 추가가격 설정부분에 빈칸이 있습니다.")
             return
@@ -826,7 +899,7 @@ export default {
       api.addActivity(params)
         .then(result => {
           alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
-          //window.location.href = '/host/admin'
+          window.location.href = '/host/admin'
         }).catch(error => alert('에러 메세지' + error + error.message + moment().format() + "정말 죄송합니다. 메이커님 내부 오류가 발생했습니다.\n 해당 화면을 캡쳐해서 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다. 다시한번 불편드려 죄송합니다."))
     },
     deleteExtraPriceOption(index) {
