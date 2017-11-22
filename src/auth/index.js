@@ -88,17 +88,7 @@ export default {
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-          user.getIdToken().then(token => {
-            localStorage.setItem('accessToken', token)
-            api.getUser()
-              .then(result => {
-                resolve(result)
-              })
-          })
-          .catch( error => reject(error))
-        } else {
-          firebase.auth().currentUser.getIdToken(true)
-          .then( token => {
+          user.getIdToken(true).then(token => {
             localStorage.setItem('accessToken', token)
             api.getUser()
               .then(result => {
