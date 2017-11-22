@@ -229,6 +229,7 @@ export default {
   },
   mounted() {
     let self = this
+    /*
     firebase.auth().getRedirectResult()
       .then(function(result) {
         if (result.credential) {
@@ -258,6 +259,7 @@ export default {
         var credential = error.credential;
         // ...
       });
+      */
     this.fetchData()
     auth.onAuthStateChanged()
       .then((user) => {
