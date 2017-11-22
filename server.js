@@ -21,6 +21,9 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 app.use(serveStatic(path.join(__dirname, 'dist')));
 
+app.get('/social/naver', function(req, res){
+  res.send(req.params.code)
+});
 app.get('/share/doc/:doc_key', function(req, res){
   axios.get(`${BASE_API_URL}/util/share/doc/${req.params.doc_key}`)
   .then(result => {
