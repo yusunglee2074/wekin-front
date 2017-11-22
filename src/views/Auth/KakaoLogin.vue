@@ -9,6 +9,7 @@
 <script>
 import moment from 'moment'
 import api from './../../api'
+import auth from './../../auth'
 import axios from 'axios'
 import firebase from 'firebase'
 
@@ -27,10 +28,10 @@ export default {
         return firebase.auth().signInWithCustomToken(customToken)
       })
       .then(result => {
-        return firebase.auth().currentUser.getIdToken()
+        return auth.getCurrentUser()
       })
       .then(idToken => {
-        return api.dbCreateWithIdToken(idToken)
+        return api.dbCreateWithIdToken(localStorage.getItem('accessToken'))
       })
       .then(result => {
         window.location.replace('/')
@@ -39,6 +40,8 @@ export default {
         if (error.response.data.message == "Already signin with this email") {
           window.alert('해당 이메일 가입 이력이 있습니다. \n 이메일: ' + error.response.data.email + '\n 추가 문의사항은 카카오톡 @위킨 혹은 고객센터에 문의바랍니다.')
           window.location.href = '/'
+        } else {
+          console.log(error, "에러")
         }
       })
   }
