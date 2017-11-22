@@ -195,6 +195,10 @@ export default {
             this.stopTimer()
             api.saveProfile(this.$store.getters.user.user_key, { phone: this.formUser.phone, phone_valid: true })
               .then(result => {
+                return auth.getCurrentUser()
+              })
+              .then(user => {
+                this.$store.commit('SET_USER', user)
                 alert("인증이 완료되었습니다.")
               })
               .catch(error => {
