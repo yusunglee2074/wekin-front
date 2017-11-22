@@ -24,13 +24,11 @@
             <div>회원가입 하러가기</div>
             <p><a @click="callSignupModal()" class="item linked">회원가입</a></p>
           </div>
-          <!--
           <div class="padded">
           <img src="./../../static/images/logo-facebook-68x68.png" class="snsLoginButton" @click="onFacebookJoinClick()">&nbsp&nbsp
           <img src="./../../static/images/logo-kakao-68x68.png" class="snsLoginButton" @click="signInWithKakao()">&nbsp&nbsp
           <img src="./../../static/images/logo-naver-68x68.png" class="snsLoginButton" @click="signInWithNaver()">&nbsp&nbsp
           </div>
-          -->
         </div>
       </div>
     </div>
