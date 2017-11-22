@@ -31,10 +31,10 @@ export default {
         return firebase.auth().signInWithCustomToken(customToken)
       })
       .then(result => {
-        return firebase.auth().currentUser.getIdToken()
+        return auth.getCurrentUser()
       })
       .then(idToken => {
-        return api.dbCreateWithIdToken(idToken)
+        return api.dbCreateWithIdToken(localStorage.getItem('accessToken'))
       })
       .then(result => {
         window.location.href = '/'
