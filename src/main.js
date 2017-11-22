@@ -47,10 +47,13 @@ router.afterEach((to, from) => {
   if (to.path !== '/login' && to.path !== '/join') {
     firebase.auth().onAuthStateChanged((currentUser) => {
       if (currentUser) { // 유저가 있는지 판단.
-        api.getUser().then( response => {
+        console.log(currentUser, '###커렌트유저')
+        auth.getCurrentUser().then(response => {
           if (response.phone_valid || currentUser.emailVerified) { // 이메일 인증 여부 확인
           } else if (response.country !== "Korea") {
             router.push('/verifyEmail')
+          } else if (currentUser.providerData.length == 0) {
+            router.push('/verify/phonenumber')
           } else if (currentUser.providerData[0].providerId === 'password') {
             router.push('/verify/phonenumber')
           }
