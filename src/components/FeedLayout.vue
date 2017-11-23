@@ -188,7 +188,7 @@ export default {
     },
     snsShare(sns_type, key) {
       var title = $("#ogTitle").attr('content');
-      var href = 'http://we-kin/share/doc/' + key
+      var href = api.forSNSLoginUrl+ '/share/doc/' + key
       var loc = "";
       var img = 'http://we-kin.com/static/images/default-profile.png'
       var oFlag = true;
