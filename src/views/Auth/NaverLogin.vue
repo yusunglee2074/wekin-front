@@ -12,6 +12,7 @@
 <script>
 import moment from 'moment'
 import api from './../../api'
+import auth from './../../auth'
 import axios from 'axios'
 import firebase from 'firebase'
 
