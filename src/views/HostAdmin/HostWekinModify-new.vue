@@ -224,10 +224,10 @@
             </datepicker>
           </div>
         </div>
-        <div v-for="(data, index) in activity.close_dates">
+        <span v-for="(data, index) in activity.close_dates">
           {{ data | formatDateWithMoment }}
           <button @click="activity.close_dates.splice(index, 1)">삭제</button>
-        </div>
+        </span>
         <div>
           이 페이지 예시설명 <tool-tip text="예를 들어 시작일이 17/01/01, 종료일 17/02/01, 체크된 요일이 월, 수, 금요일 일때. 17년도 1월에 모든 월, 수, 금요일에 활동이 등록됩니다. 마지막으로 휴무일로 지정한 날짜는 등록이 되지 않습니다. 더 자세한 설명은 사이트 아래 고객센터나 카카오톡 @위킨으로 연락바랍니다."></tool-tip>
         </div>
@@ -764,7 +764,7 @@ export default {
         this.activity.close_dates = []
         for (let y = 0; y < tempLength; y++) {
           let tmp = activities[i].close_dates[y]
-          this.activity.close_dates.push(moment("20" + tmp.slice(1, 3) + "-" + tmp.slice(3, 5) + "-" + tmp.slice(5, 7)).format())
+          this.activity.close_dates.push(moment("20" + tmp.slice(0, 2) + "-" + tmp.slice(2, 4) + "-" + tmp.slice(4, 6)).format())
         }
         break;
       } 
