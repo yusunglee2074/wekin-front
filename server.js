@@ -30,7 +30,7 @@ app.get('/share/doc/:doc_key', function(req, res){
     res.render('./../share', {
       title: result.data.content, 
       description: result.data.tags, 
-      image: result.data.image_url[0],
+      image: result.data.image_url ? result.data.image_url[0] : null,
       redirectUrl: `/feed/${req.params.doc_key}`
     })
   })
