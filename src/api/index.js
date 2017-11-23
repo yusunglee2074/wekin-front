@@ -1,14 +1,14 @@
 import axios from 'axios'
 
 // const BASE_API_URL = 'http://localhost:8888/v1'
-// const BASE_API_URL = 'http://192.168.0.100:8888/v1'
+const BASE_API_URL = 'http://175.195.139.99:8888/v1'
 // const BASE_API_URL = 'http://13.125.79.168:8888/v1' //유성이AWSㅇ임시 서버 
 // const BASE_API_URL = 'http://127.0.0.1:8888/v1'
 // const BASE_API_URL = 'https://wekin-api-dev-dot-wekinproject.appspot.com/v1'
-const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
+// const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
 const GEO_API_KEY = 'AIzaSyARPCWOhPLlFgDvqXbKb5RLA4rnVAcGbZ0'
-const forSNSLoginUrl = 'http://we-kin.com'
-// const forSNSLoginUrl = 'http://175.195.139.99:8080'
+//const forSNSLoginUrl = 'http://we-kin.com'
+const forSNSLoginUrl = 'http://175.195.139.99:8080'
 
 const BOARD_TYPE_NOTICE = 0
 
