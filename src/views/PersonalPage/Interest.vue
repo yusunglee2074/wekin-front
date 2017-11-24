@@ -2,7 +2,7 @@
   <div id="personal-page-feed">
     <div class="ui three doubling cards">
       <wekin-card-layout
-        :title="favorite.ActivityNew.title"
+        :title="favorite.ActivityNew ? favorite.ActivityNew.title : '삭제된 위킨'"
         :address="favorite.ActivityNew.address"
         :name="`maker ${favorite.ActivityNew.Host.name}`"
         :imageUrl="favorite.ActivityNew.main_image.image[0]"
