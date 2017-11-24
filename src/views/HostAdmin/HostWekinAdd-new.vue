@@ -562,6 +562,7 @@
 <script>
 import FireUpload from 'components/FireUpload.vue'
 import api from 'api'
+import auth from 'auth'
 import moment from 'moment'
 import {Storage} from 'src/util'
 import Datepicker from 'vuejs-datepicker'
@@ -896,11 +897,15 @@ export default {
           item = {"price_with_time":[],"start_time":[],"min_user":"0","max_user":"0"}
         }
       }
-      api.addActivity(params)
+      auth.getCurrentUser()
+        .then(user => {
+          return api.addActivity(params)
+        })
         .then(result => {
           alert('위킨 신청이 완료되었습니다. 승인 후 연락드리겠습니다.')
           window.location.href = '/host/admin'
-        }).catch(error => alert('에러 메세지' + error + error.message + moment().format() + "정말 죄송합니다. 메이커님 내부 오류가 발생했습니다.\n 해당 화면을 캡쳐해서 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다. 다시한번 불편드려 죄송합니다."))
+        })
+        .catch(error => alert('에러 메세지' + error + error.message + moment().format() + "정말 죄송합니다. 메이커님 내부 오류가 발생했습니다.\n 해당 화면을 캡쳐해서 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다. 다시한번 불편드려 죄송합니다."))
     },
     deleteExtraPriceOption(index) {
       if (index === 0) {

@@ -434,6 +434,7 @@
 import Trumbowyg from '../../components/Trumbowyg'
 import FireUpload from 'components/FireUpload.vue'
 import api from 'api'
+import auth from 'auth'
 import moment from 'moment'
 import {Storage} from 'src/util'
 import Datepicker from 'vuejs-datepicker';
@@ -697,24 +698,27 @@ export default {
           params.base_week_option[i] = {"price_with_time":[],"start_time":[],"min_user":"0","max_user":"10"}
         }
       }
-      if (this.activity.status === 1) {
-        params.status = 1
-        api.updateActivity(this.activity.activity_key, params)
-          .then(result => {
-            alert('위킨 수정이 완료되었습니다.')
-            window.location.href = '/host/admin'
-          })
-          .catch(error => {
-            alert('에러 메세지' + error + error.message + moment().format() + "정말 죄송합니다. 메이커님 내부 오류가 발생했습니다.\n 해당 화면을 찍어서 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다. 다시한번 불편드려 죄송합니다.")
-            return
-          })
-      } else {
-        api.addActivity(params)
-          .then(result => {
-            alert('위킨 수정 신청이 접수되었습니다.')
-            window.location.href = '/host/admin'
-          }).catch(error => alert('에러 메세지' + error + error.message + moment().format() + "정말 죄송합니다. 메이커님 내부 오류가 발생했습니다.\n 해당 화면을 찍어서 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다. 다시한번 불편드려 죄송합니다."))
-      }
+      auth.getCurrentUser()
+        .then(user => {
+          if (this.activity.status === 1) {
+            params.status = 1
+            api.updateActivity(this.activity.activity_key, params)
+              .then(result => {
+                alert('위킨 수정이 완료되었습니다.')
+                window.location.href = '/host/admin'
+              })
+              .catch(error => {
+                alert('에러 메세지' + error + error.message + moment().format() + "정말 죄송합니다. 메이커님 내부 오류가 발생했습니다.\n 해당 화면을 찍어서 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다. 다시한번 불편드려 죄송합니다.")
+                return
+              })
+          } else {
+            api.addActivity(params)
+              .then(result => {
+                alert('위킨 수정 신청이 접수되었습니다.')
+                window.location.href = '/host/admin'
+              }).catch(error => alert('에러 메세지' + error + error.message + moment().format() + "정말 죄송합니다. 메이커님 내부 오류가 발생했습니다.\n 해당 화면을 찍어서 카카오톡 플러스친구 '위킨'으로 연락주시면 바로 답변드리겠습니다. 다시한번 불편드려 죄송합니다."))
+          }
+        })
     },
     deleteExtraPriceOption(index) {
       if (index === 0) {
