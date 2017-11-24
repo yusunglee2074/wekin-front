@@ -21,7 +21,7 @@
           <div v-if="!snsShow" class="ui basic button" style="position: absolute;right: 20px;top: 20px;" v-on:click="snsShow = !snsShow">
             <span><i class="share alternate icon"></i>공유하기</span>
           </div>
-          <div v-else key="button" class="ui basic button" style="position: absolute;right: 15px;top: 15px;" v-on:click="snsShow = !snsShow">
+          <div v-else key="button" class="ui basic button" style="position: absolute;right: 15px;top: 15px; background-color:white!important;" v-on:click="snsShow = !snsShow">
             <span>
               <img class="facebookLogoBtn" @click="onFacebookShareClick(feed.doc_key)" src="/static/images/ic-facebook.png" style="width:28px;height=28px; margin-right:10px;">
               <img class="facebookLogoBtn" @click="snsShare('google', feed.doc_key)" src="/static/images/ic-google.png" style="width:28px;height=28px; margin-right:10px;">
@@ -648,6 +648,6 @@ div[contenteditable=true] {
   transition: opacity .5s
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0
+  opacity: 0;
 }
 </style>
