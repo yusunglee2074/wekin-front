@@ -10,9 +10,9 @@
               <span class="ui basic label">{{ wekiner.ActivityNew.title }}</span>
             </div>
             <div class="column">
-              <span class="date">예약시각 : {{wekiner.start_date | formatDateTimeKo }}</span>
+              <span class="date">구매일 : {{wekiner.created_at| formatDateTimeKo }}</span>
               <span class="phone">번호 : {{wekiner.User.phone}}</span>
-              <span class="email">E-mail : {{wekiner.User.email}}</span>
+              <span class="phone">신청활동일 : {{ wekiner.start_date, wekiner.start_time | sumDateAndTime | formatDateTimeKo }}</span>
             </div>
           </div>
           <div class="status" v-if="wekiner.state === 'finish'" style="color: red;">결제완료</div>
@@ -27,6 +27,7 @@
 <script>
 import hostCardLayout from 'components/HostCardLayout.vue'
 import api from 'api'
+import moment from 'moment'
 
 export default {
   components: {
@@ -35,6 +36,14 @@ export default {
   data() {
     return {
       wekiners: []
+    }
+  },
+  filters: {
+    sumDateAndTime (day, time) {
+      let hour, minute
+      hour = moment(time).get('hour')
+      minute = moment(time).get('minute')
+      return moment(day).set('hour', hour).set('minute', minute)
     }
   },
   methods: {
