@@ -1591,9 +1591,6 @@ h2 {
 }
 </style>
 <style>
-.vdp-datepicker__calendar {
-  top: -282px;
-}
 .width260 {
   width: 260px;
 }
