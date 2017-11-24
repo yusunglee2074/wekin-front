@@ -24,7 +24,7 @@
             </div>
             <div class="card--reservation__label">
               <label>활동 날짜</label>
-              <span>{{wekin.start_date | formatDate}}</span>
+              <span>{{wekin.start_date | formatDate}} {{ wekin.start_time | toTime }}</span>
             </div>
             <div class="ui divider"></div>
             <div class="card--reservation__label">
@@ -62,7 +62,7 @@
             </div>
             <div class="card--reservation__label">
               <label>활동 날짜</label>
-              <span>{{order.WekinNew.start_date | formatDate}}</span>
+              <span>{{order.WekinNew.start_date | formatDate}} {{ wekin.start_time | toTime }}</span>
             </div>
             <div class="ui divider"></div>
             <div class="card--reservation__label">
@@ -168,6 +168,9 @@ export default {
         case 'reqRef':
           return "환불요청"
       }
+    },
+    toTime (day) {
+      return moment(day).format("HH:mm")
     }
   },
   methods: {
