@@ -17,10 +17,10 @@
         <div class="ui sticky">
           <div class="ui segment">
             <h2 style="margin-top:0">{{activity.title}}</h2>
-            <p v-if="activity.address">
-              <i class="icon marker"></i>{{activity.address}}
+            <p v-if="activity.address_detail.text">
+              <i class="icon marker"></i>{{activity.address_detail.text}}
             </p>
-            <p v-if="activity.address">
+            <p>
               <i class="icon won"></i>{{activity.base_price}}
             </p>
             <div class="ui calendar">
