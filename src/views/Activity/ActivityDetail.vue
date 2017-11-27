@@ -34,6 +34,7 @@
                   format="MMM dd(D), yyyy"
                   placeholder="        날짜선택"
                   :disabled="calendar"
+                  :open-date="openDate"
                   v-on:input="resetSelection">
                 </datepicker>
               </div>
@@ -320,7 +321,8 @@
                   format="MMM dd(D), yyyy"
                   placeholder="        날짜선택"
                   :disabled="calendar"
-                  v-on:input="resetSelection">
+                  v-on:input="resetSelection"
+                  :open-date="openDate">
                 </datepicker>
               </div>
             </div>
@@ -462,6 +464,9 @@ export default {
         days: this.activity.days 
       }
       return result
+    },
+    openDate () {
+      return moment(this.activity.start_date) - moment() > 0 ? moment(this.activity.start_date) : moment()
     },
     startTimeList() {
       if(this.requestData.selectedDate) {
