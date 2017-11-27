@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="settings__list">
-        <label class="required">메이커 소개</label>
+        <label class="required">소개</label>
         <div class="ui form fields">
           <div class="field">
             <textarea v-model="request.introduce"></textarea>
@@ -29,19 +29,19 @@
         </div>
       </div>
       <div class="settings__list">
-        <label>메이커 주소</label>
+        <label>주소</label>
         <div class="ui input">
           <input type="text" v-model="request.company.address" placeholder="메이커 or 업체 주소를 입력해주세요.">
         </div>
       </div>
       <div class="settings__list">
-        <label class="required">메이커 이메일</label>
+        <label class="required">이메일</label>
         <div class="ui input">
           <input type="text" v-model="request.company.email" placeholder="메이커 or 업체 이메일을 입력해주세요.">
         </div>
       </div>
       <div class="settings__list">
-        <label class="required">메이커 연락처</label>
+        <label class="required">연락처<br>(문자 수신 가능 번호)</label>
         <div class="ui input">
           <input type="text" v-model="request.company.phone" placeholder="메이커 or 업체 연락처를 입력해주세요.">
         </div>
