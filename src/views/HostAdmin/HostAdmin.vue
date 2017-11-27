@@ -18,11 +18,11 @@
       </div>
       <!-- 모바일 메뉴 -->
       <div class="mobile-menu flex">
-        <router-link :to="{ name: 'HostAdmin' }" tag="div" class="f-one" active-class="active" exact>홈</router-link>
-        <router-link :to="{ name: 'HostStats' }" tag="div" class="f-two" active-class="active">통계</router-link>
-        <router-link :to="{ name: 'HostWekins' }" tag="div" active-class="active">위킨관리</router-link>
-        <router-link :to="{ name: 'HostBooking' }" tag="div" active-class="active">예약관리</router-link>
-        <router-link :to="{ name: 'HostBoards' }" tag="div" active-class="active">후기/Q&amp;A</router-link>
+        <router-link :to="{ name: 'HostAdmin' }" tag="div" class="f-one" active-class="active" exact style="cursor:pointer">홈</router-link>
+        <router-link :to="{ name: 'HostStats' }" tag="div" class="f-two" active-class="active" style="cursor:pointer">통계</router-link>
+        <router-link :to="{ name: 'HostWekins' }" tag="div" class="f-two" active-class="active" style="cursor:pointer">위킨관리</router-link>
+        <router-link :to="{ name: 'HostBooking' }" tag="div" class="f-two" active-class="active" style="cursor:pointer">예약관리</router-link>
+        <router-link :to="{ name: 'HostBoards' }" tag="div" class="f-two" active-class="active" style="cursor:pointer">후기/Q&amp;A</router-link>
       </div>
       <router-view class="router-view"></router-view>
     </div>
