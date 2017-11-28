@@ -131,6 +131,7 @@ export default {
           ${this.contact.name}님의 문의 메일 입니다.<br/>
           전화번호 : ${this.contact.phone}<br/>
           내용 : ${this.contact.body}
+          이메일 : ${this.contact.email}
         `
         this.isLoading = true
         api.sendEmail('wekin@wekiner.com', `${this.contact.name}님의 문의 메일 입니다.`, body)
