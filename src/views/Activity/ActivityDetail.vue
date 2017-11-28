@@ -778,6 +778,8 @@ export default {
                       if (result.message == 'error') {
                         alert("죄송합니다. 해당 날짜에 예약인원이 마감되었습니다.")
                         return
+                      } else if (result.message == "fail/Not possible to booking twice to eventActivity") {
+                        alert("이벤트 위킨은 각 주차별 한 아이디당 하나씩만 구매 가능합니다.")
                       }
                       // requestData에 위킨키 추가
                       this.requestData.wekin_key = result.data.wekin_key || result.data[1][0].wekin_key
@@ -790,7 +792,7 @@ export default {
                         }
                       })
                     })
-                    .catch( error => {
+                    .catch(error => {
                       alert(moment().format() + error + "\n내부적인 오류가 발생했습니다.\n위키너님 죄송합니다.\n해당 화면을 휴대폰으로 찍어\n카카오톡 @위킨에 보내주시면 빠르게 도와드리겠습니다.\n다시한번 죄송합니다.") 
                     })
                 } else {
