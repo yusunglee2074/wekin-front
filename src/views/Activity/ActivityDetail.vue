@@ -780,6 +780,7 @@ export default {
                         return
                       } else if (result.message == "fail/Not possible to booking twice to eventActivity") {
                         alert("이벤트 위킨은 각 주차별 한 아이디당 하나씩만 구매 가능합니다.")
+                        return
                       }
                       // requestData에 위킨키 추가
                       this.requestData.wekin_key = result.data.wekin_key || result.data[1][0].wekin_key
