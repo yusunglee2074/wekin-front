@@ -368,7 +368,6 @@ export default {
             if (activity.rating_avg == null) {
               activity.rating_avg = 0
             }
-            this.deleteBeforeTodayDate(activity.start_date_list, activity)
             return activity
           })
 
