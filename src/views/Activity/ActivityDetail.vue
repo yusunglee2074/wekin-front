@@ -41,7 +41,7 @@
             </div>
             <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
               <p style="font-size: 14px; margin: 20px 0 2px 0;">시각 선택</p>
-              <select v-model="requestData.startTime" class="width260 height25" @change="getCurrentNumberOfBookingUsers()">
+              <select v-model="requestData.startTime" class="width260 height25">
                 <option value="sample" disabled>시작시각</option>
                 <option v-for="(item, index) in startTimeList" :value="[item[0], item[1]]">
                   {{ item[0] }} {{ item[1] | Won }}
@@ -65,9 +65,9 @@
                     <span style="float: left">{{ item.name }} {{ item.price | Won }}</span>
                     <div style="float: right">
                       <span>₩ {{ +requestData.startTime[1] + +activity.base_price + +item.price + +requestData.selectedOption[1] | joinComma }}</span>
-                      <button @click="requestData.selectedExtraOption[index] > 0 ? requestData.selectedExtraOption[index]-- : null">-</button>
+                      <button @click="peoplePlusMinus('minus', index)">-</button>
                       <span>{{requestData.selectedExtraOption[index]}} </span>
-                      <button @click="totalRequestAmount < activity.base_week_option[requestData.selectedYoil].max_user ? requestData.selectedExtraOption[index]++ : null">+</button>
+                      <button @click="peoplePlusMinus('plus', index)">+</button>
                     </div>
                   </div>
                 </div>
@@ -328,7 +328,7 @@
             </div>
             <div v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
               <p style="font-size: 14px; margin: 20px 0 2px 0;">시각 선택</p>
-              <select v-model="requestData.startTime" class="width260 height25" @change="getCurrentNumberOfBookingUsers()">
+              <select v-model="requestData.startTime" class="width260 height25">
                 <option value="sample" disabled>시작시각</option>
                 <option v-for="(item, index) in startTimeList" :value="[item[0], item[1]]">
                   {{ item[0] }} {{ item[1] | Won }}
@@ -352,9 +352,9 @@
                     <span style="float: left">{{ item.name }} {{ item.price | Won }}</span>
                     <div style="float: right">
                       <span>₩ {{ +requestData.startTime[1] + +activity.base_price + +item.price + +requestData.selectedOption[1] | joinComma }}</span>
-                      <button @click="requestData.selectedExtraOption[index] > 0 ? requestData.selectedExtraOption[index]-- : null">-</button>
+                      <button @click="peoplePlusMinus('minus', index)">-</button>
                       <span>{{requestData.selectedExtraOption[index]}} </span>
-                      <button @click="totalRequestAmount < activity.base_week_option[requestData.selectedYoil].max_user ? requestData.selectedExtraOption[index]++ : null">+</button>
+                      <button @click="peoplePlusMinus('plus', index)">+</button>
                     </div>
                   </div>
                 </div>
@@ -466,7 +466,7 @@ export default {
       return result
     },
     openDate () {
-      return moment(this.activity.start_date) - moment() > 0 ? moment(this.activity.start_date) : moment()
+      return moment(this.activity.start_date) - moment() > 0 ? moment(this.activity.start_date).format() : moment().format()
     },
     startTimeList() {
       if(this.requestData.selectedDate) {
@@ -564,10 +564,18 @@ export default {
     '$route': 'getActivity'
   },
   methods: {
+    peoplePlusMinus (type, index) {
+      this.getCurrentNumberOfBookingUsers()
+      if (type === 'plus') {
+        this.totalRequestAmount < this.activity.base_week_option[this.requestData.selectedYoil].max_user ? this.requestData.selectedExtraOption[index]++ : null
+      } else {
+        this.requestData.selectedExtraOption[index] > 0 ? this.requestData.selectedExtraOption[index]-- : null
+      }
+    },
     goTab(page) {
       this.tabPage = page
     },
-    getCurrentNumberOfBookingUsers() {
+   getCurrentNumberOfBookingUsers() {
       api.getCurrentNumberOfBookingUsers(this.$route.params.key, moment(this.requestData.selectedDate).format(), this.requestData.startTime[0])
         .then( result => {
           if (result.data == this.activity.base_week_option[this.requestData.selectedYoil].max_user) {
