@@ -1,28 +1,8 @@
 <template>
   <div id="app">
-    <navbar id="navbar" ref="navbar"></navbar>
-    <router-view id="views"></router-view>
-    <keep-alive>
-      <footbar id="footbar"></footbar>
-    </keep-alive>
-    <!--
-    <transition name="modal">
-      <div class="modal-mask" v-show="isMobile" style="margin-top:50px;">
-        <div class="modal-wrapper">
-          <div class="modal-container">
-            <div class="modal-body" style="text-align:center; color:white;">
-              <p style="text-align:center">
-             <img src="/static/icon/wekinlogo.png" alt="위킨 로고" style="width:90px;height:90px;margin:auto auto;">
-</p>
-<h2 style="color:white; font-size:20px;">더욱 편리한<br> 위킨 앱을 통해 이용해보세요.</h2>
-<a href="https://itunes.apple.com/us/app/%EC%9C%84%ED%82%A8-we-kin-%EB%8B%B9%EC%8B%A0%EC%9D%98-%EC%A3%BC%EB%A7%90%EC%9D%84-%EC%9A%B0%EB%A6%AC-we-%EA%B0%80-%EC%A6%90-kin-%EA%B2%81%EA%B2%8C-%ED%95%B4%EB%93%9C%EB%A6%BD%EB%8B%88%EB%8B%A4/id1255509392?mt=8" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/assets/shared/badges/ko-kr/appstore-lrg.svg) no-repeat;width:135px;height:40px;background-size:contain;" target="_blank"></a><a href='https://play.google.com/store/apps/details?id=com.wekinner.wekin&hl=ko&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='다운로드하기 Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/ko_badge_web_generic.png' style="width:155px;"></a>
-<button class="ui inverted button" @click="isMobile = !isMobile">아뇨, 모바일 웹으로 보겠습니다.</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
-    -->
+    <h2>현재 사이트 점검중입니다.</h2>
+    <h2>소요시간 11/28 오전 10시 ~ 11월 28일 오후 2시</h2>
+    <h2>위 시간은 조정 될 수 있으며 양해부탁드립니다.</h2>
   </div>
 </template>
 
