@@ -83,9 +83,9 @@
           </fieldset>
           <div class="color secondary">{{errorMessage}}</div>
           <button class="positive ui button" style="background-color: rgb(0,154,140); width: 140px; margin-bottom: 9px;" @click="onSignUpClick()">가입하기</button>
-          <!--
           <span>&nbsp또는&nbsp</span>
           <img src="./../../static/images/logo-facebook-68x68.png" class="snsLoginButton" @click="onFacebookJoinClick()">
+          <!--
           <img src="./../../static/images/logo-kakao-68x68.png" class="snsLoginButton" @click="signInWithKakao()">
           <img src="./../../static/images/logo-naver-68x68.png" class="snsLoginButton" @click="signInWithNaver()">
           -->
