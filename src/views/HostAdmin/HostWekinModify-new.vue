@@ -667,7 +667,7 @@ export default {
         category1: this.activity.category,
         category2: this.activity.activity_key,
         start_date: this.activity.start_date,
-        end_date: moment(this.activity.end_date).add(1, 'days').format(),
+        end_date: moment(this.activity.end_date).format(),
         due_date: this.activity.due_date,
         base_start_time: this.activity.baseStartTime,
         base_price: this.activity.base_price,

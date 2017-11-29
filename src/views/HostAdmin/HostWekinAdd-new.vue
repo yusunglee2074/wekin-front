@@ -871,7 +871,7 @@ export default {
         category1: this.activity.category1,
         category2: '임시 카테고리',
         start_date: this.activity.startDate,
-        end_date: moment(this.activity.endDate).add(1, 'days').format(),
+        end_date: moment(this.activity.endDate).format(),
         due_date: this.activity.dueDate,
         base_start_time: this.activity.baseStartTime,
         base_price: this.activity.basePrice,
