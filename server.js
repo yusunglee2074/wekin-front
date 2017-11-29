@@ -22,8 +22,9 @@ app.set('view engine', 'handlebars');
 app.use(serveStatic(path.join(__dirname, 'dist')));
 
 app.get('/social/naver', function(req, res){
-  res.send(req.params.code)
+  res.redirect('http://175.195.139.99:8080/auth/kakao?code=' + req.query.code)
 });
+
 app.get('/share/doc/:doc_key', function(req, res){
   axios.get(`${BASE_API_URL}/util/share/doc/${req.params.doc_key}`)
   .then(result => {

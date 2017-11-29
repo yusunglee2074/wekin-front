@@ -85,10 +85,8 @@
           <button class="positive ui button" style="background-color: rgb(0,154,140); width: 140px; margin-bottom: 9px;" @click="onSignUpClick()">가입하기</button>
           <span>&nbsp또는&nbsp</span>
           <img src="./../../static/images/logo-facebook-68x68.png" class="snsLoginButton" @click="onFacebookJoinClick()">
-          <!--
           <img src="./../../static/images/logo-kakao-68x68.png" class="snsLoginButton" @click="signInWithKakao()">
           <img src="./../../static/images/logo-naver-68x68.png" class="snsLoginButton" @click="signInWithNaver()">
-          -->
           <div class="ui fitted checkbox">
             <input type="checkbox" v-model="isAgreed">
             <label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -160,7 +158,7 @@ export default {
       window.location.href = `https://nid.naver.com/oauth2.0/authorize?client_id=rTHYGlmyZuVKSzR4_45d&redirect_uri=${api.forSNSLoginUrl}/auth/naver&response_type=code&state=wekin`
     },
     signInWithKakao() {
-      window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=75c0694ad636bcca94fa48cbc7c9d8cf&redirect_uri=${api.forSNSLoginUrl}/auth/kakao&response_type=code`
+      window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=75c0694ad636bcca94fa48cbc7c9d8cf&redirect_uri=${api.forSNSLoginUrl}/social/naver&response_type=code`
     },
     isRightEmail(event) {
       if (!Validation.checkEmailValidation(this.user.email)) {
