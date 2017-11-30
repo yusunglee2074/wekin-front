@@ -9,7 +9,7 @@
         <i class="icon add user" slot="button" v-bind:class="{add: !isFollowed, remove: isFollowed}" @click="toggleFollow()" v-if="!isMyPage"></i>
       </personal-header>
       <div class="ui basic top attached buttons">
-        <router-link to="feed" tag="div" class="ui button" active-class="active">피드
+        <router-link to="feed" tag="div" class="ui button" active-class="active">소통
         </router-link>
         <router-link to="interest" tag="div" class="ui button" active-class="active">관심
         </router-link>

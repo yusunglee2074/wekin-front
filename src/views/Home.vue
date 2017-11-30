@@ -104,7 +104,7 @@
       <div class="ui container popular-feed-container">
         <h3 class="ui header">
           <div class="header-label-bar"></div>
-          <span class="header-label">인기 피드</span>
+          <span class="header-label">인기 소통</span>
         </h3>
         <div class="pop-feed swiper-container">
           <div class="swiper-wrapper">

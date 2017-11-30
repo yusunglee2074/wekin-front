@@ -6,7 +6,7 @@
     <feed-layout :feed="feed" v-for="feed in feeds" v-bind:key="feed.doc_key"></feed-layout>
     <!--<button class="ui basic button more-btn">더보기</button>-->
     <feed-editor ref="feedEditor" v-if="isMyPage"></feed-editor>
-    <p v-if="feeds && feeds.length == 0" style="padding-top:30px;font-size: 15px;color: #979797;text-align:center">작성 된 피드가 없습니다.</p>
+    <p v-if="feeds && feeds.length == 0" style="padding-top:30px;font-size: 15px;color: #979797;text-align:center">작성 된 소통이 없습니다.</p>
   </div>
 </template>
 <script>

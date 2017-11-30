@@ -52,7 +52,7 @@
       </div>
       <router-link :to="{ name: 'Home' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨 홈</router-link>
       <router-link :to="{ name: 'Activity' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨</router-link>
-      <router-link :to="{ name: 'Feed' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">피드</router-link>
+      <router-link :to="{ name: 'Feed' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">소통</router-link>
       <router-link :to="{ name: 'Manual', params: { key: 2 } }" class="item linked" tag="div" exact>단체활동</router-link>
       <router-link :to="{ name: 'Customer' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">고객센터</router-link>
       <router-link :to="{ name: 'Notification' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()" v-if="user">알림</router-link>
@@ -74,7 +74,7 @@
     </div>
     <div class="ui menu mobile-sub-nav" v-if="!isHostMode">
       <router-link :to="{ name: 'Activity' }" class="link" exact>위킨</router-link>
-      <router-link :to="{ name: 'Feed' }" class="link" exact>피드</router-link>
+      <router-link :to="{ name: 'Feed' }" class="link" exact>소통</router-link>
       <router-link :to="{ name: 'Manual', params: { key: 2 } }" class="link" exact>단체활동</router-link>
       <router-link :to="{ name: 'Customer' }" class="link" exact>고객센터</router-link>
       <router-link :to="{ name: 'ExplainMaker' }" class="link" v-if="user ? !user.Host : true" exact>메이커신청</router-link>
@@ -97,7 +97,7 @@
       </div>
       <div class="menu" @click="show = false">
         <router-link :to="{ name: 'Activity' }" class="item linked" tag="div" exact>위킨</router-link>
-        <router-link :to="{ name: 'Feed' }" class="item linked" tag="div" exact>피드</router-link>
+        <router-link :to="{ name: 'Feed' }" class="item linked" tag="div" exact>소통</router-link>
         <router-link :to="{ name: 'Manual', params: { key: 2 } }" class="item linked" tag="div" exact>단체활동</router-link>
         <router-link :to="{ name: 'Customer' }" class="item linked" tag="div" exact>고객센터</router-link>
         <router-link :to="{ name: 'ExplainMaker' }" class="item linked" tag="div" v-if="user ? !user.Host : true" exact>메이커신청</router-link>
