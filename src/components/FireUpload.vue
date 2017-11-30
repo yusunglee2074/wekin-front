@@ -25,12 +25,12 @@ export default {
     fireStorage (e) {
       let self = this
       let files = e.target.files
+      var imagePath = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getSeconds() + new Date().getMilliseconds()
       for (let i = 0; i < files.length; i++) {
         (function(i) {
           setTimeout(function() { 
             let file = files[i]
             let tempRef = firebase.storage().ref()
-            let imagePath = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + '/' + new Date().getSeconds() + new Date().getMilliseconds()
             let imageRef = tempRef.child('img/image/' + imagePath)
             let uploadTask = imageRef.put(file)
             uploadTask.on('state_changed', function(snapshot){
@@ -40,6 +40,14 @@ export default {
               self.$emit('update:imageUrl', downloadURL + '?alt=media')
             }
             )
+          }, 100 * i);
+        })(i);
+        (function(i) {
+          setTimeout(function() { 
+            let file = files[i]
+            let tempRef = firebase.storage().ref()
+            let imageRef = tempRef.child('img/imageThumbnail/' + imagePath)
+            let uploadTask = imageRef.put(file)
           }, 100 * i);
         })(i)
       }
