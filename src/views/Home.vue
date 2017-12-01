@@ -141,8 +141,14 @@
                 </div>
               </div>
               <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px;">
-                <span class="right floated">
+                <span>
                   ￦ {{ wekin.base_price | joinComma }}
+                </span>
+                <span style="margin-left:6px;text-decoration:line-through; color:grey;line-height:13px;">
+                  ￦ {{ wekin.price_before_discount | joinComma }}
+                </span>
+                <span style="font-weight:bold;color:#d51c1c;font-size:13px;float:right;line-height:13px;">
+                  [{{ wekin.base_price, wekin.price_before_discount | discountPercentage  }} %]
                 </span>
                 <span>
                   <strong class="title">{{wekin.title}}</strong>
@@ -183,8 +189,14 @@
               </div>-->
               </div>
               <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px;">
-                <span class="right floated">
+                <span>
                   ￦ {{ wekin.base_price | joinComma }}
+                </span>
+                <span style="margin-left:6px;text-decoration:line-through; color:grey;line-height:13px;">
+                  ￦ {{ wekin.price_before_discount | joinComma }}
+                </span>
+                <span style="font-weight:bold;color:#d51c1c;font-size:13px;float:right;line-height:13px;">
+                  [{{ wekin.base_price, wekin.price_before_discount | discountPercentage  }} %]
                 </span>
                 <span>
                   <strong class="title">{{wekin.title}}</strong>
@@ -308,6 +320,11 @@ export default {
         pm: '오후'
       },
       news: [],
+    }
+  },
+  filters: {
+    discountPercentage: function (base, before) {
+      return ((before - base) / before  * 100).toFixed(0) == 9 ? 10 : ((before - base) / before  * 100).toFixed(0)
     }
   },
   methods: {
@@ -880,7 +897,7 @@ export default {
 
 .pop-wekins,
 .new-wekins {
-  height: 222px;
+  height: 248px;
 }
 
 .makers {
@@ -972,7 +989,7 @@ export default {
 
   .pop-wekins,
   .new-wekins {
-    height: 192px;
+    height: 210px;
   }
 }
 
