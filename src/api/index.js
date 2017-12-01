@@ -25,6 +25,10 @@ export default {
     return axios.post(`${BASE_API_URL}/user/front/signUp/dbCreateWithIdtoken`, { idToken })
       .then( res => res.data )
   },
+  getVersion () {
+    return axios.get(`${BASE_API_URL}/util/mobile/version`)
+      .then(res => res.data)
+  },
   getUser () {
     return axios.get(`${BASE_API_URL}/user/front/verify`)
       .then(res => res.data)

@@ -11,25 +11,53 @@
         </div>
       </div>
     </div>
-    <h4 class="ui horizontal divider header">
-      상세 이미지 
-    </h4>
     <div id="imagediv">
-      <img id="image" :src="`${ banners[imageIndex - 1].value.detailUrl }`">
-    </div>
-    <section id="fourthSection" style="background-color:rgb(248, 248, 248); min-height: 350px; padding: 60px;" v-show="banners[imageIndex - 1].description == '위킨은 능력자 모집중!'">
-      <div class="title">
-        <h1>
-          <p>회원가입, 메이커 신청 후 모든 기능을 이용해보세요.</p>
-        </h1>
-        <h3>
-          <p>더욱 자세한 사항은 카카오톡 <span style="color: rgb(40, 180, 80)">@위킨</span> 혹은 아래 고객센터 유선 번호로 문의 바랍니다.</p>
-        </h3>
-        <h3>
-          <button class="ui red basic button large maker start" @click="makerRequest()">메이커 신청</button>
-        </h3>
+      <div v-if="imageIndex != 1">
+        <div>
+          <h4 class="ui horizontal divider header">
+            상세 이미지 
+          </h4>
+          <img id="image" :src="`${ banners[imageIndex - 1].value.detailUrl }`">
+        </div>
+        <section id="fourthSection" style="background-color:rgb(248, 248, 248); min-height: 350px; padding: 60px;" v-show="banners[imageIndex - 1].description == '위킨은 능력자 모집중!'">
+          <div class="title">
+            <h1>
+              <p>회원가입, 메이커 신청 후 모든 기능을 이용해보세요.</p>
+            </h1>
+            <h3>
+              <p>더욱 자세한 사항은 카카오톡 <span style="color: rgb(40, 180, 80)">@위킨</span> 혹은 아래 고객센터 유선 번호로 문의 바랍니다.</p>
+            </h3>
+            <h3>
+              <button class="ui red basic button large maker start" @click="makerRequest()">메이커 신청</button>
+            </h3>
+          </div>
+        </section>
       </div>
-    </section>
+    <div style="width:75%; margin:40px auto;" class="ui segment list" v-else>
+      <img style="width:100%; margin: 30px auto; max-width: none;" id="image" :src="`${ banners[imageIndex - 1].value.url }`">
+      <div class="ui link three stackable cards activities" style="text-align:left;">
+        <wekin-card-layout
+          :activityKey="wekin.activity_key"
+          :title="wekin.title"
+          :address="wekin.address"
+          :name="wekin.Host.name"
+          :imageUrl="wekin.main_image.image[0]"
+          :favorite="wekin.Favorites"
+          :rating="Math.round(wekin.rating_avg) || 0"
+          :reviewCount="wekin.review_count || 0"
+          v-for="(wekin, index) in eventWekins" v-bind:key="wekin.wekin_key">
+          <div class="right floated price" style="text-align:right;" slot="extra-header">
+            <span>￦ {{wekin.base_price | joinComma}}</span>
+            <span style="display:block;text-decoration:line-through;color:grey; font-size:0.9rem;">￦ {{wekin.price_before_discount }}</span>
+            <p style="font-weight:bold;color:#d51c1c;font-size:0.9rem;">[{{ wekin.base_price, wekin.price_before_discount | discountPercentage  }} %]</p>
+          </div>
+          <div class="content extra-body" slot="extra-body">
+            <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 4" style="padding-right:8px;" v-bind:key="index">{{schedule | formatDateKo}}</span>
+          </div>
+        </wekin-card-layout>
+      </div>
+    </div>
+    </div>
   </div>
 
 </template>
@@ -37,12 +65,19 @@
 
 <script>
 import api from 'api'
+import wekinCardLayout from 'components/WekinCardLayout.vue'
+
 export default {
   data() {
     return {
       imageIndex: '',
-      banners: []
+      banners: [],
+      eventWekinList: [],
+      eventWekins: []
     }
+  },
+  components: {
+    wekinCardLayout,
   },
   methods: {
     getImageWithPageIndex() {
@@ -78,10 +113,29 @@ export default {
       }
     }
   },
+  filters: {
+    discountPercentage: function (base, before) {
+      return ((before - base) / before  * 100).toFixed(0) == 9 ? 10 : ((before - base) / before  * 100).toFixed(0)
+    }
+  },
   mounted() {
     this.loadMainBanners()
+    api.getVersion()
+      .then(data => {
+        this.eventWekinList = JSON.parse(JSON.parse(data.data).eventWekinList)
+        return api.getActivities(3)
+      })
+      .then(activities => {
+        for (let i = 0, length = activities.length; i < length; i++) {
+          let activity = activities[i]
+          if (this.eventWekinList.includes(activity.activity_key)) {
+            this.eventWekins.push(activity)
+          }
+        }
+      })
   },
   beforeUpdate() {
+    console.log("하핫")
     this.getImageWithPageIndex()
   },
 }
