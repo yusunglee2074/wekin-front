@@ -454,9 +454,7 @@ export default {
       return finalPrice 
     },
     calendar() {
-      let toDate = moment(this.activity.start_date).add(-this.activity.due_date, 'days') - moment().add(-this.activity.due_date, 'days') > 0 
-        ? moment(this.activity.start_date).add(-this.activity.due_date + 1, 'days') 
-        : moment().add(-this.activity.due_date + 1, 'days')
+      let toDate = moment().add(this.activity.due_date, 'days')
       let result = {
         to: toDate.toDate(),
         from: moment(this.activity.end_date).toDate(),
