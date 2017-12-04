@@ -173,8 +173,27 @@
         <div class="ui divider"></div>
         <h4 v-if="wekiners.length">참석 위키너</h4>
         <a :href="`/users/${wekiner.user_key}`" v-for="(wekiner, index) in wekiners" v-bind:key="index">
-          <img class="ui tiny circular image wekiner link" :src="wekiner.User.profile_image"></img>
-          <span v-show="wekiner.pay_amount > 1" style="font-size: 26px;"><i class="remove icon"></i> {{ wekiner.pay_amount }} </span>
+          <div style="display:inline-block;position:relative;">
+            <img class="ui tiny circular image wekiner link" :src="wekiner.User.profile_image"></img>
+            <div style="
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              width: 25px;
+              height: 25px;
+              border-radius: 50%;
+              background-color: #00a29a;">
+              <span style="
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #fff;
+                font-size: 12px;
+                font-weight: bold;">
+     {{ wekiner.pay_amount }}</span>
+            </div>
+          </div>
         </a>
         <div v-if="wekiners.length" class="ui divider"></div>
         <h4>집결지</h4>
