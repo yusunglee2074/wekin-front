@@ -101,8 +101,8 @@ export default {
     })
       .then(res => res.data)
   },
-  getAttendWekiners (wekinKey) {
-    return axios.get(`${BASE_API_URL}/activity/front/wekin/${wekinKey}/wekiner`)
+  getAttendWekiners (activityKey) {
+    return axios.get(`${BASE_API_URL}/activity/front/wekin/${activityKey}/wekiner`)
       .then(res => res.data)
   },
   getMakers () {
