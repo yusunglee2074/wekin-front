@@ -18,7 +18,7 @@
     </slot>
     <div class="extra content">
       <div class="ui star rating" :data-rating="Math.round(rating)"></div>
-      <span>후기 {{reviewCount}}</span>
+      <span>결제 {{ wekinnewCount }}</span>
       <span class="right floated">
         <slot name="action-btn">
           <i class="remove bookmark icon"></i>
@@ -40,6 +40,7 @@ export default {
     'total',
     'rating',
     'reviewCount',
+    'wekinnewCount',
   ],
   mounted() {
     $('.ui.rating')

@@ -202,6 +202,7 @@
           :favorite="wekin.Favorites"
           :rating="Math.round(wekin.rating_avg) || 0"
           :reviewCount="wekin.review_count || 0"
+          :wekinnewCount="wekin.wekinnew_count || 0"
           v-for="(wekin, index) in filteredWekin" v-bind:key="wekin.wekin_key">
           <div class="right floated price" style="text-align:right;" slot="extra-header">
           <span>￦ {{wekin.base_price | joinComma}}</span>

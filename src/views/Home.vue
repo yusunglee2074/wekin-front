@@ -135,9 +135,12 @@
                 <div class="backImage overlayer"></div>
                 <div class="backImage ui circular image makerProfile" v-bind:style="{'background-image':`url(${wekin.Host.profile_image})`}"></div>
                 <div>
+                  <span class="reviewCount">결제 {{ wekin.wekinnew_count > 0 ? wekin.wekinnew_count : 0 }}</span>
                   <div class="ui star rating" :data-rating="Math.round(wekin.rating_avg)">
                   </div>
-                  <span class="reviewCount">{{wekin.review_count}}</span>
+                  <!--결제수 표시 X
+                  <span class="reviewCount">후기 {{wekin.review_count}}</span>
+                  -->
                 </div>
               </div>
               <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px;">
@@ -182,11 +185,11 @@
                 <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.image[0]})`}"></div>
                 <div class="backImage overlayer"></div>
                 <div class="backImage ui circular image makerProfile" v-bind:style="{'background-image':`url(${wekin.Host.profile_image})`}"></div>
-                <!--<div>
                 <div class="ui star rating" :data-rating="Math.round(wekin.rating_avg)">
                 </div>
+                <!-- 후기수 표시 X
                 <span class="reviewCount">{{wekin.review_count}}</span>
-              </div>-->
+              -->
               </div>
               <div class="content" style="border: solid 1px #d5d5d5; min-height: 28px;">
                 <span>
@@ -858,6 +861,7 @@ export default {
     line-height: 1.2;
     font-size: 14px;
     font-weight: 400;
+    text-shadow: 0, 2px, 4px, rgba(0, 0, 0, 0.5);
   }
 
   .makerProfile {
