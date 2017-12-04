@@ -205,8 +205,8 @@
           v-for="(wekin, index) in filteredWekin" v-bind:key="wekin.wekin_key">
           <div class="right floated price" style="text-align:right;" slot="extra-header">
           <span>￦ {{wekin.base_price | joinComma}}</span>
-          <span style="display:block;text-decoration:line-through;color:grey; font-size:0.9rem;">￦ {{wekin.price_before_discount }}</span>
-          <p style="font-weight:bold;color:#d51c1c;font-size:0.9rem;">[{{ wekin.base_price, wekin.price_before_discount | discountPercentage  }} %]</p>
+          <span v-if="wekin.price_before_discount !== null" style="display:block;text-decoration:line-through;color:grey; font-size:0.9rem;">￦ {{ wekin.price_before_discount }}</span>
+          <p v-if="wekin.price_before_discount !== null" style="font-weight:bold;color:#d51c1c;font-size:0.9rem;">[{{ wekin.base_price, wekin.price_before_discount | discountPercentage  }} %]</p>
           </div>
           <div class="content extra-body" slot="extra-body">
             <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 4" style="padding-right:8px;" v-bind:class="{  commingSchedule: isCommingSchedule(schedule), endSchedule: isEndSchedule(schedule) }" v-bind:key="index">{{schedule | formatDateKo}}</span>

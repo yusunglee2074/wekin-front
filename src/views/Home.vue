@@ -144,10 +144,10 @@
                 <span>
                   ￦ {{ wekin.base_price | joinComma }}
                 </span>
-                <span style="margin-left:6px;text-decoration:line-through; color:grey;line-height:13px;">
+                <span v-if="wekin.price_before_discount !== null" style="margin-left:6px;text-decoration:line-through; color:grey;line-height:13px;">
                   ￦ {{ wekin.price_before_discount | joinComma }}
                 </span>
-                <span style="font-weight:bold;color:#d51c1c;font-size:13px;float:right;line-height:13px;">
+                <span v-if="wekin.price_before_discount !== null" style="font-weight:bold;color:#d51c1c;font-size:13px;float:right;line-height:13px;">
                   [{{ wekin.base_price, wekin.price_before_discount | discountPercentage  }} %]
                 </span>
                 <span>
@@ -192,10 +192,10 @@
                 <span>
                   ￦ {{ wekin.base_price | joinComma }}
                 </span>
-                <span style="margin-left:6px;text-decoration:line-through; color:grey;line-height:13px;">
+                <span v-if="wekin.price_before_discount !== null" style="margin-left:6px;text-decoration:line-through; color:grey;line-height:13px;">
                   ￦ {{ wekin.price_before_discount | joinComma }}
                 </span>
-                <span style="font-weight:bold;color:#d51c1c;font-size:13px;float:right;line-height:13px;">
+                <span v-if="wekin.price_before_discount !== null" style="font-weight:bold;color:#d51c1c;font-size:13px;float:right;line-height:13px;">
                   [{{ wekin.base_price, wekin.price_before_discount | discountPercentage  }} %]
                 </span>
                 <span>
