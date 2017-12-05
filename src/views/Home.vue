@@ -135,7 +135,7 @@
                 <div class="backImage overlayer"></div>
                 <div class="backImage ui circular image makerProfile" v-bind:style="{'background-image':`url(${wekin.Host.profile_image})`}"></div>
                 <div>
-                  <span class="reviewCount">결제 {{ wekin.wekinnew_count > 0 ? wekin.wekinnew_count : 0 }}</span>
+                  <span class="reviewCount">참여 {{ wekin.wekinnew_count > 0 ? wekin.wekinnew_count : 0 }}</span>
                   <div class="ui star rating" :data-rating="Math.round(wekin.rating_avg)">
                   </div>
                   <!--결제수 표시 X
@@ -408,6 +408,7 @@ export default {
       api.getNewestActivity()
         .then(activities => {
           this.newestActivities = activities.map((activity) => {
+            activity.main_image.image[0] = activity.main_image.image[0].replace('image', 'imageThumbnail')
             if (activity.rating_avg == null) {
               activity.rating_avg = 0
             }
@@ -861,7 +862,7 @@ export default {
     line-height: 1.2;
     font-size: 14px;
     font-weight: 400;
-    text-shadow: 0, 2px, 4px, rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   }
 
   .makerProfile {
