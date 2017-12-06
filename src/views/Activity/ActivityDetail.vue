@@ -4,7 +4,7 @@
     <div class="wekin swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide top-slide" v-for="(image, index) in activity.main_image.image" v-bind:key="index">
-          <div :style="`background-image:url(${image})`"></div>
+          <div :style="`background-image:url(${image});background-position: center;`"></div>
         </div>
       </div>
       <div class="swiper-pagination" slot="pagination"></div>
