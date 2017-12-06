@@ -473,7 +473,15 @@ export default {
       return finalPrice 
     },
     calendar() {
-      let toDate = moment().add(this.activity.due_date, 'days')
+      var closestStartDate 
+      for (let i = 0, length = this.activity.start_date_list.length; i < length; i++) {
+        let item = this.activity.start_date_list[i]
+        if (moment(item) > moment()) {
+          closestStartDate = moment(item)
+          break
+        }
+      }
+      let toDate = closestStartDate > moment().add(this.activity.due_date, 'days') ? closestStartDate : moment().add(this.activity.due_date, 'days')
       let result = {
         to: toDate.toDate(),
         from: moment(this.activity.end_date).toDate(),
