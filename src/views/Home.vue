@@ -408,7 +408,8 @@ export default {
       api.getNewestActivity()
         .then(activities => {
           this.newestActivities = activities.map((activity) => {
-            activity.main_image.image[0] = activity.main_image.image[0].replace('image', 'imageThumbnail')
+            // FIXME: 썸네일 이미지가 안만들어짐
+            // activity.main_image.image[0] = activity.main_image.image[0].replace('image', 'imageThumbnail')
             if (activity.rating_avg == null) {
               activity.rating_avg = 0
             }
