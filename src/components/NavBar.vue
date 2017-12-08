@@ -53,7 +53,7 @@
       <router-link :to="{ name: 'Home' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨 홈</router-link>
       <router-link :to="{ name: 'Activity' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">위킨</router-link>
       <router-link :to="{ name: 'Feed' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">소통</router-link>
-      <router-link :to="{ name: 'Manual', params: { key: 2 } }" class="item linked" tag="div" exact>단체활동</router-link>
+      <router-link :to="{ name: 'Manual', params: { key: 2 } }" class="item linked" tag="div" v-on:click.native="toggleMobileMenu()" exact>단체활동</router-link>
       <router-link :to="{ name: 'Customer' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()">고객센터</router-link>
       <router-link :to="{ name: 'Notification' }" class="item link" tag="div" exact v-on:click.native="toggleMobileMenu()" v-if="user">알림</router-link>
       <div class="item link" v-if="user" @click="onLogoutClick()">로그아웃</div>
@@ -281,7 +281,9 @@ export default {
       this.showSignupModal = true
     },
     showSignupModalMethod2() {
-      this.showSignupModal2 = true
+      this.isMobileMenuShowing = false
+      this.$router.push('join')
+      // this.showSignupModal2 = true
     },
     showSignupModalandCloseLoginModal() {
       this.showLoginModal = false 

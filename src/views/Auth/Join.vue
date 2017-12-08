@@ -1,48 +1,119 @@
 <template>
-  <div id="login">
-    <div class="navbar-custom"></div>
-    <div class="ui card login-container">
-      <div class="content">
-        <div class="header">회원가입</div>
-      </div>
-      <div class="content padded">
-        <div class="ui input">
-          <input type="email" placeholder="이메일" v-model="user.email">
+  <div class='container'>
+    <div class='join_warp'>
+      <div class="modalsignup2" style="padding:120px 0;">
+        <div class="ui active inverted dimmer" v-if="isLoading">
+          <div class="ui medium text loader">회원가입 중 입니다.</div>
         </div>
-        <div class="ui input">
-          <input type="text" placeholder="이름" v-model="user.name">
-        </div>
-        <div class="ui input">
-          <input type="password" placeholder="비밀번호" v-model="user.password">
-        </div>
-        <div class="color secondary">{{errorMessage}}</div>
-        <div class="ui small feed">
-          <button class="negative ui button" @click="onSignUpClick()">가입하기</button>
-          <div class="ui checkbox agreement-checkbox">
-            <input type="checkbox" name="example">
-            <label>
-              <a href="/policy/term" tag="a">이용약관</a>과
-              <a href="policy/privacy" tag="a">개인정보취급방침</a>에 동의합니다.</label>
+        <div class="modal-container" @click.stop>
+          <fieldset class="inputField">
+            <div>
+              <div class="inputDefault">
+                <span>
+                  <input class="realInputDefault" type="text" v-model="user.email" v-if='iskor' placeholder="이메일" @blur="isRightEmail()">
+                  <input class="realInputDefault" type="text" v-model="user.email" v-if='!iskor' placeholder="Email" @blur="isRightEmail()">
+                </span>
+                <span>
+                </span>
+              </div>
+              <div class="inputDefault">
+                <span>
+                  <input class="realInputDefault" type="password" ref="password" v-if='iskor' placeholder="비밀번호 영숫자 6자이상" v-model="user.password">
+                  <input class="realInputDefault" type="password" ref="password" v-if='!iskor' placeholder="Password" v-model="user.password">
+                </span>
+              </div>
+              <div class="inputDefault lastInputDeleteBottomBorder">
+                <span>
+                  <input class="realInputDefault" type="password" v-if='iskor' placeholder="비밀번호확인" v-model="user.password2">
+                  <input class="realInputDefault" type="password" v-if='!iskor' placeholder="Confirm password" v-model="user.password2">
+                </span>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="inputField">
+            <div>
+              <div class="inputDefault">
+                <span>
+                  <input class="realInputDefault" type="text" v-if='iskor' ref="name" v-model="user.name" placeholder="이름">
+                  <input class="realInputDefault" type="text" v-if='!iskor' ref="name" v-model="user.name" placeholder="Full name">
+                </span>
+              </div>
+              <div class="inputDefault gender">
+                <button class="ui basic button genderButton" :class="{ 
+                  active: user.gender === 0,
+                  teal: user.gender !== 0
+                  }" @click="genderSelect(0)"><span v-if="iskor">남자</span><span v-if="!iskor">Male</span></button>
+                <button class="ui basic button genderButton" :class="{ 
+                  active: user.gender === 1,
+                  teal: user.gender !== 1 
+                  }" @click="genderSelect(1)"><span v-if="iskor">여자</span><span v-if="!iskor">Femail</span></button>
+              </div>
+              <div class="inputDefault">
+                <input class="realInputDefault setLikeSpan" type="number" v-if="iskor" v-model.number="user.birthday.year" @blur="isYear($event)" placeholder="출생년도">
+                <input class="realInputDefault setLikeSpan" type="number" v-if="!iskor" v-model.number="user.birthday.year" @blur="isYear($event)" placeholder="Year">
+                <select id="birthdayMonth" v-model="user.birthday.month">
+                  <option :value="null" disabled><span v-if="iskor">월</span><span v-if="!iskor">Mon</span></option>
+                  <option v-for="month in months" v-bind:value="month.value">
+                    {{ month.text }}
+                  </option>
+                </select>
+                <input id="birthdayDay" class="realInputDefault setLikeSpan" type="number" v-if="iskor" v-model.number="user.birthday.day" @blur="isDay($event)" placeholder="일" style="margin-left: 20px;">
+                <input id="birthdayDay" class="realInputDefault setLikeSpan" type="number" v-if="!iskor" v-model.number="user.birthday.day" @blur="isDay($event)" placeholder="day" style="margin-left: 20px;">
+              </div>
+              <div class="inputDefault lastInputDeleteBottomBorder" v-if="!areUCompany && iskor">
+                <span style="font-size: 13px;">
+                  (옵션)위킨과 제휴 중인 기업 회원 이십니까? <button @click="getCompanyEmail()">확인</button>
+                </span>
+              </div>
+              <div class="inputDefault lastInputDeleteBottomBorder" v-if="areUCompany">
+                <span>
+                  <input class="realInputDefault" type="text" v-model="user.email_company" placeholder="기업이메일(옵션)">
+                </span>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="inputField" v-if="iskor">
+            <div>
+              <div class="inputDefault">
+                <span>
+                  <input class="realInputDefault" style="width: 210px;" type="number" v-model="user.phoneNumber" placeholder="휴대폰번호">
+                  <button class="ui teal basic button phoneButton" @click="sendSms()">인증</button>
+                </span>
+              </div>
+              <div class="inputDefault">
+                <span>
+                  <input class="realInputDefault" type="number" style="width: 210px;" v-model="verifySmsNumber" placeholder="인증번호">
+                  <button class="ui teal basic button phoneButton" @click="confirmVerifyNumber()" >확인</button>
+                </span>
+              </div>
+            </div>
+          </fieldset>
+          <div class="color secondary">{{errorMessage}}</div>
+          <button class="positive ui button" style="background-color: rgb(0,154,140); width: 140px; margin-bottom: 9px;" @click="onSignUpClick()"><span v-if="iskor" style="color:white;">가입하기</span><span v-if="!iskor" style="color:white;">Submit</span></button>
+          <span v-if="iskor">&nbsp또는&nbsp</span><span v-else>&nbspOr&nbsp</span>
+          <img src="./../../../static/images/logo-facebook-68x68.png" class="snsLoginButton" @click="onFacebookJoinClick()">
+          <img src="./../../../static/images/logo-kakao-68x68.png" class="snsLoginButton" @click="signInWithKakao()">
+          <img src="./../../../static/images/logo-naver-68x68.png" class="snsLoginButton" @click="signInWithNaver()">
+          <div class="ui fitted checkbox" v-if="iskor">
+            <input type="checkbox" v-model="isAgreed">
+            <label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <a href="/policy/term" tag="a" target="_blank">이용약관</a>과
+              <a href="policy/privacy" tag="a" target="_blank">개인정보취급방침</a>에 동의합니다.</label>
+          </div>
+          <div class="ui fitted checkbox" v-if="!iskor">
+            <input type="checkbox" v-model="isAgreed">
+            <label>&nbsp&nbsp&nbsp&nbsp&nbsp
+              I have carefully reviewed and agreed the terms and conditions of the<a href="/policy/term" tag="a" target="_blank">User Agreement</a> <a href="policy/privacy" tag="a" target="_blank">Private Policy</a>
+collection and user of Personal Information.
+              </label>
           </div>
         </div>
+        <div class='ui divider'></div>
+        <div style="margin: 0 auto 30px; auto">
+          <button class="ui secondary basic button" @click="toggleKor()" style="margin-left:40px;">ENGLISH</button>
+          You can join us with English!
+        </div>
       </div>
-      <!--<div class="padded">
-        <span class="ui horizontal divider">
-          또는
-        </span>
-        <div class="social-login-container">
-          <img class="link" src="static/images/logo-facebook-68x68.png" @click="onFacebookJoinClick()">
-          <img class="link" src="static/images/logo-kakao-68x68.png" @click="onKakaoClick()">
-          <img class="link" src="static/images/logo-googleplus-68x68.png" @click="onGoogleClick()">
-        </div>
-        <div class="ui divider"></div>
-        <div class="bottom-login-container">이미 위킨 회원이신가요?
-          <a href="/login" tag="a"> 로그인</a>
-        </div>
-      </div>-->
-    </div>
-    <div class="ui active inverted dimmer" v-if="isLoading">
-      <div class="ui medium text loader">Loading</div>
     </div>
   </div>
 </template>
@@ -50,61 +121,140 @@
 import auth from 'src/auth'
 import firebase from 'firebase'
 import { Validation } from 'src/util'
+import moment from 'moment'
+import axios from 'axios'
+import api from './../../api'
 
 export default {
-  name: 'join',
-  data() {
+  name: 'modalsignup2',
+  data () {
     return {
+      iskor: true,
+      months: [
+        { text: "1월" , value: 1 },
+        { text: "2월" , value: 2 },
+        { text: "3월" , value: 3 },
+        { text: "4월" , value: 4 },
+        { text: "5월" , value: 5 },
+        { text: "6월" , value: 6 },
+        { text: "7월" , value: 7 },
+        { text: "8월" , value: 8 },
+        { text: "9월" , value: 9 },
+        { text: "10월" , value: 10 },
+        { text: "11월" , value: 11 },
+        { text: "12월" , value: 12 },
+        ],
       user: {
         email: null,
+        name: null, 
         password: null,
-        name: null
+        password2: null,
+        name: null,
+        gender: null,
+        birthday: {
+          year: null,
+          day: null,
+          month: null
+        },
+        email_company: null,
+        phoneNumber: null,
+        isPhoneSmsSent: false,
       },
+      verifySmsNumber: null,
       errorMessage: '',
       isAgreed: false,
       isLoading: false,
+      sendingTime: null,
+      phoneVerify: null,
+      areUCompany: false,
     }
-  },
-  computed: {
-    userSession() {
-      return this.$store.state.user
-    }
-  },
-  mounted() {
-    $('.agreement-checkbox').checkbox({
-      onChange: () => {
-        this.isAgreed = !this.isAgreed
-      }
-    })
-    this.initKakaoLogin()
-
   },
   methods: {
-    initKakaoLogin() {
-      Kakao.init('b799fcbeb4b6ed28e6e286a1cb70bfc0')
+    toggleKor() {
+      this.iskor = !this.iskor
+      this.user = {
+        email: null,
+        name: null, 
+        password: null,
+        password2: null,
+        name: null,
+        gender: null,
+        birthday: {
+          year: null,
+          day: null,
+          month: null
+        },
+        email_company: null,
+        phoneNumber: null,
+        isPhoneSmsSent: false,
+      }
     },
-    initNaverLogin() {
-
+    getCompanyEmail() {
+      this.areUCompany = !this.areUCompany
+    },
+    signInWithNaver() {
+      window.location.href = `https://nid.naver.com/oauth2.0/authorize?client_id=rTHYGlmyZuVKSzR4_45d&redirect_uri=${api.forSNSLoginUrl}/auth/naver&response_type=code&state=wekin`
+    },
+    signInWithKakao() {
+      window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=75c0694ad636bcca94fa48cbc7c9d8cf&redirect_uri=${api.forSNSLoginUrl}/social/naver&response_type=code`
+    },
+    isRightEmail(event) {
+      if (!Validation.checkEmailValidation(this.user.email)) {
+        this.errorMessage = "이메일 형식을 확인해주세요."
+      }
+    },
+    isYear(event) {
+      event = event ? event : window.event
+      let year = this.user.birthday.year
+      if (2020 < year || 1900 > year || String(year).length !== 4) {
+        this.errorMessage = "생일에 '년도' 형식을 맞춰주세요. 예) 1991"
+      } else {
+        this.errorMessage = ''
+      }
+    },
+    isDay(event) {
+      event = event ? event : window.event
+      let day = this.user.birthday.day
+      if (31 < day || 1 > day || String(day).length > 3) {
+        this.errorMessage = "생일에 '일' 형식을 맞춰주세요. 예) 13"
+      } else {
+        this.errorMessage = ''
+      }
+    },
+    close: function () {
+      this.$emit('update:show', false)
     },
     checkForm() {
       if (!(this.user.email &&
         this.user.password &&
+        this.user.password2 &&
         this.user.name)) {
         this.errorMessage = "모든 폼을 입력해주세요."
-      } else if (!Validation.checkEmailValidation(this.user.email)) {
-        this.errorMessage = "이메일 형식을 확인해주세요."
       } else if (!this.isAgreed) {
         alert("약관에 동의해주세요.")
+      } else if (this.user.password != this.user.password2) {
+        alert("비밀번호 2개가 일치하지 않습니다.")
+      } else if (this.user.password.length < 6) {
+        alert("비밀번호는 6자리 이상이여야 합니다.")
+        this.user.password = ''
+        this.user.password2 = ''
+        this.$refs.password.focus();
+      } else if (this.user.password.search(/[0-9]/g) < 0 || this.user.password.search(/[a-z]/ig) < 0) {
+        alert("비밀번호는 영문, 숫자 조합이여야 합니다.")
+        this.user.password = ''
+        this.user.password2 = ''
+        this.$refs.password.focus();
+      } else if (!this.user.name) {
+        this.errorMessage = "이름을 입력해주세요."
+        this.$refs.name.focus();
+      } else if (this.user.gender === null) {
+        this.errorMessage = "성별을 선택해 주세요."
+      } else if (!this.user.birthday.year || !this.user.birthday.day || !this.user.birthday.month) {
+        this.errorMessage = "생일을 입력해 주세요."
+      } else if (!this.phoneVerify) {
+        this.errorMessage = "휴대폰 인증을 진행해 주세요."
       } else {
         return true
-      }
-    },
-    onLoginSuccess(user) {
-      this.isLoading = false
-      if (user.emailVerified) {
-        this.goToRedirectUrl()
-      } else {
-        window.location.href = '/verifyEmail'
       }
     },
     onLoginFail(error) {
@@ -114,33 +264,95 @@ export default {
     onFacebookJoinClick() {
       this.isLoading = true
       auth.loginWithFacebook()
-        .then((currentUser) => window.location.href = '/')
-        .catch((error) => this.onLoginFail(error))
+        .then(currentUser => {
+          window.location.reload()
+        })
+        .catch(() => credential.user)
     },
     getErrorMessage(error) {
       switch (error) {
-        case "auth/weak-password":
-          return "비밀번호는 6자리 이상 입력해주세요."
-        case "auth/email-already-in-use":
+        case "auth/email-already-exists":
+          return "이미 가입 된 이메일 입니다."
+        case "auth/argument-error":
           return "이미 가입 된 이메일 입니다."
       }
     },
     onSignUpSuccess(result) {
       this.isLoading = false
-      alert('가입이 완료되었습니다. 서비스 이용을 위해 이메일 인증을 완료해주세요.')
-      window.location.href = '/verifyEmail'
+      alert('가입이 완료되었습니다.')
+      // this.$parent.showSignupModal2 = false
+      // this.$router.push({ name: "VerifyPhoneNumber", force: true })
+      // this.$router.go({ path: "/verify/phonenumber", force: true })
+      this.$router.go(-1)
+      window.location.reload()
     },
     onSignUpFail(error) {
       this.isLoading = false
-      console.log(error)
-      this.errorMessage = this.getErrorMessage(error.code)
+      if (error === 'auth/email-already-exists') {
+        this.errorMessage = "존재하는 이메일입니다. 비밀번호 찾기를 이용해주세요"
+      }
     },
     onSignUpClick() {
+      if (!this.iskor) {
+        if (!(this.user.email &&
+          this.user.password &&
+          this.user.password2 &&
+          this.user.name)) {
+          this.errorMessage = "모든 폼을 입력해주세요."
+        } else if (!this.isAgreed) {
+          alert("약관에 동의해주세요.")
+          return
+        } else if (this.user.password != this.user.password2) {
+          alert("비밀번호 2개가 일치하지 않습니다.")
+          return
+        } else if (this.user.password.length < 6) {
+          alert("비밀번호는 6자리 이상이여야 합니다.")
+          this.user.password = ''
+          this.user.password2 = ''
+          this.$refs.password.focus();
+          return
+        } else if (this.user.password.search(/[0-9]/g) < 0 || this.user.password.search(/[a-z]/ig) < 0) {
+          alert("비밀번호는 영문, 숫자 조합이여야 합니다.")
+          this.user.password = ''
+          this.user.password2 = ''
+          this.$refs.password.focus();
+          return
+        } else if (!this.user.name) {
+          this.errorMessage = "이름을 입력해주세요."
+          this.$refs.name.focus();
+          return
+        } else if (this.user.gender === null) {
+          this.errorMessage = "성별을 선택해 주세요."
+          return
+        } else if (!this.user.birthday.year || !this.user.birthday.day || !this.user.birthday.month) {
+          this.errorMessage = "생일을 입력해 주세요."
+          return
+        }
+        this.isLoading = true
+        this.user.country = 'notKorean'
+        auth.signUp(
+          this.user.email,
+          this.user.password,
+          this.user.name,
+          JSON.stringify(this.user)
+        )
+          .then(result => this.onSignUpSuccess(result))
+          .catch(error => {
+            this.onSignUpFail((JSON.parse(error.response.data.data).code))
+          })
+      }
       if (this.checkForm()) {
         this.isLoading = true
-        auth.signUp(this.user.email, this.user.password, this.user.name)
+        auth.signUp(
+          this.user.email,
+          this.user.password,
+          this.user.name,
+          JSON.stringify(this.user)
+        )
           .then(result => this.onSignUpSuccess(result))
-          .catch(error => this.onSignUpFail(error))
+          .catch(error => {
+            this.onSignUpFail((JSON.parse(error.response.data.data).code))
+          })
       }
     },
     goToRedirectUrl() {
@@ -158,78 +370,192 @@ export default {
         .then((currentUser) => this.goToRedirectUrl())
         .catch((error) => this.onLoginFail(error))
     },
-    onNaverClick() {
-      auth.loginWithNaver()
-        .then((currentUser) => console.log(currentUser))
-        .catch((error) => this.onLoginFail(error))
+    sendSms() {
+      if (this.sendingTime && this.sendingTime - moment() > -20000) {
+        alert("인증문자는 20초에 한번만 보낼 수 있습니다.")
+        return
+      }
+      this.user.phoneNumber = this.user.phoneNumber.replace(/-/g, "")
+      if (this.user.phoneNumber.length < 9 || this.user.phoneNumber.length > 11) {
+        alert("휴대폰번호의 형식이 이상합니다. 010########")
+        return
+      }
+      auth.sendPhoneVerification(this.user.phoneNumber)
+        .then( response => {
+          this.user.phoneNumber
+          this.sendingTime = moment()
+          this.errorMessage = "인증번호를 발송했습니다."
+        })
     },
-    onKakaoClick() {
-      this.isLoading = true
-      auth.loginWithKakao()
-        .then((currentUser) => this.goToRedirectUrl())
-        .catch((error) => this.onLoginFail(error))
+    genderSelect(num) {
+      if (num === 0) {
+        this.user.gender = 0
+      } else {
+        this.user.gender = 1
+      }
     },
+    confirmVerifyNumber() {
+      auth.verifySmsCode(this.user.phoneNumber, this.verifySmsNumber)
+        .then(response => {
+          if (response.success === true) {
+            this.phoneVerify = true
+            this.errorMessage = "인증에 성공하였습니다."
+          } else {
+            this.phoneVerify = false
+            this.verifySmsNumber = ''
+            this.errorMessage = "인증실패, 입력정보를 확인해주세요."
+          }
+        })
+    }
+  },
+  updated() {
+  },
+  mounted() {
   }
 }
 </script>
-<style lang=scss scoped>
-@import '../../style/variables.scss';
 
-.card.login-container {
-  width: 380px;
-  margin: 0 auto;
-  padding-bottom: 20px;
-  margin-top: 20px;
-  >.content:first-child {
-    border-top: 0px!important;
-  }
-  .padded {
-    padding-left: 33px;
-    padding-right: 33px;
-  }
-  .header {
-    text-align: center;
-  }
-  .ui.input {
-    width: 100%;
-    padding: 6px 0;
-    input {
-      height: 50px;
-      border: 1px solid $color-line;
-    }
-  }
-  .ui.button {
-    width: 100%;
-    height: 50px;
-    margin: 12px 0;
-  }
-  .ui.checkbox {
-    width: 100%;
-    text-align: left;
-    /*padding: 12px 6px;*/
-    font-size: 12px;
-  }
-  .ui.horizontal.divider {
-    margin-top: 0;
-  }
-  .social-login-container {
-    text-align: center;
-    padding: 4px 0;
-  }
-  .social-login-container img {
-    height: 50px;
-    padding-right: 14px;
-    &:last-child {
-      padding: 0;
-    }
-  }
-  .bottom-login-container {
-    display: block;
-    margin: 0 auto;
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
 
-    a {
-      font-family: NotoSansCJKkr-Medium;
-    }
-  }
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    transition: opacity .3s ease;
 }
+
+.modal-container {
+    width: 380px;
+    height: 540px;
+    margin: 0 auto 0;
+    padding: 20px 30px;
+    background-color: #f2f2f2;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    transition: all .3s ease;
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+
+.modal-body {
+    margin: 20px 0;
+}
+.modal-enter, .modal-leave {
+    opacity: 0;
+}
+
+.modal-leave .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.inputField {
+  margin-bottom: 6px;
+  border-color: rgb(240, 240, 240);
+  border-style: bold;
+  background-color: #fff;
+  padding: 0px;
+}
+
+.inputDefault {
+  display: block;
+  font-size: 12px;
+  height: 44px;
+  padding-bottom: 8px;
+  padding-left: 13px;
+  padding-right: 11px;
+  padding-top: 8px;
+  border-color: rgb(230, 240, 230);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+
+.realInputDefault {
+  border-bottom-color: rgb(0, 0, 0);
+  border-bottom-style: none;
+  border-bottom-width: 0px;
+  border-left-color: rgb(0, 0, 0);
+  border-left-style: none;
+  border-left-width: 0px;
+  border-right-color: rgb(0, 0, 0);
+  border-right-style: none;
+  border-right-width: 0px;
+  border-top-color: rgb(0, 0, 0);
+  border-top-style: none;
+  border-top-width: 0px;
+  display: inline-block;
+  font-size: 16px;
+  height: 30px;
+  line-height: normal;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  padding-bottom: 6px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 6px;
+  position: relative;
+  width: 260px;
+}
+
+.lastInputDeleteBottomBorder {
+  border-bottom-width: 0px;
+}
+
+.genderButton {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  width: 46%;
+
+}
+.phoneButton {
+  height: 29px;
+  line-height: 8px;
+}
+
+.gender {
+  padding: 0px;
+  padding-top: 2px;
+  height: 50px;
+}
+
+.setLikeSpan {
+  display: inline-block;
+  width: 70px;
+  border-right-color: rgb(240, 240, 240);
+  border-right-style: solid;
+  border-right-width: 1px;
+  margin-right: 15px;
+}
+
+#birthdayMonth {
+  font-size:13px;
+  width: 55px;
+  height: 28px;
+}
+
+#birthdayDay {
+  padding-left: 20px;
+  border-left-color: rgb(240, 240, 240);
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-style: none;
+}
+
+.clickedButton {
+  border-color: black;
+}
+
+.snsLoginButton {
+  width: 24px;
+  height: auto;
+}
+
+
 </style>
