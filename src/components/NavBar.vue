@@ -570,7 +570,7 @@ a.a-active {
   }
 }
 
-@media only screen and (min-width: 992px) and (max-width: 1199px) {
+@media only screen and (min-width: 992px) and (max-width: 1450px) {
   .menu-container {
     .logo {
       margin: 0 40px;
