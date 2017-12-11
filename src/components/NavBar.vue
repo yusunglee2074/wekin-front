@@ -42,8 +42,7 @@
         <div class="active content" v-else>
           <router-link :to="{ name: 'HostAdmin' }" class="item" exact v-on:click.native="toggleMobileMenu()">MAKER PAGE</router-link>
           <div class="divider"></div>
-          <router-link :to="{ name: 'HostWekinsAdd' }" class="item" exact v-on:click.native="toggleMobileMenu()">위킨 만들기</router-link>
-          <router-link :to="{ name: 'HostWekins' }" class="item" exact v-on:click.native="toggleMobileMenu()">위킨관리</router-link>
+          <router-link :to="{ name: 'HostWekins' }" class="item" exact v-on:click.native="toggleMobileMenu()">위킨관리(생성)</router-link>
           <router-link :to="{ name: 'HostBooking' }" class="item" exact v-on:click.native="toggleMobileMenu()">예약관리</router-link>
           <router-link :to="{ name: 'HostBoards' }" class="item" exact v-on:click.native="toggleMobileMenu()">후기 / Q&amp;A관리</router-link>
           <router-link :to="{ name: 'HostSettings' }" class="item" exact v-on:click.native="toggleMobileMenu()">설정</router-link>
