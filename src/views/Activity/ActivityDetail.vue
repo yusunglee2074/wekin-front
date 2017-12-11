@@ -211,7 +211,7 @@
         <p>위킨 연락처</p>
         <p> 전화번호 : 031-211-0410 </p>
         <p> 이메일 : wekin@wekiner.com </p>
-        <p> 카카오톡 : @wekiner </p>
+        <p> 카카오톡 : @위킨</p>
         <div class="ui divider"></div>
         <h4>'{{ activity.category }}' 카테고리 관련 위킨</h4>
         <div class="mobile-small-wekin">
