@@ -33,7 +33,7 @@
           <div class="ui horizontal small divided company-info list pc">
             <span class="item">경기도 수원시 영통구 에듀타운로 101, 103동 217호</span>
             <span class="item">고객센터 : 031-211-0410</span>
-            <span class="item">사업/서비스 제휴 문의 : wekiner@wekiner.com</span>
+            <span class="item">사업/서비스 제휴 문의 : wekin@wekiner.com</span>
           </div>
           <div class="ui horizontal small company-info">
             <span class="item">©2017 All Rights Reserved</span>
