@@ -482,8 +482,9 @@ export default {
         }
       }
       let toDate = closestStartDate > moment().add(this.activity.due_date, 'days') ? closestStartDate : moment().add(this.activity.due_date, 'days')
+      console.log(toDate)
       let result = {
-        to: toDate.toDate(),
+        to: toDate.set('hour', 0).toDate(),
         from: moment(this.activity.end_date).toDate(),
         dates: this.activity.datesList,
         days: this.activity.days 
