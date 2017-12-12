@@ -135,7 +135,6 @@ export default {
       })
   },
   beforeUpdate() {
-    console.log("하핫")
     this.getImageWithPageIndex()
   },
 }
