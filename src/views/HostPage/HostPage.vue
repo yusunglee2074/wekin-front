@@ -61,7 +61,7 @@ export default {
       api.getFollower(this.host.User.user_key)
         .then(users => {
           users.forEach(user => {
-            if (user.User.user_key == this.user.user_key) {
+            if (user.User.user_key == this.user ? this.user.user_key : -100) {
               this.isFollowed = true
             }
           })
