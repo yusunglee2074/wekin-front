@@ -41,7 +41,7 @@ export default {
   filters: {
     sumDateAndTime (day, time) {
       let hour, minute
-      hour = moment(time).get('hour')
+      hour = moment(time).add(-9, 'hours').get('hour')
       minute = moment(time).get('minute')
       return moment(day).set('hour', hour).set('minute', minute)
     }
