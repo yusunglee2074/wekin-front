@@ -280,8 +280,8 @@ export default {
     return axios.delete(`${BASE_API_URL}/activity/front/${activityKey}`)
       .then(res => res.data)
   },
-  frontsignUp (accessToken, name, profileImage) {
-    return axios.post(`${BASE_API_URL}/user/front/signUp`, { accessToken: accessToken, name: name, profileImage: profileImage })
+  frontsignUp (accessToken, name, profileImage, email) {
+    return axios.post(`${BASE_API_URL}/user/front/signUp`, { accessToken: accessToken, name: name, profileImage: profileImage, email: email })
       .then(res => res.data)
   },
   kakaoLogin (code, type) {
@@ -506,5 +506,13 @@ export default {
   deleteUser () {
     return axios.delete(`${BASE_API_URL}/user`)
       .then(res => res.data)
-  }
+  },
+  isThereAnyEmailAddress(token) {
+    return axios.get(`${BASE_API_URL}/user/check/email`, {
+      params: {
+        token: token 
+      }
+    })
+      .then(res => res.data)
+  },
 }
