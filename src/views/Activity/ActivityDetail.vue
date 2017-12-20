@@ -21,7 +21,7 @@
               <i class="icon marker"></i>{{activity.address}}
             </p>
             <p>
-              <i class="icon won"></i>{{activity.base_price}}
+              <i class="icon won"></i>{{activity.base_price | joinComma}} 원
             </p>
             <div class="ui calendar">
               <div class="ui input styled primary left icon" style="width: 260px;">
