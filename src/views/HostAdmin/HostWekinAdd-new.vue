@@ -175,7 +175,7 @@
         </div>
       </div>
       <div class="ui card" style="width: 300px; height:200px; margin-right:8px; float:left;" @click.self="toggleHelpBox('on', 12)">
-        <div style="width:110px; height:30px; position:absolute; bottom: 46%; left: 36%;">
+        <div style="width:120px; height:30px; position:absolute; bottom: 46%; left: 36%;">
           <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => uploadedMainImages.push(val)"></FireUpload>
         </div>
       </div>
@@ -693,15 +693,22 @@ export default {
               this.page++
             }
           } else if (page === 2) {
+            let tmpNumber = 0
             for (let index in this.detailQuestion) {
               let images = this.detailQuestion[index].images
               if (images.length === 0) {
                 alert("각 항목에 이미지는 최소 한 장씩 업로드 부탁드립니다")
+                tmpNumber = 0
                 break
               } else {
-                this.page++
-                break
+                tmpNumber++
               }
+            }
+            if (tmpNumber > 4) {
+              tmpNumber = 0
+              this.page++
+            } else {
+              tmpNumber = 0
             }
           } else if (page === 3) {
             if (!this.activity.preparation) {
@@ -720,14 +727,14 @@ export default {
               this.page++
             }
           } else if (page === 5) {
-            if (!this.activity.basePrice || Number(this.activity.basePrice) === isFinite(String(this.basePrice))) {
+            if (!this.activity.basePrice || !isFinite(String(this.activity.basePrice))) {
               alert("가격에는 숫자만 적어주세요")
             } else if (!(document.getElementById("minuser").value > 0)) {
               alert("최소인원은 0보다 큰 숫자여야 합니다")
             } else if (!document.getElementById("maxuser").value) {
               alert("최대인원을 적어주세요")
-            } else if (!document.getElementById("time").value) {
-              alert("활동시각을 적어주세요")
+            } else if (!document.getElementById("time").value.length !== 5 && document.getElementById("time").value[2] !== ':') {
+              alert('시각은 HH:mm 형식으로 입력해주세요. 예) 14:00')
             } else {
               this.page++
             }
@@ -788,6 +795,7 @@ export default {
       let id = event.srcElement.id
       let value = event.srcElement.value
       let weekOption = this.activity.baseWeekOption
+          console.log("하핫", value)
       switch(id) {
         case 'minuser': 
           for (let index in weekOption) {
@@ -800,6 +808,9 @@ export default {
           }
           break;
         case 'time': 
+          if (value.length !== 5 && value[2] !== ':') {
+            return alert('시각은 HH:mm 형식으로 입력해주세요. 예) 14:00')
+          }
           for (let index in weekOption) {
             weekOption[index].start_time[0] = value
           }

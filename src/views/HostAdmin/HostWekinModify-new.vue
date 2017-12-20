@@ -551,14 +551,14 @@ export default {
               this.page++
             }
           } else if (page === 4) {
-            if (!this.activity.base_price || Number(this.activity.base_price) === isFinite(String(this.base_price))) {
+            if (!this.activity.base_price || !isFinite(String(this.base_price))) {
               alert("가격에는 숫자만 적어주세요")
             } else if (!(document.getElementById("minuser").value > 0)) {
               alert("최소인원은 0보다 큰 숫자여야 합니다")
             } else if (!document.getElementById("maxuser").value) {
               alert("최대인원을 적어주세요")
-            } else if (!document.getElementById("time").value) {
-              alert("활동시각을 적어주세요")
+            } else if (!document.getElementById("time").value.length !== 5 && document.getElementById("time").value[2] !== ':') {
+              alert('시각은 HH:mm 형식으로 입력해주세요. 예) 14:00')
             } else {
               this.page++
             }
@@ -628,6 +628,9 @@ export default {
           }
           break;
         case 'time': 
+          if (value.length !== 5 && value[2] !== ':') {
+            return alert('시각은 HH:mm 형식으로 입력해주세요. 예) 14:00')
+          }
           for (let index in weekOption) {
             weekOption[index].start_time[0] = value
             weekOption[index].price_with_time[0] = 0
