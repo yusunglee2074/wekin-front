@@ -133,8 +133,8 @@
               <div class="image">
                 <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.image[0]})`}"></div>
                 <div class="backImage overlayer"></div>
-                <div class="backImage ui circular image makerProfile" v-bind:style="{'background-image':`url(${wekin.Host.profile_image})`}"></div>
-                <div>
+                <div class="backImage ui circular image makerProfile" v-bind:style="{'z-index': 2, 'background-image':`url(${wekin.Host.profile_image})`}"></div>
+                <div style="position: absolute;width: 100%;height: 28px;bottom: 0;background-color: rgba(0,0,0,0.25);z-index: 1;">
                   <span class="reviewCount">참여 {{ wekin.wekinnew_count > 0 ? wekin.wekinnew_count : 0 }}</span>
                   <div class="ui star rating" :data-rating="Math.round(wekin.rating_avg)">
                   </div>
@@ -184,8 +184,10 @@
               <div class="image">
                 <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.image[0]})`}"></div>
                 <div class="backImage overlayer"></div>
-                <div class="backImage ui circular image makerProfile" v-bind:style="{'background-image':`url(${wekin.Host.profile_image})`}"></div>
-                <div class="ui star rating" :data-rating="Math.round(wekin.rating_avg)">
+                <div class="backImage ui circular image makerProfile" v-bind:style="{'z-index': 2, 'background-image':`url(${wekin.Host.profile_image})`}"></div>
+                <div style="position: absolute;width: 100%;height: 28px;bottom: 0;background-color: rgba(0,0,0,0.25);z-index: 1;">
+                  <div class="ui star rating" :data-rating="Math.round(wekin.rating_avg)">
+                  </div>
                 </div>
                 <!-- 후기수 표시 X
                 <span class="reviewCount">{{wekin.review_count}}</span>
