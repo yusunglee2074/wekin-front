@@ -1,6 +1,6 @@
 <template>
     <div class="ui positive basic button fileUpload">
-      <img :src="`./../../static/icon/${icon}`">{{ title }}
+      {{ title }}
       <input class="upload" type="file" v-on:change="fireStorage" accept="image/*" multiple></input>
     </div>
 </template>
