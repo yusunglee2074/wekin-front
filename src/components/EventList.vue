@@ -5,7 +5,12 @@
         <div class="ui middle aligned animated list">
           <div class="item">
             <div class="content" style="margin-left:50px; font-size:20px; margin-top:10px;">
-              <router-link :to="{ name: 'EventList', params: { key: banner.value.order }}"><div class="header" style="margin-bottom: 2px"><span style="font-weight:200;">{{ index + 1 }}. {{ banner.description }}</span></div></router-link>
+              <div v-if="banner.value.externalLink"><div class="header" style="margin-bottom: 2px">
+                  <a :href="'/activity/' + banner.value.externalLink" target="_blank"><span style="font-weight:200;">{{ index + 1 }}. {{ banner.description }}</span></a></div>
+              </div>
+              <div v-else>
+                <router-link :to="{ name: 'EventList', params: { key: banner.value.order }}"><div class="header" style="margin-bottom: 2px"><span style="font-weight:200;">{{ index + 1 }}. {{ banner.description }}</span></div></router-link>
+              </div>
             </div>
           </div>
         </div>
