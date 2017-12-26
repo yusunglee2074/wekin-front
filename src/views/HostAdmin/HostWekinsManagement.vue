@@ -26,13 +26,15 @@
               <div class="ui red label" v-if="activity.status == 3">{{activity.status | activityStatusLabel}}</div>
               <div class="ui primary label" v-if="activity.status == 2 || activity.status == 1">{{activity.status | activityStatusLabel}}</div>
               <div class="ui label" v-if="activity.status == 5">{{activity.status | activityStatusLabel}}</div>
-              <div class="ui grey label" v-if="activity.status == 9">{{activity.status | activityStatusLabel}}</div>
+              <div class="ui grey label" v-if="activity.status == 9 || activity.status == 4">{{activity.status | activityStatusLabel}}</div>
               <div class="title">{{activity.title}}</div>
               <div class="address">{{activity.address_detail.text}}</div>
               <div class="date">{{activity.created_at | formatDate}}</div>
             </div>
             <div class="right">
               <router-link :to="{ name: 'HostWekinsModifyNew', params: { key: activity.activity_key } }" v-if="activity.status < 6" tag="button" style="width:100px" class="ui basic button">수정하기</router-link>
+              <button class="ui basic button red" v-if="activity.status === (9 || 5 || 1)" @click="activityDelete(activity, false)">삭제</button>
+              <button class="ui basic button red" v-if="activity.status === 3" @click="activityDelete(activity, true)">삭제요청</button>
             </div>
           </div>
           <div class="wekin-list-layout" v-if="hostActivities && hostActivities.length == 0">
@@ -87,7 +89,7 @@ export default {
         case 3:
           return "진행중"
         case 4:
-          return "삭제"
+          return "삭제요청"
         case 5:
           return "위킨종료"
         case 9:
@@ -115,6 +117,34 @@ export default {
     hostCardLayout
   },
   methods: {
+    activityDelete(activity, isReq) {
+      if (confirm("진행 중인 위킨의 삭제는 영업일 기준 2~3일이 소요 될 수 있습니다.\n현제 예약인원이 있는 경우에는 시간이 더 소요될 수 있습니다.\n그 외에는 즉시 삭제됩니다.")) {
+        if (!isReq) {
+          api.deleteActivity(activity.activity_key)
+            .then(result => {
+              alert("삭제 되었습니다.")
+              window.href = '/host/admin'
+            })
+            .catch(error => alert("에러가 발생했습니다. 불편 드려죄송합니다. 카카오톡 @위킨으로 연락 바랍니다."))
+        } else {
+          let tmpList = []
+          for (let i = 0, length = activity.close_dates.length; i < length; i++) {
+            let item = activity.close_dates[i]
+            tmpList.push(moment(20+item))
+          }
+          activity.close_dates = tmpList
+          activity.status = 4
+          api.updateActivity(activity.activity_key, activity)
+            .then(result => {
+              alert("요청이 정상적으로 접수되었습니다.")
+              window.href = '/host/admin'
+            })
+            .catch(error => alert("에러가 발생했습니다. 불편 드려죄송합니다. 카카오톡 @위킨으로 연락 바랍니다."))
+        }
+      } else {
+        return
+      }
+    },
     initDropdown() {
       $('.ui.dropdown.wekinStatus').dropdown({
         onChange: (value)=> {
