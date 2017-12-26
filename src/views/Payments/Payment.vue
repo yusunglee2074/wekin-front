@@ -158,6 +158,7 @@
 </template>
 <script>
 import api from 'api'
+import moment from 'moment'
 import auth from 'src/auth'
 import { Validation } from 'src/util'
 
@@ -352,7 +353,8 @@ export default {
                 buyer_tel: this.requestUser.phone,
                 digital: false,
                 app_scheme: 'iamport',
-                m_redirect_url : `http://we-kin.com/activity/${this.activity.activity_key}/payment/complete`
+                m_redirect_url : `http://we-kin.com/activity/${this.activity.activity_key}/payment/complete`,
+                vbank_due: moment().add(2, 'day').format('YYYYMMDDHHmm')
               }, (rsp) => {
                 if (rsp.success) {
                   api.verifyOrder(result.order_key, rsp.imp_uid)
