@@ -49,6 +49,9 @@ router.afterEach((to, from) => {
       if (currentUser) { // 유저가 있는지 판단.
         console.log(currentUser, '###커렌트유저')
         auth.getCurrentUser().then(response => {
+          if (response.phone === null) {
+            router.push('/verify/phonenumber')
+          }
           if (response.phone_valid || currentUser.emailVerified) { // 이메일 인증 여부 확인
           } else if (response.country !== "Korea") {
             router.push('/verifyEmail')
