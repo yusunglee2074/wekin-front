@@ -659,11 +659,11 @@ export default {
     },
     deleteBeforeTodayDate(dateList, wekin) {
       let activity = wekin 
-      let todayPlusDueDate = moment().add(activity.due_date, 'days')
+      let todayPlusDueDate = moment().set('hour', 18).add(activity.due_date, 'days')
       let length = dateList.length
       let tmp = 0
       for (let i = 0; i < length; i++) {
-        let startDate = dateList[i]
+        let startDate = moment(dateList[i]).set('hour', 19)
         if (moment(startDate).isBefore(todayPlusDueDate)) {
           tmp++
         } else {
