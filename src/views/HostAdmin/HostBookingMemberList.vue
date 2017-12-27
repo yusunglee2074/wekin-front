@@ -13,6 +13,7 @@
               <span class="date">구매일 : {{wekiner.created_at| formatDateTimeKo }}</span>
               <span class="phone">번호 : {{wekiner.User.phone}}</span>
               <span class="phone">신청활동일 : {{ wekiner.start_date, wekiner.start_time | sumDateAndTime | formatDateTimeKo }}</span>
+              <span class="phone">구매 수: {{ wekiner.pay_amount }}</span>
             </div>
           </div>
           <div class="status" v-if="wekiner.state === 'finish'" style="color: red;">결제완료</div>
@@ -99,11 +100,11 @@ export default {
     border: 1px solid $color-primary;
   }
   .column:first-child span {
-    margin-right: 26px;
+    margin-right: 16px;
     margin-bottom: 16px;
   }
   .column:last-child span {
-    margin-right: 42px;
+    margin-right: 22px;
   }
 }
 

@@ -2,14 +2,14 @@
   <div>
     <host-card-layout title="예약 관리">
       <div slot="content" class="content">
-        <div class="wekin-list-layout" v-if="!hasItBooker" v-bind:class="{ end: new Date(wekin.start_date) <= new Date() }" v-for="wekin in wekins" v-bind:key="wekin.wekin_key">
+        <div class="wekin-list-layout" v-bind:class="{ end: new Date(wekin.start_date) <= new Date() }" v-for="(wekin, index) in wekins" v-bind:key="wekin.wekin_key">
           <div class="left">
             <span class="title">{{wekin.title}}</span>
             <span class="date">{{wekin.start_date | formatDateTimeKo}}</span>
-            <p><span> 결제대기 인원 : </span>{{ getReadyPeople(wekin.WekinNews) }} 명</p>
-            <p><span> 결제완료 인원 : </span><span :style="getPaidPeople(wekin.WekinNews) > 0 ? paidStyle : ''">{{ getPaidPeople(wekin.WekinNews) }} 명</span></p>
+            <p><span> 결제대기 건 : </span>{{ getReadyPeople(wekin.WekinNews) }} 건</p>
+            <p><span> 결제완료 건 : </span><span :style="getPaidPeople(wekin.WekinNews) > 0 ? paidStyle : ''">{{ getPaidPeople(wekin.WekinNews) }} 건(토탈 {{ totalPeople(index) }})</span></p>
           </div>
-          <router-link :to="{ name: 'HostBookingDetail', params: { activity_key: wekin.activity_key }}" v-if="!hasItBooker" class="ui primary button right">예약자 확인</router-link>
+          <router-link :to="{ name: 'HostBookingDetail', params: { activity_key: wekin.activity_key }}" class="ui primary button right">예약자 확인</router-link>
         </div>
         <div class="wekin-list-layout" style="text-align:center;" v-if="wekins && wekins.length == 0">
           <p style="width:100%">예약이 진행된 위킨이 없습니다.</p>
@@ -72,6 +72,14 @@ export default {
     hostCardLayout
   },
   methods: {
+    totalPeople (index) {
+      let tmp = 0
+      for (let i = 0, length = this.wekins[index].WekinNews.length; i < length; i++) {
+        let item = this.wekins[index].WekinNews[i]
+        tmp += item.pay_amount
+      }
+      return tmp
+    },
     getReadyPeople: function (WekinNews) {
       let count = 0
       for (let i = 0; i < WekinNews.length; i++) {

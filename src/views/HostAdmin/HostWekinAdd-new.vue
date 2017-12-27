@@ -193,7 +193,7 @@
       <h2>활동가격에 대해 알려주세요.</h2>
       <h3>기본가격 </h3>
       <div class="ui input focus" style="width:300px;">
-        <input @focus="toggleHelpBox('on', 13)" @blur="toggleHelpBox('off', 13)" type="number" v-model="activity.basePrice" placeholder="숫자만 입력해주세요.">
+        <input @focus="toggleHelpBox('on', 13)" onkeypress='return event.charCode >= 48 && event.charCode <= 57' @blur="toggleHelpBox('off', 13)" type="number" v-model="activity.basePrice" placeholder="숫자만 입력해주세요.">
         <transition name="fade">
           <help-box v-show="helpBox[13]" numbering="13"></help-box>
         </transition>
@@ -727,7 +727,7 @@ export default {
               this.page++
             }
           } else if (page === 5) {
-            if (!this.activity.basePrice || !isFinite(String(this.activity.basePrice))) {
+            if (!this.activity.basePrice) {
               alert("가격에는 숫자만 적어주세요")
             } else if (!(document.getElementById("minuser").value > 0)) {
               alert("최소인원은 0보다 큰 숫자여야 합니다")

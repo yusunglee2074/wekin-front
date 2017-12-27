@@ -95,7 +95,7 @@
         50000원 (X).
         20000 (O)"></tool-tip></h3>
     <div class="ui input focus" style="width:300px;">
-      <input type="number" v-model="activity.base_price" placeholder="숫자만 입력해주세요.">
+      <input type="number" v-model="activity.base_price" placeholder="숫자만 입력해주세요." onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
     </div>
     <h3>환불규정 <tool-tip text="위킨에서는 메이커님들을 위해 환불 규정을 작성하실 수 있도록 했습니다. 운영하시는 사업장에서 사용하시는 환불규정을 작성해 주세요. 만약, 별도의 환불 규정이 없으신 경우는 위킨에서 제공해 드리는 기본 환불 규정을 사용하셔도 됩니다."></tool-tip></h3>
     <textarea type="text" v-model="refundPolicyData" v-show="wekinRefund" style="width:300px; height:80px;"></textarea> 
@@ -170,7 +170,7 @@
         <div class="ui input styled primary left icon">
           <datepicker 
             v-model="activity.start_date" 
-            id="datepickerId" 
+            id="datepickerId1" 
             wapper-class="ui input styled primary left icon" 
             language="ko" 
             format="MMM dd(D), yyyy"
@@ -183,7 +183,7 @@
         <div class="ui input styled primary left icon">
           <datepicker 
             v-model="activity.end_date" 
-            id="datepickerId" 
+            id="datepickerId2" 
             wapper-class="ui input styled primary left icon" 
             language="ko" 
             format="MMM dd(D), yyyy"
@@ -216,7 +216,7 @@
           <div class="ui input styled primary left icon">
             <datepicker 
               v-model="tempEndDate" 
-              id="datepickerId" 
+              id="datepickerId3" 
               wapper-class="ui input styled primary left icon" 
               language="ko" 
               format="MMM dd(D), yyyy"
@@ -551,7 +551,7 @@ export default {
               this.page++
             }
           } else if (page === 4) {
-            if (!this.activity.base_price || !isFinite(String(this.base_price))) {
+            if (!this.activity.base_price) {
               alert("가격에는 숫자만 적어주세요")
             } else if (!(document.getElementById("minuser").value > 0)) {
               alert("최소인원은 0보다 큰 숫자여야 합니다")
