@@ -57,7 +57,7 @@
             <p style="font-weight:bold;color:#d51c1c;font-size:0.9rem;">[{{ wekin.base_price, wekin.price_before_discount | discountPercentage  }} %]</p>
           </div>
           <div class="content extra-body" slot="extra-body">
-            <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 4" style="padding-right:8px;" v-bind:key="index">{{schedule | formatDateKo}}</span>
+            <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 3" style="padding-right:8px;" v-bind:key="index">{{schedule | formatDateKo}}</span>
           </div>
         </wekin-card-layout>
       </div>
@@ -70,6 +70,7 @@
 
 <script>
 import api from 'api'
+import moment from 'moment'
 import wekinCardLayout from 'components/WekinCardLayout.vue'
 
 export default {
@@ -116,7 +117,22 @@ export default {
           this.$router.push('/host/admin')
         }
       }
-    }
+    },
+    deleteBeforeTodayDate(dateList, wekin) {
+      let activity = wekin 
+      let todayPlusDueDate = moment().set('hour', 18).add(activity.due_date, 'days')
+      let length = dateList.length
+      let tmp = 0
+      for (let i = 0; i < length; i++) {
+        let startDate = moment(dateList[i]).set('hour', 19)
+        if (moment(startDate).isBefore(todayPlusDueDate)) {
+          tmp++
+        } else {
+          break
+        }
+      }
+      dateList.splice(0, tmp)
+    },
   },
   filters: {
     discountPercentage: function (base, before) {
@@ -133,6 +149,7 @@ export default {
       .then(activities => {
         for (let i = 0, length = activities.length; i < length; i++) {
           let activity = activities[i]
+          this.deleteBeforeTodayDate(activity.start_date_list, activity)
           if (this.eventWekinList.includes(activity.activity_key)) {
             this.eventWekins.push(activity)
           }
