@@ -95,7 +95,7 @@
           <span class="floated right" v-if="activity.base_price">{{ requestData.finalPrice - point.value | joinComma }}원</span>
           <div id="error-message" v-if="point.errorMessage" style="color: red;">{{ point.errorMessage }}</div>
         </div>
-        <div class="ui segment how-payments flex">
+        <div class="ui segment how-payments flex" v-if="!isFullPointOrder">
           <span>결제 수단</span>
           <div class="flex-space"></div>
           <div class="checkbox-container">
@@ -189,7 +189,8 @@ export default {
         validation: true,
         errorMessage: false,
         finalPrice: 0,
-      }
+      },
+      isFullPointOrder: false,
     }
   },
   computed: {
@@ -231,6 +232,11 @@ export default {
         } else {
           point.finalPrice = point.value
           point.errorMessage = false
+          if (this.requestData.finalPrice == point.finalPrice) {
+            this.isFullPointOrder = true
+          } else {
+            this.isFullPointOrder = false
+          }
         }
       } else if (point.type === 'normal' && point.value > -1) {
         if (point.value > userPoint.point) {
@@ -242,6 +248,11 @@ export default {
         } else {
           point.finalPrice = point.value
           point.errorMessage = false
+          if (this.requestData.finalPrice == point.finalPrice) {
+            this.isFullPointOrder = true
+          } else {
+            this.isFullPointOrder = false
+          }
         }
       } else if (point.value < -1 || typeof point.value !== Number) {
         point.errorMessage = "정확한 포인트값을 입력해주세요."
@@ -339,6 +350,26 @@ export default {
             refund_bank: this.requestUser.refundBank,
             refund_holder: this.requestUser.refundHolder,
           }
+          // 만약 최종 가격이 0원일 경우
+          if (this.requestData.finalPrice == this.point.finalPrice) {
+            api.postOrderWithPoint(this.user.user_key, this.requestData.wekin_key, this.point.finalPrice, refundInfo)
+              .then((rsp) => {
+                this.$router.push({
+                  name: 'PaymentComplete',
+                  params: {
+                    rsp: rsp,
+                    point_value: this.point.value, 
+                    point_type: this.point.type,
+                    wekin_key: this.requestData.wekin_key
+                  }
+                })
+              })
+              .catch(error => {
+                console.log(error)
+                alert('고객님 죄송합니다. 포인트 사용에 있어 오류가 발생했습니다.\n카카오톡 @위킨, 혹은 사이트 아래 유선전화로 연락 주시면 최대한 빨리 도와드리겠습니다.')
+                return  
+              })
+          } else {
           api.requestOrder(this.user.user_key, this.requestData.wekin_key, this.requestData.amount, refundInfo)
             .then((result) => {
               IMP.request_pay({
@@ -385,6 +416,7 @@ export default {
                 }
               })
             })
+          }
         }
       }
     }

@@ -21,11 +21,11 @@
         <div class="ui divider"></div>
         <div class="payment-result-container__list">
           <label>신청 활동</label>
-          <span class="floated right">{{rsp.name}}</span>
+          <span class="floated right">{{rsp.name || rsp.wekin_name }}</span>
         </div>
         <div class="payment-result-container__list">
           <label>결제 금액</label>
-          <span class="floated right">{{rsp.paid_amount || rsp.amount | joinComma}}(+ {{ usePoint }} P)원</span>
+          <span class="floated right">{{rsp.paid_amount || rsp.amount || 0 | joinComma}}(포인트 {{ usePoint }} P)원</span>
         </div>
         <div class="payment-result-container__list">
           <label>신청 결과</label>
