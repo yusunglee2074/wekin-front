@@ -424,6 +424,15 @@ export default {
     })
       .then(res => res.data)
   },
+  postOrderWithPoint(userKey, wekinKey, amount, extra){
+    return axios.post(`${BASE_API_URL}/order/point`, {
+      user_key: userKey,
+      wekin_key: wekinKey,
+      amount: amount,
+      extra: extra
+    })
+      .then(res => res.data)
+  },
   requestPointUse(value, type, wekin_key) {
     return axios.post(`${BASE_API_URL}/point/front/use`, {
       value: value,
