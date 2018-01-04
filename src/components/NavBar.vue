@@ -103,7 +103,7 @@
       </div>
       <div class="right menu" v-if="!user">
         <a class="item linked" @click="showLoginModal = true">로그인</a>
-        <a class="item linked" @click="showSignupModalMethod2">회원가입</a>
+        <a class="item linked" id="1" @click="showSignupModalMethod2">회원가입</a>
 
         <!--<div class="loading"></div>-->
       </div>
@@ -281,7 +281,7 @@ export default {
     },
     showSignupModalMethod2() {
       this.isMobileMenuShowing = false
-      this.$router.push('join')
+      this.$router.push('/join')
       // this.showSignupModal2 = true
     },
     showSignupModalandCloseLoginModal() {
