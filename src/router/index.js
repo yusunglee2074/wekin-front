@@ -45,6 +45,7 @@ import Filter from 'views/Filter.vue'
 import Search from 'views/Search.vue'
 import About from 'views/About.vue'
 import Manual from 'views/Manual.vue'
+import thankyou from 'views/thankyou.vue'
 import ExplainMaker from './../views/explainMakerStaticPage.vue'
 import EventList from 'components/EventList.vue'
 
@@ -71,6 +72,11 @@ export default new Router({
       path: '/manual/:key',
       name: 'Manual',
       component: Manual
+    },
+    {
+      path: '/thankyou',
+      name: 'thankyou',
+      component: thankyou
     },
     {
       path: '/manual/maker',
