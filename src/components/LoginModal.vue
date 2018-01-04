@@ -60,7 +60,7 @@ export default {
   methods: {
     callSignupModal () {
       this.$emit('update:show', false)
-      this.$router.push('join')
+      this.$router.push('/join')
       // 위에 부모 데이터 조작하기.
       //this.$parent.$parent.$refs.navbar.showSignupModalandCloseLoginModal()
     },
