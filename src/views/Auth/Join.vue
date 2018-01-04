@@ -284,6 +284,7 @@ export default {
       // this.$router.push({ name: "VerifyPhoneNumber", force: true })
       // this.$router.go({ path: "/verify/phonenumber", force: true })
       this.$router.go(-1)
+      // this.$router.push('/thankyou')
       window.location.reload()
     },
     onSignUpFail(error) {
