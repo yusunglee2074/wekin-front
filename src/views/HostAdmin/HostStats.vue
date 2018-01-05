@@ -4,6 +4,15 @@
     <div class="ui card">
       <div class="header">총 수입</div>
       <div class="content">
+        <div class="ui selection dropdown year">
+          <label>년 선택</label>
+          <input name="gender" type="hidden" :value="defaultYear">
+          <i class="dropdown icon"></i>
+          <div class="text">년 선택</div>
+          <div class="menu">
+            <div class="item" :data-value="index" v-for="index in [2017, 2018]" v-bind:key="index">{{index}}년</div>
+          </div>
+        </div>
         <div class="ui selection dropdown month">
           <label>월 선택</label>
           <input name="gender" type="hidden" :value="defaultMonth">
@@ -116,6 +125,7 @@ export default {
         five: 0
       },
       defaultMonth: 1,
+      defaultYear: 2018,
       ratingAvg: 0,
       ratingUIAvg: 0,
       reservations: [],
@@ -141,8 +151,8 @@ export default {
           this.initChart()
         }).catch((error) => console.error(error))
     },
-    getCommission(month) {
-      api.getCommission(this.user.Host.host_key, month)
+    getCommission(year, month) {
+      api.getCommission(this.user.Host.host_key, year, month)
         .then((commission) => this.commission = commission)
         .catch((error) => console.error(error))
     },
@@ -246,7 +256,7 @@ export default {
     this.getCountAllWekin()
     this.getMakerRating()
     this.getReservation()
-    this.getCommission(1)
+    this.getCommission(2018, 1)
   },
   computed: {
     user() {
@@ -263,10 +273,16 @@ export default {
       $('.ui.dropdown.month').dropdown({
         onChange: (value, text) => {
           this.defaultMonth = value
-          this.getCommission(value)
+          this.getCommission(this.defaultYear, value)
         }
       })
-      this.getCommission(this.defaultMonth)
+      $('.ui.dropdown.year').dropdown({
+        onChange: (value, text) => {
+          this.defaultYear = value
+          this.getCommission(value, this.defaultMonth)
+        }
+      })
+      this.getCommission(this.defaultYear, this.defaultMonth)
     }, 500)
   }
 }
@@ -319,6 +335,14 @@ export default {
 }
 
 .dropdown.month {
+  margin-top: 26px;
+  margin-bottom: 4px;
+  label {
+    position: absolute;
+    top: -24px;
+  }
+}
+.dropdown.year {
   margin-top: 26px;
   margin-bottom: 4px;
   label {
