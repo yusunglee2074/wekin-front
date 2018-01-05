@@ -18,7 +18,7 @@
             </div>
             <div class="content">
               <span class="right floated">
-                ￦ {{wekin.price | joinComma }}
+                ￦ {{wekin.base_price | joinComma }}
               </span>
               <span>
                 <strong>{{wekin.title}}</strong>
