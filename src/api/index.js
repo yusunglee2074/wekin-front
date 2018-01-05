@@ -403,6 +403,10 @@ export default {
     return axios.put(`${BASE_API_URL}/favorite/${userKey}/${activityKey}`)
       .then(res => res.data)
   },
+  hostFavorite(host_key) {
+    return axios.get(`${BASE_API_URL}/favorite/host/${host_key}`)
+      .then(res => res.data)
+  },
   toggleLike (userKey, activityKey) {
     return axios.put(`${BASE_API_URL}/like/${userKey}/${activityKey}`)
       .then(res => res.data)
@@ -492,8 +496,8 @@ export default {
     return axios.delete(`${BASE_API_URL}/waiting/${wekinKey}`)
       .then(res => res.data)
   },
-  getCommission (hostKey, month) {
-    return axios.get(`${BASE_API_URL}/order/host/${hostKey}/${month}`)
+  getCommission (hostKey, year, month) {
+    return axios.get(`${BASE_API_URL}/order/host/${hostKey}/${year}/${month}`)
       .then(res => res.data)
   },
   getNewestActivity () {
