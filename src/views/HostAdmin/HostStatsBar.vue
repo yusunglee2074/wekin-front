@@ -14,7 +14,7 @@
     </div>
     <div class="ui segment">
       <div class="value color secondary">{{reviewCount || 0}}</div>
-      <div class="label">신규 후기</div>
+      <div class="label">누적 후기 갯수</div>
     </div>
   </div>
 </template>
@@ -37,7 +37,10 @@ export default {
   methods: {
     getMakerReviews() {
       api.getMakerReviews(this.user.Host.host_key)
-        .then(json => this.reviews = json.results.length)
+        .then(json => {
+          console.log(json)
+          this.reviewCount = json.results.length
+        })
         .catch(err => console.error(err))
     },
     getMakerRating() {
@@ -45,18 +48,25 @@ export default {
         .then(json => {
           let ratings = json.results
           if (ratings.length) {
-            let ratingSum = ratings.reduce((a, b) => a.activity_rating + b.activity_rating)
+            let tmp = 0
+            let ratingSum = ratings.reduce((a, b) => {
+              if (tmp == 0) {
+                tmp++
+                return a.activity_rating + b.activity_rating
+              } else {
+                return a + b.activity_rating
+              }
+            })
+            console.log(ratingSum)
             this.ratingAvg = ratingSum / ratings.length
           }
         })
         .catch(err => console.error(err))
     },
     getMakerFavorite() {
-      api.getRecentlyWekin(this.user.Host.host_key)
+      api.hostFavorite(this.user.Host.host_key)
         .then(json => {
-          if(json.results){
-            this.favoriteCount = json.results.length
-          }
+          this.favoriteCount = json.data
         })
         .catch(error => console.error(error))
     },
@@ -69,7 +79,7 @@ export default {
   mounted() {
     this.$store.watch(() => {
       if (this.$store.state.user !== undefined) {
-        this.getMakerFavorite()
+        this.getMakerReviews()
         this.getMakerRating()
         this.getMakerFavorite()
         this.getCountAllWekin()
