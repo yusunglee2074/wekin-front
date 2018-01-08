@@ -29,7 +29,7 @@
             <div class="ui divider"></div>
             <div class="card--reservation__label">
               <label>결제 금액</label>
-              <span>{{wekin.final_price | joinComma}}원</span>
+              <span>총 {{wekin.final_price | joinComma}}원 / Point: {{wekin.point ? wekin.point : 0 | joinComma}} 포인트 사용</span>
             </div>
             <div class="card--reservation__label">
               <label>신청결과</label>
