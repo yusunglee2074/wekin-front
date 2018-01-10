@@ -27,6 +27,7 @@
           <option value="아웃도어">아웃도어</option>
           <option value="요가/피트니스">요가/피트니스</option>
           <option value="소품제작">소품제작</option>
+          <option value="한국체험">한국체험</option>
         </select>
         <transition name="fade">
           <help-box v-show="helpBox[1]" numbering="1"></help-box>
@@ -162,6 +163,13 @@
           <help-box v-show="helpBox[11]" numbering="11"></help-box>
         </transition>
       </div>
+      <h3>소요 시간</h3>
+      <select style="width:300px; height: 36px;" v-model="detailQuestion.requiredTime">
+        <option value="1">1시간 이내</option>
+        <option value="2">2시간 이내</option>
+        <option value="3">3시간 이내</option>
+        <option value="4">4시간 이상</option>
+      </select>
     </div>
 
     <div v-show="page === 4" class="page">
@@ -221,7 +229,7 @@
           <help-box v-show="helpBox[16]" numbering="16"></help-box>
         </transition>
       </div>
-      <h3>활동 시각<span style="font-size:12px;margin-left:5px;color:tomato;">활동시각이 불분명한 경우는 '00:00'으로 입력바랍니다.</span></h3>
+      <h3>활동 시각<span style="font-size:12px;margin-left:5px;color:tomato;">활동시각이 불분명한 경우는 '오전12:00 혹은 00:00'으로 입력바랍니다.</span></h3>
       <div class="ui input focus" style="width:300px;">
         <input @focus="toggleHelpBox('on', 17)" @blur="toggleHelpBox('off', 17)" type="time" id="time" @change="setDefaultValueOfWeekOption">
         <transition name="fade">
@@ -638,6 +646,7 @@ export default {
         question3: { name: '', images: [] },
         question4: { name: '', images: [] },
         question5: { name: '', images: [] },
+        requiredTime: 1
       },
       uploadedMainImages: [],
       uploadedMainImage: null,
