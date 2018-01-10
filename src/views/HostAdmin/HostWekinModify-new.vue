@@ -65,7 +65,7 @@
         예) 마른 수건, 갈아입을 옷, 간단한 세면도구 등.
         물안경 (대여가능, 개당 5,000원), 스노쿨링 장비 (대여가능, 개당 10,000원) 등"></tool-tip></h3>
     <div class="ui input focus" style="width:300px;">
-      <input type="text" v-model="activity.preparation">
+      <textarea type="text" v-model="activity.preparation" rows="4" cols="50"></textarea>
     </div>
     <h3>포함/불포함 사항 <tool-tip text="위킨활동을 위해 결제한 내역에 포함되는 항목과 포함되지 않는 항목을 구분하여 표시해 주세요.
         준비물에서 이미 포함이 안되거나 대여가 된 내역을 작성하셨다면 없음으로 표시하셔도 됩니다.
@@ -74,7 +74,7 @@
         - 포함 : 맥주 500cc 1잔, 피자 4인 1판, 간단한 다과, 볼링 게임비(1게임), 신발 대여료.
         - 불포함 : 포함사항 이외의 추가 주류 및 안주, 전자 다트 사용료, 당구장 사용료 등"></tool-tip></h3>
     <div class="ui input focus" style="width:300px;">
-      <input type="text" v-model="activity.inclusion">
+      <textarea type="text" v-model="activity.inclusion" rows="4" cols="50"></textarea>
     </div>
     <h3>상세 일정 <tool-tip text="위킨 활동을 진행할 상세 일정을 작성해 주세요. 시간의 흐름에 따라 작성해 주셔도 되고 소요시간에 따라 작성해 주셔도 됩니다. 별다른 일정 설명이 필요 없고, 단순한 기구의 사용만 있다면 없음으로 작성해 주시면 됩니다.예) 멋진 영월하늘을 날아보는 패러글라이딩.
         - 10:00 ~ 10:30 : 기본 이론 교육.
@@ -83,7 +83,7 @@
         11:30 ~ 12:30 : 비행.
         12:30 ~ 13:00 : 마무리 및 정리."></tool-tip></h3>
     <div class="ui input focus" style="width:300px;">
-      <input type="text" v-model="activity.schedule">
+      <textarea type="text" v-model="activity.schedule" rows="4" cols="50"></textarea>
     </div>
   </div>
 

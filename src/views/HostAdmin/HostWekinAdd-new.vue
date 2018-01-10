@@ -143,14 +143,14 @@
       <h2>준비물 외 아래 정보를 작성해주세요.</h2>
       <h3>준비물 </h3>
       <div class="ui input focus" style="width:300px;">
-        <input type="text" v-model="activity.preparation" @focus="toggleHelpBox('on', 9)" @blur="toggleHelpBox('off', 9)" placeholder="준비물을 입력해주세요.">
+        <textarea type="text" v-model="activity.preparation" @focus="toggleHelpBox('on', 9)" @blur="toggleHelpBox('off', 9)" placeholder="준비물을 입력해주세요." rows="4" cols="50"></textarea>
         <transition name="fade">
           <help-box v-show="helpBox[9]" numbering="9"></help-box>
         </transition>
       </div>
       <h3>포함/불포함 사항 </h3>
       <div class="ui input focus" style="width:300px;">
-        <input type="text" v-model="activity.inclusion" @focus="toggleHelpBox('on', 10)" @blur="toggleHelpBox('off', 10)" placeholder="포함/불포함 사항을 입력해주세요.">
+        <textarea type="text" v-model="activity.inclusion" @focus="toggleHelpBox('on', 10)" @blur="toggleHelpBox('off', 10)" placeholder="포함/불포함 사항을 입력해주세요." rows="4" cols="50"></textarea>
         <transition name="fade">
           <help-box v-show="helpBox[10]" numbering="10"></help-box>
         </transition>
