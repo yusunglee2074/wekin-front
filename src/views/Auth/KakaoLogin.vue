@@ -34,7 +34,7 @@ export default {
         return api.dbCreateWithIdToken(localStorage.getItem('accessToken'))
       })
       .then(result => {
-        window.location.replace('/')
+        window.location.replace('/thankyou')
       })
       .catch( error => {
         if (error.response.data.message == "Already signin with this email") {
