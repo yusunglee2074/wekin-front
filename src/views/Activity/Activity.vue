@@ -46,6 +46,7 @@
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '아웃도어'}" @click="toggleCheckList(categoryCheck, 0, '아웃도어')">아웃도어</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '요가/피트니스'}" @click="toggleCheckList(categoryCheck, 0, '요가/피트니스')">피트니스</button>
               <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '소품제작'}" @click="toggleCheckList(categoryCheck, 0, '소품제작')">소품제작</button>
+              <button class="ui basic button checkable" v-bind:class="{active: this.categoryCheck === '한국체험'}" @click="toggleCheckList(categoryCheck, 0, '한국체험')">한국체험</button>
             </div>
           </div>
         </div>
@@ -174,6 +175,9 @@
           </a>
           <a v-bind:class="{isClicked: this.categoryCheck === '소품제작'}" class="item" @click="toggleCheckList(categoryCheck, 0, '소품제작')">
            소품제작 
+          </a>
+          <a v-bind:class="{isClicked: this.categoryCheck === '한국체험'}" class="item" @click="toggleCheckList(categoryCheck, 0, '한국체험')">
+           한국체험 
           </a>
         </div>
       </div>
@@ -569,6 +573,9 @@ export default {
             this.togglecategory(text)
             break;
           case "소품제작":
+            this.togglecategory(text)
+            break;
+          case "한국체험":
             this.togglecategory(text)
             break;
         }
