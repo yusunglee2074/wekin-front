@@ -171,6 +171,9 @@
         <h4>준비물</h4>
         <p>{{activity.preparation}}</p>
         <div class="ui divider"></div>
+        <h4>소요 시간</h4>
+        <p>{{activity.detail_question['requiredTime'] ? activity.detail_question['requiredTime'] : '미기입'}} {{ activity.detail_question['requiredTime'] < 4 ? '시간 이내' : '' }} {{ activity.detail_question['requiredTime'] === 4 ? '시간 이상' : '' }}</p>
+        <div class="ui divider"></div>
         <h4 v-if="wekiners.length">참석 위키너</h4>
         <a :href="`/users/${wekiner.user_key}`" v-for="(wekiner, index) in wekiners" v-bind:key="index">
           <div style="display:inline-block;position:relative;">
