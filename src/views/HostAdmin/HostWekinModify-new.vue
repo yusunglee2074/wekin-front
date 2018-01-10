@@ -32,6 +32,7 @@
       <option value="아웃도어">아웃도어</option>
       <option value="요가/피트니스">요가/피트니스</option>
       <option value="소품제작">소품제작</option>
+      <option value="한국체험">한국체험</option>
     </select>
     <h2>장소를 입력해주세요.</h2>
     <h3>집결장소 <tool-tip text="집결지란, 위킨활동을 위해 활동 시작 시간에 맞추어 모이는 장소를 의미합니다. 활동지와 집결지가 동일할 경우는 활동장소와 같음을 체크해 주세요.
@@ -85,6 +86,13 @@
     <div class="ui input focus" style="width:300px;">
       <textarea type="text" v-model="activity.schedule" rows="4" cols="50"></textarea>
     </div>
+    <h3>소요 시간</h3>
+    <select style="width:300px; height: 36px;" v-model="detailQuestion.requiredTime">
+      <option value="1">1시간 이내</option>
+      <option value="2">2시간 이내</option>
+      <option value="3">3시간 이내</option>
+      <option value="4">4시간 이상</option>
+    </select>
   </div>
 
   <div v-show="page === 4">
@@ -474,6 +482,7 @@ export default {
         question3: { name: '', images: [] },
         question4: { name: '', images: [] },
         question5: { name: '', images: [] },
+        requiredTime: 1
       },
       uploadedMainImages: [],
       uploadedMainImage: null,
