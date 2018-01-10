@@ -33,7 +33,7 @@
             </div>
             <div class="right">
               <router-link :to="{ name: 'HostWekinsModifyNew', params: { key: activity.activity_key } }" v-if="activity.status < 6" tag="button" style="width:100px" class="ui basic button">수정하기</router-link>
-              <button class="ui basic button red" v-if="activity.status === (9 || 5 || 1)" @click="activityDelete(activity, false)">삭제</button>
+              <button class="ui basic button red" v-if="activity.status === 9 || activity.status === 5 || activity.status === 1" @click="activityDelete(activity, false)">삭제</button>
               <button class="ui basic button red" v-if="activity.status === 3" @click="activityDelete(activity, true)">삭제요청</button>
             </div>
           </div>
