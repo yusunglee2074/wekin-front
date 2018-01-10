@@ -44,7 +44,7 @@
               <select v-model="requestData.startTime" class="width260 height25">
                 <option value="sample" disabled>시작시각</option>
                 <option v-for="(item, index) in startTimeList" :value="[item[0], item[1]]">
-                  {{ item[0] }} {{ item[1] | Won }}
+                  {{ item[0] === '00:00' ? '시각별도문의' : item[0] }} {{ item[1] | Won }}
                 </option>
               </select>
             </div>
