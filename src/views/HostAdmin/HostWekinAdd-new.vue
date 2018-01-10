@@ -221,7 +221,7 @@
           <help-box v-show="helpBox[16]" numbering="16"></help-box>
         </transition>
       </div>
-      <h3>활동 시각 </h3>
+      <h3>활동 시각<span style="font-size:12px;margin-left:5px;color:tomato;">활동시각이 불분명한 경우는 '00:00'으로 입력바랍니다.</span></h3>
       <div class="ui input focus" style="width:300px;">
         <input @focus="toggleHelpBox('on', 17)" @blur="toggleHelpBox('off', 17)" type="time" id="time" @change="setDefaultValueOfWeekOption">
         <transition name="fade">
