@@ -59,7 +59,7 @@ export default {
           if (response.success === true) {
             api.saveProfile(this.$store.getters.user.user_key, { phone: this.phoneNumber, phone_valid: true })
               .then(result => {
-                window.location.href = '/'
+                window.location.href = '/thankyou'
               })
               .catch(error => {
                 alert(error + moment().format() + "죄송합니다. 사이트 아래 주소의 오픈카톡으로 연락주시면 바로 해결해드리겠습니다.")
