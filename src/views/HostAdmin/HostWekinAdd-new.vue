@@ -704,7 +704,7 @@ export default {
           } else if (page === 2) {
             let tmpNumber = 0
             for (let index in this.detailQuestion) {
-              let images = this.detailQuestion[index].images
+              let images = this.detailQuestion[index].images ? this.detailQuestion[index].images : '123'
               if (images.length === 0) {
                 alert("각 항목에 이미지는 최소 한 장씩 업로드 부탁드립니다")
                 tmpNumber = 0
@@ -881,7 +881,7 @@ export default {
         host_key: this.user.Host.host_key,
         main_image: { image: this.uploadedMainImages },
         title: this.activity.title,
-        intro_detail: $('#editor').trumbowyg('html'),
+        intro_detail: '',
         schedule: this.activity.schedule,
         inclusion: this.activity.inclusion,
         preparation: this.activity.preparation,
@@ -905,6 +905,15 @@ export default {
         ticket_due_date: this.activity.ticketDueDate,
         ticket_max_apply: this.activity.ticketMaxApply,
         detail_question: this.detailQuestion
+      }
+      let question = params.detail_question
+      for (let index in question) {
+        let tempI = question[index].images ? question[index].images.length : 0
+        for (let i = 0; i < tempI; i++) {
+          let tmpImage = '<img src=' + question[index].images[i] + '><br><br><br>'
+          params.intro_detail += tmpImage
+        }
+        params.intro_detail += (question[index].text ? question[index].text.replace(/\n/g, '<br>') : null) + '<br><br><br>'
       }
       for (let i in params.base_week_option) {
         let item = params.base_week_option[i]
