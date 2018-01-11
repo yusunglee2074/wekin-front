@@ -20,7 +20,7 @@
             <p v-if="activity.address">
               <i class="icon marker"></i>{{activity.address}}
             </p>
-            <p v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
+            <p v-if="requestData.selectedDate && selectedDateIsAllowToBooking">
               <i class="icon users"></i>최소 {{ activity.base_week_option[requestData.selectedYoil].min_user }} 명 ~ 최대 {{ activity.base_week_option[requestData.selectedYoil].max_user }} 명
             </p>
             <p>
