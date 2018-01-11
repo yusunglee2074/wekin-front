@@ -20,6 +20,9 @@
             <p v-if="activity.address">
               <i class="icon marker"></i>{{activity.address}}
             </p>
+            <p v-show="requestData.selectedDate && selectedDateIsAllowToBooking">
+              <i class="icon users"></i>최소 {{ activity.base_week_option[requestData.selectedYoil].min_user }} 명 ~ 최대 {{ activity.base_week_option[requestData.selectedYoil].max_user }} 명
+            </p>
             <p>
               <i class="icon won"></i>{{activity.base_price | joinComma}} 원
             </p>
@@ -160,6 +163,11 @@
         <a class="expand-btn link" v-if="!isExpanded" @click="toggleExpend()">펼치기</a>
         <a class="expand-btn link" v-if="isExpanded" @click="toggleExpend()">접기</a>
         <div class="ui divider"></div>
+        <h4 style="color:tomato;font-weight:600;">주의사항</h4>
+        <p class="pre">신청 마감일까지 최소인원 미달 시
+위킨 프로그램이 취소 될 수 있으며
+취소시 개별 연락 후 100% 환불해 드립니다.</p>
+        <div class="ui divider"></div>
         <h4>세부일정</h4>
         <div class="schedules">
           <p class="pre">{{activity.schedule}}</p>
@@ -172,7 +180,7 @@
         <p>{{activity.preparation}}</p>
         <div class="ui divider"></div>
         <h4>소요 시간</h4>
-        <p>{{activity.detail_question['requiredTime'] ? activity.detail_question['requiredTime'] : '미기입'}} {{ activity.detail_question['requiredTime'] < 4 ? '시간 이내' : '' }} {{ activity.detail_question['requiredTime'] === 4 ? '시간 이상' : '' }}</p>
+        <p>{{activity.detail_question['requiredTime'] ? activity.detail_question['requiredTime'] : '미기입'}} {{ activity.detail_question['requiredTime'] < 4 ? '시간 이내' : '' }} {{ activity.detail_question['requiredTime'] === '4' ? '시간 이상' : '' }}</p>
         <div class="ui divider"></div>
         <h4 v-if="wekiners.length">참석 위키너</h4>
         <a :href="`/users/${wekiner.user_key}`" v-for="(wekiner, index) in wekiners" v-bind:key="index">
