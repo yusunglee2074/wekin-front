@@ -42,6 +42,7 @@ export default {
             )
           }, 100 * i);
         })(i);
+        /* FIXME: 썸네일을 프론트에서 만들면 앱에서 만드는 이미지들은 썸네일이 만들어지지 않는다.
         (function(i) {
           setTimeout(function() { 
             let file = files[i]
@@ -50,6 +51,7 @@ export default {
             let uploadTask = imageRef.put(file)
           }, 100 * i);
         })(i)
+        */
       }
     }
   }
