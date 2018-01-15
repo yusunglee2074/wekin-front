@@ -8,7 +8,7 @@
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="(banner, index) in banners">
           <div v-if="banner.type == 'activityList'">
-            <a :href="'activity/' + '?list=' + banner.activityList" target="_blank"><div class="swiper-slide" v-bind:style="{ backgroundImage: `url(${banner.url})`, backgroundSize:'cover', backgroundPosition: 'center' }"></div></a>
+            <a :href="'activity/' + '?list=' + banner.activityList"><div class="swiper-slide" v-bind:style="{ backgroundImage: `url(${banner.url})`, backgroundSize:'cover', backgroundPosition: 'center' }"></div></a>
           </div>
           <div v-else>
             <div v-if="banner.externalLink">
