@@ -8,6 +8,8 @@
               <div v-if="banner.value.externalLink"><div class="header" style="margin-bottom: 2px">
                   <a :href="'/activity/' + banner.value.externalLink" target="_blank"><span style="font-weight:200;">{{ index + 1 }}. {{ banner.description }}</span></a></div>
               </div>
+              <div v-else-if="banner.value.type === 'activityList'">
+                  <a :href="'/activity/' + '?list=' + banner.value.activityList" target="_blank"><span style="font-weight:200;">{{ index + 1 }}. {{ banner.description }}</span></a></div>
               <div v-else>
                 <router-link :to="{ name: 'EventList', params: { key: banner.value.order }}"><div class="header" style="margin-bottom: 2px"><span style="font-weight:200;">{{ index + 1 }}. {{ banner.description }}</span></div></router-link>
               </div>
