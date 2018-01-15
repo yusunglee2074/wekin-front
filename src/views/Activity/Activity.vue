@@ -221,6 +221,7 @@
           <div class="ui medium text loader">Loading</div>
         </div>
       </div>
+      <div style="display:block;margin: 30px auto; width: 200px;"><button class="ui green basic button" @click="goDefault()">더 많은 위킨</button></div>
     </div>
     <!--<div class="ui segment"></div>-->
   </div>
@@ -306,19 +307,32 @@ export default {
   },
   asyncComputed: {
     filteredWekin() {
-      return this.wekins.filter((wekin) => {
-        if (this.isInPrice(wekin) &&
-          this.isInCurrentLocation(wekin) &&
-          this.isInArea(wekin) &&
-          this.isInPeople(wekin) &&
-          this.isInDate(wekin) &&
-          this.isInCategory(wekin) ) {
-          return wekin
-        }
-      })
+      if (this.$route.query.list) {
+        return this.wekins.filter((wekin) => {
+          if (this.$route.query.list.includes(wekin.activity_key)) {
+            return true
+          } else {
+            return false
+          }
+        })
+      } else {
+        return this.wekins.filter((wekin) => {
+          if (this.isInPrice(wekin) &&
+            this.isInCurrentLocation(wekin) &&
+            this.isInArea(wekin) &&
+            this.isInPeople(wekin) &&
+            this.isInDate(wekin) &&
+            this.isInCategory(wekin) ) {
+            return wekin
+          }
+        })
+      }
     }
   },
   methods: {
+    goDefault() {
+      this.$router.push('/activity')
+    },
     isEndSchedule(schedule) {
       let now = +moment()
       let startDate = moment(schedule).toDate().getTime()
