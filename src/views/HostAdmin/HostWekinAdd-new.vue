@@ -877,9 +877,13 @@ export default {
         }
       }
       // TODO: 제출전 형식 검사 해야함
+      let thumb = ''
+      thumb += this.uploadedMainImages[0].slice(0, this.uploadedMainImages[0].lastIndexOf('%2F') + 3)
+      thumb += 'thumb_'
+      thumb += this.uploadedMainImages[0].slice(this.uploadedMainImages[0].lastIndexOf('%2F') + 3, 1000)
       let params = {
         host_key: this.user.Host.host_key,
-        main_image: { image: this.uploadedMainImages },
+        main_image: { image: this.uploadedMainImages, thumb: thumb },
         title: this.activity.title,
         intro_detail: '',
         schedule: this.activity.schedule,
