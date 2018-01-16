@@ -22,6 +22,7 @@
             <div class="item" :data-value="index + 1" v-for="(date, index) in 12" v-bind:key="index">{{index + 1}}월</div>
           </div>
         </div>
+        <p style="font-size:10px;">아래 수수료 금액은 고객의 환불 등으로 인하여 약간의 차이가 있을 수 있습니다.</p>
       </div>
       <div class="ui horizontal half segments">
         <div class="ui segment">
@@ -29,11 +30,11 @@
           <div class="label">총 수입</div>
         </div>
         <div class="ui segment">
-          <div class="value">{{commission.commission | joinComma}}</div>
+          <div class="value">₩{{commission.commission | joinComma}}</div>
           <div class="label">수수료</div>
         </div>
         <div class="ui segment">
-          <div class="value">{{commission.result | joinComma}}</div>
+          <div class="value">₩{{commission.result | joinComma}}</div>
           <div class="label">지급예정</div>
         </div>
       </div>
