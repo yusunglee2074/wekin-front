@@ -107,6 +107,7 @@ export default {
   },
   loginWithFacebook () {
     let creden
+    let token
     let provider = new firebase.auth.FacebookAuthProvider()
     provider.addScope('email')
     provider.addScope('user_birthday')
@@ -116,19 +117,18 @@ export default {
         creden = credential
         return credential.user ? credential.user.getIdToken() : credential.getIdToken()
       })
-      .then(token => {
-        api.isThereAnyEmailAddress(token)
-          .then(result => {
-              console.log(result.message)
-            if (result.message == 'Exist') {
-              return api.frontsignUp(token, creden.user.displayName, creden.user.photoURL)
-            } else {
-              let email = prompt('회원님의 소셜계정에 이메일 정보가 없습니다. 이메일을 입력해주세요.')
-              return api.frontsignUp(token, creden.user.displayName, creden.user.photoURL, email)
-            }
-          })
-          .catch(result => console.log(result))
+      .then(tokenn => {
+        token = tokenn
+        return api.isThereAnyEmailAddress(token)
         })
+      .then(result => {
+        if (result.message == 'Exist') {
+          return api.frontsignUp(token, creden.user.displayName, creden.user.photoURL)
+        } else {
+          let email = prompt('회원님의 소셜계정에 이메일 정보가 없습니다. 이메일을 입력해주세요.')
+          return api.frontsignUp(token, creden.user.displayName, creden.user.photoURL, email)
+        }
+      })
       .catch(error => {
         console.log(error)
         if (error.code == "auth/account-exists-with-different-credential") {
