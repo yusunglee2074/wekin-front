@@ -202,7 +202,7 @@
           :title="wekin.title"
           :address="wekin.address"
           :name="wekin.Host.name"
-          :imageUrl="wekin.main_image.image[0]"
+          :imageUrl="wekin.main_image.thumb ? wekin.main_image.thumb : wekin.main_image.image[0]"
           :favorite="wekin.Favorites"
           :rating="Math.round(wekin.rating_avg) || 0"
           :reviewCount="wekin.review_count || 0"
@@ -643,7 +643,7 @@ export default {
           this.isLoading = false
           this.wekinsTemp = json
           this.wekins = _.orderBy(json, ['created_at'], ['desc']);
-          this.wekins = this.wekins.map( wekin => {
+          this.wekins = this.wekins.map(wekin => {
             this.deleteBeforeTodayDate(wekin.start_date_list, wekin)
             return wekin
           })

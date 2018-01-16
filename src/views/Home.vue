@@ -136,7 +136,7 @@
             <div tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in activities" v-bind:key="wekin.activity_key">
               <router-link class="ui card pointer swiper-slide" :to="{ name: 'ActivityDetail', params: { key: wekin.activity_key }}">
               <div class="image">
-                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.image[0]})`}"></div>
+                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.thumb ? wekin.main_image.thumb : wekin.main_image.image[0]})`}"></div>
                 <div class="backImage overlayer"></div>
                 <div class="backImage ui circular image makerProfile" v-bind:style="{'z-index': 2, 'background-image':`url(${wekin.Host.profile_image})`}"></div>
                 <div style="position: absolute;width: 100%;height: 28px;bottom: 0;background-color: rgba(0,0,0,0.25);z-index: 1;">
@@ -187,7 +187,7 @@
             <div :href="`/activity/${wekin.activity_key}`" tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in newestActivities" v-bind:key="index">
               <router-link class="ui card pointer swiper-slide" :to="{ name: 'ActivityDetail', params: { key: wekin.activity_key }}">
               <div class="image">
-                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.image[0]})`}"></div>
+                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.thumb ? wekin.main_image.thumb : wekin.main_image.image[0]})`}"></div>
                 <div class="backImage overlayer"></div>
                 <div class="backImage ui circular image makerProfile" v-bind:style="{'z-index': 2, 'background-image':`url(${wekin.Host.profile_image})`}"></div>
                 <div style="position: absolute;width: 100%;height: 28px;bottom: 0;background-color: rgba(0,0,0,0.25);z-index: 1;">
@@ -266,7 +266,7 @@
           <div class="swiper-wrapper">
             <router-link :to="{ name: 'hostPage', params: { key: maker.host_key}}" tag="div" class="ui card pointer swiper-slide" v-for="(maker, index) in makers" v-bind:key="maker.host_key" v-if="maker && maker.ActivityNews[0]" style="margin-right:30px;width:168px;">
               <div class="image">
-                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${maker.ActivityNews[0].main_image.image[0]})`}"></div>
+                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${maker.ActivityNews[0].main_image.thumb ? maker.ActivityNews[0].main_image.thumb : maker.ActivityNews[0].main_image.image[0]})`}"></div>
                 <div class="backImage ui circular image makerProfile" v-bind:style="{'background-image':`url(${maker.profile_image})`}"></div>
               </div>
               <div class="content" style="border: solid 1px #d5d5d5; max-height: 36px;">
