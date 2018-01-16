@@ -23,6 +23,7 @@
           </div>
         </div>
         <p style="font-size:10px;">아래 수수료 금액은 고객의 환불 등으로 인하여 약간의 차이가 있을 수 있습니다.</p>
+        <p style="font-size:10px;">금방 정확하고 상세한 정산 페이지를 위해 준비중이니 양해 부탁드립니다.</p>
       </div>
       <div class="ui horizontal half segments">
         <div class="ui segment">
