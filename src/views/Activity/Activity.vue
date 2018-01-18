@@ -258,7 +258,7 @@ export default {
       wekins: [],
       peopleCount: 0,
       peopleCheckList: [true, false, false, false, false, false],
-      isLoading: true,
+      isLoading: false,
       peopleCheck: {
         one: false,
         two: false,
@@ -318,9 +318,8 @@ export default {
       } else {
         return this.wekins.filter((wekin) => {
           if (this.isInPrice(wekin) &&
-            this.isInCurrentLocation(wekin) &&
+            // this.isInCurrentLocation(wekin) &&
             this.isInArea(wekin) &&
-            this.isInPeople(wekin) &&
             this.isInDate(wekin) &&
             this.isInCategory(wekin) ) {
             return wekin
@@ -638,25 +637,18 @@ export default {
       }
     },
     getActivities() {
+      this.isLoading = true
       api.getActivities(2)
         .then(json => {
           this.isLoading = false
           this.wekinsTemp = json
           let wekins = _.orderBy(json, ['created_at'], ['desc']);
-          for (let i = 0, length = wekins.length; i < length; i++) {
+          for (let i = 0, length = 6; i < length; i++) {
             let activity = wekins[i]
-            if (i < 6) {
-              this.wekins.push(activity)
-            } else {
-              setTimeout(() => {
-                this.wekins.push(activity)
-              }, 600 + i * 100)
-            }
+            this.deleteBeforeTodayDate(activity.start_date_list, activity)
+            this.wekins.push(activity)
           }
-          this.wekins = this.wekins.map(wekin => {
-            this.deleteBeforeTodayDate(wekin.start_date_list, wekin)
-            return wekin
-          })
+          this.wekins = wekins
           this.initSortDropdown()
 	})
 	.catch(err => console.error(err))
