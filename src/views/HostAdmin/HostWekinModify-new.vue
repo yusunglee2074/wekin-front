@@ -532,6 +532,8 @@ export default {
         case 'prev':
           if (page === 1 && confirm("위킨 수정을 종료 하시겠습니까? 변경 내용은 저장되지 않습니다.")) {
             this.$router.push({ name: "HostWekins" })
+          } else if (page === 1) {
+            return
           } else {
             this.page--
           }
