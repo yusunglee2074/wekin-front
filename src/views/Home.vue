@@ -369,7 +369,7 @@ export default {
           banners.sort(function (a, b) {
             return a.value.order - b.value.order
           })
-          counter = 300 + banners.length * 100
+          counter = 100 + banners.length * 100
           for (let i = 0, length = banners.length; i < length; i++) {
             let banner = banners[i].value
             if (i < 3) {
@@ -377,7 +377,7 @@ export default {
             } else {
               setTimeout(() => {
                 this.banners.push(banner)
-              }, 300 + i * 100)
+              }, 100 + i * 100)
             }
           }
         })
@@ -405,7 +405,7 @@ export default {
       let counter = 0
       api.getPopularActivity()
         .then(activities => {
-          counter = 300 + activities.length * 100
+          counter = 100 + activities.length * 60
           for (let i = 0, length = activities.length; i < length; i++) {
             if (i < 3) {
               let activity = activities[i]
@@ -418,7 +418,7 @@ export default {
                 if (activity.rating_avg == null) activity.rating_avg = 0
                 this.deleteBeforeTodayDate(activity.start_date_list, activity)
                 this.activities.push(activity)
-              }, 300 + 100 * i)
+              }, 100 + 50 * i)
             }
           }
 
@@ -440,7 +440,7 @@ export default {
       let counter = 0
       api.getNewestActivity()
         .then(activities => {
-          counter = 300 + activities.length * 100
+          counter = 100 + activities.length * 60
           for (let i = 0, length = activities.length; i < length; i++) {
             if (i < 3) {
               let activity = activities[i]
@@ -453,7 +453,7 @@ export default {
                 if (activity.rating_avg == null) activity.rating_avg = 0
                 this.deleteBeforeTodayDate(activity.start_date_list, activity)
                 this.newestActivities.push(activity)
-              }, 300 + 100 * i)
+              }, 100 + 50 * i)
             }
           }
           this.$nextTick(() => {
@@ -475,7 +475,7 @@ export default {
       let counter = 0
       api.getNews()
         .then(newss => {
-          counter = 300 + newss.data.length * 100
+          counter = 100 + newss.data.length * 60
           for (let i = 0, length = newss.data.length; i < length; i++) {
             let news = newss.data[i]
             if (i < 3) {
@@ -483,7 +483,7 @@ export default {
             } else {
               setTimeout(() => {
                 this.news.push(news)
-              }, 300 + i * 100)
+              }, 100 + i * 50)
             }
           }
         })
@@ -509,15 +509,15 @@ export default {
       let counter = 0
       api.getPopularMaker()
         .then(makers => {
-          counter = 300 + makers.length * 100
-          for (let i = 0, length = makers.length, counter = 300 + length * 100; i < length; i++) {
+          counter = 100 + makers.length * 60
+          for (let i = 0, length = makers.length; i < length; i++) {
             let maker = makers[i]
             if (i < 3) {
               this.makers.push(maker)
             } else {
               setTimeout(() => {
                 this.makers.push(maker)
-              }, 300 + i * 100)
+              }, 100 + i * 50)
             }
           }
         })

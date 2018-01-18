@@ -642,13 +642,14 @@ export default {
         .then(json => {
           this.isLoading = false
           this.wekinsTemp = json
+          let result = []
           let wekins = _.orderBy(json, ['created_at'], ['desc']);
-          for (let i = 0, length = 6; i < length; i++) {
+          for (let i = 0, length = wekins.length; i < length; i++) {
             let activity = wekins[i]
             this.deleteBeforeTodayDate(activity.start_date_list, activity)
-            this.wekins.push(activity)
+            result.push(activity)
           }
-          this.wekins = wekins
+          this.wekins = result 
           this.initSortDropdown()
 	})
 	.catch(err => console.error(err))
