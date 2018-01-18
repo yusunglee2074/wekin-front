@@ -368,7 +368,7 @@ section {
   padding : 20px;
   position : absolute;
   line-height : 1.5;
-  z-index : 10 
+  z-index : 1000
 }
 section:before {
   content : "";
