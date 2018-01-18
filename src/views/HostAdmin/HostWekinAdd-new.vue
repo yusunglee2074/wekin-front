@@ -61,7 +61,7 @@
       <div v-show="isFileUploading">
         <h3 style="color:rgba(40,190,140, 1)">파일 업로드 중입니다.</h3>
       </div>
-      <p style="margin-bottom: 5px; font-size: 18px;">메이커님의 활동을 간단히 소개해주세요. </p>
+      <p style="margin-bottom: 5px; font-size: 18px;">메이커님의 활동을 간단히 소개해주세요. <button @click="detailQuestionAdditionalButton(1, null, 'add')" class="ui basic button" style="padding: 3px 10px 4px 10px;">추가</button></p>
       <div class="ui input focus" style="width:300px; display:inline-table;">
         <textarea rows="4" cols="50" v-model="detailQuestion.question1.text" type="text" @focus="toggleHelpBox('on', 4)" @blur="toggleHelpBox('off', 4)"></textarea> 
         <transition name="fade">
@@ -76,8 +76,20 @@
         </div>
       </div>
       <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question1.images.push(val)"></FireUpload>
+      
+      <div v-for="(data, index) in detailQuestion.question1.additional">
+        <p style="margin-bottom: 5px; font-size: 18px;">(추가)메이커님의 활동을 간단히 소개해주세요. <button @click="detailQuestionAdditionalButton(1, index, null)" class="ui basic button" style="color:tomato!important;padding: 3px 10px 4px 10px;">제거</button></p>
+        <textarea rows="4" cols="50" v-model="detailQuestion.question1.additional[index].text" type="text"></textarea> 
+        <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, imageindex) in detailQuestion.question1.additional[index].images" v-bind:key="index">
+          <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
+            <img style="width:100%;height:100%" :src="imageUrl">
+            <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(1, index, imageindex)"></i>
+          </div>
+        </div>
+        <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question1.additional[index].images.push(val)"></FireUpload>
+      </div>
 
-      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">메이커님의 활동을 하면 어떤 점이 좋나요? </p>
+      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">메이커님의 활동을 하면 어떤 점이 좋나요? <button @click="detailQuestionAdditionalButton(2, null, 'add')" class="ui basic button" style="padding: 3px 10px 4px 10px;">추가</button> </p>
       <div class="ui input focus" style="width:300px; display:inline-table;">
         <textarea rows="4" cols="50" v-model="detailQuestion.question2.text" type="text" @focus="toggleHelpBox('on', 5)" @blur="toggleHelpBox('off', 5)"></textarea>
         <transition name="fade">
@@ -93,7 +105,19 @@
       </div>
       <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question2.images.push(val)"></FireUpload>
 
-      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">활동은 어떻게 진행되나요? </p>
+      <div v-for="(data, index) in detailQuestion.question2.additional">
+      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">(추가)메이커님의 활동을 하면 어떤 점이 좋나요? <button @click="detailQuestionAdditionalButton(2, index, null)" class="ui basic button" style="padding: 3px 10px 4px 10px;color:tomato!important;">제거</button> </p>
+        <textarea rows="4" cols="50" v-model="detailQuestion.question2.additional[index].text" type="text"></textarea>
+      <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, imageindex) in detailQuestion.question2.additional[index].images" v-bind:key="imageindex">
+        <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
+          <img style="width:100%;height:100%" :src="imageUrl">
+          <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(2, index, imageindex)"></i>
+        </div>
+      </div>
+      <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question2.additional[index].images.push(val)"></FireUpload>
+      </div>
+
+      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">활동은 어떻게 진행되나요? <button @click="detailQuestionAdditionalButton(3, null, 'add')" class="ui basic button" style="padding: 3px 10px 4px 10px;">추가</button> </p>
       <div class="ui input focus" style="width:300px; display:inline-table;">
         <textarea rows="4" cols="50" v-model="detailQuestion.question3.text" type="text" @focus="toggleHelpBox('on', 6)" @blur="toggleHelpBox('off', 6)"></textarea>
         <transition name="fade">
@@ -108,7 +132,19 @@
       </div>
       <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question3.images.push(val)"></FireUpload>
 
-      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">해당 활동에 대해서 메이커님의 꿀팁이 있나요? </p>
+      <div v-for="(data, index) in detailQuestion.question3.additional">
+      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">(추가)활동은 어떻게 진행되나요? <button @click="detailQuestionAdditionalButton(3, index, null)" class="ui basic button" style="padding: 3px 10px 4px 10px;color:tomato!important;">제거</button> </p>
+        <textarea rows="4" cols="50" v-model="detailQuestion.question3.additional[index].text" type="text"></textarea>
+      <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, imageindex) in detailQuestion.question3.additional[index].images" v-bind:key="imageindex">
+        <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
+          <img style="width:100%;height:100%" :src="imageUrl">
+          <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(3, index, imageindex)"></i>
+        </div>
+      </div>
+      <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question3.additional[index].images.push(val)"></FireUpload>
+      </div>
+
+      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">해당 활동에 대해서 메이커님의 꿀팁이 있나요?  <button @click="detailQuestionAdditionalButton(4, null, 'add')" class="ui basic button" style="padding: 3px 10px 4px 10px;">추가</button></p>
       <div class="ui input focus" style="width:300px; display:inline-table;">
         <textarea rows="4" cols="50" v-model="detailQuestion.question4.text" type="text" @focus="toggleHelpBox('on', 7)" @blur="toggleHelpBox('off', 7)"></textarea>
         <transition name="fade">
@@ -122,7 +158,20 @@
         </div>
       </div>
       <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question4.images.push(val)"></FireUpload>
-      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">어떤분들에게 좋은 활동일까요? </p>
+
+      <div v-for="(data, index) in detailQuestion.question4.additional">
+      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">(추가)해당 활동에 대해서 메이커님의 꿀팁이 있나요?  <button @click="detailQuestionAdditionalButton(4, index, index)" class="ui basic button" style="padding: 3px 10px 4px 10px;color:tomato!important;">제거</button></p>
+        <textarea rows="4" cols="50" v-model="detailQuestion.question4.additional[index].text" type="text"></textarea>
+      <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, imageindex) in detailQuestion.question4.additional[index].images" v-bind:key="imageindex">
+        <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
+          <img style="width:100%;height:100%" :src="imageUrl">
+          <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(4, index, imageindex)"></i>
+        </div>
+      </div>
+      <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question4.additional[index].images.push(val)"></FireUpload>
+      </div>
+
+      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">어떤분들에게 좋은 활동일까요?  <button @click="detailQuestionAdditionalButton(5, null, 'add')" class="ui basic button" style="padding: 3px 10px 4px 10px;">추가</button></p>
       <div class="ui input focus" style="width:300px; display:inline-table;">
         <textarea rows="4" cols="50" v-model="detailQuestion.question5.text" type="text" @focus="toggleHelpBox('on', 8)" @blur="toggleHelpBox('off', 8)"></textarea>
         <transition name="fade">
@@ -136,6 +185,20 @@
         </div>
       </div>
       <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question5.images.push(val)"></FireUpload>
+
+      <div v-for="(data, index) in detailQuestion.question5.additional">
+      <p style="margin-bottom: 4px; font-size: 18px; margin-top:0;">(추가)어떤분들에게 좋은 활동일까요?  <button @click="detailQuestionAdditionalButton(5, index, null)" class="ui basic button" style="padding: 3px 10px 4px 10px;color:tomato!important;">제거</button></p>
+        <textarea rows="4" cols="50" v-model="detailQuestion.question5.additional[index].text" type="text"></textarea>
+      <div class="ui card" style="width: 70px; height:70px; margin-right:8px; margin-top:0; display:inline-block; vertical-align: top" v-for="(imageUrl, imageindex) in detailQuestion.question5.additional[index].images" v-bind:key="imageindex">
+        <div style="left:2.5px;top:2.5px;background: white;width:92%;height:92%;z-index:222;position:absolute;" v-if="imageUrl">
+          <img style="width:100%;height:100%" :src="imageUrl">
+          <i class="remove circle outline icon big link" style="width: 30px; height:auto;position:absolute; top:0;right:0" @click="deleteQuestionImage(5, index, imageindex)"></i>
+        </div>
+      </div>
+      <FireUpload title="사진 업로드" :imageUrl="uploadedMainImage" @prog="prog => process(prog)" @update:imageUrl="val => detailQuestion.question5.additional[index].images.push(val)"></FireUpload>
+      </div>
+      <br>
+      <br>
       <br>
 
     </div>
@@ -270,7 +333,7 @@
           <div class="ui input styled primary left icon" @mouseover="toggleHelpBox('on', 18)" @mouseleave="toggleHelpBox('off', 18)">
             <datepicker 
               v-model="activity.startDate" 
-              id="datepickerId" 
+              id="datepickerId1" 
               wapper-class="ui input styled primary left icon" 
               language="ko" 
               input-class="width300"
@@ -287,7 +350,7 @@
           <div class="ui input styled primary left icon" @mouseover="toggleHelpBox('on', 19)" @mouseleave="toggleHelpBox('off', 19)">
             <datepicker 
               v-model="activity.endDate" 
-              id="datepickerId" 
+              id="datepickerId2" 
               wapper-class="ui input styled primary left icon" 
               language="ko" 
               input-class="width300"
@@ -333,7 +396,7 @@
             <div class="ui input styled primary left icon" @mouseover="toggleHelpBox('on', 22)" @mouseleave="toggleHelpBox('off', 22)">
               <datepicker 
                 v-model="tempEndDate" 
-                id="datepickerId" 
+                id="datepickerId3" 
                 wapper-class="ui input styled primary left icon" 
                 language="ko" 
                 input-class="width300"
@@ -542,7 +605,7 @@
       </div>
     </div>
 
-    <div id='footer'>
+    <div id='footer' v-if="page !== 2">
       <button class="ui labeled icon button" @click="movePage('yusung')" style="background: rgba(42,195,145,0.2);">
         <i class="left arrow icon"></i>
         이전페이지
@@ -555,8 +618,22 @@
         <i class="save icon"></i>
         임시저장
       </button>
-      
     </div>
+    <div v-else>
+      <button class="ui labeled icon button" @click="movePage('yusung')" style="background: rgba(42,195,145,0.2);">
+        <i class="left arrow icon"></i>
+        이전페이지
+      </button>
+      <button class="ui right labeled icon button" @click="movePage('next')" style="background: rgba(42,195,145,0.2);" v-if="page < 10">
+        <i class="right arrow icon"></i>
+        다음페이지
+      </button>
+      <button class="ui button" @click="tmpSave()" style="background: rgba(42,195,145,0.2);margin-left:50px;" v-if="page < 10">
+        <i class="save icon"></i>
+        임시저장
+      </button>
+    </div>
+
     <div style="  bottom: 150px;position: absolute;">
       <br>
       <transition name="fade">
@@ -641,11 +718,11 @@ export default {
       wekinRefund: false,
       refundPolicyData: '',
       detailQuestion:  {
-        question1: { name: '', images: [] },
-        question2: { name: '', images: [] },
-        question3: { name: '', images: [] },
-        question4: { name: '', images: [] },
-        question5: { name: '', images: [] },
+        question1: { text: '', images: [], additional: [] },
+        question2: { text: '', images: [], additional: [] },
+        question3: { text: '', images: [], additional: [] },
+        question4: { text: '', images: [], additional: [] },
+        question5: { text: '', images: [], additional: [] },
         requiredTime: 1
       },
       uploadedMainImages: [],
@@ -687,6 +764,13 @@ export default {
     Datepicker
   },
   methods: {
+    detailQuestionAdditionalButton (questionNumber, additionalIndex, addOrDelete) {
+      if (addOrDelete === 'add') {
+        this.detailQuestion['question' + questionNumber].additional.push({ text: '', images: [] })
+      } else {
+        this.detailQuestion['question' + questionNumber].additional.splice(additionalIndex, 1)
+      }
+    },
     movePage (type) {
       this.toggleHelpBox('off', 12)
       var page = this.page
@@ -771,6 +855,8 @@ export default {
       } else {
         if (page === 1 && confirm("위킨 수정을 종료 하시겠습니까? 변경 내용은 저장되지 않습니다.")) {
           this.$router.push({ name: "HostWekins" })
+        } else if (page === 1) {
+          return
         } else {
           this.page--
         }
@@ -804,7 +890,6 @@ export default {
       let id = event.srcElement.id
       let value = event.srcElement.value
       let weekOption = this.activity.baseWeekOption
-          console.log("하핫", value)
       switch(id) {
         case 'minuser': 
           for (let index in weekOption) {
@@ -835,9 +920,14 @@ export default {
     deleteImage(index) {
       this.uploadedMainImages.splice(index, 1)
     },
-    deleteQuestionImage(questionNumber, index) {
-      let question = 'question' + String(questionNumber)
-      this.detailQuestion[question].images.splice(index, 1)
+    deleteQuestionImage(questionNumber, index, imageindex) {
+      if (imageindex) {
+        let question = 'question' + String(questionNumber)
+        this.detailQuestion[question].additional[index].images.splice(imageindex, 1)
+      } else {
+        let question = 'question' + String(questionNumber)
+        this.detailQuestion[question].images.splice(index, 1)
+      }
     },
     checkedDaysInclude(text) {
       return this.checkedDays.indexOf(text) > -1 ? true : false
@@ -912,12 +1002,30 @@ export default {
       }
       let question = params.detail_question
       for (let index in question) {
-        let tempI = question[index].images ? question[index].images.length : 0
-        for (let i = 0; i < tempI; i++) {
-          let tmpImage = '<img src=' + question[index].images[i] + '><br><br><br>'
-          params.intro_detail += tmpImage
+        if (question[index].additional ? question[index].additional.length : false) {
+          let tempI = question[index].images ? question[index].images.length : 0
+          for (let i = 0; i < tempI; i++) {
+            let tmpImage = '<img src=' + question[index].images[i] + '><br><br><br>'
+            params.intro_detail += tmpImage
+          }
+          params.intro_detail += (question[index].text ? question[index].text.replace(/\n/g, '<br>') : '') + '<br><br><br>'
+          for (let ii = 0; ii < question[index].additional.length; ii++) {
+            let additional = question[index].additional[ii]
+            let tempImages = additional.images
+            for (let iii = 0; iii < tempImages.length; iii++) {
+              let tmpImg = '<img src=' + tempImages[iii]  + '><br><br><br>'
+              params.intro_detail += tmpImg 
+            }
+            params.intro_detail += (additional.text ? additional.text.replace(/\n/g, '<br>') : '') + '<br><br><br>'
+          }
+        } else {
+          let tempI = question[index].images ? question[index].images.length : 0
+          for (let i = 0; i < tempI; i++) {
+            let tmpImage = '<img src=' + question[index].images[i] + '><br><br><br>'
+            params.intro_detail += tmpImage
+          }
+          params.intro_detail += (question[index].text ? question[index].text.replace(/\n/g, '<br>') : '') + '<br><br><br>'
         }
-        params.intro_detail += (question[index].text ? question[index].text.replace(/\n/g, '<br>') : null) + '<br><br><br>'
       }
       for (let i in params.base_week_option) {
         let item = params.base_week_option[i]
