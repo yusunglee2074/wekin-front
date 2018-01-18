@@ -642,7 +642,17 @@ export default {
         .then(json => {
           this.isLoading = false
           this.wekinsTemp = json
-          this.wekins = _.orderBy(json, ['created_at'], ['desc']);
+          let wekins = _.orderBy(json, ['created_at'], ['desc']);
+          for (let i = 0, length = wekins.length; i < length; i++) {
+            let activity = wekins[i]
+            if (i < 6) {
+              this.wekins.push(activity)
+            } else {
+              setTimeout(() => {
+                this.wekins.push(activity)
+              }, 600 + i * 100)
+            }
+          }
           this.wekins = this.wekins.map(wekin => {
             this.deleteBeforeTodayDate(wekin.start_date_list, wekin)
             return wekin
