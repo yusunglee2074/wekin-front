@@ -234,7 +234,7 @@
         </h3>
         <div class="news swiper-container">
           <div class="swiper-wrapper">
-            <div @click="goLink(news.link_url, news.news_key)" class="ui card pointer swiper-slide" v-for="(news, index) in news.data" v-bind:key="index">
+            <div @click="goLink(news.link_url, news.news_key)" class="ui card pointer swiper-slide" v-for="(news, index) in news" v-bind:key="index">
                 <div class="image">
                   <div class="backImage mainImage" v-bind:style="{'background-image':`url(${news.thumbnail_url})`}"></div>
                   <div class="backImage overlayer">
@@ -330,6 +330,7 @@ export default {
         pm: '오후'
       },
       news: [],
+      loading: false
     }
   },
   filters: {
@@ -361,15 +362,27 @@ export default {
       return false
     },
     loadMainBanners() {
+
+      let counter = 0
       api.getMainBanners()
         .then(banners => {
           banners.sort(function (a, b) {
             return a.value.order - b.value.order
           })
-          banners.forEach(banner => {
-            this.banners.push(banner.value)
-          })
-          this.$nextTick(() => {
+          counter = 300 + banners.length * 100
+          for (let i = 0, length = banners.length; i < length; i++) {
+            let banner = banners[i].value
+            if (i < 3) {
+              this.banners.push(banner)
+            } else {
+              setTimeout(() => {
+                this.banners.push(banner)
+              }, 300 + i * 100)
+            }
+          }
+        })
+        .then(() => {
+          setTimeout(() => {
             this.swiperBanner = new Swiper('.banners.swiper-container', {
               slidesPerView: 1,
               autoplay: 3000,
@@ -378,8 +391,9 @@ export default {
               nextButton: '.swiper-button-next',
               prevButton: '.swiper-button-prev'
             })
-          })
+          }, counter)
         })
+        .catch(err => console.error(err))
     },
     loadPopularFeed() {
       api.getPopularFeed()
@@ -388,65 +402,127 @@ export default {
         .catch(err => console.error(err))
     },
     getPopularActivity() {
-      this.isLoading = true
+      let counter = 0
       api.getPopularActivity()
         .then(activities => {
-          this.activities = activities.map((activity) => {
-            if (activity.rating_avg == null) {
-              activity.rating_avg = 0
+          counter = 300 + activities.length * 100
+          for (let i = 0, length = activities.length; i < length; i++) {
+            if (i < 3) {
+              let activity = activities[i]
+              if (activity.rating_avg == null) activity.rating_avg = 0
+              this.deleteBeforeTodayDate(activity.start_date_list, activity)
+              this.activities.push(activity)
+            } else {
+              setTimeout(() => {
+                let activity = activities[i]
+                if (activity.rating_avg == null) activity.rating_avg = 0
+                this.deleteBeforeTodayDate(activity.start_date_list, activity)
+                this.activities.push(activity)
+              }, 300 + 100 * i)
             }
-            this.deleteBeforeTodayDate(activity.start_date_list, activity)
-            return activity
-          })
+          }
 
-          this.isLoading = false
           this.$nextTick(() => {
-            this.initSwiper()
             setTimeout(() => {
               $('.ui.dropdown.home').dropdown()
               this.initRating()
             }, 1000)
           })
+        })
+        .then(() => {
+          setTimeout(() => {
+            this.setupPopularWekinsSwiper()
+          }, counter)
         })
         .catch(err => console.error(err))
     },
     getNewestActivity() {
-      this.isLoading = true
+      let counter = 0
       api.getNewestActivity()
         .then(activities => {
-          this.newestActivities = activities.map((activity) => {
-            // FIXME: 썸네일 이미지가 안만들어짐
-            // activity.main_image.image[0] = activity.main_image.image[0].replace('image', 'imageThumbnail')
-            if (activity.rating_avg == null) {
-              activity.rating_avg = 0
+          counter = 300 + activities.length * 100
+          for (let i = 0, length = activities.length; i < length; i++) {
+            if (i < 3) {
+              let activity = activities[i]
+              if (activity.rating_avg == null) activity.rating_avg = 0
+              this.deleteBeforeTodayDate(activity.start_date_list, activity)
+              this.newestActivities.push(activity)
+            } else {
+              setTimeout(() => {
+                let activity = activities[i]
+                if (activity.rating_avg == null) activity.rating_avg = 0
+                this.deleteBeforeTodayDate(activity.start_date_list, activity)
+                this.newestActivities.push(activity)
+              }, 300 + 100 * i)
             }
-            this.deleteBeforeTodayDate(activity.start_date_list, activity)
-            return activity
-          })
-
-          this.isLoading = false
+          }
           this.$nextTick(() => {
-            this.initSwiper()
             setTimeout(() => {
               $('.ui.dropdown.home').dropdown()
               this.initRating()
             }, 1000)
           })
         })
+        .then(() => {
+          setTimeout(() => {
+            this.setupNewWekinsSwiper()
+          }, counter)
+          this.isLoading = false
+        })
         .catch(err => console.error(err))
     },
     getNews() {
+      let counter = 0
       api.getNews()
-        .then(news => {
-          this.news = news
+        .then(newss => {
+          counter = 300 + newss.data.length * 100
+          for (let i = 0, length = newss.data.length; i < length; i++) {
+            let news = newss.data[i]
+            if (i < 3) {
+              this.news.push(news)
+            } else {
+              setTimeout(() => {
+                this.news.push(news)
+              }, 300 + i * 100)
+            }
+          }
+        })
+        .then(() => {
+          setTimeout(() => {
+            this.newNews = new Swiper('.news.swiper-container', {
+              freeMode: true,
+              freeModeMomentumRatio: 0.2,
+              resistance: false,       
+              slidesPerView: 3,
+              spaceBetween: 20,
+              breakpoints: {
+                767: {
+                  slidesPerView: 'auto'
+                }
+              }
+            })
+          }, counter)
         })
         .catch(err => console.error(err))
     },
     getPopularMaker() {
+      let counter = 0
       api.getPopularMaker()
         .then(makers => {
-          this.makers = makers
-          this.$nextTick(() => {
+          counter = 300 + makers.length * 100
+          for (let i = 0, length = makers.length, counter = 300 + length * 100; i < length; i++) {
+            let maker = makers[i]
+            if (i < 3) {
+              this.makers.push(maker)
+            } else {
+              setTimeout(() => {
+                this.makers.push(maker)
+              }, 300 + i * 100)
+            }
+          }
+        })
+        .then(makers => {
+          setTimeout(() => {
             this.swipeMaker = new Swiper('.makers.swiper-container', {
               slidesPerView: 5,
               spaceBetween: 12,
@@ -456,8 +532,9 @@ export default {
                 }
               }
             })
-          })
+          }, counter)
         })
+        .catch(error => console.log(error))
     },
     setupPopularFeedSwiper() {
       this.$nextTick(() => {
@@ -472,19 +549,7 @@ export default {
         })
       })
     },
-    initSwiper() {
-      this.popularWekins = new Swiper('.pop-wekins.swiper-container', {
-        freeMode: true,
-        freeModeMomentumRatio: 0.2,
-        resistance: false,
-        slidesPerView: 3,
-        spaceBetween: 20,
-        breakpoints: {
-          767: {
-            slidesPerView: 'auto'
-          }
-        }
-      })
+    setupNewWekinsSwiper() {
       this.newWekins = new Swiper('.new-wekins.swiper-container', {
         freeMode: true,
         freeModeMomentumRatio: 0.2,
@@ -497,10 +562,12 @@ export default {
           }
         }
       })
-      this.newNews = new Swiper('.news.swiper-container', {
+    },
+    setupPopularWekinsSwiper() {
+      this.popularWekins = new Swiper('.pop-wekins.swiper-container', {
         freeMode: true,
         freeModeMomentumRatio: 0.2,
-        resistance: false,       
+        resistance: false,
         slidesPerView: 3,
         spaceBetween: 20,
         breakpoints: {
@@ -598,6 +665,7 @@ export default {
     },
   },
   mounted() {
+    this.isLoading = true
     this.getNewestActivity()
     this.getNews()
     this.getPopularActivity()
