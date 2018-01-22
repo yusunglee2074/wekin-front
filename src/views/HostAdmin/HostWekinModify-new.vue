@@ -91,7 +91,11 @@
       <option value="1">1시간 이내</option>
       <option value="2">2시간 이내</option>
       <option value="3">3시간 이내</option>
-      <option value="4">4시간 이상</option>
+      <option value="4">4시간 이내</option>
+      <option value="5">5시간 이내</option>
+      <option value="6">6시간 이내</option>
+      <option value="7">7시간 이내</option>
+      <option value="8">8시간 이상</option>
     </select>
   </div>
 
