@@ -726,6 +726,25 @@ export default {
     if (params.category) {
       this.categoryCheck = this.$route.params.category
     }
+    if (this.$route.query.category) {
+      let categoryDetail = {
+        0: '투어/여행',
+        1: '익스트림',
+        2: '스포츠',
+        3: '음악',
+        4: '댄스',
+        5: '뷰티',
+        6: '요리',
+        7: '아트',
+        8: '축제',
+        9: '힐링',
+        10: '아웃도어',
+        11: '요가/피트니스',
+        12: '소품제작',
+        13: '한국체험'
+      }
+      this.categoryCheck = categoryDetail[this.$route.query.category]
+    }
     if (params.people) {
       this.peopleCheck.one = false
       this.toggleCheckList(this.peopleCheck, Number(this.$route.params.people))
