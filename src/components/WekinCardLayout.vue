@@ -43,12 +43,14 @@ export default {
     'wekinnewCount',
   ],
   mounted() {
+    /*
     $('.ui.rating')
       .rating({
         initialRating: 3,
         maxRating: 5
       })
       .rating('disable')
+      */
   }
 }
 </script>
