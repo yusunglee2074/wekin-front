@@ -137,7 +137,27 @@
             </div>
             <div class="inline field">
               <label>은행명(Bank Name)</label>
-              <input type="text" v-model="requestUser.refundBank">
+              <select v-model="requestUser.refundBank" style="width:244px;height:38px;">
+                <option disabled value="">은행선택</option>
+                <option value="04">KB국민은행</option>
+                <option value="23">SC제일은행</option>
+                <option value="39">경남은행</option>
+                <option value="34">광주은행</option>
+                <option value="03">기업은행</option>
+                <option value="11">농협</option>
+                <option value="31">대구은행</option>
+                <option value="32">부산은행</option>
+                <option value="45">새마을금고</option>
+                <option value="07">수협</option>
+                <option value="88">신한은행</option>
+                <option value="05">외환은행</option>
+                <option value="20">우리은행</option>
+                <option value="71">우체국</option>
+                <option value="37">전북은행</option>
+                <option value="16">축협</option>
+                <option value="81">하나은행(서울은행)</option>
+                <option value="53">한국씨티은행(한미은행)</option>
+              </select>
             </div>
             <div class="inline field">
               <label>예금주(Account Holder Name)</label>
@@ -178,7 +198,7 @@ export default {
         gender: 0,
         phoneValid: false,
         refundHolder: null,
-        refundBank: null,
+        refundBank: '',
         refundAccount: null
       },
       isPhoneVerifying: false,
