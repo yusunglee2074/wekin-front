@@ -221,7 +221,7 @@
           <div class="ui medium text loader">Loading</div>
         </div>
       </div>
-      <div style="display:block;margin: 30px auto; width: 200px;"><button class="ui green basic button" @click="goDefault()">더 많은 위킨</button></div>
+      <div style="display:block;margin: 30px auto; width: 200px;" v-if="!isQueryEmpty"><button class="ui green basic button" @click="goDefault()">더 많은 위킨</button></div>
     </div>
     <!--<div class="ui segment"></div>-->
   </div>
@@ -303,6 +303,12 @@ export default {
           backgroundColor: 'rgb(0, 162, 154)'
         }
       },
+    }
+  },
+  computed: {
+    isQueryEmpty() {
+      if (this.$route.query.list) return false
+      else return true
     }
   },
   asyncComputed: {
