@@ -21,6 +21,10 @@ axios.interceptors.request.use((config) => {
 
 export default {
   forSNSLoginUrl,
+  iamportResponseWithUid (uid) {
+    return axios.get(`${BASE_API_URL}/iamport/${uid}`)
+      .then(r => r.data)
+  },
   dbCreateWithIdToken (idToken) {
     return axios.post(`${BASE_API_URL}/user/front/signUp/dbCreateWithIdtoken`, { idToken })
       .then( res => res.data )
