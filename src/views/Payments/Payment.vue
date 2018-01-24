@@ -404,7 +404,7 @@ export default {
                 buyer_tel: this.requestUser.phone,
                 digital: false,
                 app_scheme: 'iamport',
-                m_redirect_url : `http://we-kin.com/activity/${this.activity.activity_key}/payment/complete`,
+                m_redirect_url : `http://we-kin.com/activity/${this.activity.activity_key}/payment/complete?point_value=${this.point.value}&point_type=${this.point.point_type}&wekin_key=${this.requestData.wekin_key}`,
                 vbank_due: moment().add(2, 'day').format('YYYYMMDDHHmm')
               }, (rsp) => {
                 if (rsp.success) {
