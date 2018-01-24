@@ -44,7 +44,7 @@
         </div>
         <div class="payment-result-container__list">
           <label>결제 금액</label>
-          <span class="floated right">{{rsp.paid_amount | joinComma}}(+ {{ usePoint }} P)원</span>
+          <span class="floated right">{{rsp.paid_amount || rsp.amount | joinComma}}(+ {{ usePoint }} P)원</span>
         </div>
         <div class="payment-result-container__list">
           <label>신청 결과</label>
@@ -81,21 +81,29 @@ import api from 'api'
 export default {
   data() {
     return {
+      // 아임포트 결제창 ㅇ모바일일 경우 m_redirection으로 들어와서 
+      // 파람값에 rsp이랑 usepoitn 값이 없다 아래에서 임시로 만들어서 api콜쳐서 가져다슨다.
+      mobile_rsp: null,
+      mobile_usePointt: null
     }
   },
   asyncComputed: {
     rsp() {
-      return this.$route.params.rsp
+      return this.$route.params.rsp || this.mobile_rsp
     },
     user() {
       return this.$store.state.user
     },
     usePoint() {
-      return this.$route.params.point_value
+      return this.$route.params.point_value || this.$route.query.point_value
     }
   },
   mounted () {
-    api.requestPointUse(-1 * this.$route.params.point_value, this.$route.params.point_type === 'company' ? '1' : '0', this.$route.params.wekin_key)
+      console.log(this.$route.query.imp_uid, this.$route.query.merchant_uid)
+    if (this.$route.query.imp_uid) {
+      this.verifyOrder()
+    }
+    api.requestPointUse(-1 * this.$route.params.point_value || this.$route.query.point_value, (this.$route.params.point_type || this.$route.query.point_type) === 'company' ? '1' : '0', this.$route.params.wekin_key || this.$route.query.wekin_key)
       .then(response => {
       })
       .catch(error => {
@@ -109,17 +117,13 @@ export default {
       api.verifyOrder(orderKey, impUID)
         .then((result) => {
           if (result.data.status != 'failed') {
-            api.requestPointUse()
-              .then(response => {
-                return result.data
-              })
-              .catch(error => {
-                api.sendEmail("lys0333@gmail.com", "위킨 포인트 에러", new Date() + this.$store.getters.user.email + this.orderKey + JSON.stringify(error))
-                return result.data
-              })
+            return api.iamportResponseWithUid(this.$route.query.imp_uid)
           } else {
             window.alert(result)
           }
+        })
+        .then(r => {
+          this.mobile_rsp = r.data.data
         })
         .catch((error) => console.error(error))
     }
