@@ -247,7 +247,6 @@ export default {
     getWekinNews() {
       api.getUserWekinNews(this.$route.params.key)
         .then(result => {
-          console.log(result)
           this.wekinNews = result.data
         })
     }
