@@ -4,6 +4,7 @@
       <slot name="badge">
       </slot>
       <div :style="{ 'background-image':'url(' + imageUrl + ')','background-position': 'center center', 'height': 200 + 'px', 'background-size':'cover'}"></div>
+      <div v-if="isEnd" style="position:absolute;width:100%;top:0;left:0;height:100%;z-index:9998;background-color:black;opacity: 0.7;"><img src="static/icon/soldout.svg" style="z-index:9999;margin:auto auto;width:100%;height:100%!important;" alt=""></div>
     </router-link>
     <router-link :to="{ name: 'ActivityDetail', params: { key: activityKey }}" class="content link" style="display: block;">
         <slot name="extra-header">
@@ -41,6 +42,7 @@ export default {
     'rating',
     'reviewCount',
     'wekinnewCount',
+    'isEnd'
   ],
   mounted() {
     /*
