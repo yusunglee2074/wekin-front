@@ -110,7 +110,8 @@
     <div class="ui segment">
       <div class="header">회원탈퇴</div>
       <div class="ui divider"></div>
-      <div class="settings__list" v-if="providerId == 'password'">
+      <!--<div class="settings__list" v-if="providerId == 'password'">-->
+      <div class="settings__list">
         <label class="vertical">이메일</label>
         <div class="ui input fields">
           <input type="text" v-model="deleteUser.email">
@@ -143,6 +144,7 @@ const EXPIRED_TIME = 180
 export default {
   data() {
     return {
+      user: null,
       formUser: {
         name: '',
         phone: '',
@@ -200,6 +202,7 @@ export default {
               .then(user => {
                 this.$store.commit('SET_USER', user)
                 alert("인증이 완료되었습니다.")
+                window.location.href = '/'
               })
               .catch(error => {
                 alert(error + moment().format() + "죄송합니다. 사이트 아래 주소의 오픈카톡으로 연락주시면 바로 해결해드리겠습니다.")
@@ -273,7 +276,8 @@ export default {
 2) 3개월내 해당 이메일/아이디로 재가입이 불가합니다.
 
 정말 탈퇴하시겠습니까?`)) {
-        if (providerId == 'password') {
+        //if (providerId == 'password') {
+        if (true) {
           auth.deleteUser(this.deleteUser.email, this.deleteUser.password)
             .then(() => {
               api.deleteUser().then((result) => {
@@ -309,24 +313,18 @@ export default {
     FireUpload
   },
   computed: {
-    user() {
-      return this.$store.state.user
-    }
   },
   mounted() {
-    this.$store.watch(() => {
-      if (this.user) {
-        this.formUser.name = this.user.name
-        this.formUser.email = this.user.email
-        this.formUser.phone = this.user.phone
-        this.formUser.phoneValid = this.user.phone_valid
-        this.formUser.introduce = this.user.introduce
-        this.uploadedProfile = this.user.profile_image
-        this.gender = this.user.gender
-        this.pushNoti = this.user.push_noti
-        this.emailNoti = this.user.email_noti
-      }
-    })
+    this.user = this.$store.getters.user
+    this.formUser.name = this.user.name
+    this.formUser.email = this.user.email
+    this.formUser.phone = this.user.phone
+    this.formUser.phoneValid = this.user.phone_valid
+    this.formUser.introduce = this.user.introduce
+    this.uploadedProfile = this.user.profile_image
+    this.gender = this.user.gender
+    this.pushNoti = this.user.push_noti
+    this.emailNoti = this.user.email_noti
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.providerId = firebase.auth().currentUser.providerData[0].providerId    
