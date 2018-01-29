@@ -90,7 +90,7 @@ export default {
       .then(res => res.data)
   },
   searchActivity (keyword) {
-    return axios.get(`${BASE_API_URL}/activity/front`, {
+    return axios.get(`${BASE_API_URL}/activity/search-with-title`, {
       params: {
         keyword: keyword
       }
