@@ -406,8 +406,9 @@ export default {
     getPopularActivity() {
       let counter = 0
       api.getPopularActivity()
-        .then(activities => {
-          counter = 100 + activities.length * 60
+        .then(results => {
+          let activities = results.slice(0, 10)
+          counter = activities.length * 10 
           for (let i = 0, length = activities.length; i < length; i++) {
             if (i < 3) {
               let activity = activities[i]
@@ -420,20 +421,20 @@ export default {
                 if (activity.rating_avg == null) activity.rating_avg = 0
                 this.deleteBeforeTodayDate(activity.start_date_list, activity)
                 this.activities.push(activity)
-              }, 100 + 50 * i)
+              }, 10 * i)
             }
           }
 
           this.$nextTick(() => {
             setTimeout(() => {
-              $('.ui.dropdown.home').dropdown()
-              this.initRating()
-            }, 1000)
+              this.setupPopularWekinsSwiper()
+            }, 10 * activities.length)
           })
         })
         .then(() => {
           setTimeout(() => {
-            this.setupPopularWekinsSwiper()
+            $('.ui.dropdown.home').dropdown()
+            this.initRating()
           }, counter)
         })
         .catch(err => console.error(err))
@@ -441,8 +442,9 @@ export default {
     getNewestActivity() {
       let counter = 0
       api.getNewestActivity()
-        .then(activities => {
-          counter = 100 + activities.length * 60
+        .then(results => {
+          let activities = results.slice(0, 10)
+          counter = activities.length * 10
           for (let i = 0, length = activities.length; i < length; i++) {
             if (i < 3) {
               let activity = activities[i]
@@ -455,19 +457,19 @@ export default {
                 if (activity.rating_avg == null) activity.rating_avg = 0
                 this.deleteBeforeTodayDate(activity.start_date_list, activity)
                 this.newestActivities.push(activity)
-              }, 100 + 50 * i)
+              }, 10 * i)
             }
           }
           this.$nextTick(() => {
             setTimeout(() => {
-              $('.ui.dropdown.home').dropdown()
-              this.initRating()
-            }, 1000)
+              this.setupNewWekinsSwiper()
+            }, 10)
           })
         })
         .then(() => {
           setTimeout(() => {
-            this.setupNewWekinsSwiper()
+            $('.ui.dropdown.home').dropdown()
+            this.initRating()
           }, counter)
           this.isLoading = false
         })
@@ -476,16 +478,17 @@ export default {
     getNews() {
       let counter = 0
       api.getNews()
-        .then(newss => {
-          counter = 100 + newss.data.length * 60
-          for (let i = 0, length = newss.data.length; i < length; i++) {
-            let news = newss.data[i]
+        .then(results => {
+          let newss = results.data.slice(0, 10)
+          counter = newss.length * 10
+          for (let i = 0, length = newss.length; i < length; i++) {
+            let news = newss[i]
             if (i < 3) {
               this.news.push(news)
             } else {
               setTimeout(() => {
                 this.news.push(news)
-              }, 100 + i * 50)
+              }, i * 10)
             }
           }
         })
