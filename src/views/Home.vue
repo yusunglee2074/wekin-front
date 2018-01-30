@@ -459,7 +459,7 @@ export default {
           this.$nextTick(() => {
             setTimeout(() => {
               this.setupNewWekinsSwiper()
-            }, 10)
+            }, 100)
           })
         })
         .then(() => {
