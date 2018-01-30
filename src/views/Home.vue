@@ -309,6 +309,7 @@ export default {
   },
   data() {
     return {
+      paidAmount: {},
       swipeBanner: null,
       swipeMaker: null,
       swipePopularFeed: null,
@@ -410,21 +411,18 @@ export default {
           let activities = results.slice(0, 10)
           counter = activities.length * 10 
           for (let i = 0, length = activities.length; i < length; i++) {
+            let activity = activities[i]
+            if (activity.rating_avg == null) activity.rating_avg = 0
+            this.deleteBeforeTodayDate(activity.start_date_list, activity)
+            activity.wekinnew_count = this.paidAmount[activity.activity_key]
             if (i < 3) {
-              let activity = activities[i]
-              if (activity.rating_avg == null) activity.rating_avg = 0
-              this.deleteBeforeTodayDate(activity.start_date_list, activity)
               this.activities.push(activity)
             } else {
               setTimeout(() => {
-                let activity = activities[i]
-                if (activity.rating_avg == null) activity.rating_avg = 0
-                this.deleteBeforeTodayDate(activity.start_date_list, activity)
                 this.activities.push(activity)
               }, 10 * i)
             }
           }
-
           this.$nextTick(() => {
             setTimeout(() => {
               this.setupPopularWekinsSwiper()
@@ -446,16 +444,14 @@ export default {
           let activities = results.slice(0, 10)
           counter = activities.length * 10
           for (let i = 0, length = activities.length; i < length; i++) {
+            let activity = activities[i]
+            if (activity.rating_avg == null) activity.rating_avg = 0
+            this.deleteBeforeTodayDate(activity.start_date_list, activity)
+            activity.wekinnew_count = this.paidAmount[activity.activity_key]
             if (i < 3) {
-              let activity = activities[i]
-              if (activity.rating_avg == null) activity.rating_avg = 0
-              this.deleteBeforeTodayDate(activity.start_date_list, activity)
               this.newestActivities.push(activity)
             } else {
               setTimeout(() => {
-                let activity = activities[i]
-                if (activity.rating_avg == null) activity.rating_avg = 0
-                this.deleteBeforeTodayDate(activity.start_date_list, activity)
                 this.newestActivities.push(activity)
               }, 10 * i)
             }
@@ -671,13 +667,18 @@ export default {
   },
   mounted() {
     this.isLoading = true
-    this.getNewestActivity()
-    this.getNews()
-    this.getPopularActivity()
-    this.getPopularMaker()
-    this.loadPopularFeed()
-    this.loadMainBanners()
-    this.initCalendar()
+    api.getPaidAmount()
+      .then(r => {
+        this.paidAmount = r
+        this.getNewestActivity()
+        this.getNews()
+        this.getPopularActivity()
+        this.getPopularMaker()
+        this.loadPopularFeed()
+        this.loadMainBanners()
+        this.initCalendar()
+      })
+      .catch(e => console.log(e))
   }
 }
 </script>
