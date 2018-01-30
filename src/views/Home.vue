@@ -509,7 +509,8 @@ export default {
     getPopularMaker() {
       let counter = 0
       api.getPopularMaker()
-        .then(makers => {
+        .then(results => {
+          let makers = results.slice(0, 10)
           counter = 100 + makers.length * 60
           for (let i = 0, length = makers.length; i < length; i++) {
             let maker = makers[i]
