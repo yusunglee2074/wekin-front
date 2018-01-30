@@ -563,7 +563,7 @@
         <div class="ui input focus" style="width:300px;">
           <input @focus="toggleHelpBox('on', 23)" @blur="toggleHelpBox('off', 23)" type="text" v-model="activity.basePriceOption[index]['name']">
           <transition name="fade">
-            <help-box v-show="helpBox[23]" numbering="23"></help-box>
+            <help-box v-show="helpBox[23] && index === 0" numbering="23"></help-box>
           </transition>
         </div>
         <h3 style="margin: 6px 0px;">추가가격 </h3>
@@ -572,8 +572,9 @@
           <input type="number" v-model="activity.basePriceOption[index]['price']" v-if="index === 0" disabled>
         </div>
         <button v-show="index > 0" @click="deletePriceOption(index)">제거</button>
+        <hr>
       </div>
-      <button class="ui button secondary basic" @click="activity.basePriceOption.push({})" style="margin-top:30px;" v-show="Object.keys(activity.basePriceOption).length < 3">추가</button>
+      <button class="ui button secondary basic" @click="activity.basePriceOption.push({})" style="margin-top:8px;margin-bottom:16px;" v-show="Object.keys(activity.basePriceOption).length < 10">추가</button>
     </div>
 
     <div v-show="page === 9" class="page">
@@ -584,7 +585,7 @@
         <div class="ui input focus" style="width:300px;">
           <input @focus="toggleHelpBox('on', 24)" @blur="toggleHelpBox('off', 24)" type="text" v-model="activity.baseExtraPriceOption[index]['name']">
           <transition name="fade">
-            <help-box v-show="helpBox[24]" numbering="24"></help-box>
+            <help-box v-show="helpBox[24] && index === 0" numbering="24"></help-box>
           </transition>
         </div>
         <h3 style="margin: 6px 0px;">추가가격</h3>
@@ -593,8 +594,9 @@
           <input type="number" v-model="activity.baseExtraPriceOption[index]['price']" v-if="index === 0" disabled>
         </div>
         <button v-show="index > 0" @click="deleteExtraPriceOption(index)">제거</button>
+        <hr>
       </div>
-      <button class="ui button secondary basic" @click="activity.baseExtraPriceOption.push({})" style="margin-top:30px;" v-show="Object.keys(activity.baseExtraPriceOption).length < 3">추가</button>
+      <button class="ui button secondary basic" @click="activity.baseExtraPriceOption.push({})" style="margin-top:8px; margin-bottom:16px;" v-show="Object.keys(activity.baseExtraPriceOption).length < 10">추가</button>
     </div>
 
     <div v-show="page === 10" class="page" id="final-page">
@@ -609,7 +611,7 @@
       </div>
     </div>
 
-    <div id='footer' v-if="page !== 2">
+    <div id='footer' v-if="page !== 2 && page !== 8 && page !== 9">
       <button class="ui labeled icon button" @click="movePage('yusung')" style="background: rgba(42,195,145,0.2);">
         <i class="left arrow icon"></i>
         이전페이지

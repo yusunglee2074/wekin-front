@@ -397,8 +397,9 @@
         <input type="number" v-model="activity.base_price_option[index]['price']" placeholder="예) 3000 혹은 -3000" v-if="index === 0" disabled>
       </div>
       <button v-show="index > 0" @click="deletePriceOption(index)">제거</button>
+    <hr>
     </div>
-    <button class="ui button secondary basic" @click="activity.base_price_option.push({})" v-show="Object.keys(activity.base_price_option).length < 3">추가</button>
+    <button class="ui button secondary basic" @click="activity.base_price_option.push({})" v-show="Object.keys(activity.base_price_option).length < 10" style="margin-top: 8px; margin-bottom: 16px;">추가</button>
   </div>
 
   <div v-show="page === 9">
@@ -415,8 +416,9 @@
         <input type="number" v-model="activity.base_extra_price_option[index]['price']" placeholder="예) 3000 혹은 -3000" v-if="index === 0" disabled>
       </div>
       <button v-show="index > 0" @click="deleteExtraPriceOption(index)">제거</button>
+      <hr>
     </div>
-    <button class="ui button secondary basic" @click="activity.base_extra_price_option.push({})" v-show="Object.keys(activity.base_extra_price_option).length < 3">추가</button>
+    <button class="ui button secondary basic" @click="activity.base_extra_price_option.push({})" v-show="Object.keys(activity.base_extra_price_option).length < 10" style="margin-top: 8px; margin-bottom: 16px;">추가</button>
   </div>
 
   <div v-show="page === 10">
@@ -427,7 +429,17 @@
     <button class="positive ui button" @click="submit()">수정 신청 하기</button>
   </div>
 
-  <div id='footer'>
+  <div id='footer' v-if="page !== 8 && page !== 9">
+    <button class="ui labeled icon button" @click="pageButton('prev')" style="background: rgba(42,195,145,0.2);">
+      <i class="left arrow icon"></i>
+      이전페이지
+    </button>
+    <button class="ui right labeled icon button" @click="pageButton('next')" style="background: rgba(42,195,145,0.2);">
+      <i class="right arrow icon"></i>
+      다음페이지
+    </button>
+  </div>
+  <div v-else>
     <button class="ui labeled icon button" @click="pageButton('prev')" style="background: rgba(42,195,145,0.2);">
       <i class="left arrow icon"></i>
       이전페이지
