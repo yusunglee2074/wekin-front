@@ -588,7 +588,14 @@ export default {
         selectedExtraOption: {
           0: 0,
           1: 0,
-          2: 0
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0,
+          6: 0,
+          7: 0,
+          9: 0,
+          8: 0
         },
       },
       selectedDateIsAllowToBooking: true,
@@ -636,7 +643,14 @@ export default {
         this.requestData.selectedExtraOption = {
           0: 0,
           1: 0,
-          2: 0
+          2: 0,
+          3: 0,
+          4: 0,
+          5: 0,
+          6: 0,
+          7: 0,
+          9: 0,
+          8: 0
         }
       }
     },
@@ -796,7 +810,7 @@ export default {
       } else if (this.requestData.selectedOption === 'sample') {
         window.alert("코스옵션을 선택해주세요.")
         return
-      } else if (this.requestData.selectedExtraOption[0] == 0 && this.requestData.selectedExtraOption[1] == 0 && this.requestData.selectedExtraOption[2] == 0 ) {
+      } else if (this.requestData.selectedExtraOption[0] == 0 && this.requestData.selectedExtraOption[1] == 0 && this.requestData.selectedExtraOption[2] == 0 && this.requestData.selectedExtraOption[3] == 0 && this.requestData.selectedExtraOption[4] == 0 && this.requestData.selectedExtraOption[5] == 0 && this.requestData.selectedExtraOption[6] == 0 && this.requestData.selectedExtraOption[7] == 0 && this.requestData.selectedExtraOption[8] == 0 && this.requestData.selectedExtraOption[9] == 0) {
         window.alert("인원옵션을 선택해주세요.")
         return
       }
