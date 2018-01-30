@@ -356,7 +356,7 @@ export default {
         alert("환불 정보를 확인해주세요.")
       } else if (this.point.value > this.activity.price * this.$route.params.peopleCount) {
         alert("포인트 사용 에러입니다. 포인트 양을 확인해주세요.")
-      } else if (this.phoneValid) {
+      } else if (!this.requestUser.phoneValid) {
         alert("핸드폰이 인증되있지 않습니다. 화면 왼쪽에서 핸드폰 인증을 진행해주세요")
       } else {
         return true
