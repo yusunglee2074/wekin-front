@@ -51,6 +51,7 @@ export default {
       if (!this.isLastPage) {
         this.busy = true;
         api.getFeed(page, size).then(json => {
+          console.log(json.results)
           if (json.results.length != 0) {
             json.results.forEach(feed => {
               feed.refs = this.$refs.feedEditor
