@@ -5,7 +5,7 @@
       <div class="ui input feed-e" @click="onEditorClick()" v-if="user">
         <input type="text" placeholder="이야기를 남겨주세요." disabled="disabled">
       </div>
-      <feed-layout :feed="feed" v-for="feed in feeds" v-bind:key="feed.doc_key" v-if="!user || (user && !feed.private_mode)">
+      <feed-layout :feed="feed" v-for="feed in feeds" v-bind:key="feed.doc_key" v-if="!feed.private_mode">
       </feed-layout>
       <div class="app" style="height: 100px; width: 1px;margin: 0 auto;" v-infinite-scroll="loadMore" :infinite-scroll-disabled="busy" infinite-scroll-distance="10">
       </div>
