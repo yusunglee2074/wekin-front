@@ -430,7 +430,7 @@ export default {
           this.$nextTick(() => {
             setTimeout(() => {
               this.setupPopularWekinsSwiper()
-            }, 10 * activities.length)
+            }, 100)
           })
         })
         .then(() => {
