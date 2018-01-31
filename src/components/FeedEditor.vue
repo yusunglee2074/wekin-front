@@ -80,7 +80,7 @@
         <div style="positon:absolute; max-width:190px;">
           <div class="ui segments" style="margin-top:4px; margin-left:10px;" v-if="findWekin && findWekin !== '선택안함'">
   <div class="ui segment" style="padding: 4px 0px 4px 10px;cursor: pointer;" @click="getOneActivity(allActivitiesKeyNumber[index])" v-for="(item, index) in allActivitiesTitle " v-if="item.includes(findWekin)">
-    <p style="font-size:14px;">{{ item.slice(0, 13) }}...</p>
+    <p style="font-size:14px;">{{ item.slice(0, 33) }}...</p>
   </div>
   <div class="ui segment secondary" style="padding: 4px 0px 4px 10px;cursor: pointer;" @click="getOneActivity(0)">
     <p style="font-size:14px;"><i class="hand pointer icon"></i>관련위킨 선택안함</p>
@@ -349,6 +349,7 @@ export default {
       this.showFeedEditor()
     },
     createReview(activity) {
+      this.getOneActivity(activity.activity_key)
       this.activity.key = activity.activity_key
       this.activity.title = activity.title
       this.findWekin = activity.title
