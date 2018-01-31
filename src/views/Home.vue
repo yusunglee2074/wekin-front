@@ -136,7 +136,9 @@
             <div tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in activities" v-bind:key="wekin.activity_key">
               <router-link class="ui card pointer swiper-slide" :to="{ name: 'ActivityDetail', params: { key: wekin.activity_key }}">
               <div class="image">
-                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.thumb ? wekin.main_image.thumb : wekin.main_image.image[0]})`}"></div>
+                <div class="backImage mainImage">
+                  <img :src="wekin.main_image.thumb ? wekin.main_image.thumb : wekin.main_image.image[0]" alt="" style="width:100%; heigth: 100%; object-fit: cover;">
+                </div>
           <div v-if="wekin.is_it_end" style="position:absolute;width:100%;top:0;left:0;height:100%;z-index:9998;background-color:black;opacity: 0.7;"><img src="static/icon/soldout.svg" style="z-index:9999;margin:auto auto;width:100%;height:100%!important;" alt=""></div>
                 <div class="backImage overlayer"></div>
                 <div class="backImage ui circular image makerProfile" v-bind:style="{'z-index': 2, 'background-image':`url(${wekin.Host.profile_image})`}"></div>
@@ -188,7 +190,9 @@
             <div :href="`/activity/${wekin.activity_key}`" style="position:relative;" tag="a" class="ui card pointer swiper-slide" v-for="(wekin, index) in newestActivities" v-bind:key="index">
               <router-link class="ui card pointer swiper-slide" :to="{ name: 'ActivityDetail', params: { key: wekin.activity_key }}">
               <div class="image">
-                <div class="backImage mainImage" v-bind:style="{'background-image':`url(${wekin.main_image.thumb ? wekin.main_image.thumb : wekin.main_image.image[0]})`}"></div>
+                <div class="backImage mainImage">
+                  <img :src="wekin.main_image.thumb ? wekin.main_image.thumb : wekin.main_image.image[0]"  style="width:100%; heigth: 100%; object-fit: cover;">
+                </div>
           <div v-if="wekin.is_it_end" style="position:absolute;width:100%;top:0;left:0;height:100%;z-index:9998;background-color:black;opacity: 0.7;"><img src="static/icon/soldout.svg" style="z-index:9999;margin:auto auto;width:100%;height:100%!important;" alt=""></div>
                 <div class="backImage overlayer"></div>
                 <div class="backImage ui circular image makerProfile" v-bind:style="{'z-index': 2, 'background-image':`url(${wekin.Host.profile_image})`}"></div>
@@ -1032,7 +1036,7 @@ export default {
 }
 
 .backImage {
-  height: 160px;
+  height: 156px;
   border-radius: 4px;
   background-repeat: no-repeat;
   background-size: cover;
