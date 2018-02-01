@@ -9,7 +9,7 @@
                   <a :href="'/activity/' + banner.value.externalLink" target="_blank"><span style="font-weight:200;">{{ index + 1 }}. {{ banner.description }}</span></a></div>
               </div>
               <div v-else-if="banner.value.type === 'activityList'">
-                  <a :href="'/activity/' + '?list=' + banner.value.activityList" target="_blank"><span style="font-weight:200;">{{ index + 1 }}. {{ banner.description }}</span></a></div>
+                <a :href="'/activity/' + '?list=' + banner.value.activityList" target="_blank"><span style="font-weight:200;">{{ index + 1 }}. {{ banner.description }}</span></a></div>
               <div v-else>
                 <router-link :to="{ name: 'EventList', params: { key: banner.value.order }}"><div class="header" style="margin-bottom: 2px"><span style="font-weight:200;">{{ index + 1 }}. {{ banner.description }}</span></div></router-link>
               </div>
@@ -40,30 +40,30 @@
           </div>
         </section>
       </div>
-    <div style="width:75%; margin:40px auto;" class="ui segment list" v-else>
-      <img style="width:100%; margin: 30px auto; max-width: none;" id="image" :src="`${ banners[imageIndex - 1].value.url }`">
-      <div class="ui link three stackable cards activities" style="text-align:left;">
-        <wekin-card-layout
-          :activityKey="wekin.activity_key"
-          :title="wekin.title"
-          :address="wekin.address"
-          :name="wekin.Host.name"
-          :imageUrl="wekin.main_image.image[0]"
-          :favorite="wekin.Favorites"
-          :rating="Math.round(wekin.rating_avg) || 0"
-          :reviewCount="wekin.review_count || 0"
-          v-for="(wekin, index) in eventWekins" v-bind:key="wekin.wekin_key">
-          <div class="right floated price" style="text-align:right;" slot="extra-header">
-            <span>￦ {{wekin.base_price | joinComma}}</span>
-            <!--<span style="display:block;text-decoration:line-through;color:grey; font-size:0.9rem;">￦ {{wekin.price_before_discount }}</span>
-            <p style="font-weight:bold;color:#d51c1c;font-size:0.9rem;">[{{ wekin.base_price, wekin.price_before_discount | discountPercentage  }} %]</p>-->
-          </div>
-          <div class="content extra-body" slot="extra-body">
-            <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 3" style="padding-right:8px;" v-bind:key="index">{{schedule | formatDateKo}}</span>
-          </div>
-        </wekin-card-layout>
+      <div style="width:75%; margin:40px auto;" class="ui segment list" v-else>
+        <img style="width:100%; margin: 30px auto; max-width: none;" id="image" :src="`${ banners[imageIndex - 1].value.detailUrl }`">
+        <div class="ui link three stackable cards activities" style="text-align:left;">
+          <wekin-card-layout
+            :activityKey="wekin.activity_key"
+            :title="wekin.title"
+            :address="wekin.address"
+            :name="wekin.Host.name"
+            :imageUrl="wekin.main_image.image[0]"
+            :favorite="wekin.Favorites"
+            :rating="Math.round(wekin.rating_avg) || 0"
+            :reviewCount="wekin.review_count || 0"
+            v-for="(wekin, index) in eventWekins" v-bind:key="wekin.wekin_key">
+            <div class="right floated price" style="text-align:right;" slot="extra-header">
+              <span>￦ {{wekin.base_price | joinComma}}</span>
+              <!--<span style="display:block;text-decoration:line-through;color:grey; font-size:0.9rem;">￦ {{wekin.price_before_discount }}</span>
+              <p style="font-weight:bold;color:#d51c1c;font-size:0.9rem;">[{{ wekin.base_price, wekin.price_before_discount | discountPercentage  }} %]</p>-->
+            </div>
+            <div class="content extra-body" slot="extra-body">
+              <span v-for="(schedule, index) in wekin.start_date_list" v-if="index < 3" style="padding-right:8px;" v-bind:key="index">{{schedule | formatDateKo}}</span>
+            </div>
+          </wekin-card-layout>
+        </div>
       </div>
-    </div>
     </div>
   </div>
 
