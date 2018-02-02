@@ -108,6 +108,7 @@
       <div class="clear"></div>
     </div>
     <div class="ui segment">
+      <div v-if="providerId == 'password'">
       <div class="header">회원탈퇴</div>
       <div class="ui divider"></div>
       <!--<div class="settings__list" v-if="providerId == 'password'">-->
@@ -129,7 +130,23 @@
           <br></br>*삭제되신 정보는 재가입 후에도 복구가 불가능합니다.</span>
       </div>
       <button class="ui primary button floated right save-btn" @click="onWithdrawalClick()">탈퇴</button>
+      
+      
       <div class="clear"></div>
+      <hr>
+</div>
+      <div v-if="!providerId || providerId  == 'facebook.com'">
+        <h3>소셜 회원 탈퇴</h3>
+        <div class="ui divider"></div>
+        <div class="settings__list">
+          <span class="color negative"></span>
+        </div>
+          <button @click="withDraw()" class="ui primary button floated right">소셜 회원 계정탈퇴</button>
+        <div class="settings__list">
+          <span class="color negative">
+            *연동한 SNS과 연결을 끊고 모든 내용이 삭제됩니다.<br>*삭제되신 정보는 복구가 불가능합니다.</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -170,6 +187,16 @@ export default {
     }
   },
   methods: {
+    withDraw() {
+      if (confirm("정말로 탈퇴 하시겠습니까?")) {
+        api.withDrawSocial(localStorage.getItem('socialToken'), this.user.uuid)
+          .then(result => {
+            window.alert("모든 정보가 삭제되었습니다. 행복한 하루되세요!")
+            window.location.href = '/'
+          })
+          .catch(e => window.alert('에러가 발생했습니다. 혹시나 로그아웃 후 재 로그인에도 탈퇴가 진행되지 않으신다면 카카오톡 @위킨 으로 연락주시면 빠르게 답변드리겠습니다.'))
+      } else return
+    },
     onPhoneClick() {
       if (this.formUser.phoneValid && confirm("전화번호를 재인증 하시겠습니까?")) {
         this.formUser.phoneValid = false

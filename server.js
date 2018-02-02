@@ -8,6 +8,11 @@ var axios = require('axios')
 const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
 // const BASE_API_URL = 'http://192.168.0.100:8888/v1'
 
+
+// social sign up
+const snsUrl = 'http://we-kin.com/'
+// const snsUrl = 'http://175.195.139.99:3000/'
+
 app = express();
 
 app.get('*.js', function(req, res, next) {
@@ -22,7 +27,7 @@ app.set('view engine', 'handlebars');
 app.use(serveStatic(path.join(__dirname, 'dist')));
 
 app.get('/social/naver', function(req, res){
-  res.redirect('http://175.195.139.99:8080/auth/kakao?code=' + req.query.code)
+  res.redirect(snsUrl + 'auth/kakao?code=' + req.query.code)
 });
 
 app.get('/share/doc/:doc_key', function(req, res){

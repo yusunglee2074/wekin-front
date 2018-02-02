@@ -8,7 +8,7 @@ import axios from 'axios'
 const BASE_API_URL = 'https://wekin-api-prod-dot-wekinproject.appspot.com/v1'
 const GEO_API_KEY = 'AIzaSyARPCWOhPLlFgDvqXbKb5RLA4rnVAcGbZ0'
 const forSNSLoginUrl = 'http://we-kin.com'
-// const forSNSLoginUrl = 'http://175.195.139.99:8080'
+// const forSNSLoginUrl = 'http://175.195.139.99:3000'
 
 const BOARD_TYPE_NOTICE = 0
 
@@ -20,6 +20,10 @@ axios.interceptors.request.use((config) => {
 })
 
 export default {
+  withDrawSocial (socialToken, uuid) {
+    return axios.post(`${BASE_API_URL}/user/withdraw-social`, { socialToken: socialToken, uuid: uuid })
+      .then(r => r.data)
+  },
   getPaidAmount () {
     return axios.get(`${BASE_API_URL}/wekin/paid-amount`)
       .then(r => r.data)

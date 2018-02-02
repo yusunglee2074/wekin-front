@@ -27,6 +27,7 @@ export default {
   mounted() {
     api.kakaoLogin(this.$route.query.code, 'naver')
       .then(res => {
+        localStorage.setItem('socialToken', JSON.stringify(res.data.userToken))
         let customToken = res.data.customToken
         let userInfo = res.data.userInfo
         return firebase.auth().signInWithCustomToken(customToken)
@@ -38,7 +39,7 @@ export default {
         return api.dbCreateWithIdToken(localStorage.getItem('accessToken'))
       })
       .then(result => {
-        window.location.href = '/'
+        window.location.replace('/')
       })
       .catch( error => {
         if (error.response.data.message == "Already signin with this email") {
