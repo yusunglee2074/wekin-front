@@ -35,14 +35,9 @@ export default {
         return api.dbCreateWithIdToken(localStorage.getItem('accessToken'))
       })
       .then(result => {
-        if (result.exist == true) {
           window.location.replace('/')
-        } else {
-          window.location.replace('/thankyou')
-        }
       })
       .catch(error => {
-        console.log("여기로 빠지나?")
         if (error.response.data.message == "Already signin with this email") {
           window.alert('해당 이메일 가입 이력이 있습니다. \n 이메일: ' + error.response.data.email + '\n 추가 문의사항은 카카오톡 @위킨 혹은 고객센터에 문의바랍니다.')
           window.location.href = '/'
