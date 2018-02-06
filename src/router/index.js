@@ -46,6 +46,7 @@ import Search from 'views/Search.vue'
 import About from 'views/About.vue'
 import Manual from 'views/Manual.vue'
 import thankyou from 'views/thankyou.vue'
+import askProcess from 'views/askMakerToProcessOrNot.vue'
 import ExplainMaker from './../views/explainMakerStaticPage.vue'
 import EventList from 'components/EventList.vue'
 
@@ -77,6 +78,11 @@ export default new Router({
       path: '/thankyou',
       name: 'thankyou',
       component: thankyou
+    },
+    {
+      path: '/ask-the-maker-to-process-or-not',
+      name: 'askProcess',
+      component: askProcess
     },
     {
       path: '/manual/maker',

@@ -69,8 +69,25 @@
       </div>
       <div class="settings__list">
         <label>진행 가능 언어</label>
-        <div class="ui input fields">
-          <input type="text" v-model="request.language" placeholder="한국어 외 활동 진행 가능한 언어가 있으신가요?">
+        <div class="fields">
+          <input type="checkbox" id="1" value="한국어" v-model="request.language">
+          <label for="1">한국어</label>
+          <input type="checkbox" id="2" value="영어" v-model="request.language">
+          <label for="2">영어</label>
+          <input type="checkbox" id="3" value="중국어" v-model="request.language">
+          <label for="3">중국어</label>
+          <input type="checkbox" id="4" value="일본어" v-model="request.language">
+          <label for="4">일본어</label>
+          <input type="checkbox" id="5" value="필리핀어" v-model="request.language">
+          <label for="5">필리핀어</label>
+          <input type="checkbox" id="6" value="기타" v-model="request.language">
+          <label for="6">기타</label>
+          <br>
+          <span>선택: {{ request.language | excludegita }}</span>
+          <br>
+          <div v-if="request.language.includes('기타')">
+            <label for="gita">기타 언어 : </label><input id='gita' type="text" v-model="request.gitaLanguage">
+          </div>
         </div>
       </div>
       <div class="ui divider"></div>
@@ -211,6 +228,7 @@ export default {
     },
     sendForm() {
       if (this.checkForm()) {
+        this.request.language.push(this.request.gitaLanguage)
         let params = {
           name: this.request.name,
           introduce: this.request.introduce,
@@ -226,7 +244,7 @@ export default {
           license_list: this.uploadedLicense,
           type: this.hostType,
           join_method: this.knownRoute,
-          language: this.request.language
+          language: JSON.stringify(this.request.language) 
         }
 
         api.requestHost(params)
@@ -252,6 +270,15 @@ export default {
       }
     }
   },
+  filters: {
+    excludegita (aray) {
+      let result = []
+      for (let i = 0; i < aray.length; i++) {
+        if (aray[i] !== '기타') result.push(aray[i])
+      }
+      return result
+    }
+  },
   data() {
     return {
       request: {
@@ -266,7 +293,8 @@ export default {
           address: null,
           email: null,
         },
-        language: null
+        language: ['한국어'],
+        gitaLanguage: ''
       },
       knownRoute: "지인소개",
       hostType: 0,
