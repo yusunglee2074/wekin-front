@@ -20,6 +20,14 @@ axios.interceptors.request.use((config) => {
 })
 
 export default {
+  cancelOrderAndRefundWithSms(wekinKeysList) {
+    return axios.put(`${BASE_API_URL}/order/cancel-order-and-refund-with-sms`, { wekinKeysList })
+      .then(r => r.data)
+  },
+  getPaidWekinsForHost (activityKey) {
+    return axios.get(`${BASE_API_URL}/host/get-paid-wekins/${activityKey}`)
+      .then(r => r.data)
+  },
   withDrawSocial (socialToken, uuid) {
     return axios.post(`${BASE_API_URL}/user/withdraw-social`, { socialToken: socialToken, uuid: uuid })
       .then(r => r.data)
