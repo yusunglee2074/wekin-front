@@ -39,6 +39,7 @@ export default {
           .catch(error => console.log(error))
         return currentUser
       })
+      .catch(error => window.alert(error))
   },
   signOut () {
     return firebase.auth().signOut()
