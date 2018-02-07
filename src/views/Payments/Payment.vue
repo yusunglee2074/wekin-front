@@ -211,7 +211,7 @@ export default {
         finalPrice: 0,
       },
       isFullPointOrder: false,
-      isMobile = false
+      isMobile: false
     }
   },
   computed: {
