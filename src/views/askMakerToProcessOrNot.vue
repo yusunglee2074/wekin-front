@@ -7,7 +7,7 @@
     <div class="thank-content">
     </div>
     <div id="thank-ask">
-      <p>내일 있을 "{{ activity.title }}"의 <br><span>진행가능 최소인원은 {{ minUser }}명</span> 입니다.</p>
+      <p>내일 있을 "{{ activity.title }}"의 작성하셨던 <br><span>진행가능 최소인원은 {{ minUser }}명</span> 입니다.</p>
       <p>최소인원에 미치지 못해 <span>진행하지 않는다면</span></p>
       <p>꼭 아래 버튼을 눌러, 고객들에게 문자를 통해 <span>진행하지 않는다는걸</span> 알려주세요.</p>
       <p>진행하신다면 이 페이지는 <span>무시</span>하셔도 좋습니다.</p>
