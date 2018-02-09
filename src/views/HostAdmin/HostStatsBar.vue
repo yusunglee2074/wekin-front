@@ -57,8 +57,8 @@ export default {
                 return a + b.activity_rating
               }
             })
-            console.log(ratingSum)
-            this.ratingAvg = ratingSum / ratings.length
+            let temp = ratingSum/ratings.length
+            this.ratingAvg = temp.toFixed(2)
           }
         })
         .catch(err => console.error(err))
