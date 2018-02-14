@@ -19,10 +19,10 @@
       </div>
     </div>
     <div id="imagediv">
-      <div v-if="imageIndex != 1">
+      <div v-if="banners[imageIndex - 1].value.type !== 'activityList'">
         <div>
           <h4 class="ui horizontal divider header">
-            상세 이미지 
+            상세 설명 
           </h4>
           <img id="image" :src="`${ banners[imageIndex - 1].value.detailUrl }`">
         </div>
@@ -40,7 +40,7 @@
           </div>
         </section>
       </div>
-      <div style="width:75%; margin:40px auto;" class="ui segment list" v-else>
+      <div style="width:75%; margin:40px auto;" class="ui segment list" v-if="banners[imageIndex - 1].value.type === 'activityList'">
         <img style="width:100%; margin: 30px auto; max-width: none;" id="image" :src="`${ banners[imageIndex - 1].value.detailUrl }`">
         <div class="ui link three stackable cards activities" style="text-align:left;">
           <wekin-card-layout
@@ -52,7 +52,7 @@
             :favorite="wekin.Favorites"
             :rating="Math.round(wekin.rating_avg) || 0"
             :reviewCount="wekin.review_count || 0"
-            v-for="(wekin, index) in eventWekins" v-bind:key="wekin.wekin_key">
+            v-for="(wekin, index) in eventWekins[imageIndex - 1]" v-bind:key="wekin.wekin_key">
             <div class="right floated price" style="text-align:right;" slot="extra-header">
               <span>￦ {{wekin.base_price | joinComma}}</span>
               <!--<span style="display:block;text-decoration:line-through;color:grey; font-size:0.9rem;">￦ {{wekin.price_before_discount }}</span>
@@ -80,8 +80,7 @@ export default {
     return {
       imageIndex: '',
       banners: [],
-      eventWekinList: [],
-      eventWekins: []
+      eventWekins: [[], [], [], [], [], []]
     }
   },
   components: {
@@ -92,15 +91,7 @@ export default {
       this.imageIndex = this.$route.params.key
     },
     loadMainBanners() {
-      api.getMainBanners()
-        .then(banners => {
-          banners.sort(function (a, b) {
-            return a.value.order - b.value.order
-          })
-          banners.forEach((banner, index) => {
-            this.banners.push(banner)
-          })
-        })
+      return api.getMainBanners()
     },
     joinRequest () {
       console.log(this.$parent.$refs.navbar)
@@ -141,22 +132,38 @@ export default {
       return ((before - base) / before  * 100).toFixed(0) == 9 ? 10 : ((before - base) / before  * 100).toFixed(0)
     }
   },
-  mounted() {
+  created() {
     this.loadMainBanners()
-    api.getVersion()
-      .then(data => {
-        this.eventWekinList = JSON.parse(JSON.parse(data.data).eventWekinList)
+      .then(banners => {
+        banners.sort(function (a, b) {
+          return a.value.order - b.value.order
+        })
+        banners.forEach((banner, index) => {
+          this.banners.push(banner)
+        })
         return api.getActivities(3)
       })
       .then(activities => {
+        this.allWekins = activities
+        let tmpActivityList = {}
+        for (let i = 0; i < this.banners.length; i++) {
+          if (this.banners[i].value.type === 'activityList') {
+            tmpActivityList[this.imageIndex - 1] = this.banners[i].value.activityList
+          } else {
+            continue
+          }
+        }
         for (let i = 0, length = activities.length; i < length; i++) {
           let activity = activities[i]
           this.deleteBeforeTodayDate(activity.start_date_list, activity)
-          if (this.eventWekinList.includes(activity.activity_key)) {
-            this.eventWekins.push(activity)
+          for (let list in tmpActivityList) {
+            if (tmpActivityList[list].includes(activity.activity_key)) {
+              this.eventWekins[this.imageIndex - 1].push(activity)
+            }
           }
         }
       })
+      .catch(error => console.log(error))
   },
   beforeUpdate() {
     this.getImageWithPageIndex()
