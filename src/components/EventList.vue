@@ -24,7 +24,7 @@
           <h4 class="ui horizontal divider header">
             상세 설명 
           </h4>
-          <img id="image" :src="`${ banners[imageIndex - 1].value.detailUrl }`">
+          <img v-if="banners[imageIndex - 1].value.detailUrl" id="image" :src="`${ banners[imageIndex - 1].value.detailUrl }`">
         </div>
         <section id="fourthSection" style="background-color:rgb(248, 248, 248); min-height: 350px; padding: 60px;" v-show="banners[imageIndex - 1].description == '위킨은 능력자 모집중!'">
           <div class="title">
@@ -41,8 +41,8 @@
         </section>
       </div>
       <div style="width:75%; margin:40px auto;" class="ui segment list" v-if="banners[imageIndex - 1].value.type === 'activityList'">
-        <img style="width:100%; margin: 30px auto; max-width: none;" id="image" :src="`${ banners[imageIndex - 1].value.detailUrl }`">
-        <div class="ui link three stackable cards activities" style="text-align:left;">
+        <img v-if="banners[imageIndex - 1].value.detailUrl" style="width:100%; margin: 30px auto; max-width: none;" id="image" :src="`${ banners[imageIndex - 1].value.detailUrl }`">
+        <div class="ui link three stackable cards activities" style="text-align:left; padding-top:20px;">
           <wekin-card-layout
             :activityKey="wekin.activity_key"
             :title="wekin.title"
@@ -148,11 +148,12 @@ export default {
         let tmpActivityList = {}
         for (let i = 0; i < this.banners.length; i++) {
           if (this.banners[i].value.type === 'activityList') {
-            tmpActivityList[this.imageIndex - 1] = this.banners[i].value.activityList
+            tmpActivityList[this.banners[i].value.order - 1] = this.banners[i].value.activityList
           } else {
             continue
           }
         }
+        console.log(tmpActivityList)
         for (let i = 0, length = activities.length; i < length; i++) {
           let activity = activities[i]
           this.deleteBeforeTodayDate(activity.start_date_list, activity)
