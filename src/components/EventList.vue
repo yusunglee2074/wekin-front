@@ -159,7 +159,7 @@ export default {
           this.deleteBeforeTodayDate(activity.start_date_list, activity)
           for (let list in tmpActivityList) {
             if (tmpActivityList[list].includes(activity.activity_key)) {
-              this.eventWekins[this.imageIndex - 1].push(activity)
+              this.eventWekins[list].push(activity)
             }
           }
         }
