@@ -49,6 +49,8 @@ import thankyou from 'views/thankyou.vue'
 import askProcess from 'views/askMakerToProcessOrNot.vue'
 import ExplainMaker from './../views/explainMakerStaticPage.vue'
 import EventList from 'components/EventList.vue'
+import EventLanding from 'components/InviteEvent/LandingPage.vue'
+import InviteFriendEventRanking from 'components/InviteEvent/Ranking.vue'
 
 Vue.use(Router)
 
@@ -244,6 +246,16 @@ export default new Router({
       path: '/event/:key',
       name: 'EventList',
       component: EventList
+    },
+    {
+      path: '/event/invite-friend/ranking',
+      name: 'InviteFriendEventRanking',
+      component: InviteFriendEventRanking
+    },
+    {
+      path: '/event/invite-friend/:user_key',
+      name: 'EventLanding',
+      component: EventLanding
     }
   ]
 })
