@@ -19,7 +19,7 @@
       </div>
       <div v-else class="dog">
         <img src="https://firebasestorage.googleapis.com/v0/b/wekin-9111d.appspot.com/o/test%2Famazon_corgi_surprise_dribbble-min.png?alt=media&token=9419917c-8483-415f-ae65-946fac58d8f7">
-        <button @click="open()" v-show="user && moment() > moment('2018-02-21')">상품열개</button>
+        <button @click="open()" v-show="user && canIOpenThisBox()">상품열개</button>
       </div>
       <div>
       </div>
@@ -33,6 +33,7 @@
 
 <script>
 import api from 'api'
+import moment from 'moment'
 
 export default {
   data() {
@@ -55,6 +56,13 @@ export default {
   beforeUpdate() {
   },
   methods: {
+    canIOpenThisBox() {
+      if (moment() > moment('2018-02-22')) {
+        return true
+      } else {
+        return false
+      }
+    },
     setJoined() {
       return api.setUserStatusToJoinedForEvent(this.user.user_key)
         .then(result => {
