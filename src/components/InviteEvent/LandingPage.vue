@@ -17,7 +17,7 @@
         <div class="guage-checker"><span class="arrow"></span></div>
       </div>
       <div class="time">
-        <p style="margin-bottom:52px;"><a class="title">이벤트 기간</a> 2월 21일 수요일 ~ 3월 10일 토요일(18일간)</p>
+        <p style="margin-bottom:52px;"><a class="title">이벤트 기간</a> 2월 21일 수요일 ~ 3월 11일 일요일(18일간)</p>
         <p><a class="title">당첨자 발표</a> 2018년 3월 20일(화), 위킨 홈페이지, 앱</p>
         <p class="count-down">남은시간 <span><a>{{ countDownHours[0] }}</a><a>{{ countDownHours[1] }}</a><a>{{ countDownHours[2] }}</a><span style="color:white; margin-left:8px;">:</span><a>{{ countDownMinutes[0] }}</a><a>{{ countDownMinutes[1] }}</a><span style="color:white; margin-left:8px;">:</span><a>{{ countDownSeconds[0] }}</a><a>{{ countDownSeconds[1] }}</a></span></p>
         <button id="submit" @click="goTo('ranking')">이벤트 참여하기</button>
@@ -29,18 +29,20 @@
         <p>초대한 친구 회원가입 1명당(무제한) = <span>2,000 point</span></p>
       </div>
       <div class="third-text">
-        <div>휴대폰 이미지</div>
+        <img src="./../../../static/images/event/cellphone.png">
         <span>위킨앱 다운로드</span>
       </div>
     </div>
     <div class="ranking">
-      <Rank circle="랭킹 1등" id="현재 1위 ${currentUser} kin*****" img="./../../../static/images/event/macbook-min.png"></Rank>
-      <Rank circle="랭킹 2등" id="현재 2위 kin*****" img="./../../../static/images/event/ipad-min.png"></Rank>
-      <Rank circle="랭킹 3등" id="현재 3kin*****" img="./../../../static/images/event/nintendo-min.png"></Rank>
-      <Rank circle="8000번째 가입자" id="" img="./../../../static/images/event/giftcard-1.svg"></Rank>
-      <Rank circle="2000, 4000, 6000번째 가입자" id="" img="./../../../static/images/event/giftcard-2.svg"></Rank>
-      <Rank circle="위킨박스 당첨자" id="" img="./../../../static/images/event/giftcard-3.svg"></Rank>
-      <Rank circle="위킨박스 당첨자" id="" img="./../../../static/images/event/coffee-min.png"></Rank>
+      <div class="wrap">
+      <Rank circle="랭킹 1등" i='1' :id="ranking[0] ? ranking[0].email : '정보없음'" img="./../../../static/images/event/macbook-min.png" style="display:inline-block;"></Rank>
+      <Rank circle="랭킹 2등" i='2' :id="ranking[1] ? ranking[1].email : '정보없음'" img="./../../../static/images/event/ipad-min.png" style="display:inline-block;"></Rank>
+      <Rank circle="랭킹 3등" i='3' :id="ranking[2] ? ranking[2].email : '정보없음'" img="./../../../static/images/event/nintendo-min.png" style="display:inline-block;"></Rank>
+      <Rank circle="팔천번째 가입자" id="" img="./../../../static/images/event/giftcard-1.svg" style="display:inline-block;"></Rank>
+      <Rank circle="2000,4000,6000번째 가입자" id="" img="./../../../static/images/event/giftcard-2.svg" style="display:inline-block;"></Rank>
+      <Rank circle="위킨박스 당첨자" id="" img="./../../../static/images/event/giftcard-3.svg" style="display:inline-block;"></Rank>
+      <Rank circle="위킨박스 당첨자" id="" img="./../../../static/images/event/coffee-min.png" style="display:inline-block;"></Rank>
+</div>
     </div>
     <div class="how-to">
       <div class="title">
@@ -123,7 +125,7 @@ export default {
   },
   created() {
     window.setInterval(() => {
-      this.leftTime = moment('2018-03-11').unix() - moment().unix()
+      this.leftTime = moment('2018-03-11').set('hour', 23).set('minute', 59).set('second', 59).unix() - moment().unix()
     }, 1000)
     api.inviteNewUserLanding(this.$route.params.user_key)
       .then(result => {
@@ -150,7 +152,9 @@ export default {
         }
         return api.getInviteEventRanking()
       })
-      .then(result => this.ranking = result)
+      .then(result => { 
+        this.ranking = result
+      })
       .catch(e => console.log(e))
   },
   beforeUpdate() {
@@ -240,7 +244,7 @@ export default {
   display:inline-block;
   margin-left: 15px;
 }
-@media only screen and (max-width: 548px) {
+@media only screen and (max-width: 840px) {
   .content .count-down a {
     width: 38px;
     height: 46px;
@@ -380,7 +384,8 @@ Margin-left : -14px ; Border-bottom : solid 24px #f7d532 ; border-left : solid 1
   padding: 110px;
 }
 .footer .first-text p {
-  width: 757px;
+  max-width: 757px;
+  width: 50vw;
   font-family: NanumSquareOTFEB;
   font-size: 1.6em;
   line-height: 0.94;
@@ -419,6 +424,11 @@ Margin-left : -14px ; Border-bottom : solid 24px #f7d532 ; border-left : solid 1
   right: 10%;
   padding: 22px 0;
 }
+.footer .third-text img {
+  position: absolute;
+  top: -200%;
+  right: 20%;
+}
 .footer .third-text span {
   font-family: NanumSquareOTFEB;
   font-size: 1.5em;
@@ -426,7 +436,7 @@ Margin-left : -14px ; Border-bottom : solid 24px #f7d532 ; border-left : solid 1
   text-align: left;
   color: #1e245b;
 }
-@media only screen and (max-width: 548px) {
+@media only screen and (max-width: 700px) {
   .footer {
     max-width: 1700px;
     width: 100%;
@@ -465,7 +475,7 @@ Margin-left : -14px ; Border-bottom : solid 24px #f7d532 ; border-left : solid 1
   }
   .footer .third-text {
     margin: 30px auto;
-    width: 116px;
+    width: 189px;
     height: 50px;
     border-radius: 36px;
     background-color: #eed034;
@@ -473,9 +483,12 @@ Margin-left : -14px ; Border-bottom : solid 24px #f7d532 ; border-left : solid 1
     position: initial;
     padding: 10px 10px;
   }
+  .footer .third-text img {
+    display: none;
+  }
   .footer .third-text span {
     font-family: NanumSquareOTFEB;
-    font-size: 1.5em;
+    font-size: 0.9em;
     line-height: 1.0;
     text-align: left;
     color: #1e245b;
@@ -579,5 +592,9 @@ Margin-left : -14px ; Border-bottom : solid 24px #f7d532 ; border-left : solid 1
     color: #ffffff;
   }
 }
+
+
+.ranking { background-color:#202345; display : inline-block ; width : 100% }
+.ranking > .wrap { width : 100% ; max-width : 1436px ; margin : auto }
 
 </style>
