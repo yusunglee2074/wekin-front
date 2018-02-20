@@ -8,9 +8,9 @@
     <div class="line"></div>
     <div class="content">
       <p class="intro"><span>10,000명의 신규회원</span>이 모이면 맥북에어, 아이패드 등 <span>218개의 특급선물</span>을 쏩니다!</p>
-      <p class="count-down">현재 <span><a>9</a><a>9</a></span> ,<span><a>9</a><a>9</a><a>9</a><a>9</a></span> 명/ <span id="10-000">10,000명</span></p>
+      <p class="count-down">현재 <span><a>{{currentUser[0]}}</a><a>{{currentUser[1]}}</a></span> ,<span><a>{{currentUser[2]}}</a><a>{{currentUser[3]}}</a><a>{{currentUser[4]}}</a></span> 명/ <span id="10-000">10,000명</span></p>
       <div class="guage-bg">
-        <div class="guage-bar"></div>
+        <div class="guage-bar" v-bind:style="{ width: currentUser / 100 + '%' }" ></div>
         <div class="guage-checker"><span class="arrow"></span></div>
         <div class="guage-checker"><span class="arrow"></span></div>
         <div class="guage-checker"><span class="arrow"></span></div>
@@ -19,8 +19,8 @@
       <div class="time">
         <p style="margin-bottom:52px;"><a class="title">이벤트 기간</a> 2월 21일 수요일 ~ 3월 10일 토요일(18일간)</p>
         <p><a class="title">당첨자 발표</a> 2018년 3월 20일(화), 위킨 홈페이지, 앱</p>
-        <p class="count-down">남은시간 <span><a>2</a><a>4</a>:<a>1</a><a>1</a>:<a>1</a><a>3</a></span></p>
-        <button id="submit">이벤트 참여하기</button>
+        <p class="count-down">남은시간 <span><a>{{ countDownHours[0] }}</a><a>{{ countDownHours[1] }}</a><a>{{ countDownHours[2] }}</a><span style="color:white; margin-left:8px;">:</span><a>{{ countDownMinutes[0] }}</a><a>{{ countDownMinutes[1] }}</a><span style="color:white; margin-left:8px;">:</span><a>{{ countDownSeconds[0] }}</a><a>{{ countDownSeconds[1] }}</a></span></p>
+        <button id="submit" @click="goTo('ranking')">이벤트 참여하기</button>
       </div>
     </div>
     <div class="footer">
@@ -34,13 +34,13 @@
       </div>
     </div>
     <div class="ranking">
-      <Rank circle="랭킹 1등" id="현재 1위 kin*****"></Rank>
-      <Rank circle="랭킹 2등" id="현재 2위 kin*****"></Rank>
-      <Rank circle="랭킹 3등" id="현재 3kin*****"></Rank>
-      <Rank circle="8000번째 가입자" id=""></Rank>
-      <Rank circle="2000, 4000, 6000번째 가입자" id=""></Rank>
-      <Rank circle="위킨박스 당첨자" id=""></Rank>
-      <Rank circle="위킨박스 당첨자" id=""></Rank>
+      <Rank circle="랭킹 1등" id="현재 1위 ${currentUser} kin*****" img="./../../../static/images/event/macbook-min.png"></Rank>
+      <Rank circle="랭킹 2등" id="현재 2위 kin*****" img="./../../../static/images/event/ipad-min.png"></Rank>
+      <Rank circle="랭킹 3등" id="현재 3kin*****" img="./../../../static/images/event/nintendo-min.png"></Rank>
+      <Rank circle="8000번째 가입자" id="" img="./../../../static/images/event/giftcard-1.svg"></Rank>
+      <Rank circle="2000, 4000, 6000번째 가입자" id="" img="./../../../static/images/event/giftcard-2.svg"></Rank>
+      <Rank circle="위킨박스 당첨자" id="" img="./../../../static/images/event/giftcard-3.svg"></Rank>
+      <Rank circle="위킨박스 당첨자" id="" img="./../../../static/images/event/coffee-min.png"></Rank>
     </div>
     <div class="how-to">
       <div class="title">
@@ -71,16 +71,87 @@ import Rank from './rank-component.vue'
 export default {
   data() {
     return {
+      currentUser: '00000',
+      leftTime: '',
+      ranking: {}
     }
+  },
+  computed: {
+    countDownHours() {
+      switch(String(this.leftTime / 3600 | 0).length) {
+        case 3:
+          return String(this.leftTime / 3600 | 0)
+          break
+        case 2:
+          return '0' + String(this.leftTime / 3600 | 0)
+          break
+        case 1:
+          return '00' + String(this.leftTime / 3600 | 0)
+          break
+      }
+    },
+    countDownMinutes() {
+      switch(String((this.leftTime / 60 | 0) % 60).length) {
+        case 1:
+          return '0' + String((this.leftTime / 60 | 0) % 60)
+          break
+        case 2:
+          return String((this.leftTime / 60 | 0) % 60)
+          break
+      }
+    },
+    countDownSeconds() {
+      switch(String(this.leftTime % 60).length) {
+        case 1:
+          return '0' + String(this.leftTime % 60)
+          break
+        case 2:
+          return String(this.leftTime % 60)
+          break
+      }
+    },
   },
   components: {
     Rank
   },
   methods: {
+    goTo(where) {
+      this.$router.push('/event/invite-friend/ranking')
+    }
   },
   filters: {
   },
   created() {
+    window.setInterval(() => {
+      this.leftTime = moment('2018-03-11').unix() - moment().unix()
+    }, 1000)
+    api.inviteNewUserLanding(this.$route.params.user_key)
+      .then(result => {
+        return api.getCurrentJoinedUsersCount()
+      })
+      .then(count => {
+        count = String(count)
+        switch(count.length) {
+          case 1:
+            this.currentUser = '0000' + count
+            break
+          case 2:
+            this.currentUser = '000' + count
+            break
+          case 3:
+            this.currentUser = '00' + count
+            break
+          case 4:
+            this.currentUser = '0' + count
+            break
+          case 5:
+            this.currentUser = count
+            break
+        }
+        return api.getInviteEventRanking()
+      })
+      .then(result => this.ranking = result)
+      .catch(e => console.log(e))
   },
   beforeUpdate() {
   },
@@ -208,7 +279,6 @@ export default {
 }
 .content .guage-bg .guage-bar {
   background-color: #6857b2;
-  width: 50%;
   height: 40px;
 }
 .content .guage-bg > .guage-checker {
@@ -277,6 +347,7 @@ Margin-left : -14px ; Border-bottom : solid 24px #f7d532 ; border-left : solid 1
   }
 }
 .content #submit {
+  cursor: pointer;
 	width: 450px;
 	height: 100px;
 	border-radius: 100px;
@@ -289,6 +360,7 @@ Margin-left : -14px ; Border-bottom : solid 24px #f7d532 ; border-left : solid 1
 }
 @media only screen and (max-width: 548px) {
   .content #submit {
+  cursor: pointer;
     width: 225px;
     height: 50px;
     border-radius: 100px;
