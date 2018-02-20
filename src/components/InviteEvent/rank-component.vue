@@ -1,14 +1,10 @@
 <template>
-  <div class="rank" style="background-color:#202345;">
-    <div class="circle">
-      <span>{{ circle }}</span>
-    </div>
-    <div class="id">
-      <span>{{ id }}</span>
-    </div>
-    <div class="item-img">
-      <img :src="img">
-    </div>
+  <div class="rank">
+    <div class="circle"><span>{{ circle }}</span></div>
+      <div class="id" v-if="i">현재 {{ i }}위 <br> {{ id }}</div>
+      <div class="item-img">
+        <img :src="img">
+      </div>
   </div>
 </template>
 
@@ -21,6 +17,7 @@ export default {
     'circle',
     'id',
     'img',
+    'i'
   ],
   data() {
     return {
@@ -40,66 +37,48 @@ export default {
 </script>
 <style>
 .rank {
-  padding: 10px;
+  padding : 308px 0 0 0 ;
+  width: 50%; height : 570px ; float : left ; display : inline-block ; 
+  margin: auto;
+  Position : relative 
 }
-.circle {
+.rank > .circle {
   width: 168px;
   height: 168px;
   border-radius: 50%;
   background-color: #eed034;
-  padding: 70px 38px;
   display: inline-block;
-}
-.circle span {
-  text-align: center;
-  width: 101px;
-  height: 32px;
   font-family: NanumSquareOTFEB;
-  font-size: 28px;
-  line-height: 1.14;
-  text-align: left;
-  color: #1e245b;
+  Color : #1e245b ; font-size : 23px ; text-align : center ; line-height : 1 ; position : absolute ; top : 100px ; left : 0
+; display: -webkit-box; display: -ms-inlinebox; display: -webkit-inline-box; display: inline-box; -webkit-box-pack: center; -ms-flex-pack: center; -webkit-justify-content: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; -webkit-align-items: center; align-items: center;
 }
-.id {
+.rank > .circle > span { display : inline-block }
+.rank > .id {
+  Position : absolute ; top : 138px ; left : 218px ;
   display: inline-block;
   font-family: NanumSquareOTFEB;
   font-size: 26px;
-  line-height: 1.23;
+  line-height: 46px;
   text-align: left;
   color: #ffffff;
 }
-.id span {
-  color: white;
+.rank > .item-img { text-align : center }
+.rank:last-child {
+  padding : 100px 0 0 0 ;
+  width: 100%; float : initial ; display : inline-block ; 
+  Text-align : center  
 }
+.rank:last-child > .circle { position : static }
+.rank:last-child > .item-img { margin-top : -50px }
+
+
 @media only screen and (max-width: 548px) {
-  .circle {
-    width: 84px;
-    height: 84px;
-    border-radius: 50%;
-    background-color: #eed034;
-    padding: 35px 19px;
-    display: inline-block;
-  }
-  .circle span {
-    text-align: center;
-    width: 50px;
-    height: 16px;
-    font-family: NanumSquareOTFEB;
-    font-size: 14px;
-    line-height: 8px;
-    text-align: left;
-    color: #1e245b;
-  }
-  .id {
-    display: inline-block;
-    font-family: NanumSquareOTFEB;
-    font-size: 13px;
-    line-height: 8px;
-    text-align: left;
-    color: #ffffff;
-  }
-  .id span {
-    color: white;
-  }
+  .rank {  width: 100%; height : auto ; display: block }
+  .rank:last-child {
+    padding : 308px 0 0 0 ;
+    width: 100%; display : block ; 
+  Text-align : left  }
+  .rank:last-child > .circle { position : absolute }
+  .rank:last-child > .item-img { margin-top : 0px }
 }
 </style>
