@@ -4,43 +4,49 @@
       <h2>2018 만만한 챌린지</h2>
       <p>이벤트 참여하기</p>
     </div>
-    <div class="how-to">
-      <div class="title">
-        <span>참여방법</span>
-      </div>
-      <div class="four-bro">
-        <a>01</a>
-        <div class="order">
-          <span>신규가입 또는 로그인</span>
+    <div class="how-to section">
+      <div class="container">
+        <div class="title">
+          참여방법
         </div>
-      </div>
-      <div class="four-bro">
-        <a>02</a>
-        <div class="order">
-          <span>친구를 초대할 고유 URL 발급</span>
-        </div>
-      </div>
-      <div class="four-bro">
-        <a>03</a>
-        <div class="order">
-          <span>내 고유 URL를 통해 새롭게 회원가입</span>
-        </div>
-      </div>
-      <div class="four-bro">
-        <a>04</a>
-        <div class="order">
-          <span>응모완료</span>
+        <div class="four-bro-wrap">
+          <div class="four-bro">
+            <div class="circle">01</div>
+            <div class="order">
+              <p>신규가입 또는 로그인</p>
+            </div>
+          </div>
+          <div class="four-bro">
+            <div class="circle">02</div>
+            <div class="order">
+              <p>친구를 초대할 SNS채널 선택 고유 URL발급</p>
+            </div>
+          </div>
+          <div class="four-bro">
+            <div class="circle">03</div>
+            <div class="order">
+              <p>내 초대 메시지 링크를 통해 친구 회원가입</p>
+            </div>
+          </div>
+          <div class="four-bro">
+            <div class="circle">04</div>
+            <div class="order">
+              <p>응모완료</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="url" style="text-align:center;">
-      <p>홍보용 URL 발급하기</p>
-      <input type="text" placeholder="홍보용 URL 발급하기" disabled>
-      <button id="url-button1">발급하기</button>
-      <button id="url-button2">복사하기</button>
+    <div class="url section">
+      <p class="section-title">홍보용 URL 발급하기</p>
+      <input class="url-input" type="text" placeholder="홍보용 URL 발급하기" disabled>
+      <div class="url-btn-wrap">
+        <button id="url-button1">발급하기</button>
+        <button id="url-button2">복사하기</button>
+      </div>
     </div>
-    <div class="share-social">
-      <p>친구 초대하기</p>
+    <div class="share-social section">
+      <p class="section-title">친구 초대하기</p>
       <div class="share-buttons">
         <button>페이스북</button>
         <button>카카오</button>
@@ -48,38 +54,44 @@
         <button>다음</button>
       </div>
     </div>
-    <div class="ranking">
-      <p>랭킹보기</p>
-      <div class="rank">
-        <div class="first">
-          <div>랭킹 1등</div>
+    <div class="ranking section">
+      <p class="section-title">랭킹보기</p>
+      <div class="rank macbook">
+        <div class="circle-wrap">
+          <div class="circle rank">
+            <div>랭킹 1등</div>
+          </div>
+          <div class="circle gift">
+            <img src="./../../../static/images/event/macbook-min.png">
+          </div>
         </div>
-        <div class="first">
-          <img style="height:50%; width: 70%; top: 31%; left: 15%;" src="./../../../static/images/event/macbook-min.png">
-        </div>
-        <div class="third">
+        <div class="rank-name">
           <div>아이디</div>
         </div>
       </div>
-      <div class="rank">
-        <div class="first">
-          <div>랭킹 2등</div>
+      <div class="rank ipad">
+        <div class="circle-wrap">
+          <div class="circle rank">
+            <div>랭킹 2등</div>
+          </div>
+          <div class="circle gift">
+            <img src="./../../../static/images/event/ipad-min.png">
+          </div>
         </div>
-        <div class="first">
-          <img style="height:70%; width: 60%; top: 21%; left: 20%;" src="./../../../static/images/event/ipad-min.png">
-        </div>
-        <div class="third">
+        <div class="rank-name">
           <div>아이디</div>
         </div>
       </div>
-      <div class="rank">
-        <div class="first">
-          <div>랭킹 3등</div>
+      <div class="rank nintendo">
+        <div class="circle-wrap">
+          <div class="circle rank">
+            <div>랭킹 3등</div>
+          </div>
+          <div class="circle gift">
+            <img src="./../../../static/images/event/nintendo-min.png">
+          </div>
         </div>
-        <div class="first">
-          <img style="height:40%; width: 70%; top: 38%; left: 15%;" src="./../../../static/images/event/nintendo-min.png">
-        </div>
-        <div class="third">
+        <div class="rank-name">
           <div>아이디</div>
         </div>
       </div>
@@ -128,6 +140,15 @@ export default {
   src: url('https://firebasestorage.googleapis.com/v0/b/wekin-9111d.appspot.com/o/test%2FNanumSquareRoundR.woff?alt=media&token=da184a77-33b4-44b9-8a05-c209192ae8ae') format('woff');
 }
 
+p, button, div {
+  font-family: 'NanumSquareOTFEB';
+  font-weight: 600;
+}
+
+button:active {
+  opacity: 0.7;
+}
+
 .invite-event-ranking {
   font-size: 2.1vw;
   max-width: 1980px;
@@ -160,456 +181,404 @@ export default {
   text-align: center;
   color: #f7d532;
 }
-.how-to {
-  max-width: 100vw;
-  width: 100%;
-  height: 500px;
-  background-color: #111326;
-  text-align: center;
-  padding: 3vw;
-}
-.how-to .title {
-  position: relative;
-  max-width: 30vw;
-  max-height: 72px;
-  height: 10vw;
-  border-radius: 100px;
-  background-color: #02a477;
-  text-align: center;
-  margin: 30px auto;
-}
-.how-to .title span {
-  position: absolute;
-  top: 50%;
-  left: 30%;
-  margin-top: -2%;
-  font-family: NanumSquareOTFEB;
-  font-size:1.7em; 
-  text-align: center;
-  color: #ffffff;
-}
-.how-to .four-bro {
-  float:left;
-  display: inline-block;
-  width: 22vw;
-  height: 4vw;
-  position: relative;
-}
-.how-to .order {
-  position: absolute; 
-  max-width: 200px;
-  width: 24vw;
-  display: inline-block;
-  left: 16%;
-  top: 20%;
-}
-.how-to a {
-  left: 0%;
-  top: 32%;
-  position: absolute; 
-  display: inline-block;
-  width: 3vw;
-  height: 3vw;
-  background-color: #6857b2;
-  border-radius: 50%;
-  font-family: NanumSquareOTFEB;
-  font-size: 1.25em;
-  line-height: 1.2;
-  text-align: center;
-  color: #ffffff;
-}
-.how-to .order span {
-  font-family: NanumSquareOTFEB;
-  font-size: 1.3em;
-  line-height: 1.47;
-  text-align: left;
-  color: #ffffff;
-}
-@media only screen and (max-width: 548px) {
+
+@media only screen and (min-width: 548px) {
+  .section {
+    // max-width: 1000px;
+    padding: 90px 10px;
+  }
+
+  .container {
+    margin: auto;
+  }
+
+  .section-title {
+    color: #f7d532;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  // section 01 참여방법
   .how-to {
-    max-width: 1920px;
-    width: 100%;
-    height: 476px;
     background-color: #111326;
-    padding: 10px;
+
+    .title {
+      width: 160px;
+      height: 50px;
+      margin: auto;
+      margin-bottom: 30px;
+      text-align: center;
+      font-size: 24px;
+      color: #fff;
+      line-height: 50px;
+      border-radius: 100px;
+      background-color: #02a477
+    }
+
+    .four-bro-wrap {
+      width: 100%;
+      padding-bottom: 80px;
+    }
+
+    .four-bro {
+      float: left;
+      width: 25%;
+      text-align: center;
+      padding-left: 5%;
+
+      .circle {
+        float: left;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
+        color: #fff;
+        border-radius: 100%;
+        background-color: #6857b2;
+      }
+
+      .order {
+        float: left;
+        width: 80%;
+        font-size: 12px;
+        text-align: left;
+      }
+
+      p {
+        display: inline-block;
+        padding-top: 5px;
+        padding-left: 10px;
+        text-align: left;
+        color: #fff;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+    }
   }
-  .how-to .title {
-    width: 118px;
-    height: 36px;
-    border-radius: 100px;
-    background-color: #02a477;
+
+  // section 02 URL 발급
+  .url {
+    padding-right: 50px;
+    padding-left: 50px;
     text-align: center;
-    padding: 13px;
-    margin: 30px auto;
+    background-color: #202345;
   }
-  .how-to .title span {
-    font-family: NanumSquareOTFEB;
-    font-size:1.98em; 
-    line-height: 0.79;
-    text-align: center;
-    color: #ffffff;
+
+  .url-input {
+    border: 0;
+    border-radius: 5px;
+    float: left;
+    width: 60%;
+    height: 60px;
+    padding-left: 20px;
   }
-  .how-to .four-bro {
-    font-size: 1.7em;
-    float: none;
-    display: block;
-    width: 80vw;
-    height: 17vw;
-    position: relative;
-    text-align: left;
-    margin: 16px auto;
+
+  button {
+    width: 15%;
+    height: 60px;
+    border: 0;
+    border-radius: 5px;
   }
-  .how-to .order {
-    position: block; 
-    width: 100vw;
-    max-width: 90%;
-    display: inline-block;
-    padding-top: 10px;
+  #url-button1 {
+    background-color: #eed034;
+    margin-right: 10px;
   }
-  .how-to a {
-    width: 40px;
-    height: 40px;
+  #url-button2 {
+    color: #fff;
     background-color: #6857b2;
-    border-radius: 50%;
-    font-family: NanumSquareOTFEB;
-    font-size: 1.5em;
-    padding-top: 6px;
-    text-align: center;
-    color: #ffffff;
   }
-  .how-to .order span {
-    margin-left: 6px;
-    width: 100%;
-    font-family: NanumSquareOTFEB;
-    font-size: 1.6em;
-    text-align: left;
-    color: #ffffff;
-  }
-}
-@media only screen and (min-width: 488px) and (max-width: 1100px) {
-  .how-to {
-    max-width: 1920px;
-    width: 100%;
-    height: 476px;
-    background-color: #111326;
-    padding: 10px;
-  }
-  .how-to .title {
-    width: 200px;
-    height: 56px;
-    border-radius: 100px;
-    background-color: #02a477;
-    text-align: center;
-    padding: 13px;
-    margin: 30px auto;
-  }
-  .how-to .title span {
-    font-family: NanumSquareOTFEB;
-    font-size: 1.6em; 
-    line-height: 0.79;
-    text-align: center;
-    color: #ffffff;
-  }
-  .how-to .four-bro {
-    font-size: 1.2em;
-    float: none;
-    display: block;
-    width: 80vw;
-    height: 7vw;
-    position: relative;
-    text-align: left;
-    margin: 16px auto;
-  }
-  .how-to .order {
-    position: block; 
-    width: 100vw;
-    max-width: 90%;
-    display: inline-block;
-    padding-top: 10px;
-  }
-  .how-to a {
-    width: 40px;
-    height: 40px;
-    background-color: #6857b2;
-    border-radius: 50%;
-    font-family: NanumSquareOTFEB;
-    font-size: 1.5em;
-    padding-top: 6px;
-    text-align: center;
-    color: #ffffff;
-  }
-  .how-to .order span {
-    margin-left: 6px;
-    width: 100%;
-    font-family: NanumSquareOTFEB;
-    font-size: 1.6em;
-    text-align: left;
-    color: #ffffff;
-  }
-}
 
-.url {
-  max-width: 1920px;
-  width: 100%;
-  min-height: 380px;
-  background-color: #202345;
-  padding:40px;
-}
-.url p {
-  font-family: NanumSquareOTFEB;
-  font-size: 2.7em;
-  line-height: 0.94;
-  text-align: center;
-  color: #ffffff;
-}
-.url input {
-  display: block;
-  margin-right: 45px;
-  margin-top: 60px;
-  margin-bottom: 35px;
-  max-width: 100vw;
-  width: 100%;
-  height: 40px;
-  border-radius: 5px;
-  background-color: #ffffff;
-  font-family: NanumSquareOTFEB;
-  font-size: 1.5em;
-  line-height: 1.0;
-  text-align: left;
-  color: #333333;
-  padding: 30px;
-}
-.url button {
-  display: inline-block;
-  text-align: center;
-  margin-right: 20px;
-  max-width: 234px;
-  width: 30vw;
-  max-height: 110px;
-  height: 80px;
-  border-radius: 5px;
-  background-color: #eed034;
-  font-family: NanumSquareOTFEB;
-  font-size: 1.5em;
-  line-height: 1.0;
-  color: #1e245b;
-}
-.url button#url-button2 {
-  background-color: #6857b2;
-  color: white;
-}
-
-.share-social {
-  max-width: 1920px;
-  width: 100%;
-  min-height: 439px;
-  background-color: #1e245b;
-  background-image: url("./../../../static/images/bg-3-min.png");
-  background-size: contain;
-  background-repeat: repeat;
-  padding: 13vw;
-}
-.share-social p {
-  font-family: NanumSquareOTFEB;
-  font-size: 2.5em;
-  line-height: 1.0;
-  text-align: center;
-  color: #f7d532;
-}
-.share-social .share-buttons {
-  margin: auto auto;
-  text-align: center;
-  padding: 10px;
-  min-width: 300px;
-
-}
-.share-social button {
-  min-width: 85px;
-  max-width: 305px;
-  margin-top: 20px;
-  width: 17vw;
-  margin-right: 6%;
-  margin-left: 6%;
-  height: 90px;
-  border-radius: 100px;
-  background-color: #eed034;
-  font-size: 1.3em;
-  line-height: 1.0;
-}
-@media only screen and (max-width: 548px) {
+  // section 03 친구 초대
   .share-social {
-    max-width: 1920px;
+    padding-right: 50px;
+    padding-left: 50px;
+    text-align: center;
+    background-image: url("./../../../static/images/bg-3-min.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    .share-buttons {
+      button {
+        margin: 0 10px;
+        border-radius: 100px;
+        background-color: #eed034;
+      }
+    }
+  }
+
+  // section 04 랭킹
+  .ranking {
+    padding-right: 150px;
+    padding-left: 150px;
+    text-align: center;
+    background-color: #202345;
+
+    .rank {
+      position: relative;
+      clear: both;
+      height: 100px;
+      margin-bottom: 40px;
+
+      .circle {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        margin-right: 40px;
+        line-height: 100px;
+        font-size: 16px;
+        border-radius: 100%;
+        background-color: #eed034;
+      }
+      .circle.rank {
+        left: 0;
+      }
+      .circle.gift {
+        right: 0;
+      }
+    }
+
+    .circle-wrap {
+      position: relative;
+      width: 30%;
+    }
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .rank.macbook {
+      img {
+        width: 80%;
+      }
+    }
+    .rank.ipad {
+      img {
+        width: 50%;
+      }
+    }
+    .rank.nintendo {
+      img {
+        width: 80%;
+      }
+    }
+
+    .rank-name {
+      position: absolute;
+      right: 0;
+      width: 70%;
+      height: 70px;
+      margin-top: 15px;
+      font-size: 16px;
+      line-height: 70px;
+      border-radius: 100px;
+      background-color: #eed034;
+    }
+  }
+}
+
+@media only screen and (max-width: 548px) {
+  .section {
+    padding: 50px 10px;
+  }
+
+  .section-title {
+    color: #f7d532;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  // section 01
+  .how-to {
     width: 100%;
-    min-height: 439px;
-    background-color: #1e245b;
+    background-color: #111326;
+
+    .title {
+      width: 120px;
+      height: 30px;
+      margin: auto;
+      margin-bottom: 30px;
+      line-height: 30px;
+      color: #fff;
+      text-align: center;
+      font-weight: bold;
+      font-size: 15px;
+      border-radius: 100px;
+      background-color: #02a477;
+    }
+
+    .four-bro {
+      display: block;
+      width: 80%;
+      height: auto;
+      float: none;
+      clear: both;
+      margin: auto;
+      margin-bottom: 15px;
+      line-height: 40px;
+      text-align: center;
+      .circle {
+        float: left;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        color: #fff;
+        font-family: 'NanumSquareOTFEB';
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 40px;
+        border-radius: 100%;
+        background-color: #6857b2;
+      }
+      .order {
+        p {
+          color : #fff;
+          text-align: left;
+          font-size: 14px;
+          line-height: 40px;
+        }
+      }
+    }
+  }
+
+  // section 02
+  .url {
+    text-align: center;
+    background-color: #202345;
+  
+    .section-title {
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .url-input {
+      width: 80%;
+      height: 50px;
+      margin-bottom: 20px;
+      padding-left: 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      border: 0;
+    }
+
+    button {
+      border: 0;
+      width: 30%;
+      height: 50px;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 5px;
+    }
+
+    #url-button1 {
+      background-color: #eed034;
+      margin-right: 10px;
+    }
+    #url-button2 {
+      color: #fff;
+      background-color: #6857b2;
+    }
+  }
+
+  // section 03
+  .share-social {
     background-image: url("./../../../static/images/bg-3-min.png");
     background-size: contain;
     background-repeat: repeat;
-    padding: 13vw;
-  }
-  .share-social p {
-    font-family: NanumSquareOTFEB;
-    font-size: 3.5em;
-    line-height: 1.0;
     text-align: center;
-    color: #f7d532;
-  }
-  .share-social .share-buttons {
-    margin: auto auto;
-    text-align: center;
-    padding: 10px;
-    min-width: 300px;
 
+    .share-buttons {
+      button {
+        display: block;
+        width: 80%;
+        height: 50px;
+        margin: auto;
+        margin-bottom: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 100px;
+        border: 0;
+        background-color: #eed034;
+      }
+    }
   }
-  .share-social button {
-    min-width: 85px;
-    max-width: 305px;
-    margin-top: 20px;
-    width: 17vw;
-    margin-right: 6%;
-    margin-left: 6%;
-    height: 90px;
-    border-radius: 100px;
-    background-color: #eed034;
-    font-size: 1.7em;
-    line-height: 1.0;
-    font-weight: bold;
-  }
-}
 
-.ranking {
-  padding-top: 100px;
-  max-width: 1920px;
-  width: 100%;
-  min-height: 2563px;
-  background-color: #202345;
-  text-align: center;
-}
-.ranking p {
-  font-family: NanumSquareOTFEB;
-  font-size: 2.5em;
-  line-height: 1.0;
-  text-align: center;
-  color: #f7d532;
-}
-.ranking .rank {
-  width: 60%;
-  margin: auto auto;
-  height: 10.5vw;
-  padding: 1vw;
-}
-.ranking .rank .first {
-  float: left;
-  width: 10vw;
-  height: 10vw;
-  border-radius: 50%;
-  background-color: #eed034;
-  position: relative;
-  text-align: center;
-  display: inline-block;
-  margin-left: 30px;
-  margin-bottom: 7px;
-}
-.ranking .rank .first div {
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  margin-top: -5%;
-}
-.ranking .rank .first img {
-  width: 70%;
-  height: 70%;
-  margin-top: 14%;
-}
-.ranking .rank .third {
-  display: inline-block;
-  position: relative;
-  max-width: 811px;
-  max-height: 10vw;
-  min-height: 5vw;
-  width: 30vw;
-  max-height: 90px;
-  border-radius: 100px;
-  background-color: #eed034;
-  margin-top: 2.5vw;
-}
-.ranking .rank .third div {
-  width: 100%;
-  position: absolute;
-  top: 30%;
-  height: 100%;
-}
-@media only screen and (max-width: 548px) {
+  // seection 04 랭킹
   .ranking {
-    padding-top: 50px;
-    max-width: 1920px;
-    width: 100%;
-    min-height: 2563px;
     background-color: #202345;
     text-align: center;
-  }
-  .ranking p {
-    font-family: NanumSquareOTFEB;
-    font-size: 4.5em;
-    line-height: 1.0;
-    text-align: center;
-    color: #f7d532;
-  }
-  .ranking .rank {
-    width: 90%;
-    margin: auto auto;
-    height: 100px;
-    padding: 1vw;
-    display: block;
-  }
-  .ranking .rank .first {
-    float: left;
-    margin-right: 15px;
-    width: 15vw;
-    height: 15vw;
-    border-radius: 50%;
-    background-color: #eed034;
-    position: relative;
-    text-align: center;
-    display: inline-block;
-    margin-left: 0px;
-    margin-bottom: 0px;
-  }
-  .ranking .rank .first div {
-    width: 100%;
-    position: absolute;
-    top: 43%;
-    font-size: 1.6em;
-    margin-top: -5%;
-  }
-  .ranking .rank .first img {
-    width: 90%;
-    position: absolute;
-    top: 29%;
-    font-size: 1.6em;
-    left: 4%;
-    margin-top: -5%;
-  }
-  .ranking .rank .third {
-    display: inline-block;
-    position: relative;
-    max-width: 811px;
-    max-height: 10vw;
-    min-height: 10vw;
-    width: 40vw;
-    max-height: 90px;
-    border-radius: 100px;
-    background-color: #eed034;
-    margin-top: 2.5vw;
-  }
-  .ranking .rank .third div {
-    width: 100%;
-    position: absolute;
-    font-size: 2.1em;
-    text-align: left;
-    padding-left: 20px;
-    top: 30%;
-    height: 100%;
+
+    .rank {
+      position: relative;
+      margin-bottom: 50px;
+    }
+
+    .circle-wrap {
+      position: relative;
+      width: 220px;
+      height: 100px;
+      margin: auto;
+      margin-bottom: 20px;
+    }
+
+    .circle {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100px;
+      height: 100px;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 100px;
+      border-radius: 100%;
+      background-color: #eed034;
+
+      &.rank {
+        left: 0;
+      }
+      &.gift {
+        right: 0;
+      }
+    }
+
+    .rank-name {
+      width: 220px;
+      height: 50px;
+      margin: auto;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 50px;
+      border-radius: 100px;
+      background-color: #eed034;
+    }
+
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .rank.macbook {
+      img {
+        width: 80%;
+      }
+    }
+    .rank.ipad {
+      img {
+        width: 50%;
+      }
+    }
+    .rank.nintendo {
+      img {
+        width: 80%;
+      }
+    }
   }
 }
+
 </style>
