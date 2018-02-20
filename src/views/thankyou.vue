@@ -11,13 +11,17 @@
       </div>
       <div v-if="opened" class="dog">
         <img src="https://firebasestorage.googleapis.com/v0/b/wekin-9111d.appspot.com/o/test%2Fdog.gif?alt=media&token=60c51ca5-fe75-45da-b894-07ed0a7a8011">
-        <span v-show="!showText">두구두구 기다리시개~</span>
-        <span v-show="showText">아메리카노 당첨받개~</span>
-        <span v-show="showText">* 상품은 다음날 가입시 인증 하셨던 핸드폰 문자메시지로 전송됩니다.</span>
+        <p v-show="!showText">두구두구 기다리시개~</p>
+        <span v-show="item == 'nope'">WEKIN 10,000 POINT 당첨을 축하하개</span>
+        <span v-show="item == 'americano'">WEKIN 10,000 POINT, 아메리카노 당첨받개~</span>
+        <span v-show="item == 'giftCard'">WEKIN 10,000 POINT, 스타벅스 1 만원권 당첨받개~</span>
+        <p v-show="showText">* 상품은 다음날 가입시 인증 하셨던 핸드폰 문자메시지로 전송됩니다.</p>
       </div>
       <div v-else class="dog">
         <img src="https://firebasestorage.googleapis.com/v0/b/wekin-9111d.appspot.com/o/test%2Famazon_corgi_surprise_dribbble-min.png?alt=media&token=9419917c-8483-415f-ae65-946fac58d8f7">
-        <button @click="open()">선물받기</button>
+        <button @click="open()" v-show="user">상품열개</button>
+      </div>
+      <div>
       </div>
       <div class="button" v-if="opened">
         <button @click="goHome()" style="font-size:20px;font-weight:500;color:#ffffff;width: 330px; height:70px; border-radius:8px;background-color: #03b281">시작하기</button>
@@ -28,15 +32,21 @@
 
 
 <script>
+import api from 'api'
+
 export default {
   data() {
     return {
       key: null,
       opened: false,
-      showText: false
+      showText: false,
+      item: '',
     }
   },
   computed: {
+    user() {
+      return this.$store.state.user
+    }
   },
   created() {
   },
@@ -45,12 +55,39 @@ export default {
   beforeUpdate() {
   },
   methods: {
+    setJoined() {
+      return api.setUserStatusToJoinedForEvent(this.user.user_key)
+        .then(result => {
+          return result
+        })
+        .catch(e => console.log(e))
+    },
     goHome() {
       this.$router.push('/')
     },
     open() {
       this.opened = true
       setTimeout(() => { this.showText = true }, 2000)
+      this.setJoined()
+        .then(result => {
+          return api.setEventItem(this.user.user_key)
+        })
+        .then(result => {
+          this.item = result.value
+        })
+        .catch(e => {
+          switch(JSON.parse(e.response.data.message).msg) {
+            case 'This user is not Fresh user':
+              window.alert("회원님은 이벤트 기간 내 가입자가 아닙니다.")
+              this.opened = false
+              break
+            case 'Already receive this item.':
+              this.item = JSON.parse(e.response.data.message).data
+              window.alert("회원님은 이미 이벤트에 참여하셨습니다.")
+              this.opened = false
+              break
+          }
+        })
     }
   }
 }
