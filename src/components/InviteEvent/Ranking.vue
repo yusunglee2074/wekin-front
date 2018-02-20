@@ -35,17 +35,17 @@
     </div>
     <div class="url" style="text-align:center;">
       <p>홍보용 URL 발급하기</p>
-      <input type="text" placeholder="홍보용 URL 발급하기" disabled>
-      <button id="url-button1">발급하기</button>
-      <button id="url-button2">복사하기</button>
+      <input type="text" ref="url" v-model="url" placeholder="홍보용 URL 발급하기">
+      <button id="url-button1" @click="plzUrl()">발급하기</button>
+      <button id="url-button2" @click="copyUrl()">복사하기</button>
     </div>
     <div class="share-social">
       <p>친구 초대하기</p>
       <div class="share-buttons">
-        <button>페이스북</button>
-        <button>카카오</button>
-        <button>네이버</button>
-        <button>다음</button>
+        <button @click="share('facebook')">페이스북</button>
+        <button @click="share('kakao')">카카오</button>
+        <button @click="share('naver')">네이버</button>
+        <button @click="share('band')">네이버밴드</button>
       </div>
     </div>
     <div class="ranking">
@@ -58,7 +58,7 @@
           <img style="height:50%; width: 70%; top: 31%; left: 15%;" src="./../../../static/images/event/macbook-min.png">
         </div>
         <div class="third">
-          <div>아이디</div>
+          <div>{{ ranking[0] ? ranking[0].email : '정보없음' | hidingEmail }}</div>
         </div>
       </div>
       <div class="rank">
@@ -69,7 +69,7 @@
           <img style="height:70%; width: 60%; top: 21%; left: 20%;" src="./../../../static/images/event/ipad-min.png">
         </div>
         <div class="third">
-          <div>아이디</div>
+          <div>{{ ranking[1] ? ranking[1].email : '정보없음' }}</div>
         </div>
       </div>
       <div class="rank">
@@ -80,7 +80,7 @@
           <img style="height:40%; width: 70%; top: 38%; left: 15%;" src="./../../../static/images/event/nintendo-min.png">
         </div>
         <div class="third">
-          <div>아이디</div>
+          <div>{{ ranking[2] ? ranking[2].email : '정보없음' }}</div>
         </div>
       </div>
       <div class="rank-to-4">
@@ -100,15 +100,65 @@ import moment from 'moment'
 export default {
   data() {
     return {
+      url: '',
+      ranking: '',
     }
   },
   components: {
   },
+  computed: {
+    user() {
+      return this.$store.state.user
+    }
+  },
   methods: {
+    plzUrl() {
+      if (this.user) {
+        api.getInviteEventUrl(this.user.user_key)
+          .then(url => {
+            this.url = url.url
+          })
+          .catch(e => console.log(e))
+      } else {
+        window.alert("로그인이 필요합니다.")
+      }
+    },
+    copyUrl() {
+      this.$refs.url.select()
+      document.execCommand('copy')
+    },
+    share(type) {
+      let loc
+      if (!this.url) return window.alert("홍보용 URL를 먼저 발급 받아주세요!")
+      switch(type) {
+        case 'facebook':
+          window.open(`https://www.facebook.com/v2.1/dialog/feed?&app_id=101477687056507&display=popup&locale=ko_KR&link=${encodeURIComponent(`${ this.url }`)}&version=v2.1`,
+            'facebookShare',
+            'toolbar=0,status=0,width=625,height=435'
+          );
+          break
+        case 'kakao':
+          loc = 'https://story.kakao.com/share?url=' + this.url;
+          break
+        case 'naver':
+          loc = "http://share.naver.com/web/shareView.nhn?url=" + encodeURIComponent(this.url) + "&title=" + encodeURIComponent('위킨과 레저하자!');
+          break
+        case 'band':
+          loc = 'http://www.band.us/plugin/share?body=' + encodeURIComponent('위킨과 레저하자!') + '%0A' + encodeURIComponent(this.url);
+          break
+      }
+      window.open(loc);
+    }
   },
   filters: {
+    hidingEmail (item) {
+      return item.slice(0, 5) + '*****'
+    }
   },
   created() {
+    api.getInviteEventRanking()
+      .then(result => this.ranking = result)
+      .catch(e => console.log(e))
   },
   beforeUpdate() {
   },
@@ -538,6 +588,7 @@ export default {
   position: absolute;
   top: 30%;
   height: 100%;
+  font-size: 1.88em;
 }
 @media only screen and (max-width: 548px) {
   .ranking {
@@ -605,7 +656,7 @@ export default {
   .ranking .rank .third div {
     width: 100%;
     position: absolute;
-    font-size: 2.1em;
+    font-size: 1.8em;
     text-align: left;
     padding-left: 20px;
     top: 30%;
