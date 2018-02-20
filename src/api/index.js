@@ -20,6 +20,22 @@ axios.interceptors.request.use((config) => {
 })
 
 export default {
+  getCurrentJoinedUsersCount() {
+    return axios.get(`${BASE_API_URL}/event/count-user`)
+      .then(r => r.data)
+  },
+  getInviteEventRanking() {
+    return axios.get(`${BASE_API_URL}/event/ranking`)
+      .then(r => r.data)
+  },
+  getInviteEventUrl(user_key) {
+    return axios.post(`${BASE_API_URL}/event/url`, { user_key })
+      .then(r => r.data)
+  },
+  inviteNewUserLanding(userKey) {
+    return axios.post(`${BASE_API_URL}/event/newUser`, { user_key: userKey })
+      .then(r => r.data)
+  },
   cancelOrderAndRefundWithSms(wekinKeysList) {
     return axios.put(`${BASE_API_URL}/order/cancel-order-and-refund-with-sms`, { wekinKeysList })
       .then(r => r.data)
