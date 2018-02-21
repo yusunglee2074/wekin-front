@@ -20,7 +20,7 @@
         <p style="margin-bottom:52px;"><a class="title">이벤트 기간</a> 2월 21일 수요일 ~ 3월 11일 일요일(18일간)</p>
         <p><a class="title">당첨자 발표</a> 2018년 3월 20일(화), 위킨 홈페이지, 앱</p>
         <p class="count-down">남은시간 <span class="coutner-wrap"><a>{{ countDownHours[0] }}</a><a>{{ countDownHours[1] }}</a><a>{{ countDownHours[2] }}</a><span style="color:white; margin-left:8px;">:</span><a>{{ countDownMinutes[0] }}</a><a>{{ countDownMinutes[1] }}</a><span style="color:white; margin-left:8px;">:</span><a>{{ countDownSeconds[0] }}</a><a>{{ countDownSeconds[1] }}</a></span></p>
-        <button id="submit" @click="goTo('ranking')">이벤트 참여하기</button>
+        <button id="submit" @click="goTo('ranking')" style="cursor:pointer">이벤트 참여하기</button>
       </div>
     </div>
     <div class="footer">
@@ -28,7 +28,7 @@
         <p>앱 설치하고 + 회원가입 하면 즉시 <br> <span class="none-at-mobile">=</span> <span class="span-block">10,000 point</span></p>
         <p>초대한 친구 회원가입 1명당(무제한) <br> <span class="none-at-mobile">=</span> <span class="span-block">2,000 point</span></p>
       </div>
-      <div class="third-text">
+      <div class="third-text" @click="goAppStore()" style="cursor: pointer">
         <img src="./../../../static/images/event/cellphone.png">
         <span>위킨앱 다운로드</span>
       </div>
@@ -145,11 +145,40 @@ export default {
     Rank
   },
   methods: {
+    goAppStore() {
+      if (this.getMobileOperatingSystem() === 'Android') {
+        window.location.href = 'https://play.google.com/store/apps/details?id=com.wekinner.wekin&hl=ko&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'
+      } else {
+        window.location.href = 'https://itunes.apple.com/us/app/%EC%9C%84%ED%82%A8-we-kin-%EB%8B%B9%EC%8B%A0%EC%9D%98-%EC%A3%BC%EB%A7%90%EC%9D%84-%EC%9A%B0%EB%A6%AC-we-%EA%B0%80-%EC%A6%90-kin-%EA%B2%81%EA%B2%8C-%ED%95%B4%EB%93%9C%EB%A6%BD%EB%8B%88%EB%8B%A4/id1255509392?mt=8'
+      }
+    },
+    getMobileOperatingSystem() {
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      // Windows Phone must come first because its UA also contains "Android"
+      if (/windows phone/i.test(userAgent)) {
+        return "Windows Phone";
+      }
+
+      if (/android/i.test(userAgent)) {
+        return "Android";
+      }
+
+      // iOS detection from: http://stackoverflow.com/a/9039885/177710
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+      }
+
+      return "unknown";
+    },
     goTo(where) {
       this.$router.push('/event/invite-friend/ranking')
     }
   },
   filters: {
+    hidingEmail (item) {
+      return item.slice(0, 5) + '*****'
+    }
   },
   created() {
     window.setInterval(() => {
