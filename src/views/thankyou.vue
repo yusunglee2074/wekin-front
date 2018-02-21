@@ -6,8 +6,8 @@
     </div>
     <div class="content">
       <div class="message">
-        <h1 style="font-size:72px;color:white;font-weight:500;">환영합니다!</h1>
-        <h2 style="font-size:28px;color:#6f6f6f;font-weight:500;">위킨 회원가입이 완료되었습니다.</h2>
+        <h1>환영합니다!</h1>
+        <h2>위킨 회원가입이 완료되었습니다.</h2>
       </div>
       <div v-if="opened" class="dog">
         <img src="https://firebasestorage.googleapis.com/v0/b/wekin-9111d.appspot.com/o/test%2Fdog.gif?alt=media&token=60c51ca5-fe75-45da-b894-07ed0a7a8011">
@@ -19,11 +19,11 @@
       </div>
       <div v-else class="dog">
         <img src="https://firebasestorage.googleapis.com/v0/b/wekin-9111d.appspot.com/o/test%2Famazon_corgi_surprise_dribbble-min.png?alt=media&token=9419917c-8483-415f-ae65-946fac58d8f7">
-        <button @click="open()" v-show="user">상품열개</button>
+        <button @click="open()" v-show="user && canIOpenThisBox()">상품열개</button>
       </div>
       <div>
       </div>
-      <div class="button" v-if="opened && canIOpenThisBox()">
+      <div class="button" v-if="opened || canIOpenThisBox() === false">
         <button @click="goHome()" style="font-size:20px;font-weight:500;color:#ffffff;width: 330px; height:70px; border-radius:8px;background-color: #03b281">시작하기</button>
       </div>
     </div>
@@ -102,10 +102,11 @@ export default {
 </script>
 
 <style>
+
 .thank {
   width: 100%;
   height: 600px;
-  margin-top: 180px;
+  margin-top: 40px;
 }
 .thank .header {
   width: 100%;
@@ -129,6 +130,12 @@ export default {
 }
 .content .message {
   text-align: center;
+}
+.thank .content .message h1 {
+  font-size: 45px; color: white; font-weight: 500;
+}
+.thank .content .message h2 {
+  font-size:20px;color:#6f6f6f;font-weight:500;
 }
 .content .dog {
   width: 300px;
@@ -154,5 +161,25 @@ export default {
   border: 0px;
   margin-top: 45px;
   text-align: center;
+}
+@media only screen and (max-width: 548px) {
+  .thank {
+    width: 100%;
+    margin-top: 100px;
+    background-color: rgb(251, 181, 75); 
+  }
+  .thank .content {
+    width: 100%;
+    padding-top: 60px;
+    margin: 0px auto;
+    padding: 40px;
+    background-color: rgb(251, 181, 75); 
+  }
+  .thank .content .message h1 {
+    font-size: 45px; color: white; font-weight: 500;
+  }
+  .thank .content .message h2 {
+    font-size:20px;color:#6f6f6f;font-weight:500;
+  }
 }
 </style>
