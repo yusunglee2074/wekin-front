@@ -1,7 +1,7 @@
 <template>
   <div class="rank">
     <div class="circle"><p>{{ circle }}</p></div>
-    <div class="id" v-if="i">현재 {{ i }}위 <span class="span-block">{{ id }}</span></div>
+    <div class="id" v-if="i">현재 {{ i }}위 <span class="span-block">{{ id | hidingEmail }}</span></div>
     <div class="item-img" :class="{ ipad: i === '2' }">
       <img :src="img">
     </div>
@@ -28,6 +28,10 @@ export default {
   methods: {
   },
   filters: {
+    hidingEmail (item) {
+      if (item == '정보없음') return '정보없음'
+      return item.slice(0, 5) + '*****'
+    }
   },
   created() {
   },
