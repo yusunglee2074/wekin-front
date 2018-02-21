@@ -23,7 +23,7 @@
       </div>
       <div>
       </div>
-      <div class="button" v-if="opened">
+      <div class="button" v-if="opened && canIOpenThisBox()">
         <button @click="goHome()" style="font-size:20px;font-weight:500;color:#ffffff;width: 330px; height:70px; border-radius:8px;background-color: #03b281">시작하기</button>
       </div>
     </div>
