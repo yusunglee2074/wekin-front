@@ -66,7 +66,7 @@
         <div class="rank">
           <div class="circle"><span class="circle-inner">위킨박스 당첨자</span></div>
           <!-- <div class="id" v-if="i">현재 {{ i }}위 <span class="span-block">{{ id }}</span></div> -->
-          <div class="item-img">
+          <div class="item-img coffee">
             <img src="./../../../static/images/event/coffee-min.png">
           </div>
         </div>
@@ -640,6 +640,38 @@ Margin-left : -14px ; Border-bottom : solid 24px #f7d532 ; border-left : solid 1
         }
         .item-img {
           margin-top: 120px;
+
+          &.coffee {
+            img {
+              width: 50%;
+            }
+          }
+        }
+      }
+    }
+
+    .how-to {
+      margin-top: 12px;
+      height: auto;
+      .title {
+        height: 40px;
+        padding: 0;
+        span {
+          display: block;
+          height: 40px;
+          line-height: 40px;
+        }
+      }
+      .order {
+        margin-bottom: 10px;
+        a {
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          line-height: 30px;
+        }
+        span {
+          font-size: 16px;
         }
       }
     }
