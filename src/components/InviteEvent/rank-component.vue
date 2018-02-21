@@ -71,11 +71,11 @@ export default {
 }
 .rank > .item-img { text-align : center }
 .rank:last-child {
-  padding : 100px 0 0 0 ;
-  width: 100%; float : initial ; display : inline-block ; 
+  // padding : 100px 0 0 0 ;
+  // width: 100%; float : initial ; display : inline-block ; 
   Text-align : center  
 }
-.rank:last-child > .circle { position : static }
+// .rank:last-child > .circle { position : static }
 .rank:last-child > .item-img { margin-top : -50px }
 
 
@@ -87,11 +87,12 @@ export default {
     padding-top: 0px;
   }
   .rank:last-child {
-    padding : 308px 0 0 0 ;
-    width: 100%; display : block ; 
-  Text-align : left  }
-  .rank:last-child > .circle { position : absolute; }
-  .rank:last-child > .item-img { margin-top : 0px }
+    // padding : 308px 0 0 0 ;
+    // width: 100%; display : block ; 
+    // Text-align : left
+  }
+  // .rank:last-child > .circle { position : absolute; }
+  // .rank:last-child > .item-img { margin-top : 0px }
   .rank .circle {
     position: relative;
     display: block;
