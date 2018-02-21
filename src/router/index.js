@@ -243,7 +243,7 @@ export default new Router({
       component: Settings
     },
     {
-      path: '/event/:key',
+      path: '/event/:key(\\d+)',
       name: 'EventList',
       component: EventList
     },

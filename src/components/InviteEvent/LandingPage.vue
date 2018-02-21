@@ -127,35 +127,64 @@ export default {
     window.setInterval(() => {
       this.leftTime = moment('2018-03-11').set('hour', 23).set('minute', 59).set('second', 59).unix() - moment().unix()
     }, 1000)
-    api.inviteNewUserLanding(this.$route.params.user_key)
-      .then(result => {
-        return api.getCurrentJoinedUsersCount()
-      })
-      .then(count => {
-        count = String(count)
-        switch(count.length) {
-          case 1:
-            this.currentUser = '0000' + count
-            break
-          case 2:
-            this.currentUser = '000' + count
-            break
-          case 3:
-            this.currentUser = '00' + count
-            break
-          case 4:
-            this.currentUser = '0' + count
-            break
-          case 5:
-            this.currentUser = count
-            break
-        }
-        return api.getInviteEventRanking()
-      })
-      .then(result => { 
-        this.ranking = result
-      })
-      .catch(e => console.log(e))
+    if (this.$route.params.user_key) {
+      api.inviteNewUserLanding(this.$route.params.user_key)
+        .then(result => {
+          return api.getCurrentJoinedUsersCount()
+        })
+        .then(count => {
+          count = String(count)
+          switch(count.length) {
+            case 1:
+              this.currentUser = '0000' + count
+              break
+            case 2:
+              this.currentUser = '000' + count
+              break
+            case 3:
+              this.currentUser = '00' + count
+              break
+            case 4:
+              this.currentUser = '0' + count
+              break
+            case 5:
+              this.currentUser = count
+              break
+          }
+          return api.getInviteEventRanking()
+        })
+        .then(result => {
+          this.ranking = result
+        })
+        .catch(e => console.log(e))
+    } else {
+      api.getCurrentJoinedUsersCount()
+        .then(count => {
+          count = String(count)
+          switch(count.length) {
+            case 1:
+              this.currentUser = '0000' + count
+              break
+            case 2:
+              this.currentUser = '000' + count
+              break
+            case 3:
+              this.currentUser = '00' + count
+              break
+            case 4:
+              this.currentUser = '0' + count
+              break
+            case 5:
+              this.currentUser = count
+              break
+          }
+          return api.getInviteEventRanking()
+        })
+        .then(result => {
+          this.ranking = result
+        })
+        .catch(e => console.log(e))
+    }
   },
   beforeUpdate() {
   },
