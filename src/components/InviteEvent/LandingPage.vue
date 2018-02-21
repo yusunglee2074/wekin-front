@@ -25,8 +25,8 @@
     </div>
     <div class="footer">
       <div class="first-text">
-        <p>앱 설치하고 + 회원가입 하면 즉시 <span class="none-at-mobile">=</span> <span class="span-block">10,000 point</span></p>
-        <p>초대한 친구 회원가입 1명당(무제한) <span class="none-at-mobile">=</span> <span class="span-block">2,000 point</span></p>
+        <p>앱 설치하고 + 회원가입 하면 즉시 <br> <span class="none-at-mobile">=</span> <span class="span-block">10,000 point</span></p>
+        <p>초대한 친구 회원가입 1명당(무제한) <br> <span class="none-at-mobile">=</span> <span class="span-block">2,000 point</span></p>
       </div>
       <div class="third-text">
         <img src="./../../../static/images/event/cellphone.png">
