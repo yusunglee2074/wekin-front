@@ -220,7 +220,7 @@
                 <div class="inf-col inf-col-60 rank-name-col">
                   <div class="rank-name-wrap">
                     <p>현재 1위</p>
-                    <p>{{ ranking[0].email | hidingEmail }}</p>
+                    <p>{{ ranking[0] ? ranking[0].email : '정보없음' | hidingEmail }}</p>
                   </div>
                 </div>
               </div>
@@ -244,7 +244,7 @@
                 <div class="inf-col inf-col-60 rank-name-col">
                   <div class="rank-name-wrap">
                     <p>현재 2위</p>
-                    <p>{{ ranking[1] }}</p>
+                    <p>{{ ranking[1] ? ranking[1].email : '정보없음' | hidingEmail }}</p>
                   </div>
                 </div>
               </div>
@@ -270,7 +270,7 @@
                 <div class="inf-col inf-col-60 rank-name-col">
                   <div class="rank-name-wrap">
                     <p>현재 3위</p>
-                    <p>{{ ranking[2] }}</p>
+                    <p>{{ ranking[2] ? ranking[2].email : '정보없음' | hidingEmail }}</p>
                   </div>
                 </div>
               </div>
@@ -482,6 +482,7 @@ export default {
   },
   filters: {
     hidingEmail (item) {
+      if (item === '정보없음') return '정보없음'
       return item.slice(0, 5) + '*****'
     }
   },
@@ -489,7 +490,7 @@ export default {
     window.setInterval(() => {
       this.leftTime = moment('2018-03-11').set('hour', 23).set('minute', 59).set('second', 59).unix() - moment().unix()
     }, 1000)
-    if (this.$route.params.user_key) {
+    if (this.$route.params.user_key && this.$route.params.user_key !== '0') {
       api.inviteNewUserLanding(this.$route.params.user_key)
         .then(result => {
           return api.getCurrentJoinedUsersCount()
