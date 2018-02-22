@@ -106,12 +106,12 @@
                 <span>현재</span>
               </div>
               <div class="inf-col num-card-wrap inf-col-center">
-                <div class="num-card">9</div>
-                <div class="num-card">9</div>
+                <div class="num-card">{{currentUser[0]}}</div>
+                <div class="num-card">{{currentUser[1]}}</div>
                 <div class="num-card dot">,</div>
-                <div class="num-card">9</div>
-                <div class="num-card">9</div>
-                <div class="num-card">9</div>
+                <div class="num-card">{{currentUser[2]}}</div>
+                <div class="num-card">{{currentUser[3]}}</div>
+                <div class="num-card">{{currentUser[4]}}</div>
               </div>
               <div class="inf-col inf-col-right">
                 <span>명</span>
@@ -166,21 +166,21 @@
                 <span>남은시간</span>
               </div>
               <div class="inf-col inf-col-80 time-cards">
-                <div class="num-card">9</div>
-                <div class="num-card">9</div>
-                <div class="num-card">9</div>
+                <div class="num-card">{{ countDownHours[0] }}</div>
+                <div class="num-card">{{ countDownHours[1] }}</div>
+                <div class="num-card">{{ countDownHours[2] }}</div>
                 <div class="num-card dot">:</div>
-                <div class="num-card">9</div>
-                <div class="num-card">9</div>
+                <div class="num-card">{{ countDownMinutes[0] }}</div>
+                <div class="num-card">{{ countDownMinutes[1] }}</div>
                 <div class="num-card dot">:</div>
-                <div class="num-card">9</div>
-                <div class="num-card">9</div>
+                <div class="num-card">{{ countDownSeconds[0] }}</div>
+                <div class="num-card">{{ countDownSeconds[1] }}</div>
               </div>
             </div>
           </div>
 
           <div class="apply-btn-box">
-            <button class="apply-btn">이벤트 참여하기</button>
+            <button class="apply-btn" @click="goTo('ranking')">이벤트 참여하기</button>
           </div>
         </div>
       </div>
@@ -220,7 +220,7 @@
                 <div class="inf-col inf-col-60 rank-name-col">
                   <div class="rank-name-wrap">
                     <p>현재 1위</p>
-                    <p>*****</p>
+                    <p>{{ ranking[0] }}</p>
                   </div>
                 </div>
               </div>
@@ -244,7 +244,7 @@
                 <div class="inf-col inf-col-60 rank-name-col">
                   <div class="rank-name-wrap">
                     <p>현재 2위</p>
-                    <p>*****</p>
+                    <p>{{ ranking[1] }}</p>
                   </div>
                 </div>
               </div>
@@ -269,8 +269,8 @@
                 </div>
                 <div class="inf-col inf-col-60 rank-name-col">
                   <div class="rank-name-wrap">
-                    <p>현재 1위</p>
-                    <p>*****</p>
+                    <p>현재 3위</p>
+                    <p>{{ ranking[2] }}</p>
                   </div>
                 </div>
               </div>
@@ -371,7 +371,27 @@
     </section>
     <section class="section-04 section">
       <div class="container">
-
+        <div class="section-header">
+          <div class="section-title">참여방법</div>
+        </div>
+        <div class="section-body">
+          <div class="inf-col step">
+            <div class="inf-col inf-col-50 circle-wrap"><div class="step-circle">01</div></div>
+            <div class="inf-col inf-col-50 content-wrap"><div class="step-content">신규가입 또는 로그인</div></div>
+          </div>
+          <div class="inf-col step">
+            <div class="inf-col inf-col-50 circle-wrap"><div class="step-circle">02</div></div>
+            <div class="inf-col inf-col-50 content-wrap"><div class="step-content">친구를 초대할 SNS채널 선택 고유 URL발급</div></div>
+          </div>
+          <div class="inf-col step">
+            <div class="inf-col inf-col-50 circle-wrap"><div class="step-circle">03</div></div>
+            <div class="inf-col inf-col-50 content-wrap"><div class="step-content">내 초대 메시지 링크를 통해 친구 회원가입</div></div>
+          </div>
+          <div class="inf-col step">
+            <div class="inf-col inf-col-50 circle-wrap"><div class="step-circle">04</div></div>
+            <div class="inf-col inf-col-50 content-wrap"><div class="step-content">응모완료</div></div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -625,6 +645,20 @@ button {
     }
   }
 }
+
+.section-04 {
+  background-color: #111326;
+
+  .section-title {
+    border-radius: 100px;
+    background-color: #02a477;
+  }
+
+  .step-circle {
+    border-radius: 100%;
+    background-color: #6857b2;
+  }
+}
 // 공통 --- END
 
 /* Mobile Devices 모바일 */
@@ -695,6 +729,7 @@ button {
       }
 
       .graph-box {
+        margin-top: 40px;
         padding: 0 15px;
 
         .graph {
@@ -737,12 +772,16 @@ button {
       }
 
       .date-info-box {
+        margin-top: 70px;
         table {
           width: 100%;
         }
         th {
           display: flex;
           justify-content: center;
+        }
+        td {
+          padding: 16px;
         }
         .th-title {
           width: 120px;
@@ -753,10 +792,26 @@ button {
         }
       }
 
+      .time-count-box {
+        margin-top: 40px;
+
+        .inf-row {
+          display: block;
+        }
+
+        .rest-time {
+          span {
+            display: block;
+            margin-bottom: 12px;
+          }
+        }
+      }
+
       .apply-btn-box {
         .apply-btn {
-          width: 170px;
+          width: 80%;
           height: 50px;
+          margin-top: 60px;
           font-size: 20px;
           border-radius: 100px;
         }
@@ -800,16 +855,23 @@ button {
     .container {
       text-align: center;
     }
+    .rank-item {
+      margin-bottom: 50px;
+    }
     .rank-circle {
       display: flex;
       justify-content: center;
       align-items: center;
       margin: auto;
+      margin-bottom: 16px;
       width: 80px;
       height: 80px;
       .rank-circle-inner {
         font-size: 14px;
       }
+    }
+    .rank-name-wrap {
+      margin-bottom: 10px;
     }
     .rank-body {
       .macbook {
@@ -827,6 +889,42 @@ button {
       .coffee {
         width: 150px;
       }
+    }
+  }
+
+  .section-04 {
+    .section-title {
+      width: 150px;
+      height: 40px;
+      margin: auto;
+      margin-bottom: 30px;
+      font-size: 16px;
+      line-height: 40px;
+      line-height: 40px;
+      text-align: center;
+    }
+    .step {
+      display: flex;
+      width: 80%;
+      margin: auto;
+      margin-bottom: 20px;
+    }
+    .step-circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 34px;
+      height: 34px;
+      font-size: 16px;
+    }
+    .content-wrap {
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+    }
+    .step-content {
+      font-size: 16px;
+      line-height: 1.6;
     }
   }
 }
@@ -847,8 +945,7 @@ button {
 
   .inf-col {
     float: left;
-    background-color: skyblue;
-    border: 1px solid tomato;
+    border: 1px solid transparent;
     box-sizing: border-box;
   }
 
@@ -993,6 +1090,7 @@ button {
       }
 
       .date-info-box {
+        margin-top: 80px;
         table {
           width: 100%;
           font-size: 18px;
@@ -1025,10 +1123,15 @@ button {
         }
       }
 
+      .time-count-box {
+        margin-top: 50px;
+      }
+
       .apply-btn-box {
         .apply-btn {
           width: 300px;
           height: 60px;
+          margin-top: 50px;
           font-size: 24px;
           border-radius: 100px;
         }
@@ -1183,6 +1286,40 @@ button {
       }
     }
   }
+
+  .section-04 {
+    .section-header {
+      margin-bottom: 40px;
+    }
+    .section-title {
+      width: 150px;
+      height: 40px;
+      margin: auto;
+      text-align: center;
+      line-height: 40px;
+    }
+    .step {
+      width: 25%;
+    }
+    .circle-wrap {
+      position: relative;
+    }
+    .step-circle {
+      position: absolute;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+    }
+    .content-wrap {
+      padding-top: 5px;
+      padding-left: 10px;
+    }
+    .section-body {
+      height: 80px;
+    }
+  }
 }
 
 /* Medium Devices 데스크탑 */
@@ -1294,6 +1431,7 @@ button {
       }
 
       .date-info-box {
+        margin-top: 100px;
         table {
           font-size: 20px;
         }
@@ -1313,6 +1451,7 @@ button {
       }
 
       .time-count-box {
+        margin-top: 70px;
         .rest-time {
           width: 30%;
         }
@@ -1325,6 +1464,7 @@ button {
         .apply-btn {
           width: 380px;
           height: 70px;
+          margin-top: 70px;
           font-size: 24px;
           border-radius: 100px;
         }
