@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="rank-name">
-          <div>{{ ranking[1] ? ranking[1].email : '정보없음' }}</div>
+          <div>{{ ranking[1] ? ranking[1].email : '정보없음' | hidingEmail }}</div>
         </div>
       </div>
       <div class="rank nintendo">
@@ -92,7 +92,7 @@
           </div>
         </div>
         <div class="rank-name">
-          <div>{{ ranking[2] ? ranking[2].email : '정보없음' }}</div>
+          <div>{{ ranking[2] ? ranking[2].email : '정보없음' | hidingEmail }}</div>
         </div>
       </div>
       <div class="rank nintendo" v-if="rankingFrom4th.length > 0" v-for="(item, index) in rankingFrom4th">
