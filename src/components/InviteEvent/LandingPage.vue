@@ -518,6 +518,7 @@ export default {
         })
         .then(result => {
           this.ranking = result
+          this.$router.push('/join')
         })
         .catch(e => console.log(e))
     } else {
