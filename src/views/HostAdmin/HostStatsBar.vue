@@ -49,14 +49,11 @@ export default {
           let ratings = json.results
           if (ratings.length) {
             let tmp = 0
-            let ratingSum = ratings.reduce((a, b) => {
-              if (tmp == 0) {
-                tmp++
-                return a.activity_rating + b.activity_rating
-              } else {
-                return a + b.activity_rating
-              }
-            })
+            let ratingSum = 0
+            for (let i = 0; i < ratings.length; i++) {
+              if (tmp === 0) tmp++
+              ratingSum += ratings[i].activity_rating
+            }
             let temp = ratingSum/ratings.length
             this.ratingAvg = temp.toFixed(2)
           }
