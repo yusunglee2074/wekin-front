@@ -198,8 +198,8 @@
             <div class="round">100% 증정</div>
           </div>
         </div>
-        <div class="inf-col inf-col-30 down-wrap">
-          <button class="down-btn">
+        <div class="inf-col inf-col-30 down-wrap" @click="goAppStore()" style="cursor: pointer">
+          <button class="down-btn" style="cursor: pointer">
             <img class="phone-img" src="./../../../static/images/event/cellphone.png" alt="">
             <div class="down">위킨앱 다운로드</div>
           </button>
@@ -220,7 +220,7 @@
                 <div class="inf-col inf-col-60 rank-name-col">
                   <div class="rank-name-wrap">
                     <p>현재 1위</p>
-                    <p>{{ ranking[0] }}</p>
+                    <p>{{ ranking[0].email | hidingEmail }}</p>
                   </div>
                 </div>
               </div>
@@ -631,8 +631,7 @@ button {
   }
 
   .apply-btn {
-    color: #1e245b;
-    background-color: #eed034;
+    cursor: pointer;color: #1e245b;background-color: #eed034;
   }
 }
 
