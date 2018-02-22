@@ -1,5 +1,5 @@
 <template>
-  <div class="invite-event-landing">
+  <!-- <div class="invite-event-landing">
     <div class='header'>
       <h2>2018 <span>만만한 챌린지</span></h2>
       <p>위킨 회원가입 시 100% 선물 지급</p>
@@ -38,34 +38,26 @@
         <Rank circle="랭킹 1등" i='1' :id="ranking[0] ? ranking[0].email : '정보없음'" img="./../../../static/images/event/macbook-min.png" style="display:inline-block;"></Rank>
         <Rank circle="랭킹 2등" i='2' :id="ranking[1] ? ranking[1].email : '정보없음'" img="./../../../static/images/event/ipad-min.png" style="display:inline-block;"></Rank>
         <Rank circle="랭킹 3등" i='3' :id="ranking[2] ? ranking[2].email : '정보없음'" img="./../../../static/images/event/nintendo-min.png" style="display:inline-block;"></Rank>
-        <!-- <Rank circle="8000번째 가입자" id="" img="./../../../static/images/event/giftcard-1.svg" style="display:inline-block;"></Rank> -->
         <div class="rank">
           <div class="circle"><span class="circle-inner">8000번째 가입자</span></div>
-          <!-- <div class="id" v-if="i">현재 {{ i }}위 <span class="span-block">{{ id }}</span></div> -->
           <div class="item-img">
             <img src="./../../../static/images/event/giftcard-1.svg">
           </div>
         </div>
-        <!-- <Rank circle="2000,4000,6000번째 가입자" id="" img="./../../../static/images/event/giftcard-2.svg" style="display:inline-block;"></Rank> -->
         <div class="rank">
           <div class="circle"><span class="circle-inner multi"><span class="span-block">2000</span><span class="span-block">4000</span><span class="span-block">6000</span>번째 가입자</span></div>
-          <!-- <div class="id" v-if="i">현재 {{ i }}위 <span class="span-block">{{ id }}</span></div> -->
           <div class="item-img">
             <img src="./../../../static/images/event/giftcard-2.svg">
           </div>
         </div>
-        <!-- <Rank circle="위킨박스 당첨자" id="" img="./../../../static/images/event/giftcard-3.svg" style="display:inline-block;"></Rank> -->
         <div class="rank">
           <div class="circle"><span class="circle-inner">위킨박스 당첨자</span></div>
-          <!-- <div class="id" v-if="i">현재 {{ i }}위 <span class="span-block">{{ id }}</span></div> -->
           <div class="item-img">
             <img src="./../../../static/images/event/giftcard-3.svg">
           </div>
         </div>
-        <!-- <Rank circle="위킨박스 당첨자" id="" img="./../../../static/images/event/coffee-min.png" style="display:inline-block;"></Rank> -->
         <div class="rank">
           <div class="circle"><span class="circle-inner">위킨박스 당첨자</span></div>
-          <!-- <div class="id" v-if="i">현재 {{ i }}위 <span class="span-block">{{ id }}</span></div> -->
           <div class="item-img coffee">
             <img src="./../../../static/images/event/coffee-min.png">
           </div>
@@ -89,6 +81,319 @@
         <a>04</a><span>응모완료</span>
       </div>
     </div>
+  </div> -->
+  <div class="whole">
+    <section class="section-01 section">
+      <div class="container">
+
+        <div class="title-box">
+          <h2 class="event-title">2018 <span class="event-title-span">만만한 챌린지</span></h2>
+          <p>위킨 회원가입 시 100% 선물 지급</p>
+          <p>이보다 쉬운 도전은 없다.</p>
+        </div>
+
+        <div class="content-01-box">
+          <p class="sub-title not-mobile"><span class="y-point">10,000명의 신규회원</span>이 모이면 맥북에어, 아이패드 등 <span class="y-point">218개의 특급선물</span>을 쏩니다!</p>
+          <div class="sub-title only-mobile">
+            <p><span class="y-point">10,000명의 신규회원</span>이 모이면</p>
+            <p>맥북에어, 아이패드 등</p>
+            <p><span class="y-point">218개의 특급선물</span>을 쏩니다!</p>
+          </div>
+
+          <div class="count-box">
+            <div class="inf-row">
+              <div class="inf-col inf-col-left">
+                <span>현재</span>
+              </div>
+              <div class="inf-col num-card-wrap inf-col-center">
+                <div class="num-card">{{currentUser[0]}}</div>
+                <div class="num-card">{{currentUser[1]}}</div>
+                <div class="num-card dot">,</div>
+                <div class="num-card">{{currentUser[2]}}</div>
+                <div class="num-card">{{currentUser[3]}}</div>
+                <div class="num-card">{{currentUser[4]}}</div>
+              </div>
+              <div class="inf-col inf-col-right">
+                <span>명</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="graph-box">
+            <div class="graph">
+              <div class="graph-fill"></div>
+            </div>
+            <div class="pointer-wrap">
+              <div class="pointers">
+                <div class="tri"><img src="./../../../static/images/event/triangle.svg" alt=""></div>
+                <div class="tri"><img src="./../../../static/images/event/triangle.svg" alt=""></div>
+                <div class="tri"><img src="./../../../static/images/event/triangle.svg" alt=""></div>
+                <div class="tri"><img src="./../../../static/images/event/triangle.svg" alt=""></div>
+                <div class="tri"></div>
+              </div>
+              <div class="pointer-num">
+                <div class="tri"><div class="num">2000</div></div>
+                <div class="tri"><div class="num">4000</div></div>
+                <div class="tri"><div class="num">6000</div></div>
+                <div class="tri"><div class="num">8000</div></div>
+                <div class="tri"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="date-info-box">
+            <table class="not-mobile">
+              <tr>
+                <th><div class="th-title">이벤트 기간</div></th>
+                <td>기간: 2월 22일 (목요일) ~ 3월 11일 (일요일)</td>
+              </tr>
+              <tr>
+                <th><div class="th-title">당첨자 발표</div></th>
+                <td>2018년 3월 20일 (화요일), 위킨 홈페이지 및 앱</td>
+              </tr>
+            </table>
+            <table class="only-mobile">
+              <tr><th><div class="th-title">이벤트 기간</div></th></tr>
+              <tr><td>기간: 2월 22일 (목요일) ~ 3월 11일 (일요일)</td></tr>
+              <tr><th><div class="th-title">당첨자 발표</div></th></tr>
+              <tr><td>2018년 3월 20일 (화요일), 위킨 홈페이지 및 앱</td></tr>
+            </table>
+          </div>
+
+          <div class="time-count-box">
+            <div class="inf-row">
+              <div class="inf-col inf-col-20 rest-time">
+                <span>남은시간</span>
+              </div>
+              <div class="inf-col inf-col-80 time-cards">
+                <div class="num-card">{{ countDownHours[0] }}</div>
+                <div class="num-card">{{ countDownHours[1] }}</div>
+                <div class="num-card">{{ countDownHours[2] }}</div>
+                <div class="num-card dot">:</div>
+                <div class="num-card">{{ countDownMinutes[0] }}</div>
+                <div class="num-card">{{ countDownMinutes[1] }}</div>
+                <div class="num-card dot">:</div>
+                <div class="num-card">{{ countDownSeconds[0] }}</div>
+                <div class="num-card">{{ countDownSeconds[1] }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="apply-btn-box">
+            <button class="apply-btn" @click="goTo('ranking')">이벤트 참여하기</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-02 section">
+      <div class="container">
+        <div class="inf-col inf-col-70">
+          <div class="inf-col inf-col-60 p-wrap">
+            <div class="p-wrap-wrap">
+              <p>앱 설치하고 + 회원가입 하면 즉시 = <span class="y-point">10,000 point</span></p>
+              <p>회원가입 친구 1명당(무제한) = <span class="y-point">2,000 point</span></p>
+            </div>
+          </div>
+          <div class="inf-col inf-col-30">
+            <div class="round">100% 증정</div>
+          </div>
+        </div>
+        <div class="inf-col inf-col-30 down-wrap">
+          <button class="down-btn">
+            <img class="phone-img" src="./../../../static/images/event/cellphone.png" alt="">
+            <div class="down">위킨앱 다운로드</div>
+          </button>
+        </div>
+      </div>
+    </section>
+    <section class="section-03 section">
+      <div class="container">
+        <div>
+          <div class="inf-col inf-col-50 rank-wrap">
+            <div class="rank-item">
+              <div class="rank-header">
+                <div class="inf-col inf-col-40">
+                  <div class="rank-circle">
+                    <span class="rank-circle-inner">랭킹 1등</span>
+                  </div>
+                </div>
+                <div class="inf-col inf-col-60 rank-name-col">
+                  <div class="rank-name-wrap">
+                    <p>현재 1위</p>
+                    <p>{{ ranking[0] }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="rank-body">
+                <div class="body-inner">
+                  <img class="macbook" src="./../../../static/images/event/macbook-min.png" alt="">
+                  <div></div>
+                  <p>Macbook Air</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inf-col inf-col-50 rank-wrap">
+            <div class="rank-item">
+              <div class="rank-header">
+                <div class="inf-col inf-col-40">
+                  <div class="rank-circle">
+                    <span class="rank-circle-inner">랭킹 2등</span>
+                  </div>
+                </div>
+                <div class="inf-col inf-col-60 rank-name-col">
+                  <div class="rank-name-wrap">
+                    <p>현재 2위</p>
+                    <p>{{ ranking[1] }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="rank-body">
+                <div class="body-inner">
+                  <img class="ipad" src="./../../../static/images/event/ipad-min.png" alt="">
+                  <div></div>
+                  <p>iPad</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="inf-col inf-col-50 rank-wrap">
+            <div class="rank-item">
+              <div class="rank-header">
+                <div class="inf-col inf-col-40">
+                  <div class="rank-circle">
+                    <span class="rank-circle-inner">랭킹 3등</span>
+                  </div>
+                </div>
+                <div class="inf-col inf-col-60 rank-name-col">
+                  <div class="rank-name-wrap">
+                    <p>현재 3위</p>
+                    <p>{{ ranking[2] }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="rank-body">
+                <div class="body-inner">
+                  <img class="nintendo" src="./../../../static/images/event/nintendo-min.png" alt="">
+                  <div></div>
+                  <p>닌텐도 스위치</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inf-col inf-col-50 rank-wrap">
+            <div class="rank-item">
+              <div class="rank-header">
+                <div class="inf-col inf-col-40">
+                  <div class="rank-circle">
+                    <span class="rank-circle-inner">8000번째 <span class="span-block">가입자</span></span>
+                  </div>
+                </div>
+                <div class="inf-col inf-col-60 rank-name-col"></div>
+              </div>
+              <div class="rank-body">
+                <div class="body-inner">
+                  <img class="giftcard" src="./../../../static/images/event/giftcard-1.svg" alt="">
+                  <div></div>
+                  <p>신세계 상품권 10만원</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="inf-col inf-col-50 rank-wrap">
+            <div class="rank-item">
+              <div class="rank-header">
+                <div class="inf-col inf-col-40">
+                  <div class="rank-circle">
+                    <span class="rank-circle-inner smaller">
+                      <span class="span-block">2000번째</span>
+                      <span class="span-block">4000번째</span>
+                      <span class="span-bloc6">6000번째</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="inf-col inf-col-50 rank-name-col"></div>
+              </div>
+              <div class="rank-body">
+                <div class="body-inner">
+                  <img class="giftcard" src="./../../../static/images/event/giftcard-2.svg" alt="">
+                  <div></div>
+                  <p>CJ외식 상품권 5만원</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="inf-col inf-col-50 rank-wrap">
+            <div class="rank-item">
+              <div class="rank-header">
+                <div class="inf-col inf-col-40">
+                  <div class="rank-circle">
+                    <span class="rank-circle-inner">위킨박스 <span class="span-block">당첨자</span></span>
+                  </div>
+                </div>
+                <div class="inf-col inf-col-60 rank-name-col"></div>
+              </div>
+              <div class="rank-body">
+                <div class="body-inner">
+                  <img class="giftcard" src="./../../../static/images/event/giftcard-3.svg" alt="">
+                  <div></div>
+                  <p>스타벅스 기프트 카드 1만원</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="inf-col inf-col-100">
+            <div class="rank-item">
+              <div class="rank-header">
+                <div class="inf-col inf-col-100">
+                  <div class="rank-circle">
+                    <span class="rank-circle-inner">위킨박스 <span class="span-block">당첨자</span></span>
+                  </div>
+                </div>
+              </div>
+              <div class="rank-body">
+                <div class="body-inner">
+                  <img class="coffee" src="./../../../static/images/event/coffee-min.png" alt="">
+                  <div></div>
+                  <p>스타벅스 아메리카노</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section-04 section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-title">참여방법</div>
+        </div>
+        <div class="section-body">
+          <div class="inf-col step">
+            <div class="inf-col inf-col-50 circle-wrap"><div class="step-circle">01</div></div>
+            <div class="inf-col inf-col-50 content-wrap"><div class="step-content">신규가입 또는 로그인</div></div>
+          </div>
+          <div class="inf-col step">
+            <div class="inf-col inf-col-50 circle-wrap"><div class="step-circle">02</div></div>
+            <div class="inf-col inf-col-50 content-wrap"><div class="step-content">친구를 초대할 SNS채널 선택 고유 URL발급</div></div>
+          </div>
+          <div class="inf-col step">
+            <div class="inf-col inf-col-50 circle-wrap"><div class="step-circle">03</div></div>
+            <div class="inf-col inf-col-50 content-wrap"><div class="step-content">내 초대 메시지 링크를 통해 친구 회원가입</div></div>
+          </div>
+          <div class="inf-col step">
+            <div class="inf-col inf-col-50 circle-wrap"><div class="step-circle">04</div></div>
+            <div class="inf-col inf-col-50 content-wrap"><div class="step-content">응모완료</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -261,641 +566,1186 @@ export default {
   src: url('https://firebasestorage.googleapis.com/v0/b/wekin-9111d.appspot.com/o/test%2FNanumSquareRoundR.woff?alt=media&token=da184a77-33b4-44b9-8a05-c209192ae8ae') format('woff');
 }
 
-.invite-event-landing {
-  background-image: url("./../../../static/images/bg-min.png");
-  font-size: 20px;
-  padding: 30px;
+// 공통 --- START
+p, span, div, button {
+  font-family: 'NanumSquareOTFEB';
+  font-weight: bold;
+  color: #fff;
 }
-@media only screen and (max-width: 548px) {
-  .invite-event-landing {
-    font-size: 13px;
-    padding-top: 30px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-}
-.header {
-  text-align: center;
-  max-width: 1920px;
-  width: 90%;
-  margin: auto auto;
-  margin-top: 110px;
-}
-.header h2 {
-  font-size: 5em;
-  font-weight: 900;
-  line-height: 1.25;
-  color: #f7d532;
-  text-shadow: 0 2px 0 #18654f;
-  font-family: 'TmonWeb';
-  span {
-    color: #f7d532;
-    text-shadow: 0 2px 0 #18654f;
-    font-family: 'TmonWeb';
-  }
-}
-.header p {
-  font-family: NanumSquareOTFEB;
-  font-size: 2em;
-  line-height: 1.52;
-  text-align: center;
-  color: #ffffff;
-  margin-bottom: 0;
-}
-.line {
-  width: 1053px;
-  // height: 3px;
-  border: solid 2px #8184a1;
-  margin: 30px auto;
-}
-.content {
-  text-align: center;
-}
-.content .intro {
-  font-family: NanumSquareOTFEB;
-  font-size: 1.5em;
-  line-height: 1.0;
-  text-align: center;
-  color: #ffffff;
-  margin: 49px auto;
 
-  span {
-    color: #fff;
-  }
+button {
+  border: 0;
+  background-color: transparent;
 }
-.content .intro .yellow-point {
+
+.whole {
+  width: 100%;
+  height: 100%;
+}
+
+.section {
+  padding: 50px 0;
+}
+
+.y-point {
   color: #f7d532;
 }
-.content .count-down a {
-  width: 75px;
-  height: 90px;
+
+.container {
+  margin: auto;
+}
+
+.num-card {
+  color: #fff;
   border-radius: 10px;
   background-color: #6857b2;
-  font-family: NanumSquareOTFEB;
-  font-size: 1.2em;
-  line-height: 90px;
-  text-align: center;
-  color: #ffffff;
-  display:inline-block;
-  margin-left: 15px;
 }
-@media only screen and (max-width: 840px) {
-  .content .count-down a {
-    width: 38px;
-    height: 46px;
-    border-radius: 10px;
-    background-color: #6857b2;
-    font-family: NanumSquareOTFEB;
-    font-size: 1.2em;
-    line-height: 45px;
-    text-align: center;
-    color: #ffffff;
-    display:inline-block;
-    margin-left: 3px;
+
+.span-block {
+  display: block;
+}
+
+.section-01 {
+  padding-top: 150px;
+  text-align: center;
+  background-image: url("./../../../static/images/bg-min.png");
+  background-size: cover;
+
+  .event-title, .event-title-span {
+    font-family: 'TmonWeb';
+    color: #f7d532;
+    text-shadow: 0 2px 0 #18654f;
+  }
+  .event-title {
+    margin-bottom: 25px;
+  }
+
+  .title-box {
+    margin: auto;
+    border-bottom: 2px solid #8184a1;
+    padding-bottom: 30px;
+  }
+
+  .content-01-box {
+    padding: 30px 0;
+  }
+
+  .apply-btn {
+    color: #1e245b;
+    background-color: #eed034;
   }
 }
-.content .count-down {
-  font-family: NanumSquareOTFEB;
-  font-size: 2.4em;
-  line-height: 1.0;
-  text-align: center;
-  color: #ffffff;
-}
-.content .count-down span {
-  font-size: 1em;
-  line-height: 1.33;
-  text-align: center;
-  color: #8c7cd1;
-}
-.content .guage-bg {
-  max-width: 1180px;
-  width : 100% ;
-  height: 40px;
-  opacity: 1;
-  background-color: #ffffff;
-  margin: auto auto;
-  position: relative;
-}
-.content .guage-bg .guage-bar {
-  background-color: #6857b2;
-  height: 40px;
-}
-.content .guage-bg > .guage-checker {
-  position: absolute;
-  width: 52px;
-  height: 60px; margin-left : -26px ; font-size : 1.3em ; 
-  display: inline-block; top : 0; text-align : center ; color : #fff ; padding-top : 55px
+
+.section-02 {
+  background-color: #111326;
+
+  .inf-col {
+    p {
+      padding-left: 15px;
+    }
+  }
+
+  .round,
+  .down {
+    color: #1e245b;
+    text-align: center;
+    border-radius: 36px;
+    background-color: #eed034;
+  }
 }
 
-.content .guage-bg > .guage-checker .arrow { display : inline-block ; position : absolute ; top : 16px ; left : 50% ; ; width : 28px ; height : 32px ;  
-Margin-left : -14px ; Border-bottom : solid 24px #f7d532 ; border-left : solid 14px transparent ; border-right : solid 14px transparent }
+.section-03 {
+  background-color: #202345;
 
-.content .guage-bg > .guage-checker:nth-child(2) { left : 20% }
-.content .guage-bg > .guage-checker:nth-child(3) { left : 40% }
-.content .guage-bg > .guage-checker:nth-child(4) { left : 60% }
-.content .guage-bg > .guage-checker:nth-child(5) { left : 80% }
-
-.content .guage-bg > .guage-checker:nth-child(2):after { content : "2000" }
-.content .guage-bg > .guage-checker:nth-child(3):after { content : "4000" }
-.content .guage-bg > .guage-checker:nth-child(4):after { content : "6000" }
-.content .guage-bg > .guage-checker:nth-child(5):after { content : "8000" }
-
-.content .time {
-  margin-top: 100px;
-}
-.content .time p {
-  max-width: 780px;
-  height: 30px;
-  font-family: NanumSquareOTFEB;
-  font-size: 1.4em;
-  text-align: center;
-  color: #ffffff;
-  margin: 80px auto;
-  line-height: 1.0;
-}
-.content .time p .title {
-  width: 180px;
-  height: 56px;
-  border-radius: 100px;
-  background-color: #6857b2;
-  color: white;
-  padding: 3px 10px;
-  font-size: 0.8em;
-  line-height: 56px;
-  display: inline-block;
-}
-
-.ranking {
-  .rank {
-    .circle {
+  .rank-circle {
+    text-align: center;
+    border-radius: 100%;
+    background-color: #eed034;
+    span {
       color: #1e245b;
-      font-size: 23px;
+    }
+  }
 
-      .span-block {
-        display: block;
-      }
+  .rank-body {
+    p {
+      display: inline-block;
+      padding: 0 1px;
+      border-bottom: 1px solid #fff;
     }
   }
 }
-@media only screen and (max-width: 548px) {
-  // .content .time p {
-  //   max-width: 780px;
-  //   height: 20px;
-  //   font-family: NanumSquareOTFEB;
-  //   font-size: 1.4em;
-  //   text-align: center;
-  //   color: #ffffff;
-  //   line-height: 1.0;
-  // }
-  // .content .time p .title {
-  //   width: 90px;
-  //   height: 28px;
-  //   border-radius: 100px;
-  //   background-color: #6857b2;
-  //   color: white;
-  //   font-size: 0.8em;
-  //   line-height: 28px;
-  //   display: inline-block;
-  // }
+
+.section-04 {
+  background-color: #111326;
+
+  .section-title {
+    border-radius: 100px;
+    background-color: #02a477;
+  }
+
+  .step-circle {
+    border-radius: 100%;
+    background-color: #6857b2;
+  }
 }
-.content #submit {
-  cursor: pointer;
-	width: 450px;
-	height: 100px;
-	border-radius: 100px;
-	background-color: #eed034;
-	font-family: NanumSquareOTFEB;
-	font-size: 1.8em;
-	line-height: 1.0;
-	text-align: center;
-	color: #1e245b;
-}
+// 공통 --- END
 
+/* Mobile Devices 모바일 */
+@media only screen and (max-width : 767px) {
 
+  .whole {
+    background-color: skyblue;
+  }
 
-@media only screen and (max-width: 548px) {
-  // .content #submit {
-  // cursor: pointer;
-  //   width: 225px;
-  //   height: 50px;
-  //   border-radius: 100px;
-  //   background-color: #eed034;
-  //   font-family: NanumSquareOTFEB;
-  //   font-size: 1.8em;
-  //   line-height: 50px;
-  //   text-align: center;
-  //   color: #1e245b;
-  // }
-
-  .none-at-mobile {
+  .not-mobile {
     display: none;
   }
 
-  .invite-event-landing {
-    background-image: url('./../../../static/images/event/influencer-bg.png');
-    .header {
-      h2 {
-        font-size: 54px;
-        margin-bottom: 30px;
-
-        span {
-          display: block;
-        }
-      }
+  .section-01 {
+    .event-title {
+      font-size: 50px;
+    }
+    .event-title-span {
+      display: block;
+    }
+    .title-box {
       p {
-        font-size: 22px;
-        font-weight: bold;
+        font-size: 18px;
       }
     }
 
-    .line {
-      width: 100%;
-      border-width: 1px;
-    }
+    .content-01-box {
+      .sub-title {
+        font-size: 16px;
+      }
 
-    .content {
-      .intro {
-        padding: 0 10px;
-        font-size: 20px;
-        line-height: 1.5;
+      .count-box {
+        margin-top: 30px;
+      }
 
-        .span-block {
-          display: block;
+      .inf-row,
+      .inf-col,
+      .num-card-wrap,
+      .num-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .inf-col {
+        span {
+          font-size: 18px;
         }
       }
 
-      .count-down {
-        margin-bottom: 28px;
-        font-size: 20px;
+      .num-card-wrap {
+        margin: 0 10px;
       }
 
-      .guage-bg {
-        height: 20px;
+      .num-card {
+        width: 40px;
+        height: 55px;
+        margin-right: 5px;
+        font-size: 30px;
 
-        .guage-bar {
-          height: 20px;
+        &.dot {
+          width: 8px;
+          background-color: transparent;
         }
-        .guage-checker {
-          height: 20px;
-          padding-top: 28px;
-          font-size: 14px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
 
-          .arrow {
-            top: -5px;
-            width: 14px;
-            margin-left: -7px;
-            padding-bottom: 0;
-            border-bottom-width: 10px;
-            border-left-width: 7px;
-            border-right-width: 7px;
+      .graph-box {
+        margin-top: 40px;
+        padding: 0 15px;
+
+        .graph {
+          width: 100%;
+          background-color: #fff;
+          opacity: 0.7;
+        }
+        .graph-fill {
+          height: 20px;
+          background-color: #6857b2;
+        }
+
+        .pointer-wrap {
+          margin-top: -5px;
+        }
+
+        .pointers,
+        .pointer-num {
+          display: flex;
+        }
+
+        .tri {
+          position: relative;
+          flex: 1;
+
+          img,
+          .num {
+            position: absolute;
+            right: 0;
+            transform: translateX(50%);
+          }
+          img {
+            width: 16px;
+          }
+          .num {
+            padding-top: 12px;
+            font-size: 12px;
           }
         }
       }
 
-      .time {
-        p {
-          text-align: center;
+      .date-info-box {
+        margin-top: 70px;
+        table {
+          width: 100%;
         }
-        .title {
-          display: block;
+        th {
+          display: flex;
+          justify-content: center;
+        }
+        td {
+          padding: 16px;
+        }
+        .th-title {
           width: 120px;
-          height: 36px;
-          line-height: 34px;
-          margin: auto;
-          margin-bottom: 20px;
+          height: 30px;
+          line-height: 30px;
+          border-radius: 100px;
+          background-color: #6857b2;
         }
-        .count-down {
-          margin-bottom: 100px;
-          .coutner-wrap {
-            margin-top: 16px;
+      }
+
+      .time-count-box {
+        margin-top: 40px;
+
+        .inf-row {
+          display: block;
+        }
+
+        .rest-time {
+          span {
             display: block;
+            margin-bottom: 12px;
           }
         }
-        #submit {
+      }
+
+      .apply-btn-box {
+        .apply-btn {
           width: 80%;
           height: 50px;
+          margin-top: 60px;
+          font-size: 20px;
+          border-radius: 100px;
         }
       }
     }
+  }
 
-    .footer {
-      margin-top: 50px !important;
-      margin-bottom: 12px;
-      padding: 50px 0;
-      .first-text {
-        font-size: 12px;
+  .section-02 {
+    padding-right: 15px;
+    padding-left: 15px;
+    text-align: center;
+
+    .round {
+      width: 120px;
+      height: 30px;
+      margin: auto;
+      line-height: 30px;
+    }
+
+    .down-btn {
+      width: 100%;
+      padding: 30px 0;
+      background-color: #0b0c19;
+
+      .phone-img {
+        width: 100px;
+      }
+      .down {
+        position: relative;
+        z-index: 100;
+        width: 140px;
+        height: 30px;
+        margin: auto;
+        margin-top: -10px;
+        line-height: 30px;
+      }
+    }
+  }
+
+  .section-03 {
+    .container {
+      text-align: center;
+    }
+    .rank-item {
+      margin-bottom: 50px;
+    }
+    .rank-circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      margin-bottom: 16px;
+      width: 80px;
+      height: 80px;
+      .rank-circle-inner {
+        font-size: 14px;
+      }
+    }
+    .rank-name-wrap {
+      margin-bottom: 10px;
+    }
+    .rank-body {
+      .macbook {
+        width: 200px;
+      }
+      .ipad {
+        width: 120px;
+      }
+      .nintendo {
+        width: 220px;
+      }
+      .giftcard {
+        width: 170px;
+      }
+      .coffee {
+        width: 150px;
+      }
+    }
+  }
+
+  .section-04 {
+    .section-title {
+      width: 150px;
+      height: 40px;
+      margin: auto;
+      margin-bottom: 30px;
+      font-size: 16px;
+      line-height: 40px;
+      line-height: 40px;
+      text-align: center;
+    }
+    .step {
+      display: flex;
+      width: 80%;
+      margin: auto;
+      margin-bottom: 20px;
+    }
+    .step-circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 34px;
+      height: 34px;
+      font-size: 16px;
+    }
+    .content-wrap {
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+    }
+    .step-content {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+  }
+}
+
+/* Small Devices 태블릿 */
+@media only screen and (min-width : 768px) {
+  .whole {
+    background-color: green;
+  }
+
+  .container {
+    width: 800px;
+  }
+
+  .only-mobile {
+    display: none;
+  }
+
+  .inf-col {
+    float: left;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+  }
+
+  .inf-col-10 {
+    width: 10%;
+  }
+  .inf-col-20 {
+    width: 20%;
+  }
+  .inf-col-30 {
+    width: 30%;
+  }
+  .inf-col-40 {
+    width: 40%;
+  }
+  .inf-col-50 {
+    width: 50%;
+  }
+  .inf-col-60 {
+    width: 60%;
+  }
+  .inf-col-70 {
+    width: 70%;
+  }
+  .inf-col-80 {
+    width: 80%;
+  }
+  .inf-col-90 {
+    width: 90%;
+  }
+  .inf-col-100 {
+    width: 100%;
+  }
+
+
+  .num-card-wrap, .num-card {
+    float: left;
+
+    span {
+      display: inline-block;
+    }
+  }
+
+  .section-01 {
+    .event-title {
+      font-size: 80px;
+    }
+    .title-box {
+      p {
+        font-size: 18px;
+      }
+    }
+
+    .content-01-box {
+      .sub-title {
+        font-size: 18px;
+      }
+
+      .count-box {
+        height: 85px;
+        margin-top: 40px;
+      }
+
+      .inf-col {
+        span {
+          height: 85px;
+          line-height: 85px;
+          font-size: 32px;
+        }
+      }
+
+      .inf-col-left,
+      .inf-col-right {
+        width: 20%;
+      }
+
+      .inf-col-left {
+        text-align: right;
+      }
+      .inf-col-right {
+        text-align: left;
+      }
+
+      .num-card-wrap {
+        width: 60%;
+        padding-left: 35px;
+      }
+
+      .num-card {
+        width: 70px;
+        height: 85px;
+        margin-right: 10px;
+        line-height: 85px;
+        font-size: 50px;
+
+        &.dot {
+          width: 10px;
+          background-color: transparent;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .graph-box {
+        margin: 60px 0;
+      }
+      .graph {
+        opacity: 0.7;
+        background-color: #ffffff;
+      }
+      .graph-fill {
+        height: 30px;
+        background-color: #6857b2;
+      }
+      .pointer-wrap {
+        margin-top: -8px;
+      }
+      .tri {
+        position: relative;
+        float: left;
+        width: 20%;
+        height: 20px;
+        text-align: right;
+
+        img {
+          width: 20px;
+          margin-right: -10px;
+
+          &::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 20px;
+          }
+        }
+        .num {
+          position: absolute;
+          right: 0;
+          transform: translateX(50%);
+        }
+      }
+
+      .date-info-box {
+        margin-top: 80px;
+        table {
+          width: 100%;
+          font-size: 18px;
+        }
+        tr {
+          height: 68px;
+        }
+        th, td {
+          // padding-bottom: 20px;
+        }
+        th {
+          position: relative;
+          width: 35%;
+        }
+        td {
+          width: 65%;
+          padding-left: 15px;
+          text-align: left;
+        }
+        .th-title {
+          position: absolute;
+          top: 50%;
+          right: 15px;
+          transform: translateY(-50%);
+          width: 150px;
+          height: 38px;
+          line-height: 38px;
+          border-radius: 100px;
+          background-color: #6857b2;
+        }
+      }
+
+      .time-count-box {
+        margin-top: 50px;
+      }
+
+      .apply-btn-box {
+        .apply-btn {
+          width: 300px;
+          height: 60px;
+          margin-top: 50px;
+          font-size: 24px;
+          border-radius: 100px;
+        }
+      }
+    }
+  }
+
+  .section-02 {
+    .container {
+      height: 150px;
+    }
+    .inf-col {
+      position: relative;
+      height: 150px;
+
+      .p-wrap {
+        position: relative;
+      }
+
+      .p-wrap-wrap {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      p {
+        height: 40px;
+        margin-bottom: 0;
+        line-height: 40px;
+      }
+
+      .round {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-60%, -50%);
+        width: 120px;
+        height: 30px;
+        line-height: 30px;
+      }
+    }
+    .down-wrap {
+      height: 150px;
+      background-color: #0b0c19;
+    }
+    .down-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      .phone-img {
+        width: 80px;
+      }
+      .down {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        width: 140px;
+        height: 30px;
+        line-height: 30px;
+      }
+    }
+  }
+
+  .section-03 {
+    .container {
+      height: 1160px;
+    }
+    .rank-wrap {
+      margin-bottom: 20px;
+      padding: 0 30px;
+    }
+    .inf-col {
+      position: relative;
+    }
+    .rank-header {
+      height: 80px;
+    }
+    .rank-circle {
+      position: absolute;
+      right: 0;
+      width: 80px;
+      height: 80px;
+      .rank-circle-inner {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+
+        &.smaller {
+          span {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+    .rank-name-col {
+      height: 80px;
+    }
+    .rank-name-wrap {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding-left: 20px;
+    }
+    .rank-body {
+      position: relative;
+      height: 180px;
+      text-align: center;
+      .body-inner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
 
         p {
-          margin-bottom: 50px;
-          text-align: center;
-        }
-
-        .span-block {
-          display: block;
           margin-top: 10px;
         }
       }
-      .third-text {
-        margin: auto;
-        margin-top: -10px;
-        padding: 0;
-        height: 38px;
-        border: 0;
-        background-color: #02a477;
-        span {
-          display: block;
-          width: 100%;
-          height: 38px;
-          line-height: 38px;
-          text-align: center;
-          color: #fff;
-          font-size: 14px;
-          font-weight: bold;
-        }
+      .macbook {
+        width: 200px;
+      }
+      .ipad {
+        width: 83px;
+      }
+      .nintendo {
+        width: 220px;
+      }
+      .giftcard {
+        width: 150px;
+      }
+      .coffee {
+        width: 140px;
       }
     }
-
-    .ranking {
-      .rank {
-        .circle {
-          span {
-            font-size: 18px;
-            font-weight: bold;
-          }
-          .circle-inner {
-            width: 100%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 0 10px;
-
-            &.multi {
-              font-size: 14px;
-            }
-          }
-        }
-        .span-block {
-          display: block;
-        }
-        .item-img {
-          margin-top: 120px;
-
-          &.coffee {
-            img {
-              width: 50%;
-            }
-          }
-        }
+    .inf-col-100 {
+      .rank-item {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
+      }
+      .rank-circle {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .rank-body {
+        height: 220px;
       }
     }
+  }
 
-    .how-to {
-      margin-top: 12px;
-      height: auto;
-      .title {
-        height: 40px;
-        padding: 0;
-        span {
-          display: block;
-          height: 40px;
-          line-height: 40px;
-        }
-      }
-      .order {
-        margin-bottom: 10px;
-        a {
-          display: inline-block;
-          width: 30px;
-          height: 30px;
-          line-height: 30px;
-        }
-        span {
-          font-size: 16px;
-        }
-      }
+  .section-04 {
+    .section-header {
+      margin-bottom: 40px;
+    }
+    .section-title {
+      width: 150px;
+      height: 40px;
+      margin: auto;
+      text-align: center;
+      line-height: 40px;
+    }
+    .step {
+      width: 25%;
+    }
+    .circle-wrap {
+      position: relative;
+    }
+    .step-circle {
+      position: absolute;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      line-height: 40px;
+    }
+    .content-wrap {
+      padding-top: 5px;
+      padding-left: 10px;
+    }
+    .section-body {
+      height: 80px;
     }
   }
 }
 
-.footer {
-  text-align: center;
-  background-color: #111326;
-  position: relative;
-  padding: 110px;
-}
-.footer .first-text p {
-  max-width: 757px;
-  width: 50vw;
-  font-family: NanumSquareOTFEB;
-  font-size: 1.6em;
-  line-height: 0.94;
-  text-align: left;
-  color: #ffffff;
-}
-.footer .first-text span {
-  color: #eed034;
-}
-.footer .second-text {
-  width: 232px;
-  height: 73px;
-  border-radius: 36px;
-  background-color: #eed034;
-  border: solid 1px #979797;
-  position: absolute;
-  top: 42%;
-  right: 35%;
-  padding: 22px 0;
-}
-.footer .second-text span {
-  font-family: NanumSquareOTFEB;
-  font-size: 1.5em;
-  line-height: 1.0;
-  text-align: left;
-  color: #1e245b;
-}
-.footer .third-text {
-  width: 232px;
-  height: 73px;
-  border-radius: 36px;
-  background-color: #eed034;
-  border: solid 1px #979797;
-  position: absolute;
-  top: 59%;
-  right: 10%;
-  padding: 22px 0;
-}
-.footer .third-text img {
-  position: absolute;
-  top: -200%;
-  right: 20%;
-}
-.footer .third-text span {
-  font-family: NanumSquareOTFEB;
-  font-size: 1.5em;
-  line-height: 1.0;
-  text-align: left;
-  color: #1e245b;
-}
-@media only screen and (max-width: 700px) {
-  .footer {
-    max-width: 1700px;
-    width: 100%;
-    text-align: center;
-    background-color: #111326;
-    position: relative;
-    padding: 20px;
+/* Medium Devices 데스크탑 */
+@media only screen and (min-width : 992px) {
+  .whole {
+    background-color: palegoldenrod;
+
+    .container {
+      width: 1000px;
+    }
   }
-  .footer .first-text p {
-    max-width: 757px;
-    width: 100%;
-    font-family: NanumSquareOTFEB;
-    font-size: 1.3em;
-    line-height: 0.94;
-    text-align: left;
-    color: #ffffff;
+
+  .section-01 {
+    .event-title {
+      font-size: 100px;
+    }
+    .title-box {
+      width: 900px;
+      p {
+        font-size: 24px;
+      }
+    }
+
+    .content-01-box {
+      .sub-title {
+        font-size: 20px;
+      }
+
+      .count-box {
+        height: 90px;
+        margin-top: 55px;
+      }
+      .inf-col {
+        span {
+          height: 90px;
+          line-height: 90px;
+          font-size: 38px;
+        }
+      }
+      .inf-col-left,
+      .inf-col-right {
+        width: 25%;
+      }
+      .inf-col-left {
+        text-align: right;
+      }
+      .inf-col-right {
+        text-align: left;
+      }
+      .num-card-wrap {
+        position: relative;
+        width: 50%;
+        padding-left: 35px;
+        text-align: center;
+      }
+      .num-card {
+        width: 75px;
+        height: 90px;
+        margin-right: 10px;
+        line-height: 90px;
+        font-size: 52px;
+
+        &.dot {
+          width: 10px;
+          background-color: transparent;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      .graph-box {
+        margin: 60px 0;
+      }
+      .graph {
+        opacity: 0.7;
+        background-color: #ffffff;
+      }
+      .graph-fill {
+        height: 30px;
+        background-color: #6857b2;
+      }
+      .pointer-wrap {
+        margin-top: -8px;
+      }
+      .tri {
+        position: relative;
+        float: left;
+        width: 20%;
+        height: 20px;
+        text-align: right;
+
+        img {
+          width: 20px;
+          margin-right: -10px;
+
+          &::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 20px;
+          }
+        }
+        .num {
+          position: absolute;
+          right: 0;
+          transform: translateX(50%);
+        }
+      }
+
+      .date-info-box {
+        margin-top: 100px;
+        table {
+          font-size: 20px;
+        }
+        tr {
+          height: 78px;
+        }
+        th {
+          width: 40%;
+        }
+        td {
+          width: 60%;
+          padding-left: 20px;
+        }
+        .th-title {
+          right: 20px;
+        }
+      }
+
+      .time-count-box {
+        margin-top: 70px;
+        .rest-time {
+          width: 30%;
+        }
+        .time-cards {
+          width: 70%;
+        }
+      }
+
+      .apply-btn-box {
+        .apply-btn {
+          width: 380px;
+          height: 70px;
+          margin-top: 70px;
+          font-size: 24px;
+          border-radius: 100px;
+        }
+      }
+    }
   }
-  .footer .first-text span {
-    color: #eed034;
+
+  .section-02 {
+    .container {
+      height: 200px;
+    }
+    .inf-col {
+      height: 200px;
+    }
+    .p-wrap {
+      p {
+        margin: 10px 0;
+        font-size: 18px;
+      }
+    }
+    .down-btn {
+      .phone-img {
+        width: 100px;
+      }
+      .down {
+        width: 160px;
+      }
+    }
   }
-  .footer .second-text {
-    margin: 30px auto;
-    width: 116px;
-    height: 38px;
-    border-radius: 36px;
-    background-color: #eed034;
-    border: solid 1px #979797;
-    position: initial;
-    padding: 10px 10px;
-  }
-  .footer .second-text span {
-    font-family: NanumSquareOTFEB;
-    font-size: 1.5em;
-    text-align: left;
-    color: #1e245b;
-  }
-  .footer .third-text {
-    margin: 30px auto;
-    width: 189px;
-    height: 50px;
-    border-radius: 36px;
-    background-color: #eed034;
-    border: solid 1px #979797;
-    position: initial;
-    padding: 10px 10px;
-  }
-  .footer .third-text img {
-    display: none;
-  }
-  .footer .third-text span {
-    font-family: NanumSquareOTFEB;
-    font-size: 0.9em;
-    line-height: 1.0;
-    text-align: left;
-    color: #1e245b;
+
+  .section-03 {
+
   }
 }
 
-.how-to {
-  max-width: 1920px;
-  width: 100%;
-  height: 476px;
-  background-color: #111326;
-  padding: 30px;
-}
-.how-to .title {
-  width: 237px;
-  height: 72px;
-  border-radius: 100px;
-  background-color: #02a477;
-  text-align: center;
-  padding: 26px;
-  margin: 30px auto;
-}
-.how-to .title span {
-  font-family: NanumSquareOTFEB;
-  font-size:1.4em; 
-  line-height: 0.79;
-  text-align: center;
-  color: #ffffff;
-}
-.how-to .order {
-  display: inline-block;
-}
-.how-to .order a {
-  width: 140px;
-  height: 140px;
-  background-color: #6857b2;
-  border-radius: 50%;
-  font-family: NanumSquareOTFEB;
-  font-size: 1.25em;
-  line-height: 1.2;
-  text-align: center;
-  color: #ffffff;
-  margin-right: 10px;
-}
-.how-to .order span {
-  width: 183px;
-  height: 94px;
-  font-family: NanumSquareOTFEB;
-  font-size: 1.6em;
-  line-height: 1.47;
-  text-align: left;
-  color: #ffffff;
-}
-@media only screen and (max-width: 548px) {
-  // .how-to {
-  //   max-width: 1920px;
-  //   width: 100%;
-  //   height: 476px;
-  //   background-color: #111326;
-  //   padding: 10px;
-  // }
-  // .how-to .title {
-  //   width: 118px;
-  //   height: 36px;
-  //   border-radius: 100px;
-  //   background-color: #02a477;
-  //   text-align: center;
-  //   padding: 13px;
-  //   margin: 30px auto;
-  // }
-  // .how-to .title span {
-  //   font-family: NanumSquareOTFEB;
-  //   font-size:1.4em; 
-  //   line-height: 0.79;
-  //   text-align: center;
-  //   color: #ffffff;
-  // }
-  // .how-to .order {
-  //   display: inline-block;
-  //   margin-bottom: 10px;
-  // }
-  // .how-to .order a {
-  //   width: 140px;
-  //   height: 140px;
-  //   background-color: #6857b2;
-  //   border-radius: 50%;
-  //   font-family: NanumSquareOTFEB;
-  //   font-size: 1.5em;
-  //   line-height: 1.2;
-  //   text-align: center;
-  //   color: #ffffff;
-  // }
-  // .how-to .order span {
-  //   margin-left: 6px;
-  //   width: 183px;
-  //   height: 94px;
-  //   font-family: NanumSquareOTFEB;
-  //   font-size: 1.6em;
-  //   line-height: 1.47;
-  //   text-align: left;
-  //   color: #ffffff;
-  // }
-}
+// /* Large Devices, Wide Screens */
+// @media only screen and (min-width : 1200px) {
+//   .whole {
+//     background-color: blue;
+//   }
+// }
 
+// .invite-event-landing {
+//   background-image: url("./../../../static/images/bg-min.png");
+//   font-size: 20px;
+//   padding: 30px;
+// }
 
-.ranking { background-color:#202345; display : inline-block ; width : 100% }
-.ranking > .wrap { width : 100% ; max-width : 1436px ; margin : auto }
+// @media only screen and (max-width: 548px) {
+//   // .content #submit {
+//   // cursor: pointer;
+//   //   width: 225px;
+//   //   height: 50px;
+//   //   border-radius: 100px;
+//   //   background-color: #eed034;
+//   //   font-family: NanumSquareOTFEB;
+//   //   font-size: 1.8em;
+//   //   line-height: 50px;
+//   //   text-align: center;
+//   //   color: #1e245b;
+//   // }
+
+//   .none-at-mobile {
+//     display: none;
+//   }
+
+//   .invite-event-landing {
+//     background-image: url('./../../../static/images/event/influencer-bg.png');
+//     .header {
+//       h2 {
+//         font-size: 54px;
+//         margin-bottom: 30px;
+
+//         span {
+//           display: block;
+//         }
+//       }
+//       p {
+//         font-size: 22px;
+//         font-weight: bold;
+//       }
+//     }
+
+//     .line {
+//       width: 100%;
+//       border-width: 1px;
+//     }
+
+//     .content {
+//       .intro {
+//         padding: 0 10px;
+//         font-size: 20px;
+//         line-height: 1.5;
+
+//         .span-block {
+//           display: block;
+//         }
+//       }
+
+//       .count-down {
+//         margin-bottom: 28px;
+//         font-size: 20px;
+//       }
+
+//       .guage-bg {
+//         height: 20px;
+
+//         .guage-bar {
+//           height: 20px;
+//         }
+//         .guage-checker {
+//           height: 20px;
+//           padding-top: 28px;
+//           font-size: 14px;
+
+//           .arrow {
+//             top: -5px;
+//             width: 14px;
+//             margin-left: -7px;
+//             padding-bottom: 0;
+//             border-bottom-width: 10px;
+//             border-left-width: 7px;
+//             border-right-width: 7px;
+//           }
+//         }
+//       }
+
+//       .time {
+//         p {
+//           text-align: center;
+//         }
+//         .title {
+//           display: block;
+//           width: 120px;
+//           height: 36px;
+//           line-height: 34px;
+//           margin: auto;
+//           margin-bottom: 20px;
+//         }
+//         .count-down {
+//           margin-bottom: 100px;
+//           .coutner-wrap {
+//             margin-top: 16px;
+//             display: block;
+//           }
+//         }
+//         #submit {
+//           width: 80%;
+//           height: 50px;
+//         }
+//       }
+//     }
+
+//     .footer {
+//       margin-top: 50px !important;
+//       margin-bottom: 12px;
+//       padding: 50px 0;
+//       .first-text {
+//         font-size: 12px;
+
+//         p {
+//           margin-bottom: 50px;
+//           text-align: center;
+//         }
+
+//         .span-block {
+//           display: block;
+//           margin-top: 10px;
+//         }
+//       }
+//       .third-text {
+//         margin: auto;
+//         margin-top: -10px;
+//         padding: 0;
+//         height: 38px;
+//         border: 0;
+//         background-color: #02a477;
+//         span {
+//           display: block;
+//           width: 100%;
+//           height: 38px;
+//           line-height: 38px;
+//           text-align: center;
+//           color: #fff;
+//           font-size: 14px;
+//           font-weight: bold;
+//         }
+//       }
+//     }
+
+//     .ranking {
+//       .rank {
+//         .circle {
+//           span {
+//             font-size: 18px;
+//             font-weight: bold;
+//           }
+//           .circle-inner {
+//             width: 100%;
+//             position: absolute;
+//             top: 50%;
+//             left: 50%;
+//             transform: translate(-50%, -50%);
+//             padding: 0 10px;
+
+//             &.multi {
+//               font-size: 14px;
+//             }
+//           }
+//         }
+//         .span-block {
+//           display: block;
+//         }
+//         .item-img {
+//           margin-top: 120px;
+
+//           &.coffee {
+//             img {
+//               width: 50%;
+//             }
+//           }
+//         }
+//       }
+//     }
+
+//     .how-to {
+//       margin-top: 12px;
+//       height: auto;
+//       .title {
+//         height: 40px;
+//         padding: 0;
+//         span {
+//           display: block;
+//           height: 40px;
+//           line-height: 40px;
+//         }
+//       }
+//       .order {
+//         margin-bottom: 10px;
+//         a {
+//           display: inline-block;
+//           width: 30px;
+//           height: 30px;
+//           line-height: 30px;
+//         }
+//         span {
+//           font-size: 16px;
+//         }
+//       }
+//     }
+//   }
+// }
+
 
 </style>
