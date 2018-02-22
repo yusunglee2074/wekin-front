@@ -95,9 +95,18 @@
           <div>{{ ranking[2] ? ranking[2].email : '정보없음' }}</div>
         </div>
       </div>
-      <div class="rank-to-4">
-        <div class="first">랭킹 4등</div>
-        <div class="second">kin*****</div>
+      <div class="rank nintendo" v-if="rankingFrom4th.length > 0" v-for="(item, index) in rankingFrom4th">
+        <div class="circle-wrap">
+          <div class="circle rank">
+            <div>랭킹 {{ index + 4 }}등</div>
+          </div>
+          <div class="circle gift">
+            <img src="./../../../static/icon/wekinlogo.png">
+          </div>
+        </div>
+        <div class="rank-name">
+          <div>{{ item }}</div>
+        </div>
       </div>
       <button>더보기</button>
     </div>
@@ -119,6 +128,9 @@ export default {
   components: {
   },
   computed: {
+    rankingFrom4th() {
+      return this.ranking.slice(3, 100)
+    },
     user() {
       return this.$store.state.user
     }
@@ -391,7 +403,7 @@ button:active {
 
     .circle-wrap {
       position: relative;
-      width: 30%;
+      width: 270px;
     }
 
     img {
@@ -403,7 +415,7 @@ button:active {
 
     .rank.macbook {
       img {
-        width: 80%;
+        width: 50%;
       }
     }
     .rank.ipad {
@@ -419,7 +431,7 @@ button:active {
 
     .rank-name {
       position: absolute;
-      right: 0;
+      left: 280px;
       width: 70%;
       height: 70px;
       margin-top: 15px;
