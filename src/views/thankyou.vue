@@ -19,11 +19,11 @@
       </div>
       <div v-else class="dog">
         <img src="https://firebasestorage.googleapis.com/v0/b/wekin-9111d.appspot.com/o/test%2Famazon_corgi_surprise_dribbble-min.png?alt=media&token=9419917c-8483-415f-ae65-946fac58d8f7">
-        <button @click="open()" v-show="user && canIOpenThisBox()">상품열개</button>
+        <button @click="open()" v-show="user">상품열개</button>
       </div>
       <div>
       </div>
-      <div class="button" v-if="opened || canIOpenThisBox() === false">
+      <div class="button" v-if="opened">
         <button @click="goHome()" style="font-size:20px;font-weight:500;color:#ffffff;width: 330px; height:70px; border-radius:8px;background-color: #03b281">시작하기</button>
       </div>
     </div>
