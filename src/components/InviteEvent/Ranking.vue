@@ -144,6 +144,7 @@ export default {
           .catch(e => console.log(e))
       } else {
         window.alert("로그인이 필요합니다.")
+        this.$parent.$refs.navbar.showModalLogin()
       }
     },
     copyUrl() {
@@ -175,6 +176,7 @@ export default {
   },
   filters: {
     hidingEmail (item) {
+      if (item === '정보없음') return '정보없음'
       return item.slice(0, 5) + '*****'
     }
   },

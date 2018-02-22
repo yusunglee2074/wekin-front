@@ -121,7 +121,7 @@
 
           <div class="graph-box">
             <div class="graph">
-              <div class="graph-fill"></div>
+              <div class="graph-fill" v-bind:style="{ width: currentUser / 100 + '%' }"></div>
             </div>
             <div class="pointer-wrap">
               <div class="pointers">
