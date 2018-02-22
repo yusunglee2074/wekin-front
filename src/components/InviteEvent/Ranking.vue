@@ -95,18 +95,21 @@
           <div>{{ ranking[2] ? ranking[2].email : '정보없음' | hidingEmail }}</div>
         </div>
       </div>
-      <div class="rank nintendo" v-if="rankingFrom4th.length > 0" v-for="(item, index) in rankingFrom4th">
-        <div class="circle-wrap">
-          <div class="circle rank">
-            <div>랭킹 {{ index + 4 }}등</div>
+      <div v-for="(iitem, iindex) in rankingFrom4th" v-if="rankingFrom4th.length <= rankingIndex">
+        <div class="rank nintendo" v-if="rankingFrom4th[iindex].length > 0" v-for="(item, index) in rankingFrom4th[iindex]">
+          <div class="circle-wrap">
+            <div class="circle rank">
+              <div>랭킹 {{ index + 4 }}등</div>
+            </div>
+            <div class="circle gift">
+              <img src="./../../../static/icon/wekinlogo.png">
+            </div>
           </div>
-          <div class="circle gift">
-            <img src="./../../../static/icon/wekinlogo.png">
+          <div class="rank-name">
+            <div>{{ item.email | hidingEmail }}</div>
           </div>
         </div>
-        <div class="rank-name">
-          <div>{{ item }}</div>
-        </div>
+        <button v-if="rankingFrom4th[0].length > 6" @click="rankingIndex++">더보기</button>
       </div>
     </div>
   </div>
@@ -122,14 +125,13 @@ export default {
     return {
       url: '',
       ranking: '',
+      rankingFrom4th: [],
+      rankingIndex: 1
     }
   },
   components: {
   },
   computed: {
-    rankingFrom4th() {
-      return this.ranking.slice(3, 100)
-    },
     user() {
       return this.$store.state.user
     }
@@ -182,7 +184,18 @@ export default {
   },
   created() {
     api.getInviteEventRanking()
-      .then(result => this.ranking = result)
+      .then(result => {
+        this.ranking = result
+        let tempListIndex = -1
+        for (let i = 0; i < result.length; i++) {
+          if (i % 10 === 0) {
+            tempListIndex++
+            this.rankingFrom4th.push([])
+          }
+          if (i < 3) continue
+          this.rankingFrom4th[tempListIndex].push(result[i])
+        }
+      })
       .catch(e => console.log(e))
   },
   beforeUpdate() {
