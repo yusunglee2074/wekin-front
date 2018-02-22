@@ -39,19 +39,19 @@
     </div>
     <div class="url section">
       <p class="section-title">홍보용 URL 발급하기</p>
-      <input class="url-input" type="text" ref="url" v-model="url" placeholder="홍보용 URL 발급하기">
+      <input class="url-input" type="text" ref="url" v-model="url" readonly placeholder="홍보용 URL 발급하기">
       <div class="url-btn-wrap">
-        <button id="url-button1" @click="plzUrl()">발급하기</button>
-        <button id="url-button2" @click="copyUrl()">복사하기</button>
+        <button id="url-button1" @click="plzUrl()" style="cursor: pointer">발급하기</button>
+        <button id="url-button2" @click="copyUrl()" style="cursor: pointer">복사하기</button>
       </div>
     </div>
     <div class="share-social section">
       <p class="section-title">친구 초대하기</p>
       <div class="share-buttons">
-        <button @click="share('facebook')">페이스북</button>
-        <button @click="share('kakao')">카카오</button>
-        <button @click="share('naver')">네이버</button>
-        <button @click="share('band')">네이버밴드</button>
+        <button @click="share('facebook')" style="cursor: pointer">페이스북</button>
+        <button @click="share('kakao')" style="cursor: pointer">카카오</button>
+        <button @click="share('naver')" style="cursor: pointer">네이버</button>
+        <button @click="share('band')" style="cursor: pointer">네이버밴드</button>
       </div>
     </div>
     <div class="ranking section">
@@ -108,7 +108,6 @@
           <div>{{ item }}</div>
         </div>
       </div>
-      <button>더보기</button>
     </div>
   </div>
 </template>
