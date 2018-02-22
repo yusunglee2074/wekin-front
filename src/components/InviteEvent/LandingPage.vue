@@ -172,7 +172,7 @@ export default {
       return "unknown";
     },
     goTo(where) {
-      this.$router.push('/event/invite-friend/ranking')
+      window.location.href = '/event/invite-friend/ranking'
     }
   },
   filters: {
