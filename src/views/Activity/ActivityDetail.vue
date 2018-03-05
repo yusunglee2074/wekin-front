@@ -204,6 +204,12 @@
                 font-weight: bold;">
      {{ wekiner.pay_amount }}</span>
             </div>
+            <span style="
+              position: absolute;
+              top: 36%;
+              left: 25%;
+              font-weight: 100;
+              ">{{ wekiner.User.name }}</span>
           </div>
         </a>
         <div v-if="wekiners.length" class="ui divider"></div>
