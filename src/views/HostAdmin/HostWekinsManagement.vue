@@ -32,7 +32,9 @@
               <div class="date">{{activity.created_at | formatDate}}</div>
             </div>
             <div class="right">
-              <router-link :to="{ name: 'HostWekinsModifyNew', params: { key: activity.activity_key } }" v-if="activity.status < 6" tag="button" style="width:100px" class="ui basic button">수정하기</router-link>
+              <div><span>날짜는 즉시 반영됩니다.</span></div>
+              <router-link :to="{ name: 'ModifyTime', params: { key: activity.activity_key } }" v-if="activity.status < 6" tag="button" style="width:100px" class="ui basic button">날짜변경</router-link>
+              <router-link :to="{ name: 'HostWekinsModifyNew', params: { key: activity.activity_key } }" v-if="activity.status < 6" tag="button" style="width:100px" class="ui basic button">내용수정</router-link>
               <button class="ui basic button red" v-if="activity.status === 9 || activity.status === 5 || activity.status === 1" @click="activityDelete(activity, false)">삭제</button>
               <button class="ui basic button red" v-if="activity.status === 3" @click="activityDelete(activity, true)">삭제요청</button>
             </div>
