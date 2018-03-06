@@ -37,6 +37,7 @@ import HostWekinModifyNew from 'views/HostAdmin/HostWekinModify-new.vue'
 import HostBookingsManagement from 'views/HostAdmin/HostBookingsManagement.vue'
 import HostBookingMemberList from 'views/HostAdmin/HostBookingMemberList.vue'
 import HostBoardsManagement from 'views/HostAdmin/HostBoardsManagement.vue'
+import ModifyTime from 'views/HostAdmin/ModifyTime.vue'
 import Notification from 'views/Notification.vue'
 import HostSettings from 'views/HostAdmin/HostSettings.vue'
 import SearchResult from 'views/SearchResult.vue'
@@ -216,6 +217,11 @@ export default new Router({
         { path: 'boards', name: 'HostBoards', component: HostBoardsManagement },
         { path: 'settings', name: 'HostSettings', component: HostSettings },
       ]
+    },
+    { 
+      path: '/wekin/modify/date/:key', 
+      name: 'ModifyTime', 
+      component: ModifyTime
     },
     { 
       path: '/wekin/modify/:key', 
