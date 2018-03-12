@@ -19,7 +19,7 @@
       </div>
       <div v-else class="dog">
         <img src="https://firebasestorage.googleapis.com/v0/b/wekin-9111d.appspot.com/o/test%2Famazon_corgi_surprise_dribbble-min.png?alt=media&token=9419917c-8483-415f-ae65-946fac58d8f7">
-        <button @click="open()" v-show="user">상품열개</button>
+        <button @click="goHome()" v-show="user">메인화면으로 이동</button>
       </div>
       <div>
       </div>
@@ -74,6 +74,7 @@ export default {
       this.$router.push('/')
     },
     open() {
+      /*
       this.opened = true
       setTimeout(() => { this.showText = true }, 2000)
       this.setJoined()
@@ -96,6 +97,7 @@ export default {
               break
           }
         })
+    */
     }
   }
 }
