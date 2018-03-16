@@ -241,7 +241,13 @@ export default {
             alert("취소되었습니다.")
             window.location.href = this.$route.fullPath
           })
-          .catch(err => console.error(err))
+          .catch(err => {
+            if (err.response.data.message == "Not allow to refund with this maker") {
+              window.alert("죄송합니다.\n해당 위킨은 환불신청이 불가능 합니다.\n자세한 사항은 카카오톡 @위킨 혹은\n사이트 아래 나와있는 유선전화로 연락주세요.")
+            } else {
+              window.alert("죄송합니다.\n내부적인 오류가 발생했습니다.\n해당 화면을 캡쳐 후 카카오톡 @위킨\n혹은 유선전화로 연락부탁드립니다.", err.response.data.message)
+            }
+          })
       }
     },
     getWekinNews() {
